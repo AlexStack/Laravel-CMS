@@ -18,6 +18,12 @@ return [
 
     'upload_dir' => env('LARAVEL_CMS_UPLOAD_DIR', 'laravel-cms-uploads'),
 
+    'homepage_route' => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
+
+    'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/cms-'),
+
+    'admin_route' => env('LARAVEL_CMS_BACKEND_ROUTE', '/cmsadmin'),
+
     /*
     |--------------------------------------------------------------------------
     | User id in admin_id_ary can access the cms backend

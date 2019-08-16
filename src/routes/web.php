@@ -3,9 +3,10 @@
 Route::group([
     'namespace'  => 'AlexStack\LaravelCms\Http\Controllers',
 ], function () {
+    Route::get(config('laravel-cms.admin_route'), 'LaravelCmsPageAdminController@index',  ['names' => 'LaravelCmsAdmin']);
 
-    Route::resource('laravelCms/pages', 'LaravelCmsPageAdminController',  ['names' => 'LaravelCmsAdminPages']);
+    Route::resource(config('laravel-cms.admin_route') . '/pages', 'LaravelCmsPageAdminController',  ['names' => 'LaravelCmsAdminPages']);
 
-    Route::get('/cms-home', 'LaravelCmsPageController@index')->name('LaravelCmsPages.index');
-    Route::get('cms-{slug}', 'LaravelCmsPageController@show')->name('LaravelCmsPages.show');
+    Route::get(config('laravel-cms.homepage_route'), 'LaravelCmsPageController@index')->name('LaravelCmsPages.index');
+    Route::get(config('laravel-cms.page_route_prefix') . '{slug}', 'LaravelCmsPageController@show')->name('LaravelCmsPages.show');
 });
