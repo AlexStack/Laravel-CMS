@@ -1,4 +1,4 @@
-@extends('laravel-cms::laravel-cms-backend.backend-layout')
+@extends('laravel-cms::backend.backend-layout')
 
 @section('content')
 
@@ -60,7 +60,7 @@
                         @endif
                     </li>
                 @empty
-                    <li class="list-group-item list-group-item-action">No Page yet, <a href="./create">Create a new page</a> </a>
+                    <li class="list-group-item list-group-item-action">No Page yet, <a href="{{ route('LaravelCmsAdminPages.create') }}">Create a new page</a> </a>
                 @endforelse
             </ul>
 

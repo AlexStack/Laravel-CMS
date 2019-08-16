@@ -1,31 +1,29 @@
-@extends('laravel-cms::laravel-cms-frontend.frontend-layout')
+@extends('laravel-cms::frontend.frontend-layout')
 
 @section('content')
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md">
-<div class="text-center main_title"><h1>{{$page->title}}</h1></div>
+        <div class="col-md pb-5 page-content">
 
-<div class="main_content">
+<div class="text-center main-title">
+    <h1>{{$page->title}}</h1>
+</div>
 
-    @if ( isset($file_data->main_image) )
-        <img src="{{$controller->imageUrl($file_data->main_image, '800') }}" class="img-fluid" />
-
-        <img src="{{$controller->imageUrl($file_data->main_image, '500') }}" class="img-fluid" />
-
-        <img src="{{$controller->imageUrl($file_data->main_image, 'w', '150') }}" class="img-fluid" />
-
-        <img src="{{$controller->imageUrl($file_data->main_image, '100', '100') }}" class="img-fluid" />
-    @endif
-
+<div class="main-content">
     {!! $page->main_content !!}
 </div>
+
+<div class="text-center main-image">
+    @if ( isset($file_data->main_image) )
+        <img src="{{$controller->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
+    @endif
+</div>
+
 
 @if ( $page->children )
 <div class="row sub-pages">
 @foreach ($page->children as $sub_page)
-
 
   <div class="col-md-4">
     <div class="card">
@@ -35,10 +33,11 @@
       </div>
     </div>
   </div>
-
 @endforeach
 </div>
 @endif
+
+
         </div>
     </div>
 </div>

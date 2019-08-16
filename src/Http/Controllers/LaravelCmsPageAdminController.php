@@ -52,7 +52,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['controller'] = $this;
 
-        return view('laravel-cms::laravel-cms-backend.page-list', $data);
+        return view('laravel-cms::backend.page-list', $data);
     }
 
     public function edit($id)
@@ -75,7 +75,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['controller'] = $this;
 
-        return view('laravel-cms::laravel-cms-backend.page-edit', $data);
+        return view('laravel-cms::backend.page-edit', $data);
     }
 
     public function create()
@@ -84,7 +84,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['parent_page_options'] = $this->parentPages();
 
-        return view('laravel-cms::laravel-cms-backend.page-create', $data);
+        return view('laravel-cms::backend.page-create', $data);
     }
 
 
@@ -132,7 +132,7 @@ class LaravelCmsPageAdminController extends Controller
         $data['page_model'] = $page->update($form_data);
 
         return back()->withInput();
-        //return view('laravel-cms::laravel-cms-backend.page-edit', $data);
+        //return view('laravel-cms::backend.page-edit', $data);
 
         //return redirect()->route('user.edit_pictures', ['model_name'=>'Property4rent', 'id'=>$property4rent->id]);
 

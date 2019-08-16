@@ -25,7 +25,7 @@ class LaravelCmsPageController extends Controller
     public function index()
     {
         // return 'front-end cms';
-        // return view('laravel-cms::laravel-cms-backend.page-list');
+        // return view('laravel-cms::backend.page-list');
         return $this->show('homepage');
     }
 
@@ -57,7 +57,7 @@ class LaravelCmsPageController extends Controller
 
         $data['controller'] = $this;
 
-        return view('laravel-cms::laravel-cms-frontend.' . $template_file, $data);
+        return view('laravel-cms::frontend.' . $template_file, $data);
     }
 
     static public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')

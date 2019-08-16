@@ -1,23 +1,35 @@
 <?php
 
 return [
-
-    'top_logo' => env('LARAVEL_CMS_TOP_LOGO', 'http://image.intervention.io/img/intervention.svg'),
+    /*
+    |--------------------------------------------------------------------------
+    | CMS frontend global settings
+    |--------------------------------------------------------------------------
+    | need to run "php artisan config:cache" after make a change
+    |
+    */
+    'top_logo' => env('LARAVEL_CMS_TOP_LOGO', 'https://dummyimage.com/200x80/edeaed/010312.png&text=Laravel+CMS'),
 
     'page_top' => '<div class="row justify-content-end">
-        <div class="col-md text-right page_top">
-            page_top_link1 page_top_top_link2
+        <div class="col-md text-right text-secondary page_top">
+            <i class="fab fa-facebook-square mr-3"></i>
+            <i class="fab fa-twitter-square mr-3"></i>
+            <i class="fas fa-envelope mr-4"></i>
+
         </div>
     </div>',
 
     'page_footer' => '<div class="row justify-content-center">
-        <div class="col-md mb-5 footer">
-            page_footer page_footer footer
+        <div class="col-md pt-5 pb-5 text-center bg-light footer">
+            <span class="small  text-secondary">Made with <i class="fas fa-heart"></i> by <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class=" text-secondary">LaravelCms</a> @ ' . date('Y') . '</span>
         </div>
     </div>',
 
-    'upload_dir' => env('LARAVEL_CMS_UPLOAD_DIR', 'laravel-cms-uploads'),
-
+    /*
+    |--------------------------------------------------------------------------
+    | Custom routes
+    |--------------------------------------------------------------------------
+    */
     'homepage_route' => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
 
     'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/cms-'),
@@ -34,6 +46,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | File Upload Folder Name: /public/storage/xxx
+    |--------------------------------------------------------------------------
+    */
+    'upload_dir' => env('LARAVEL_CMS_UPLOAD_DIR', 'laravel-cms-uploads'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Image Re-optimize Time (seconds)
     |--------------------------------------------------------------------------
     |
@@ -45,6 +64,7 @@ return [
     'image_reoptimize_time' => env('LARAVEL_CMS_IMAGE_REOPTIMIZE_TIME', 360000000),
 
     'image_encode' => env('LARAVEL_CMS_IMAGE_ENCODE', 'jpg'),
+
     /*
     |--------------------------------------------------------------------------
     | Database Table Name

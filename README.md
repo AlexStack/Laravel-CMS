@@ -1,7 +1,10 @@
 # Amila Laravel CMS
 
--   Simple laravel cms for EXISTING or new laravel website
+-   Simple Laravel CMS for any EXISTING or new Laravel website.
 -   Only add 2 database tables, not effect your existing database tables.
+-   You can custom the database table names and page URL path(route)
+-   Website is ready after install. Easy to use, simple enough but flexible.
+-   Basic Laravel syntax and habit, no need to learn a new "language"
 
 ## How to install
 
