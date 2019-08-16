@@ -6,6 +6,7 @@
 ## How to install
 
 ```php
+// Go to the laravel project folder and install via composer
 composer require alexstack/laravel-cms
 
 // Publish config file and view files
@@ -14,26 +15,30 @@ composer require alexstack/laravel-cms
 php artisan vendor:publish --provider="AlexStack\LaravelCms\LaravelCmsServiceProvider"
 
 
-// Create database tables
+// Create database tables and load test data
 php artisan migrate --path=./vendor/alexstack/laravel-cms/src/database/migrations/
-// Load test data
 php artisan db:seed --class='AlexStack\LaravelCms\CmsPagesTableSeeder'
 
 // Now you can access the cms frontend site: http://yourdomain/cms-home
 
-// Access backend admin: http://yourdomain/cmsadmin
-
-// Initial Laravel Auth if you see error "Route [login] not defined"
-php artisan make:auth
-php artisan migrate
-
-// Create a link if the uploaded image show 404 error
-php artisan storage:link
-
-// Clear and cache the config file if you make a change
-php artisan config:cache
+// Access backend with the first user of your site: http://yourdomain/cmsadmin
 
 ```
+
+## Error "Route [login] not defined" while access the backend /cmsadmin
+
+-   This means you did not install Laravel Auth
+-   Fix it by below commands:
+
+```php
+php artisan make:auth
+php artisan migrate
+```
+
+## Why the uploaded image can not display (404 error)
+
+-   You can fix it by create a storage public link
+-   php artisan storage:link
 
 ## Custom the cms database table name in config/laravel-cms.php
 
@@ -55,7 +60,33 @@ php artisan config:cache
 -   **page_route_prefix**: This is the frontend page prefix. By default it is /cms-, it will match path like /cms-\*. You can change it to a folder like /xxx/ or anything like xxx-, eg. Page- Article-
 -   **admin_route**: This is the backend admin page route, By default it is /cmsadmin
 -   After change the route, you will need to run below commands:
+    -   php artisan config:cache
+    -   or
     -   php artisan optimize
+
+## Display an image with different size in the frontend Laravel .blade.php template file
+
+-   .blade.php Code examples:
+
+```php
+@if ( isset($file_data->main_image) )
+    <img src="{{$controller->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
+
+    <img src="{{$controller->imageUrl($file_data->main_image, '500') }}" class="img-fluid" />
+
+    <img src="{{$controller->imageUrl($file_data->main_image, 'w', '150') }}" class="img-fluid" />
+
+    <img src="{{$controller->imageUrl($file_data->main_image, '100', '100') }}" class="img-fluid" />
+
+    <img src="{{$controller->imageUrl($file_data->main_image, 'original', 'original') }}" class="img-fluid" />
+
+@endif
+
+```
+
+-   You can get an image with any width and height. or use the original image.
+-   Available image variables: $file_data->main_image, $file_data->main_banner, $file_data->extra_image, $file_data->extra_image_2
+-   The CMS will resize the image at the first time, then will directly use it afterwards.
 
 ## License
 
