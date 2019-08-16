@@ -79,6 +79,11 @@ class LaravelCmsFile extends Model
         'url' => 'string'
     ];
 
+    public function __construct()
+    {
+        $this->table = config('laravel-cms.table_name.files') ?? 'cms_files';
+    }
+
     /**
      * Validation rules
      *

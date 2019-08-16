@@ -24,7 +24,10 @@
     "autoload": {
         "psr-4": {
             "AlexStack\\LaravelCms\\": "src/"
-        }
+        },
+        "classmap": [
+            "database/seeds"
+        ]
     },
     "minimum-stability": "dev",
     "extra": {

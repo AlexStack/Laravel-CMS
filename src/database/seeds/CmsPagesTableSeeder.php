@@ -1,5 +1,7 @@
 <?php
 
+namespace AlexStack\LaravelCms;
+
 use Illuminate\Database\Seeder;
 
 class CmsPagesTableSeeder extends Seeder
@@ -12,13 +14,14 @@ class CmsPagesTableSeeder extends Seeder
      */
     public function run()
     {
-        
+        $table_name_files = config('laravel-cms.table_name.files') ?? 'cms_files';
+        $table_name_pages = config('laravel-cms.table_name.pages') ?? 'cms_pages';
 
-        \DB::table('cms_pages')->delete();
-        
-        \DB::table('cms_pages')->insert(array (
-            0 => 
-            array (
+        \DB::table($table_name_pages)->delete();
+
+        \DB::table($table_name_pages)->insert(array(
+            0 =>
+            array(
                 'id' => 1,
                 'user_id' => NULL,
                 'parent_id' => NULL,
@@ -51,8 +54,8 @@ class CmsPagesTableSeeder extends Seeder
                 'created_at' => '2019-08-15 23:23:53',
                 'updated_at' => '2019-08-15 23:56:37',
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 'id' => 2,
                 'user_id' => NULL,
                 'parent_id' => NULL,
@@ -85,8 +88,8 @@ class CmsPagesTableSeeder extends Seeder
                 'created_at' => '2019-08-15 23:24:33',
                 'updated_at' => '2019-08-15 23:56:52',
             ),
-            2 => 
-            array (
+            2 =>
+            array(
                 'id' => 3,
                 'user_id' => NULL,
                 'parent_id' => NULL,
@@ -119,8 +122,8 @@ class CmsPagesTableSeeder extends Seeder
                 'created_at' => '2019-08-15 23:24:50',
                 'updated_at' => '2019-08-15 23:56:45',
             ),
-            3 => 
-            array (
+            3 =>
+            array(
                 'id' => 4,
                 'user_id' => NULL,
                 'parent_id' => NULL,
@@ -153,8 +156,8 @@ class CmsPagesTableSeeder extends Seeder
                 'created_at' => '2019-08-15 23:25:33',
                 'updated_at' => '2019-08-15 23:50:52',
             ),
-            4 => 
-            array (
+            4 =>
+            array(
                 'id' => 5,
                 'user_id' => NULL,
                 'parent_id' => NULL,
@@ -171,7 +174,7 @@ class CmsPagesTableSeeder extends Seeder
                 'main_banner' => NULL,
                 'main_image' => NULL,
                 'main_text' => NULL,
-            'main_content' => '<p>This is the home page main content. </p><p>You can change it <a href="/laravelCms/pages">in the cms backend</a>: </p><p>Please keep only one <span style="font-weight: bold;">slug </span>settings in the SEO tab as <span style="color: rgb(156, 0, 255); font-weight: bold;">homepage</span>.</p><p><a href="/laravelCms/pages">Click here go to the cms backend,</a> you will need to log in as the first user on the website.</p><p><br></p><p><br></p><p><br></p>',
+                'main_content' => '<p>This is the home page main content. </p><p>You can change it <a href="/laravelCms/pages">in the cms backend</a>: </p><p>Please keep only one <span style="font-weight: bold;">slug </span>settings in the SEO tab as <span style="color: rgb(156, 0, 255); font-weight: bold;">homepage</span>.</p><p><a href="/laravelCms/pages">Click here go to the cms backend,</a> you will need to log in as the first user on the website.</p><p><br></p><p><br></p><p><br></p>',
                 'sort_value' => NULL,
                 'view_counts' => NULL,
                 'tags' => NULL,
@@ -187,8 +190,8 @@ class CmsPagesTableSeeder extends Seeder
                 'created_at' => '2019-08-15 23:25:50',
                 'updated_at' => '2019-08-15 23:47:10',
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 'id' => 6,
                 'user_id' => NULL,
                 'parent_id' => 4,
@@ -221,8 +224,8 @@ class CmsPagesTableSeeder extends Seeder
                 'created_at' => '2019-08-15 23:52:00',
                 'updated_at' => '2019-08-15 23:57:20',
             ),
-            6 => 
-            array (
+            6 =>
+            array(
                 'id' => 7,
                 'user_id' => NULL,
                 'parent_id' => 4,
@@ -255,8 +258,8 @@ class CmsPagesTableSeeder extends Seeder
                 'created_at' => '2019-08-15 23:52:47',
                 'updated_at' => '2019-08-15 23:57:13',
             ),
-            7 => 
-            array (
+            7 =>
+            array(
                 'id' => 8,
                 'user_id' => NULL,
                 'parent_id' => 4,
@@ -290,7 +293,5 @@ class CmsPagesTableSeeder extends Seeder
                 'updated_at' => '2019-08-15 23:57:04',
             ),
         ));
-        
-        
     }
 }

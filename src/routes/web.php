@@ -3,7 +3,7 @@
 Route::group([
     'namespace'  => 'AlexStack\LaravelCms\Http\Controllers',
 ], function () {
-    Route::get(config('laravel-cms.admin_route'), 'LaravelCmsPageAdminController@index',  ['names' => 'LaravelCmsAdmin']);
+    Route::get(config('laravel-cms.admin_route'), 'LaravelCmsPageAdminController@dashboard',  ['names' => 'LaravelCmsAdmin']);
 
     Route::resource(config('laravel-cms.admin_route') . '/pages', 'LaravelCmsPageAdminController',  ['names' => 'LaravelCmsAdminPages']);
 

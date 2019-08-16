@@ -13,6 +13,9 @@ php artisan migrate --path=./vendor/alexstack/laravel-cms/src/database/migration
 php artisan make:auth
 // Publish config file and view files
 php artisan vendor:publish --provider="AlexStack\LaravelCms\LaravelCmsServiceProvider"
+// Load test data
+php artisan db:seed --class='AlexStack\LaravelCms\CmsPagesTableSeeder'
+
 ```
 
 ## License

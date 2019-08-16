@@ -124,6 +124,11 @@ class LaravelCmsPage extends Model
         'file_data' => 'string'
     ];
 
+    public function __construct()
+    {
+        $this->table = config('laravel-cms.table_name.pages') ?? 'cms_pages';
+    }
+
     /**
      * Validation rules
      *
