@@ -1,12 +1,12 @@
-@extends('laravel-cms-frontend.frontend-layout')
+@extends('laravel-cms::laravel-cms-frontend.frontend-layout')
 
 @section('content')
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md">
+<div class="text-center main_title"><h1>{{$page->title}}</h1></div>
 
-<h1>{{$page->title}}</h1>
 <div class="main_content">
 
     @if ( isset($file_data->main_image) )

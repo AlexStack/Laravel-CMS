@@ -3,8 +3,8 @@
 namespace AlexStack\LaravelCms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\LaravelCmsPage;
-
+use AlexStack\LaravelCms\Models\LaravelCmsPage;
+use App\Http\Controllers\Controller;
 
 class LaravelCmsPageController extends Controller
 {
@@ -15,9 +15,7 @@ class LaravelCmsPageController extends Controller
      * @return void
      */
     public function __construct()
-    {
-        //$this->middleware('auth'); // TODO: must be admin
-    }
+    { }
 
     /**
      * Show the application dashboard.
@@ -27,7 +25,7 @@ class LaravelCmsPageController extends Controller
     public function index()
     {
         // return 'front-end cms';
-        // return view('laravel-cms-backend.page-list');
+        // return view('laravel-cms::laravel-cms-backend.page-list');
         return $this->show('homepage');
     }
 
@@ -59,7 +57,7 @@ class LaravelCmsPageController extends Controller
 
         $data['controller'] = $this;
 
-        return view('laravel-cms-frontend.' . $template_file, $data);
+        return view('laravel-cms::laravel-cms-frontend.' . $template_file, $data);
     }
 
     static public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')

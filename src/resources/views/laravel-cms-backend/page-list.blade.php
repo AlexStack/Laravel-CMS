@@ -1,4 +1,4 @@
-@extends('laravel-cms-backend.backend-layout')
+@extends('laravel-cms::laravel-cms-backend.backend-layout')
 
 @section('content')
 

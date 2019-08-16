@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Models\LaravelCmsFile;
 use Auth;
+use App\Http\Controllers\Controller;
 
 class LaravelCmsPageAdminController extends Controller
 {
@@ -18,12 +19,16 @@ class LaravelCmsPageAdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth'); // TODO: must be admin
+        $this->middleware(['web', 'auth']); // TODO: must be admin
     }
 
     public function checkUser()
     {
+        // return true;
         $this->user = Auth::user();
+        if (!$this->user) {
+            exit('Can not get user info. Please logout and re-login again ');
+        }
 
         if (!in_array($this->user->id, config('laravel-cms.admin_id_ary'))) {
             exit('Access denied for user id ' . $this->user->id);
@@ -41,7 +46,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['controller'] = $this;
 
-        return view('laravel-cms-backend.page-list', $data);
+        return view('laravel-cms::laravel-cms-backend.page-list', $data);
     }
 
     public function edit($id)
@@ -64,7 +69,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['controller'] = $this;
 
-        return view('laravel-cms-backend.page-edit', $data);
+        return view('laravel-cms::laravel-cms-backend.page-edit', $data);
     }
 
     public function create()
@@ -73,7 +78,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['parent_page_options'] = $this->parentPages();
 
-        return view('laravel-cms-backend.page-create', $data);
+        return view('laravel-cms::laravel-cms-backend.page-create', $data);
     }
 
 
@@ -82,15 +87,15 @@ class LaravelCmsPageAdminController extends Controller
         $this->checkUser();
 
         $form_data = $request->all();
-        $form_data['user_id'] = $this->user->id;
+        $form_data['user_id'] = $this->user->id ?? null;
 
         $all_file_data = [];
         $this->handleUpload($request, $form_data, $all_file_data);
 
         $rs = LaravelCmsPage::create($form_data);
 
-        return redirect()->action(
-            'LaravelCmsPageAdminController@edit',
+        return redirect()->route(
+            'LaravelCmsAdminPages.edit',
             ['id' => $rs->id]
         );
     }
@@ -103,7 +108,7 @@ class LaravelCmsPageAdminController extends Controller
         $form_data['id'] = $request->page;
 
         $page = LaravelCmsPage::find($form_data['id']);
-        if (!$page->user_id) {
+        if (!$page->user_id && isset($this->user->id)) {
             $form_data['user_id'] = $this->user->id;
         }
 
@@ -121,7 +126,7 @@ class LaravelCmsPageAdminController extends Controller
         $data['page_model'] = $page->update($form_data);
 
         return back()->withInput();
-        //return view('laravel-cms-backend.page-edit', $data);
+        //return view('laravel-cms::laravel-cms-backend.page-edit', $data);
 
         //return redirect()->route('user.edit_pictures', ['model_name'=>'Property4rent', 'id'=>$property4rent->id]);
 

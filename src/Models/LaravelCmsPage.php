@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @version August 13, 2019, 10:57 am NZST
  *
- * @property \App\Models\LaravelCmsFile mainImage
- * @property \App\Models\LaravelCmsFile mainBanner
- * @property \App\Models\LaravelCmsFile extraImage
- * @property \App\Models\LaravelCmsFile extraImage2
+ * @property \AlexStack\LaravelCms\Models\LaravelCmsFile mainImage
+ * @property \AlexStack\LaravelCms\Models\LaravelCmsFile mainBanner
+ * @property \AlexStack\LaravelCms\Models\LaravelCmsFile extraImage
+ * @property \AlexStack\LaravelCms\Models\LaravelCmsFile extraImage2
  * @property \App\Models\User user
  * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
@@ -138,7 +138,7 @@ class LaravelCmsPage extends Model
      **/
     public function mainImage()
     {
-        return $this->belongsTo(\App\Models\LaravelCmsFile::class, 'main_image');
+        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsFile::class, 'main_image');
     }
 
     /**
@@ -146,7 +146,7 @@ class LaravelCmsPage extends Model
      **/
     public function mainBanner()
     {
-        return $this->belongsTo(\App\Models\LaravelCmsFile::class, 'main_banner');
+        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsFile::class, 'main_banner');
     }
 
     /**
@@ -154,7 +154,7 @@ class LaravelCmsPage extends Model
      **/
     public function extraImage()
     {
-        return $this->belongsTo(\App\Models\LaravelCmsFile::class, 'extra_image');
+        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsFile::class, 'extra_image');
     }
 
     /**
@@ -162,7 +162,7 @@ class LaravelCmsPage extends Model
      **/
     public function extraImage2()
     {
-        return $this->belongsTo(\App\Models\LaravelCmsFile::class, 'extra_image_2');
+        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsFile::class, 'extra_image_2');
     }
 
     /**
@@ -175,16 +175,16 @@ class LaravelCmsPage extends Model
 
     public function parent()
     {
-        return $this->belongsTo(\App\Models\LaravelCmsPage::class, 'parent_id')->whereNull('parent_id')->with('parent');
+        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id')->whereNull('parent_id')->with('parent');
     }
 
     public function children()
     {
-        return $this->hasMany(\App\Models\LaravelCmsPage::class, 'parent_id', 'id')->with('children')->orderBy('sort_value', 'desc')->orderBy('id', 'desc');
+        return $this->hasMany(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id', 'id')->with('children')->orderBy('sort_value', 'desc')->orderBy('id', 'desc');
     }
 
     public function menus()
     {
-        return $this->hasMany(\App\Models\LaravelCmsPage::class, 'parent_id', 'id')->where('menu_enabled', 1)->with('menus:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled')->orderBy('sort_value', 'desc')->orderBy('id', 'desc');
+        return $this->hasMany(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id', 'id')->where('menu_enabled', 1)->with('menus:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled')->orderBy('sort_value', 'desc')->orderBy('id', 'desc');
     }
 }

@@ -93,7 +93,7 @@ class LaravelCmsFile extends Model
      **/
     public function pages()
     {
-        return $this->hasMany(\App\Models\LaravelCmsPage::class);
+        return $this->hasMany(\AlexStack\LaravelCms\Models\LaravelCmsPage::class);
     }
 
 

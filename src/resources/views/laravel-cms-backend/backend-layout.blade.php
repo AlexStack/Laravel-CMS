@@ -21,7 +21,7 @@
         </style>
     </head>
     <body>
-        @include('laravel-cms-backend.backend-header')
+        @include('laravel-cms::laravel-cms-backend.backend-header')
         @yield('content')
 
 <div class="container">
