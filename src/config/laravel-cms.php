@@ -56,9 +56,9 @@ return [
 
     'table_name' => [
 
-        'pages' => 'lc_pages',
+        'pages' => 'laravelcms_pages',
 
-        'files' => 'lc_files',
+        'files' => 'laravelcms_files',
     ],
 
 ];
