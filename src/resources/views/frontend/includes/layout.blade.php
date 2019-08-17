@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="{{ $helper->assetUrl('css/main.css') }}">
 
     </head>
-    <body>
+    <body class="{{$page->template_file}} page-{{$page->id}} slug-{{str_replace('.html', '', $page->slug) }}">
         @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.header')
 
         @yield('content')

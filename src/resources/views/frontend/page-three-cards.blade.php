@@ -21,7 +21,7 @@
 </div>
 
 
-<div class="row">
+<div class="row mt-3 cards">
     <div class="col-md-4 first-card">
         @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.image-card', ['extra_id' => 1, 'width'=>'auto', 'height'=>200 ])
     </div>
