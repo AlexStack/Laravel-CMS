@@ -5,6 +5,7 @@ namespace AlexStack\LaravelCms\Http\Controllers;
 use Illuminate\Http\Request;
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Models\LaravelCmsFile;
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use Auth;
 use App\Http\Controllers\Controller;
 
@@ -72,7 +73,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['all_pages']  = json_decode(json_encode($all_page_ary), FALSE);
 
-        $data['controller'] = $this;
+        $data['helper'] = new LaravelCmsHelper;
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-list', $data);
     }
@@ -98,7 +99,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['file_data']->file_dir = asset('storage/' . config('laravel-cms.upload_dir'));
 
-        $data['controller'] = $this;
+        $data['helper'] = new LaravelCmsHelper;
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-edit', $data);
     }
@@ -288,69 +289,5 @@ class LaravelCmsPageAdminController extends Controller
 
         // echo '<pre>111:' . var_export($new_file, true) . '</pre>';
         // exit();
-    }
-
-
-    static public function imageUrl($img_obj, $width, $height = null, $resize_type = 'ratio')
-    {
-        if (!is_numeric($width)) {
-            $width = null;
-        }
-        if (!is_numeric($height)) {
-            $height = null;
-        }
-        if (config('laravel-cms.image_encode') == 'jpg') {
-            $suffix = 'jpg';
-        } else {
-            $suffix = $img_obj->suffix;
-        }
-
-        $filename   = $img_obj->id . '_' . ($width ?? 'auto') . '_' . ($height ?? 'auto') . '_' . $resize_type . '.' . $suffix;
-
-        $related_dir = 'storage/' . config('laravel-cms.upload_dir') . '/optimized/' . substr($img_obj->id, -2);
-
-        $abs_real_dir = public_path($related_dir);
-        $abs_real_path = $abs_real_dir . '/' . $filename;
-        $web_url = '/' . $related_dir . '/' . $filename;
-
-        if (file_exists($abs_real_path) && filemtime($abs_real_path) > time() - config('laravel-cms.image_reoptimize_time')) {
-            return $web_url;
-            //return $abs_real_path . ' - already exists - ' . $web_url;
-        }
-
-        if (!file_exists($abs_real_dir)) {
-            mkdir($abs_real_dir, 0755, true);
-        }
-
-        $original_img = public_path('storage/' . config('laravel-cms.upload_dir') . '/' . $img_obj->path);
-
-        //self::debug($original_img);
-
-        // resize the image to a width of 800 and constrain aspect ratio (auto height)
-        $new_img = \Intervention\Image\ImageManagerStatic::make($original_img)->orientate()->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-        if ($suffix == 'jpg' || $suffix == 'jpeg') {
-            $new_img->encode('jpg');
-        }
-        $new_img->save($abs_real_path, 75);
-
-        return $web_url;
-        // return $abs_real_path . ' optimized image created ' . $width;
-    }
-
-    public function url($page)
-    {
-        if (!$page->slug) {
-            $page->slug = $page->id . '.html';
-        }
-        if ($page->slug == 'homepage') {
-            return route('LaravelCmsPages.index');
-        }
-        if (trim($page->redirect_url) != '') {
-            return trim($page->redirect_url);
-        }
-        return route('LaravelCmsPages.show', $page->slug);
     }
 }
