@@ -91,6 +91,28 @@ php artisan migrate
 -   Available image variables: $file_data->main_image, $file_data->main_banner, $file_data->extra_image, $file_data->extra_image_2
 -   The CMS will resize the image at the first time, then will directly use it afterwards.
 
+## How to change the CSS & JS assets of the frontend?
+
+-   The asset files located at public/laravel-cms/<theme_name>, eg. public/laravel-cms/frontend/css
+-   Example code to load css or js:
+
+```php
+<link rel="stylesheet" href="{{ $helper->assetUrl('css/main.css') }}">
+...
+<script src="{{ $helper->assetUrl('js/bottom.js') }}"></script>
+```
+
+-   The default template file will load css and js asset with last_modify_time parameter to avoid cache from browser
+
+## How to set up a different template theme from the default?
+
+-   Copy the default theme folder /resources/views/laravel-cms/**frontend** to /resources/views/laravel-cms/**new_theme**
+-   Change or add the blade files and the config.php in your **new_theme**
+-   Change 'template_frontend_dir' => 'new_theme' in config/laravel-cms.php
+-   run **php artisan config:cache** to load new config file
+-   Change template settings for the pages in the backend
+-   The css/js asset files will locate at public/laravel-cms/**new_theme**
+
 ## License
 
 -   MIT
