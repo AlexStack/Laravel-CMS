@@ -1,0 +1,40 @@
+{
+    "name": "alexstack/laravel-cms",
+    "description": "Simple laravel cms for existing or new laravel website. Only 2 database tables, not effect your existing database tables.",
+    "type": "vendor",
+    "homepage": "https://github.com/AlexStack/Laravel-CMS/",
+    "keywords": ["laravel", "laravel cms", "laravel blog", "laravel wordpress"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/AlexStack/Laravel-CMS/issues"
+    },
+    "authors": [{
+        "name": "Alex",
+        "homepage": "https://github.com/AlexStack/"
+    }],
+    "require": {
+        "php": ">=7.0.0",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "laravel/framework": "^5.5",
+        "intervention/image": "^2.4",
+        "intervention/imagecache": "^2.3",
+        "laravelcollective/html": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "AlexStack\\LaravelCms\\": "src/"
+        },
+        "classmap": [
+            "src/database/seeds"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AlexStack\\LaravelCms\\LaravelCmsServiceProvider"
+            ]
+        }
+    }
+}
