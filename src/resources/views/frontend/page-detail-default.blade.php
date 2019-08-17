@@ -1,3 +1,5 @@
+@inject('CmsHelper','AlexStack\LaravelCms\Helpers\LaravelCmsHelper')
+
 @extends('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.layout')
 
 @section('content')
@@ -9,6 +11,7 @@
 <div class="text-center main-title">
     <h1>{{$page->title}}</h1>
 </div>
+
 
 <div class="main-content">
     {!! $page->main_content !!}

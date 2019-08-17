@@ -1,3 +1,5 @@
+@inject('CmsHelper','AlexStack\LaravelCms\Helpers\LaravelCmsHelper')
+
 @extends('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.layout')
 
 @section('content')

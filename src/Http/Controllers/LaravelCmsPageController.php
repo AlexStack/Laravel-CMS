@@ -4,6 +4,7 @@ namespace AlexStack\LaravelCms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use App\Http\Controllers\Controller;
 
 class LaravelCmsPageController extends Controller
@@ -56,6 +57,7 @@ class LaravelCmsPageController extends Controller
         $data['file_data']->file_dir = asset('storage/' . config('laravel-cms.upload_dir'));
 
         $data['controller'] = $this;
+        $data['cms_helper'] = new LaravelCmsHelper;
 
         return view('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.' . $template_file, $data);
     }

@@ -69,6 +69,7 @@
     </div>
     <div class="tab-pane" id="seo" role="tabpanel">
         @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "slug",'label'=>'Page URL(Filename/Slug)'])
+        @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "meta_title", 'label'=>"Meta Title(Leave it empty will use Title instead)"])
         @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "meta_keywords"])
         @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "meta_description"])
         @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "tags",'label'=>'Multiple tags separate by comma ,'])
