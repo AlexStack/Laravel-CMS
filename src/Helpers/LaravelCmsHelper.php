@@ -116,7 +116,7 @@ class LaravelCmsHelper
         if (file_exists($abs_real_path)) {
             $url .= '?last_modify_time=' . date('Ymd-His', filemtime($abs_real_path));
         } else {
-            $url .= '?file_not_exists_please_publish_it_first,' . $abs_real_path;
+            $url .= '?file_not_exists_please_publish_it_first';
         }
         return '/' . $url;
     }
