@@ -53,7 +53,7 @@
                         </span>
                         <a href="./pages/{{$item->id}}/edit" class="text-secondary"><i class="far fa-edit ml-3"></i></a>
 
-                        <a href="{{$controller->url($item)}}" class="{{$color_class}}" target="_blank"><i class="far fa-eye ml-3"></i></a>
+                        <a href="{{$helper->url($item)}}" class="{{$color_class}}" target="_blank"><i class="far fa-eye ml-3"></i></a>
 
                         @if ( $item->menu_enabled)
                             <a href="{{ route('LaravelCmsAdminPages.create', ['parent_id' => $item->id, 'menu_enabled'=>0]) }}" class="text-secondary" ><i class="far fa-plus-square ml-3"></i></a>

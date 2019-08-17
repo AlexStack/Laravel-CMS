@@ -1,5 +1,3 @@
-@inject('CmsHelper','AlexStack\LaravelCms\Helpers\LaravelCmsHelper')
-
 @extends('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.layout')
 
 @section('content')
@@ -18,7 +16,7 @@
 
 <div class="text-center main-image">
     @if ( isset($file_data->main_image) )
-        <img src="{{$controller->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
+        <img src="{{$helper->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
     @endif
 </div>
 

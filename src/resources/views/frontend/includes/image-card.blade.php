@@ -8,7 +8,7 @@
     @if ( isset($file_data->$extra_image) )
         <div class="extra-image extra-image-{{$extra_id}}">
             <a href="{!! $page->$extra_text !!}">
-                <img class="img-fluid card-img-top2" src="{{$controller->imageUrl($file_data->$extra_image, $width ,$height) }}" alt="" />
+                <img class="img-fluid card-img-top2" src="{{$helper->imageUrl($file_data->$extra_image, $width ,$height) }}" alt="" />
             </a>
         </div>
     @else

@@ -19,7 +19,7 @@
 
 <div class="text-center main-image">
     @if ( isset($file_data->main_image) )
-        <img src="{{$controller->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
+        <img src="{{$helper->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
     @endif
 </div>
 
