@@ -32,8 +32,7 @@ class LaravelCmsServiceProvider extends ServiceProvider
         // $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/laravel-cms')], 'lang');
 
         // Publish public files and assets.
-        // $this->publishes([__DIR__ . '/public/' => public_path('/')], 'public');
-
+        $this->publishes([__DIR__ . '/assets' => public_path('/laravel-cms')], 'assets');
     }
 
     /**

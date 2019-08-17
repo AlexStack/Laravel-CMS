@@ -91,4 +91,5 @@ return [
     */
     'template_frontend_dir' => 'frontend',
     'template_backend_dir' => 'backend',
+    'template_language' => 'cn',
 ];
