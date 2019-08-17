@@ -19,7 +19,7 @@
 
     @if ( isset($page_model) )
     <li class="nav-item">
-        <a class="nav-link" href="{{$controller->url($page_model)}}" target="_blank"><i class="fas fa-eye mr-1"></i>Preview</a>
+        <a class="nav-link" href="{{$helper->url($page_model)}}" target="_blank"><i class="fas fa-eye mr-1"></i>Preview</a>
     </li>
     @endif
 </ul>

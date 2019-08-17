@@ -73,15 +73,15 @@ php artisan migrate
 
 ```php
 @if ( isset($file_data->main_image) )
-    <img src="{{$controller->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
 
-    <img src="{{$controller->imageUrl($file_data->main_image, '500') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, '500') }}" class="img-fluid" />
 
-    <img src="{{$controller->imageUrl($file_data->main_image, 'w', '150') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, 'w', '150') }}" class="img-fluid" />
 
-    <img src="{{$controller->imageUrl($file_data->main_image, '100', '100') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, '100', '100') }}" class="img-fluid" />
 
-    <img src="{{$controller->imageUrl($file_data->main_image, 'original', 'original') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, 'original', 'original') }}" class="img-fluid" />
 
 @endif
 
