@@ -27,9 +27,6 @@
         },
         "classmap": [
             "src/database/seeds"
-        ],
-        "files": [
-            "src/Helpers/LaravelCmsHelper.php"
         ]
     },
     "minimum-stability": "dev",
