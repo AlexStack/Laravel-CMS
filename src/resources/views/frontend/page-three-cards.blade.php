@@ -21,6 +21,20 @@
 </div>
 
 
+<div class="row">
+    <div class="col-md-4 first-card">
+        @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.image-card', ['extra_id' => 1, 'width'=>'auto', 'height'=>200 ])
+    </div>
+    <div class="col-md-4 second-card">
+        @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.image-card', ['extra_id' => 2, 'width'=>'auto', 'height'=>200 ])
+    </div>
+
+    <div class="col-md-4 third-card">
+        @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.image-card', ['extra_id' => 3, 'width'=>'auto', 'height'=>200 ])
+    </div>
+
+  </div>
+
 @if ( $page->children )
 <div class="row sub-pages">
 @foreach ($page->children as $sub_page)

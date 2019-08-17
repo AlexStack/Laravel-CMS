@@ -1,4 +1,4 @@
-@extends('laravel-cms::backend.backend-layout')
+@extends('laravel-cms::' . config('laravel-cms.template_backend_dir')  .  '.includes.layout')
 
 @section('content')
 <div class="container">
@@ -7,7 +7,7 @@
 
 {!! Form::model($page_model, ['route' => ['LaravelCmsAdminPages.update', $page_model->id], 'method' => "PUT", 'files'=>true]) !!}
 
-    @include('laravel-cms::backend.page-form')
+    @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.page-form')
 
       <div>
           <button type="submit" class="btn btn-primary"><i class="far fa-save mr-2"></i>Save</button>

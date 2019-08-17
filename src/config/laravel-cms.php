@@ -81,4 +81,14 @@ return [
         'files' => 'laravelcms_files',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Blade template directory
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure a different template them
+    |
+    */
+    'template_frontend_dir' => 'frontend',
+    'template_backend_dir' => 'backend',
 ];

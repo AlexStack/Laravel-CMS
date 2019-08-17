@@ -25,7 +25,7 @@ class LaravelCmsPageController extends Controller
     public function index()
     {
         // return 'front-end cms';
-        // return view('laravel-cms::backend.page-list');
+        // return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-list');
         return $this->show('homepage');
     }
 
@@ -57,7 +57,7 @@ class LaravelCmsPageController extends Controller
 
         $data['controller'] = $this;
 
-        return view('laravel-cms::frontend.' . $template_file, $data);
+        return view('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.' . $template_file, $data);
     }
 
     static public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')
@@ -149,11 +149,11 @@ class LaravelCmsPageController extends Controller
         if (!$page->slug) {
             $page->slug = $page->id . '.html';
         }
-        if ($page->slug == 'homepage') {
-            return route('LaravelCmsPages.index');
-        }
         if (trim($page->redirect_url) != '') {
             return trim($page->redirect_url);
+        }
+        if ($page->slug == 'homepage') {
+            return route('LaravelCmsPages.index');
         }
         return route('LaravelCmsPages.show', $page->slug);
     }

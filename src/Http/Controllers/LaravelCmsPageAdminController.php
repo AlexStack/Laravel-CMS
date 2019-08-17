@@ -35,6 +35,28 @@ class LaravelCmsPageAdminController extends Controller
         }
     }
 
+    public function templateFileOption()
+    {
+        $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/' . config('laravel-cms.template_frontend_dir');
+
+        if (!file_exists($app_view_dir)) {
+            $app_view_dir = dirname(__FILE__, 3) . '/resources/views/' . config('laravel-cms.template_frontend_dir');
+        }
+        $files = glob($app_view_dir . "/*.blade.php");
+        foreach ($files as $f) {
+            $k = str_replace('.blade.php', '', basename($f));
+            $option_ary[$k] = ucwords(str_replace(['-', '_', '.'], ' ', $k));
+        }
+        if (file_exists($app_view_dir . '/config.php')) {
+            $config_ary = include($app_view_dir . '/config.php');
+            if (isset($config_ary['blade_files'])) {
+                $option_ary = $config_ary['blade_files'] + $option_ary;
+            }
+        }
+
+        return $option_ary;
+    }
+
     public function dashboard()
     {
         $this->checkUser();
@@ -46,23 +68,26 @@ class LaravelCmsPageAdminController extends Controller
         $this->checkUser();
         //$data['all_pages'] = LaravelCmsPage::orderBy('id','desc')->get();
 
-        $all_page_ary = $this->flatten_array($this->parentPages('all')->toArray());
+        $all_page_ary = $this->flattenArray($this->parentPages('all')->toArray());
 
         $data['all_pages']  = json_decode(json_encode($all_page_ary), FALSE);
 
         $data['controller'] = $this;
 
-        return view('laravel-cms::backend.page-list', $data);
+        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-list', $data);
     }
 
     public function edit($id)
     {
         $this->checkUser();
 
+
+
         $data['page_model'] = LaravelCmsPage::find($id);
         //$data['parent_page_options'] = array_merge(array(null=>"Top Level"),  $this->parentPages()->pluck('title', 'id')->toArray());
 
         $data['parent_page_options'] = $this->parentPages();
+        $data['template_file_options'] = $this->templateFileOption();
 
         $data['file_data'] = json_decode($data['page_model']->file_data);
         if ($data['file_data'] == null) {
@@ -75,7 +100,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['controller'] = $this;
 
-        return view('laravel-cms::backend.page-edit', $data);
+        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-edit', $data);
     }
 
     public function create()
@@ -83,8 +108,9 @@ class LaravelCmsPageAdminController extends Controller
         $this->checkUser();
 
         $data['parent_page_options'] = $this->parentPages();
+        $data['template_file_options'] = $this->templateFileOption();
 
-        return view('laravel-cms::backend.page-create', $data);
+        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-create', $data);
     }
 
 
@@ -132,7 +158,7 @@ class LaravelCmsPageAdminController extends Controller
         $data['page_model'] = $page->update($form_data);
 
         return back()->withInput();
-        //return view('laravel-cms::backend.page-edit', $data);
+        //return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-edit', $data);
 
         //return redirect()->route('user.edit_pictures', ['model_name'=>'Property4rent', 'id'=>$property4rent->id]);
 
@@ -148,7 +174,7 @@ class LaravelCmsPageAdminController extends Controller
     }
 
 
-    public function flatten_array($elements, $depth = 0)
+    public function flattenArray($elements, $depth = 0)
     {
         $result = array();
 
@@ -165,7 +191,7 @@ class LaravelCmsPageAdminController extends Controller
             $result[] = $element;
 
             if (isset($children)) {
-                $result = array_merge($result, $this->flatten_array($children, $depth + 1));
+                $result = array_merge($result, $this->flattenArray($children, $depth + 1));
             }
         }
 
@@ -184,7 +210,7 @@ class LaravelCmsPageAdminController extends Controller
 
         if ($action == 'get_select_options') {
             $options = [null => 'Top Level'];
-            $flat_ary = $this->flatten_array($data['children']->toArray());
+            $flat_ary = $this->flattenArray($data['children']->toArray());
 
             //var_dump($flat_ary);
 
@@ -211,13 +237,17 @@ class LaravelCmsPageAdminController extends Controller
             $all_file_data['main_banner'] = $this->uploadFile($request->file('main_banner'))->toArray();
             $form_data['main_banner'] = $all_file_data['main_banner']['id'];
         }
-        if ($request->hasFile('extra_image')) {
-            $all_file_data['extra_image'] = $this->uploadFile($request->file('extra_image'))->toArray();
-            $form_data['extra_image'] = $all_file_data['extra_image']['id'];
+        if ($request->hasFile('extra_image_1')) {
+            $all_file_data['extra_image_1'] = $this->uploadFile($request->file('extra_image_1'))->toArray();
+            $form_data['extra_image_1'] = $all_file_data['extra_image_1']['id'];
         }
         if ($request->hasFile('extra_image_2')) {
             $all_file_data['extra_image_2'] = $this->uploadFile($request->file('extra_image_2'))->toArray();
             $form_data['extra_image_2'] = $all_file_data['extra_image_2']['id'];
+        }
+        if ($request->hasFile('extra_image_3')) {
+            $all_file_data['extra_image_3'] = $this->uploadFile($request->file('extra_image_3'))->toArray();
+            $form_data['extra_image_3'] = $all_file_data['extra_image_3']['id'];
         }
         $form_data['file_data'] = json_encode($all_file_data);
     }

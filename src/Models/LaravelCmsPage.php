@@ -78,14 +78,18 @@ class LaravelCmsPage extends Model
         'sort_value',
         'view_counts',
         'tags',
-        'extra_image',
-        'extra_text',
-        'extra_content',
+        'extra_image_1',
+        'extra_text_1',
+        'extra_content_1',
         'extra_image_2',
         'extra_text_2',
         'extra_content_2',
+        'extra_image_3',
+        'extra_text_3',
+        'extra_content_3',
         'redirect_url',
-        'file_data'
+        'file_data',
+        'special_text',
     ];
 
     /**
@@ -114,14 +118,18 @@ class LaravelCmsPage extends Model
         'sort_value' => 'integer',
         'view_counts' => 'integer',
         'tags' => 'string',
-        'extra_image' => 'integer',
-        'extra_text' => 'string',
-        'extra_content' => 'string',
+        'extra_image_1' => 'integer',
+        'extra_text_1' => 'string',
+        'extra_content_1' => 'string',
         'extra_image_2' => 'integer',
         'extra_text_2' => 'string',
         'extra_content_2' => 'string',
+        'extra_image_3' => 'integer',
+        'extra_text_3' => 'string',
+        'extra_content_3' => 'string',
         'redirect_url' => 'string',
-        'file_data' => 'string'
+        'file_data' => 'string',
+        'special_text' => 'string',
     ];
 
     public function __construct()
@@ -157,9 +165,9 @@ class LaravelCmsPage extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function extraImage()
+    public function extraImage1()
     {
-        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsFile::class, 'extra_image');
+        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsFile::class, 'extra_image_1');
     }
 
     /**
@@ -168,6 +176,14 @@ class LaravelCmsPage extends Model
     public function extraImage2()
     {
         return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsFile::class, 'extra_image_2');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function extraImage3()
+    {
+        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsFile::class, 'extra_image_3');
     }
 
     /**

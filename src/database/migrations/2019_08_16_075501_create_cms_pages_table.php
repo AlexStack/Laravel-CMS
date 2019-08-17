@@ -34,12 +34,18 @@ class CreateCmsPagesTable extends Migration
             $table->smallInteger('sort_value')->unsigned()->nullable()->index('sort_value');
             $table->integer('view_counts')->unsigned()->nullable()->index('view_counts');
             $table->string('tags', 190)->nullable();
-            $table->integer('extra_image')->unsigned()->nullable()->index('extra_image');
-            $table->text('extra_text', 65535)->nullable();
-            $table->text('extra_content', 65535)->nullable();
+            $table->integer('extra_image_1')->unsigned()->nullable()->index('extra_image');
+            $table->text('extra_text_1', 65535)->nullable();
+            $table->text('extra_content_1', 65535)->nullable();
             $table->integer('extra_image_2')->unsigned()->nullable()->index('extra_image_2');
             $table->text('extra_text_2', 65535)->nullable();
             $table->text('extra_content_2', 65535)->nullable();
+
+            $table->integer('extra_image_3')->unsigned()->nullable()->index('extra_image_3');
+            $table->text('extra_text_3', 65535)->nullable();
+            $table->text('extra_content_3', 65535)->nullable();
+            $table->text('special_text', 65535)->nullable();
+
             $table->text('file_data', 65535)->nullable();
             $table->string('redirect_url', 190)->nullable();
             $table->softDeletes()->index('deleted_at');
