@@ -33,13 +33,14 @@
 
         @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "menu_title"])
 
-        @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "main_text"])
+        @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_banner", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
         @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "main_content"])
 
         @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_image", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
-        @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_banner", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+
+        @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "sub_content"])
 
     </div>
 

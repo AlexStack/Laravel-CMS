@@ -29,7 +29,7 @@ class CreateCmsPagesTable extends Migration
             $table->text('abstract', 65535)->nullable();
             $table->integer('main_banner')->unsigned()->nullable()->index('main_banner');
             $table->integer('main_image')->unsigned()->nullable()->index('main_image');
-            $table->text('main_text', 65535)->nullable();
+            $table->text('sub_content', 65535)->nullable();
             $table->text('main_content', 65535)->nullable();
             $table->smallInteger('sort_value')->unsigned()->nullable()->index('sort_value');
             $table->integer('view_counts')->unsigned()->nullable()->index('view_counts');

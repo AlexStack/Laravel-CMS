@@ -36,7 +36,7 @@
 </div>
 
 <div class="text-center main-text">
-    {!! $page->main_text !!}
+    {!! $page->sub_content !!}
 </div>
 
 @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.sub-page-cards', ['sub_pages' => $page->children, 'card_class'=>'col-md-6 mb-4', 'img_width'=>200, 'img_height'=>150 ])
