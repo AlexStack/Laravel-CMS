@@ -11,7 +11,7 @@ class LaravelCmsHelper
     static public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')
     {
         if (!isset($img_obj->id)) {
-            return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWBAMAAADOL2zRAAAAG1BMVEX59/cUAQFNPj6jmprc2NhpXV0wHx+/ubmGfHzpsC2oAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACC0lEQVRoge2VPW/bMBCGiUiONOb8QWWMEKDpWAFF2lFakow2aqQdqzppO9pBA3S0gCC/u+/RqqVELFynmor3GfxB3j3kkRRlDCGEEEIIIYQQQgghZA/SkX6GMn3SGsn6JS6b9+dylr5co/5cX7XInlwL1fTk+pwmtSu8ltu8cYXy49GemavyyxIt96V97Xpe2XmhGY/b4JarsLWrEpHjtuscDe9KEaQO8FNu0DPDd4WGrAluuQJ41BXLmbmra9u45G0gdmEyDFZN8st0YjQorCAPWsEtl0GR6iqG+nfcciU61xz5uZv3oRhTwBegwwXPxh0XitRY16OxW9eJMSuXuwygRJ1waxAG1zJNcdxxxbJWV4lUc2BbrukmPJKla8T8NkFZommY6LDjwjia546Fjr11YTmK0W/X5fsULhe0SkypeyG26yrsTleQai5c6x2uWB52uVIZfvrZnteJ6eIKLxPvejWuWOae9fK6Vta7j43rUIc4gGv2ZB8nHlcs2/OV/NmVwaXpkZ4vvRFmiceFpfSd+8Y1kHl4L1i3gXzEuR8jeJHfPbsQatfK+zw2rlD37VTeuOfRaqEa/KzE2jVQV3Qt33O/C7eF/WBKBAW4J7Lx5lJZetZ/X6qjHiS1xnsg9idzNU93B/4FF/IQnrvX4L8T6WP4rReVMVepPe1JRQghhBBCCCGEEPL/8wuP/XKfB47dPQAAAABJRU5ErkJggg==';
+            return self::assetUrl('images/no-image.png', false);
         }
         if (!is_numeric($width)) {
             $width = null;
@@ -80,7 +80,7 @@ class LaravelCmsHelper
         }
     }
 
-    public function menus()
+    static public function menus()
     {
         $data['menus'] = LaravelCmsPage::with('menus:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled')
             ->whereNull('parent_id')
@@ -96,7 +96,7 @@ class LaravelCmsHelper
     }
 
 
-    public function url($page)
+    static public function url($page)
     {
         if (!$page->slug) {
             $page->slug = $page->id . '.html';
@@ -111,16 +111,17 @@ class LaravelCmsHelper
     }
 
 
-    public function assetUrl($file)
+    static public function assetUrl($file, $with_modify_time = true)
     {
         $url = 'laravel-cms/' . config('laravel-cms.template_frontend_dir') . '/' . $file;
+        if ($with_modify_time) {
+            $abs_real_path = public_path($url);
 
-        $abs_real_path = public_path($url);
-
-        if (file_exists($abs_real_path)) {
-            $url .= '?last_modify_time=' . date('Ymd-His', filemtime($abs_real_path));
-        } else {
-            $url .= '?file_not_exists_please_publish_it_first';
+            if (file_exists($abs_real_path)) {
+                $url .= '?last_modify_time=' . date('Ymd-His', filemtime($abs_real_path));
+            } else {
+                $url .= '?file_not_exists_please_publish_it_first';
+            }
         }
         return '/' . $url;
     }
