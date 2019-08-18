@@ -21,7 +21,7 @@
 </div>
 
 
-<div class="row mt-3 cards">
+<div class="row mt-3 img-cards">
     <div class="col-md-4 first-card">
         @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.image-card', ['extra_id' => 1, 'width'=>'auto', 'height'=>200 ])
     </div>
@@ -33,23 +33,13 @@
         @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.image-card', ['extra_id' => 3, 'width'=>'auto', 'height'=>200 ])
     </div>
 
-  </div>
-
-@if ( $page->children )
-<div class="row sub-pages">
-@foreach ($page->children as $sub_page)
-
-  <div class="col-md-4">
-    <div class="card">
-    <h4 class="card-header"><a href="{{ route('LaravelCmsPages.show', ($sub_page->slug ?? $sub_page->id . '.html') ) }}">{{$sub_page->menu_title ?? $sub_page->title}}</a></h4>
-      <div class="card-body">
-        <p class="card-text">{!! $sub_page->abstract ?? str_limit(strip_tags($sub_page->main_content), 180) !!}</p>
-      </div>
-    </div>
-  </div>
-@endforeach
 </div>
-@endif
+
+<div class="text-center main-text">
+    {!! $page->main_text !!}
+</div>
+
+@include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.sub-page-cards', ['sub_pages' => $page->children, 'card_class'=>'col-md-6 mb-4', 'img_width'=>200, 'img_height'=>150 ])
 
 
         </div>

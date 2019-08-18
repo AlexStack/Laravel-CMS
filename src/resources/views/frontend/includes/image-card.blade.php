@@ -7,7 +7,7 @@
 <div class="card mb-3">
     @if ( isset($file_data->$extra_image) )
         <div class="extra-image extra-image-{{$extra_id}}">
-            <a href="{!! $page->$extra_text !!}">
+            <a href="{{ $page->$extra_text }}" title="{{$page->title}}">
                 <img class="img-fluid card-img-top" src="{{$helper->imageUrl($file_data->$extra_image, $width ,$height) }}" alt="" />
             </a>
         </div>

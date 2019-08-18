@@ -10,12 +10,16 @@ class LaravelCmsHelper
 
     static public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')
     {
+        if (!isset($img_obj->id)) {
+            return self::assetUrl('images/no-image.png', false);
+        }
         if (!is_numeric($width)) {
             $width = null;
         }
         if (!is_numeric($height)) {
             $height = null;
         }
+
 
         if ($img_obj->suffix == 'svg' || ($width == null && $height == null)) {
             $original_img_url = '/storage/' . config('laravel-cms.upload_dir') . '/' . $img_obj->path;
@@ -76,7 +80,7 @@ class LaravelCmsHelper
         }
     }
 
-    public function menus()
+    static public function menus()
     {
         $data['menus'] = LaravelCmsPage::with('menus:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled')
             ->whereNull('parent_id')
@@ -92,7 +96,7 @@ class LaravelCmsHelper
     }
 
 
-    public function url($page)
+    static public function url($page)
     {
         if (!$page->slug) {
             $page->slug = $page->id . '.html';
@@ -101,22 +105,23 @@ class LaravelCmsHelper
             return trim($page->redirect_url);
         }
         if ($page->slug == 'homepage') {
-            return route('LaravelCmsPages.index');
+            return route('LaravelCmsPages.index', [], false);
         }
-        return route('LaravelCmsPages.show', $page->slug);
+        return route('LaravelCmsPages.show', $page->slug, false);
     }
 
 
-    public function assetUrl($file)
+    static public function assetUrl($file, $with_modify_time = true)
     {
         $url = 'laravel-cms/' . config('laravel-cms.template_frontend_dir') . '/' . $file;
+        if ($with_modify_time) {
+            $abs_real_path = public_path($url);
 
-        $abs_real_path = public_path($url);
-
-        if (file_exists($abs_real_path)) {
-            $url .= '?last_modify_time=' . date('Ymd-His', filemtime($abs_real_path));
-        } else {
-            $url .= '?file_not_exists_please_publish_it_first';
+            if (file_exists($abs_real_path)) {
+                $url .= '?last_modify_time=' . date('Ymd-His', filemtime($abs_real_path));
+            } else {
+                $url .= '?file_not_exists_please_publish_it_first';
+            }
         }
         return '/' . $url;
     }

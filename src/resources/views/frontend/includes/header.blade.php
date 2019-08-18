@@ -1,7 +1,7 @@
 <header class="container ">
     {!! config('laravel-cms.page_top') !!}
     <nav class="navbar navbar-expand-lg navbar-light top-nav">
-        <a class="navbar-brand" href="{{ route('LaravelCmsPages.index') }}" title="Home">
+        <a class="navbar-brand" href="{{ route('LaravelCmsPages.index', [], false) }}" title="Home">
         {{-- <% if $SiteConfig.TopLogo %>
             <img src="$SiteConfig.TopLogo.URL" class="top-logo" />
         <% else %> --}}
@@ -27,7 +27,7 @@
                     @if ( count($item->menus) >0 )
                     dropdown
                     @endif
-                 <% if $isCurrent %>active<% end_if %>" >
+                 {{-- <% if $isCurrent %>active<% end_if %> --}}" >
                     @if ( count($item->menus) >0 )
                     <a class="nav-link dropdown-toggle" href="{{ $helper->url($item)  }}" id="drop{{$item->id}}" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" >{{ $item->menu_title ?? $item->title }}
                         <span class="icon d-none d-lg-inline icon-down-arrow"></span>

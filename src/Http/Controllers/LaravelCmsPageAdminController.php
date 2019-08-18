@@ -165,15 +165,6 @@ class LaravelCmsPageAdminController extends Controller
 
     }
 
-    public function debug($data, $exit = 'exit')
-    {
-        echo '<pre>' . var_export($data, true) . '</pre>';
-        echo '<hr>Debug Time: ' . date('Y-m-d H:i:s') . '<hr>';
-        if ($exit != 'no_exit') {
-            exit();
-        }
-    }
-
 
     public function flattenArray($elements, $depth = 0)
     {
@@ -230,25 +221,20 @@ class LaravelCmsPageAdminController extends Controller
     private function handleUpload($request, &$form_data, &$all_file_data = [])
     {
 
-        if ($request->hasFile('main_image')) {
-            $all_file_data['main_image'] = $this->uploadFile($request->file('main_image'))->toArray();
-            $form_data['main_image'] = $all_file_data['main_image']['id'];
-        }
-        if ($request->hasFile('main_banner')) {
-            $all_file_data['main_banner'] = $this->uploadFile($request->file('main_banner'))->toArray();
-            $form_data['main_banner'] = $all_file_data['main_banner']['id'];
-        }
-        if ($request->hasFile('extra_image_1')) {
-            $all_file_data['extra_image_1'] = $this->uploadFile($request->file('extra_image_1'))->toArray();
-            $form_data['extra_image_1'] = $all_file_data['extra_image_1']['id'];
-        }
-        if ($request->hasFile('extra_image_2')) {
-            $all_file_data['extra_image_2'] = $this->uploadFile($request->file('extra_image_2'))->toArray();
-            $form_data['extra_image_2'] = $all_file_data['extra_image_2']['id'];
-        }
-        if ($request->hasFile('extra_image_3')) {
-            $all_file_data['extra_image_3'] = $this->uploadFile($request->file('extra_image_3'))->toArray();
-            $form_data['extra_image_3'] = $all_file_data['extra_image_3']['id'];
+        $file_ary = ['main_image', 'main_banner', 'extra_image_1', 'extra_image_2', 'extra_image_3'];
+        foreach ($file_ary as $field_name) {
+
+            $field_name_delete = $field_name . '_delete';
+
+            if ($request->hasFile($field_name)) {
+
+                $all_file_data[$field_name] = $this->uploadFile($request->file($field_name))->toArray();
+                $form_data[$field_name]     = $all_file_data[$field_name]['id'];
+            } else if ($request->$field_name_delete) {
+
+                $all_file_data[$field_name] = null;
+                $form_data[$field_name]     = null;
+            }
         }
         $form_data['file_data'] = json_encode($all_file_data);
     }

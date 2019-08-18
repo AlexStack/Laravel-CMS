@@ -25,7 +25,7 @@ return [
         </div>
     </div>',
 
-    'favicon_url' => '/images/favicons/favicon-32x32-min.png',
+    'favicon_url' => '/favicon.ico',
 
     /*
     |--------------------------------------------------------------------------

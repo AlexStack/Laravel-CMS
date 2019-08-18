@@ -27,8 +27,14 @@
 @elseif ( $type == 'file')
 
     {!! Form::file($name, $input_attributes); !!}
-    @if ( isset($file_data) && property_exists($file_data, $name) )
-        <div class="form-group upload-img"><img src="{{$file_data->file_dir . '/' . $file_data->$name->path}}" width=120 /></div>
+    @if ( isset($file_data) && property_exists($file_data, $name) && isset($file_data->$name) )
+        <div class="form-group upload-img">
+            <a href="{{$helper->imageUrl($file_data->$name, 'original','original') }}" target="_blank">
+                <img class="img-fluid img-thumbnail p-1" src="{{$helper->imageUrl($file_data->$name, 'w','100') }}" alt="" /></a>
+
+            Delete: {!! Form::checkbox($name . '_delete', 1, $checked ?? false); !!}
+
+        </div>
     @endif
 
 @elseif ( $type == 'checkbox')
