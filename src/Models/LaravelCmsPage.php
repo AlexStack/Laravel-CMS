@@ -47,7 +47,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class LaravelCmsPage extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
 
     public $table = 'cms_pages';
 

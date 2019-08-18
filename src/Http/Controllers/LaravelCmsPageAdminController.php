@@ -125,8 +125,10 @@ class LaravelCmsPageAdminController extends Controller
         $all_file_data = [];
         $this->handleUpload($request, $form_data, $all_file_data);
 
-        $rs = LaravelCmsPage::create($form_data);
 
+
+        $rs = LaravelCmsPage::create($form_data);
+        LaravelCmsHelper::debug($rs);
         return redirect()->route(
             'LaravelCmsAdminPages.edit',
             ['id' => $rs->id]
@@ -165,6 +167,17 @@ class LaravelCmsPageAdminController extends Controller
 
     }
 
+    public function destroy(Request $request, $id)
+    {
+        $this->checkUser();
+        $rs = LaravelCmsPage::find($id)->delete();
+
+        //LaravelCmsHelper::debug($rs);
+
+        return redirect()->route(
+            'LaravelCmsAdminPages.index'
+        );
+    }
 
     public function flattenArray($elements, $depth = 0)
     {
