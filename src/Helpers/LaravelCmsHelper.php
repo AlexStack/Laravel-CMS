@@ -101,9 +101,9 @@ class LaravelCmsHelper
             return trim($page->redirect_url);
         }
         if ($page->slug == 'homepage') {
-            return route('LaravelCmsPages.index');
+            return route('LaravelCmsPages.index', false);
         }
-        return route('LaravelCmsPages.show', $page->slug);
+        return route('LaravelCmsPages.show', $page->slug, false);
     }
 
 
