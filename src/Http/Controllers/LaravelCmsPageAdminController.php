@@ -124,11 +124,17 @@ class LaravelCmsPageAdminController extends Controller
 
         $all_file_data = [];
         $this->handleUpload($request, $form_data, $all_file_data);
+        //LaravelCmsHelper::debug($form_data);
 
+        $form_data2['title'] = 'test' . date('Y-m-d H:i:s');
 
+        //LaravelCmsHelper::debug($form_data2);
 
-        $rs = LaravelCmsPage::create($form_data);
-        LaravelCmsHelper::debug($rs);
+        // $model = new LaravelCmsPage();
+        // $rs = $model->save($form_data);
+
+        $rs = LaravelCmsPage::create($form_data2);
+
         return redirect()->route(
             'LaravelCmsAdminPages.edit',
             ['id' => $rs->id]
