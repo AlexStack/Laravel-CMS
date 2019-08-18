@@ -25,6 +25,8 @@ return [
         </div>
     </div>',
 
+    'favicon_url' => '/images/favicons/favicon-32x32-min.png',
+
     /*
     |--------------------------------------------------------------------------
     | Custom routes
@@ -90,6 +92,6 @@ return [
     |
     */
     'template_frontend_dir' => 'frontend',
-    'template_backend_dir' => 'backend',
-    'template_language' => 'cn',
+    'template_backend_dir'  => 'backend',
+    'template_language'     => 'en',
 ];

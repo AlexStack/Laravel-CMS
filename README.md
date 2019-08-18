@@ -2,7 +2,7 @@
 
 -   Simple Laravel CMS for any EXISTING or new Laravel website.
 -   Only add 2 database tables, not effect your existing database tables.
--   You can custom the database table names and page URL path(route)
+-   You can easy custom the database table names, the page URL path(route) and the template(theme)
 -   Website is ready after install. Easy to use, simple enough but flexible.
 -   Basic Laravel syntax and habit, no need to learn a new "language"
 
@@ -109,6 +109,13 @@ php artisan migrate
 -   Copy the default theme folder /resources/views/laravel-cms/**frontend** to /resources/views/laravel-cms/**new_theme**
 -   Change or add the blade files and the config.php in your **new_theme**
 -   Change 'template_frontend_dir' => 'new_theme' in config/laravel-cms.php
+
+```php
+    'template_frontend_dir' => 'new_theme',
+    'template_backend_dir'  => 'backend',
+    'template_language'     => 'en',
+```
+
 -   run **php artisan config:cache** to load new config file
 -   Change template settings for the pages in the backend
 -   The css/js asset files will locate at public/laravel-cms/**new_theme**
