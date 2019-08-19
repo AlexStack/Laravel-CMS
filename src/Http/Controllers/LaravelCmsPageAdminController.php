@@ -185,16 +185,16 @@ class LaravelCmsPageAdminController extends Controller
         );
     }
 
-    public function flattenArray($elements, $depth = 0)
+    public function flattenArray($elements, $name = 'children', $depth = 0)
     {
         $result = array();
 
         foreach ($elements as $element) {
             $element['depth'] = $depth;
 
-            if (isset($element['children'])) {
-                $children = $element['children'];
-                unset($element['children']);
+            if (isset($element[$name])) {
+                $children = $element[$name];
+                unset($element[$name]);
             } else {
                 $children = null;
             }
@@ -202,7 +202,7 @@ class LaravelCmsPageAdminController extends Controller
             $result[] = $element;
 
             if (isset($children)) {
-                $result = array_merge($result, $this->flattenArray($children, $depth + 1));
+                $result = array_merge($result, $this->flattenArray($children, $name, $depth + 1));
             }
         }
 

@@ -196,7 +196,7 @@ class LaravelCmsPage extends Model
 
     public function parent()
     {
-        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id')->whereNull('parent_id')->with('parent');
+        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id')->with('parent:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled');
     }
 
     public function children()

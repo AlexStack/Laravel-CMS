@@ -125,4 +125,17 @@ class LaravelCmsHelper
         }
         return '/' . $url;
     }
+
+    static public function activeMenuClass($menu_item, $current_page, $class = 'active')
+    {
+        $p = array_column($current_page->parent_flat_ary, 'id');
+
+        if ($menu_item->menu_enabled && $menu_item->parent_id && !empty($p)) {
+            $p = array_diff($p, [$menu_item->parent_id]);
+        }
+        if ($menu_item->id == $current_page->id || in_array($menu_item->id, $p)) {
+            return $class;
+        }
+        return '';
+    }
 }

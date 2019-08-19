@@ -25,8 +25,9 @@
                 @foreach ( $menus as $item)
                 <li class="nav-item
                     @if ( count($item->menus) >0 )
-                    dropdown
+                        dropdown
                     @endif
+                    {{$helper->activeMenuClass($item, $page, ' active')}}
                  {{-- <% if $isCurrent %>active<% end_if %> --}}" >
                     @if ( count($item->menus) >0 )
                     <a class="nav-link dropdown-toggle" href="{{ $helper->url($item)  }}" id="drop{{$item->id}}" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" >{{ $item->menu_title ?? $item->title }}
@@ -36,8 +37,9 @@
                         @if ( count($item->menus) >0 )
                             <div class="dropdown-menu" aria-labelledby="drop{{$item->id}}">
                             @foreach ( $item->menus as $item2)
-                                <a class="dropdown-item" href="{{  $helper->url($item2)  }}">
+                            <a class="dropdown-item {{$helper->activeMenuClass($item2, $page, 'active')}}" href="{{  $helper->url($item2)  }}">
                                     {{ $item2->menu_title ?? $item2->title }}
+                                    - {{$item2->parent_id}}
                                 </a>
                             @endforeach
                             </div>
