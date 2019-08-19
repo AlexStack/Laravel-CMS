@@ -8,6 +8,7 @@ use AlexStack\LaravelCms\Models\LaravelCmsFile;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use Auth;
 use App\Http\Controllers\Controller;
+use DB;
 
 class LaravelCmsPageAdminController extends Controller
 {
@@ -124,16 +125,24 @@ class LaravelCmsPageAdminController extends Controller
 
         $all_file_data = [];
         $this->handleUpload($request, $form_data, $all_file_data);
-        //LaravelCmsHelper::debug($form_data);
+        //LaravelCmsHelper::debug($form_data, 'no_exit');
 
-        $form_data2['title'] = 'test' . date('Y-m-d H:i:s');
 
-        //LaravelCmsHelper::debug($form_data2);
+        // DB::enableQueryLog();
 
-        // $model = new LaravelCmsPage();
-        // $rs = $model->save($form_data);
+        // $rs = LaravelCmsPage::create($form_data);  // create() not working ???
 
-        $rs = LaravelCmsPage::create($form_data2);
+        $rs = new LaravelCmsPage;
+        foreach ($rs->fillable as $field) {
+            if (isset($form_data[$field])) {
+                $rs->$field = trim($form_data[$field]);
+            }
+        }
+        $rs->save();
+        //LaravelCmsHelper::debug($rs);
+
+        // $sql = DB::getQueryLog();
+        // LaravelCmsHelper::debug($sql);
 
         return redirect()->route(
             'LaravelCmsAdminPages.edit',

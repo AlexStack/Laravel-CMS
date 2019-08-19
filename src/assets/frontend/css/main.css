@@ -8,6 +8,17 @@ body {
   color: black;
 }
 
+.breadcrumb {
+  background-color: unset;
+  margin-top: 2rem;
+  padding-left: 0;
+}
+
+
+.breadcrumb-item+.breadcrumb-item::before {
+  content: ">"
+}
+
 /*
 .top-nav .dropdown:hover .dropdown-menu {
     display: block !important;
