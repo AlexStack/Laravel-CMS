@@ -4,7 +4,7 @@
     $extra_content  = 'extra_content_' . $extra_id;
 @endphp
 
-<div class="card mb-3">
+<div class="card mb-4">
     @if ( isset($file_data->$extra_image) )
         <div class="extra-image extra-image-{{$extra_id}}">
             <a href="{{ $page->$extra_text }}" title="{{$page->title}}">

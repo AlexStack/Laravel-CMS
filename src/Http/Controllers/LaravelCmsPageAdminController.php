@@ -8,6 +8,7 @@ use AlexStack\LaravelCms\Models\LaravelCmsFile;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use Auth;
 use App\Http\Controllers\Controller;
+use DB;
 
 class LaravelCmsPageAdminController extends Controller
 {
@@ -124,8 +125,24 @@ class LaravelCmsPageAdminController extends Controller
 
         $all_file_data = [];
         $this->handleUpload($request, $form_data, $all_file_data);
+        //LaravelCmsHelper::debug($form_data, 'no_exit');
 
-        $rs = LaravelCmsPage::create($form_data);
+
+        // DB::enableQueryLog();
+
+        // $rs = LaravelCmsPage::create($form_data);  // create() not working ???
+
+        $rs = new LaravelCmsPage;
+        foreach ($rs->fillable as $field) {
+            if (isset($form_data[$field])) {
+                $rs->$field = trim($form_data[$field]);
+            }
+        }
+        $rs->save();
+        //LaravelCmsHelper::debug($rs);
+
+        // $sql = DB::getQueryLog();
+        // LaravelCmsHelper::debug($sql);
 
         return redirect()->route(
             'LaravelCmsAdminPages.edit',
@@ -165,17 +182,28 @@ class LaravelCmsPageAdminController extends Controller
 
     }
 
+    public function destroy(Request $request, $id)
+    {
+        $this->checkUser();
+        $rs = LaravelCmsPage::find($id)->delete();
 
-    public function flattenArray($elements, $depth = 0)
+        //LaravelCmsHelper::debug($rs);
+
+        return redirect()->route(
+            'LaravelCmsAdminPages.index'
+        );
+    }
+
+    public function flattenArray($elements, $name = 'children', $depth = 0)
     {
         $result = array();
 
         foreach ($elements as $element) {
             $element['depth'] = $depth;
 
-            if (isset($element['children'])) {
-                $children = $element['children'];
-                unset($element['children']);
+            if (isset($element[$name])) {
+                $children = $element[$name];
+                unset($element[$name]);
             } else {
                 $children = null;
             }
@@ -183,7 +211,7 @@ class LaravelCmsPageAdminController extends Controller
             $result[] = $element;
 
             if (isset($children)) {
-                $result = array_merge($result, $this->flattenArray($children, $depth + 1));
+                $result = array_merge($result, $this->flattenArray($children, $name, $depth + 1));
             }
         }
 

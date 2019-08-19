@@ -42,12 +42,20 @@ class LaravelCmsPageController extends Controller
         }
         $data['page']  = LaravelCmsPage::with(['children' => function ($query) {
             return $query->take(120);
-        }])->where($search_field, $slug)->first();
+        }, 'parent:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled'])->where($search_field, $slug)->first();
         if (!$data['page']) {
             return abort(404);
         }
         $template_file = $data['page']->template_file ?? 'page-detail-default';
-        //$this->debug($data['page']->toArray());
+
+        if (isset($data['page']->parent)) {
+            $data['page']->parent_flat_ary = array_reverse($this->flattenParentArray($data['page']->parent->toArray(), 'parent'));
+        } else {
+            $data['page']->parent_flat_ary = [];
+        }
+
+
+        //LaravelCmsHelper::debug($data['page']->parent->toArray(), 'no_exit');
 
 
         $data['file_data'] = json_decode($data['page']->file_data);
@@ -63,18 +71,6 @@ class LaravelCmsPageController extends Controller
     }
 
 
-    static public function debug($data, $exit = 'exit')
-    {
-        if (is_a($data, 'Illuminate\Database\Eloquent\Collection')) {
-            $data = $data->toArray();
-        }
-        echo '<pre>' . var_export($data, true) . '</pre>';
-        echo '<hr>Debug Time: ' . date('Y-m-d H:i:s') . '<hr>';
-        if ($exit != 'no_exit') {
-            exit();
-        }
-    }
-
     public function menus()
     {
         $data['menus'] = LaravelCmsPage::with('menus:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled')
@@ -88,5 +84,28 @@ class LaravelCmsPageController extends Controller
         //$this->debug($data['menus']);
 
         return $data['menus'];
+    }
+
+    public function flattenParentArray($element, $name = 'parent', $depth = 0)
+    {
+        $result = array();
+
+
+        $element['depth'] = $depth;
+
+        if (isset($element[$name])) {
+            $children = $element[$name];
+            unset($element[$name]);
+        } else {
+            $children = null;
+        }
+
+        $result[] = $element;
+
+        if (isset($children)) {
+            $result = array_merge($result, $this->flattenParentArray($children, $name, $depth + 1));
+        }
+
+        return $result;
     }
 }

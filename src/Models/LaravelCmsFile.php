@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class LaravelCmsFile extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
 
     public $table = 'cms_files';
 

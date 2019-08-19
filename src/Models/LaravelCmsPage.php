@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string abstract
  * @property integer main_banner
  * @property integer main_image
- * @property string main_text
+ * @property string sub_content
  * @property string main_content
  * @property integer sort_value
  * @property integer view_counts
@@ -47,7 +47,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class LaravelCmsPage extends Model
 {
-    use SoftDeletes;
+    //use SoftDeletes;
 
     public $table = 'cms_pages';
 
@@ -73,7 +73,7 @@ class LaravelCmsPage extends Model
         'abstract',
         'main_banner',
         'main_image',
-        'main_text',
+        'sub_content',
         'main_content',
         'sort_value',
         'view_counts',
@@ -113,7 +113,7 @@ class LaravelCmsPage extends Model
         'abstract' => 'string',
         'main_banner' => 'integer',
         'main_image' => 'integer',
-        'main_text' => 'string',
+        'sub_content' => 'string',
         'main_content' => 'string',
         'sort_value' => 'integer',
         'view_counts' => 'integer',
@@ -196,7 +196,7 @@ class LaravelCmsPage extends Model
 
     public function parent()
     {
-        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id')->whereNull('parent_id')->with('parent');
+        return $this->belongsTo(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id')->with('parent:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled');
     }
 
     public function children()

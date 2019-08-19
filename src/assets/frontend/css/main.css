@@ -2,6 +2,23 @@ body {
   font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Arial"
 }
 
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #e7eaec;
+  color: black;
+}
+
+.breadcrumb {
+  background-color: unset;
+  margin-top: 2rem;
+  padding-left: 0;
+}
+
+
+.breadcrumb-item+.breadcrumb-item::before {
+  content: ">"
+}
+
 /*
 .top-nav .dropdown:hover .dropdown-menu {
     display: block !important;
