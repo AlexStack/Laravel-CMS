@@ -2,6 +2,12 @@ body {
   font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Arial"
 }
 
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #e7eaec;
+  color: black;
+}
+
 /*
 .top-nav .dropdown:hover .dropdown-menu {
     display: block !important;

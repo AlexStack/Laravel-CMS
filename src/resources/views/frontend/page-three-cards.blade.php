@@ -14,7 +14,7 @@
     {!! $page->main_content !!}
 </div>
 
-<div class="text-center main-image">
+<div class="text-center mb-4 main-image">
     @if ( isset($file_data->main_image) )
         <img src="{{$helper->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
     @endif
