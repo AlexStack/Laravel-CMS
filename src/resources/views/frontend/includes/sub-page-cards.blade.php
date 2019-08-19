@@ -1,5 +1,5 @@
 @if ( $sub_pages )
-<div class="row sub-pages">
+<div class="row mb-4 sub-pages">
 @foreach ($sub_pages as $sub_page)
 
 <div class="{{$card_class ?? 'col-md-4 mb-4' }}">

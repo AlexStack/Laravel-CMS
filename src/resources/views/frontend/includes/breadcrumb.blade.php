@@ -1,4 +1,4 @@
-<nav aria-label="breadcrumb" class="nav-breadcrumb">
+<nav aria-label="breadcrumb" class="mb-4 nav-breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item app-name"><a href="/">{{config('app.name')}}</a></li>
     @php

@@ -6,11 +6,11 @@
     <div class="row justify-content-center">
         <div class="col-md pb-5 page-content">
 
-<div class="text-center main-title">
+<div class="text-center mb-4 main-title">
     <h1>{{$page->title}}</h1>
 </div>
 
-<div class="main-content">
+<div class="mb-4 main-content">
     {!! $page->main_content !!}
 </div>
 
@@ -21,7 +21,7 @@
 </div>
 
 
-<div class="row mt-3 img-cards">
+<div class="row mb-4 img-cards">
     <div class="col-md-4 first-card">
         @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.image-card', ['extra_id' => 1, 'width'=>'auto', 'height'=>200 ])
     </div>
@@ -35,7 +35,7 @@
 
 </div>
 
-<div class="text-center main-text">
+<div class="text-center mb-4 main-text">
     {!! $page->sub_content !!}
 </div>
 

@@ -11,7 +11,7 @@
 </div>
 
 
-<div class="main-content">
+<div class="mb-4 main-content">
     {!! $page->main_content !!}
 </div>
 
@@ -22,7 +22,7 @@
 </div>
 
 
-<div class="text-center main-text">
+<div class="text-center mb-4 main-text">
     {!! $page->sub_content !!}
 </div>
 
