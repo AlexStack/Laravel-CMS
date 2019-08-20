@@ -47,7 +47,7 @@ return [
     | 'slug_suffix' can be anything you want, empty means no suffix
     */
     'slug_format'   => 'from_title',
-    'slug_suffix'   => '.xxl',
+    'slug_suffix'   => '.html',
     'slug_separate' => '-',
 
 
