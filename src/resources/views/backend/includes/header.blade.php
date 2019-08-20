@@ -2,7 +2,7 @@
     <div class="row justify-content-start">
         <div class="col-md-6">
         <h2>
-            <img class="img-fluid top-logo" src="{{$helper->assetUrl('images/top-logo.png', false, true) }}" alt="Laravel CMS" />
+            <a href="{{ route('LaravelCmsAdmin.index') }}"><img class="img-fluid top-logo" src="{{$helper->assetUrl('images/top-logo.png', false, true) }}" alt="Laravel CMS" /></a>
         </h2>
         </div>
         <div class="col-md-6 align-middle text-right pt-3">
