@@ -29,14 +29,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Custom routes
+    | Custom page routes
     |--------------------------------------------------------------------------
     */
-    'homepage_route' => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
+    'homepage_route'    => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
 
     'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/cms-'),
 
-    'admin_route' => env('LARAVEL_CMS_BACKEND_ROUTE', '/cmsadmin'),
+    'admin_route'       => env('LARAVEL_CMS_BACKEND_ROUTE', '/cmsadmin'),
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default slug format and suffix for page URL
+    |--------------------------------------------------------------------------
+    | 'slug_format' can be from_title, id, pinyin
+    | 'slug_suffix' can be anything you want, empty means no suffix
+    */
+    'slug_format'   => 'from_title',
+    'slug_suffix'   => '.xxl',
+    'slug_separate' => '-',
+
 
     /*
     |--------------------------------------------------------------------------

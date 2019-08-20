@@ -99,7 +99,7 @@ class LaravelCmsHelper
     static public function url($page)
     {
         if (!$page->slug) {
-            $page->slug = $page->id . '.html';
+            $page->slug = $page->id . config('laravel-cms.slug_suffix');
         }
         if (trim($page->redirect_url) != '') {
             return trim($page->redirect_url);
@@ -111,9 +111,9 @@ class LaravelCmsHelper
     }
 
 
-    static public function assetUrl($file, $with_modify_time = true)
+    static public function assetUrl($file, $with_modify_time = true, $is_backend = false)
     {
-        $url = 'laravel-cms/' . config('laravel-cms.template_frontend_dir') . '/' . $file;
+        $url = 'laravel-cms/' . config('laravel-cms.' . ($is_backend ? 'template_backend_dir' : 'template_frontend_dir')) . '/' . $file;
         if ($with_modify_time) {
             $abs_real_path = public_path($url);
 
