@@ -337,7 +337,7 @@ class LaravelCmsPageAdminController extends Controller
 
         if ($slug || trim($slug) != '') {
             $slug = preg_replace('/[^A-Za-z0-9-\._]+/', $separate, trim(strtr($slug, $normalizeChars)));
-            if (strpos($slug, '.') === false && strpos($slug_suffix, '.') !== false) {
+            if (strpos($slug, '.') === false && strpos($slug_suffix, '.') !== false && $slug != 'homepage') {
                 return $slug . $slug_suffix;
             }
             return $slug;

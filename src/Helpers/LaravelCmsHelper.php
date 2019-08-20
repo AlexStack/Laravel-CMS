@@ -98,13 +98,14 @@ class LaravelCmsHelper
 
     static public function url($page)
     {
+        $slug_suffix = config('laravel-cms.slug_suffix');
         if (!$page->slug) {
             $page->slug = $page->id . config('laravel-cms.slug_suffix');
         }
         if (trim($page->redirect_url) != '') {
             return trim($page->redirect_url);
         }
-        if ($page->slug == 'homepage') {
+        if ($page->slug == 'homepage' || $page->slug == 'homepage' . $slug_suffix) {
             return route('LaravelCmsPages.index', [], false);
         }
         return route('LaravelCmsPages.show', $page->slug, false);
