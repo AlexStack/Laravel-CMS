@@ -15,7 +15,7 @@
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
 
-        <link rel="icon" href="{{ config('laravel-cms.favicon_url') ?? 'favicon.ico'}}" />
+        <link rel="icon" href="{{$helper->assetUrl('images/favicon-32x32.png', false, true) }}" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
@@ -30,7 +30,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md text-center mt-5 mb-5 footer">
-        <span class="small">Laravel CMS {{date('Y')}}</span>
+        <span class="small"><a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class="text-dark">Laravel CMS</a> {{date('Y')}}</span>
         </div>
     </div>
 </div>

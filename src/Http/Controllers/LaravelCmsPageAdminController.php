@@ -111,6 +111,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['parent_page_options'] = $this->parentPages();
         $data['template_file_options'] = $this->templateFileOption();
+        $data['helper'] = new LaravelCmsHelper;
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-create', $data);
     }
@@ -127,7 +128,7 @@ class LaravelCmsPageAdminController extends Controller
         $this->handleUpload($request, $form_data, $all_file_data);
         //LaravelCmsHelper::debug($form_data, 'no_exit');
 
-
+        $form_data['slug'] = $this->getSlug($form_data);
         // DB::enableQueryLog();
 
         // $rs = LaravelCmsPage::create($form_data);  // create() not working ???
@@ -143,6 +144,9 @@ class LaravelCmsPageAdminController extends Controller
 
         // $sql = DB::getQueryLog();
         // LaravelCmsHelper::debug($sql);
+        if ($rs->slug == null || trim($rs->slug) == '') {
+            $rs->save(['slug' => $this->generateSlug('', $rs->id)]);
+        }
 
         return redirect()->route(
             'LaravelCmsAdminPages.edit',
@@ -162,8 +166,8 @@ class LaravelCmsPageAdminController extends Controller
             $form_data['user_id'] = $this->user->id;
         }
 
+        $form_data['slug'] = $this->getSlug($form_data);
 
-        // $all_file_data = [];
         $all_file_data = json_decode($page->file_data, true); // json2array
 
         //$this->debug($all_file_data, 'exit');
@@ -303,5 +307,80 @@ class LaravelCmsPageAdminController extends Controller
 
         // echo '<pre>111:' . var_export($new_file, true) . '</pre>';
         // exit();
+    }
+
+
+    public function generateSlug($slug, $def = null, $separate = '-')
+    {
+        $slug_format = config('laravel-cms.slug_format');
+        $slug_suffix = config('laravel-cms.slug_suffix');
+        $separate    = config('laravel-cms.slug_separate') ?? $separate;
+
+        if (config('laravel-cms.template_language') == 'cn') {
+            if ($slug_format == 'from_title') {
+                $slug_format    = 'pinyin';
+            }
+            $normalizeChars = [];
+        } else {
+            $normalizeChars = array(
+                'Š' => 'S', 'š' => 's', 'Ð' => 'Dj', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A',
+                'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I',
+                'Ï' => 'I', 'Ñ' => 'N', 'Ń' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U',
+                'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a',
+                'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i',
+                'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ń' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u',
+                'ú' => 'u', 'û' => 'u', 'ü' => 'u', 'ý' => 'y', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', 'ƒ' => 'f',
+                'ă' => 'a', 'î' => 'i', 'â' => 'a', 'ș' => 's', 'ț' => 't', 'Ă' => 'A', 'Î' => 'I', 'Â' => 'A', 'Ș' => 'S', 'Ț' => 'T',
+            );
+        }
+
+
+        if ($slug || trim($slug) != '') {
+            $slug = preg_replace('/[^A-Za-z0-9-\._]+/', $separate, trim(strtr($slug, $normalizeChars)));
+            if (strpos($slug, '.') === false && strpos($slug_suffix, '.') !== false) {
+                return $slug . $slug_suffix;
+            }
+            return $slug;
+        } else if ($slug_format == 'pinyin') {
+            $pinyin = new \Overtrue\Pinyin\Pinyin('\Overtrue\Pinyin\GeneratorFileDictLoader');
+            $slug = strtr($pinyin->permalink(trim($def), '-'), $normalizeChars);
+
+            $slug = ucwords($slug, '-');
+            //exit($slug); // some Chinese can not convert
+            $slug = preg_replace('/[^A-Za-z0-9-\._]+/', $separate, $slug);
+
+            if ($separate != '-') {
+                $slug = str_replace('-', $separate, $slug);
+            }
+        } else if ($slug_format == 'from_title') {
+            $slug = preg_replace('/[^A-Za-z0-9-\._]+/', $separate, trim(strtr($def, $normalizeChars)));
+        } else {
+            if (!$def) {
+                return '';
+            }
+            $slug = trim($def);
+        }
+        if (strlen($slug) > (190 - strlen($slug_suffix))) {
+            $slug = substr($slug, 0, (190 - strlen($slug_suffix)));
+        }
+        return $slug . $slug_suffix;
+    }
+
+    public function getSlug($form_data)
+    {
+        $slug_format = config('laravel-cms.slug_format');
+        $slug_suffix = config('laravel-cms.slug_suffix');
+
+        $default_slug = $slug_format == 'id' ? $form_data['id'] : ($form_data['menu_title'] ?? $form_data['title']);
+        $new_slug = $this->generateSlug($form_data['slug'], $default_slug);
+        $rs = LaravelCmsPage::where('slug', $new_slug)->first();
+        if (isset($rs->id) && $rs->id != $form_data['id']) {
+            if ($slug_suffix != '') {
+                $new_slug = str_replace($slug_suffix, '', $new_slug) . '-' . uniqid() . $slug_suffix;
+            } else {
+                $new_slug .= '-' . uniqid();
+            }
+        }
+        return $new_slug;
     }
 }

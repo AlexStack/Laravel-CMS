@@ -120,6 +120,17 @@ php artisan migrate
 -   Change template settings for the pages in the backend
 -   The css/js asset files will locate at public/laravel-cms/**new_theme**
 
+## Set default slug format and suffix for page SEO URL in config/laravel-cms.php
+
+-   'slug_format' can be from_title, id, pinyin
+-   'slug_suffix' can be anything you want, empty means no suffix
+
+```php
+    'slug_format'   => 'from_title',
+    'slug_suffix'   => '.html',
+    'slug_separate' => '-',
+```
+
 ## License
 
 -   MIT
