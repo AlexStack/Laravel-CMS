@@ -96,7 +96,7 @@ class LaravelCmsHelper
     }
 
 
-    static public function url($page)
+    static public function url($page, $is_abs_link = false)
     {
         $slug_suffix = config('laravel-cms.slug_suffix');
         if (!$page->slug) {
@@ -106,9 +106,9 @@ class LaravelCmsHelper
             return trim($page->redirect_url);
         }
         if ($page->slug == 'homepage' || $page->slug == 'homepage' . $slug_suffix) {
-            return route('LaravelCmsPages.index', [], false);
+            return route('LaravelCmsPages.index', [], $is_abs_link);
         }
-        return route('LaravelCmsPages.show', $page->slug, false);
+        return route('LaravelCmsPages.show', $page->slug, $is_abs_link);
     }
 
 

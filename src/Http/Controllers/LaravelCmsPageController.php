@@ -25,13 +25,14 @@ class LaravelCmsPageController extends Controller
      */
     public function index()
     {
-        // return 'front-end cms';
-        // return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-list');
         return $this->show('homepage');
     }
 
     public function show($slug)
     {
+        if ($slug == 'sitemap.txt') {
+            return $this->sitemap('txt');
+        }
         $data['menus'] = $this->menus();
         if (is_numeric(str_replace('.html', '', $slug))) {
             $search_field = 'id';
@@ -107,5 +108,20 @@ class LaravelCmsPageController extends Controller
         }
 
         return $result;
+    }
+
+    public function sitemap($type = 'txt')
+    {
+        $new_pages = LaravelCmsPage::where('status', 'publish')->orderBy('id', 'desc')->limit(2000)->get(['title', 'menu_title', 'id', 'parent_id', 'slug', 'redirect_url', 'menu_enabled']);
+        if ($type == 'txt') {
+            foreach ($new_pages as $page) {
+                if (trim($page->redirect_url) == '') {
+                    echo LaravelCmsHelper::url($page, true) . "\n";
+                }
+            }
+            exit();
+        }
+
+        //LaravelCmsHelper::debug($sitemap);
     }
 }
