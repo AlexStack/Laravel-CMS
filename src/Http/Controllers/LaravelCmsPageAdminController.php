@@ -37,6 +37,30 @@ class LaravelCmsPageAdminController extends Controller
         }
     }
 
+    public function extraPageTabs()
+    {
+        $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/plugins';
+
+        if (!file_exists($app_view_dir)) {
+            $app_view_dir = dirname(__FILE__, 3) . '/resources/views/plugins';
+        }
+        $dirs = glob($app_view_dir . "/page-tab-*");
+        //LaravelCmsHelper::debug($dirs);
+        $option_ary = [];
+        foreach ($dirs as $d) {
+            if (file_exists($d . '/config.php')) {
+                $config_ary = include($d . '/config.php');
+                if (isset($config_ary['blade_file']) && file_exists($d . '/' . $config_ary['blade_file']  . '.blade.php')) {
+                    $config_ary['blade_dir'] = basename($d);
+                    $option_ary[] = $config_ary;
+                }
+            }
+        }
+
+        //LaravelCmsHelper::debug($option_ary);
+        return $option_ary;
+    }
+
     public function templateFileOption()
     {
         $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/' . config('laravel-cms.template_frontend_dir');
@@ -83,7 +107,7 @@ class LaravelCmsPageAdminController extends Controller
     {
         $this->checkUser();
 
-
+        $data['page_tab_blades'] = $this->extraPageTabs();
 
         $data['page_model'] = LaravelCmsPage::find($id);
         //$data['parent_page_options'] = array_merge(array(null=>"Top Level"),  $this->parentPages()->pluck('title', 'id')->toArray());

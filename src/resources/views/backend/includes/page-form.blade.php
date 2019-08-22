@@ -22,12 +22,17 @@
         <a class="nav-link" href="{{$helper->url($page_model)}}" target="_blank"><i class="fas fa-eye mr-1"></i>Preview</a>
     </li>
     @endif
+
+    @foreach ( $page_tab_blades as $tab )
+    <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#{{$tab['blade_file']}}" role="tab">{!! $tab['tab_name'] !!}</a>
+    </li>
+    @endforeach
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
     <div class="tab-pane active" id="main-content" role="tabpanel">
-
 
         @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "title"])
 
@@ -97,5 +102,11 @@
 
     </div>
     <div class="tab-pane" id="files" role="tabpanel">Files</div>
+
+    @foreach ( $page_tab_blades as $tab )
+    <div class="tab-pane" id="{{$tab['blade_file']}}" role="tabpanel">
+        @include('laravel-cms::plugins/' . $tab['blade_dir'] . '.' . $tab['blade_file'] )
+    </div>
+    @endforeach
 
 </div>
