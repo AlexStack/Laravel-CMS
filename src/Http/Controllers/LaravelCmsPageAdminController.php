@@ -39,23 +39,27 @@ class LaravelCmsPageAdminController extends Controller
 
     public function extraPageTabs($action = 'return_options', $form_data = null, $page = null)
     {
-        $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/plugins';
+        // $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/plugins';
 
-        if (!file_exists($app_view_dir)) {
-            $app_view_dir = dirname(__FILE__, 3) . '/resources/views/plugins';
-        }
-        $dirs = glob($app_view_dir . "/page-tab-*");
+        // if (!file_exists($app_view_dir)) {
+        //     $app_view_dir = dirname(__FILE__, 3) . '/resources/views/plugins';
+        // }
+        // $dirs = glob($app_view_dir . "/page-tab-*");
 
-        $option_ary = [];
-        foreach ($dirs as $d) {
-            if (file_exists($d . '/config.php')) {
-                $config_ary = include($d . '/config.php');
-                if (isset($config_ary['blade_file']) && file_exists($d . '/' . $config_ary['blade_file']  . '.blade.php') && $config_ary['enabled']) {
-                    $config_ary['blade_dir'] = basename($d);
-                    $option_ary[] = $config_ary;
-                }
-            }
-        }
+        // $option_ary = [];
+        // foreach ($dirs as $d) {
+        //     if (file_exists($d . '/config.php')) {
+        //         $config_ary = include($d . '/config.php');
+        //         if (isset($config_ary['blade_file']) && file_exists($d . '/' . $config_ary['blade_file']  . '.blade.php') && $config_ary['enabled']) {
+        //             $config_ary['blade_dir'] = basename($d);
+        //             $option_ary[] = $config_ary;
+        //         }
+        //     }
+        // }
+        $option_ary = LaravelCmsHelper::getPlugins('page-tab-');
+
+        //LaravelCmsHelper::debug($option_ary);
+
         if ($action == 'return_options') {
             return $option_ary;
         } else if (in_array($action, ['edit', 'store', 'update', 'destroy'])) {

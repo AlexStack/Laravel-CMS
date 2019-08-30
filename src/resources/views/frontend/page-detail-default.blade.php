@@ -31,6 +31,9 @@
 
 @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.breadcrumb')
 
+
+{!! $plugins['contact-us-form']::displayForm($page) !!}
+
         </div>
     </div>
 </div>

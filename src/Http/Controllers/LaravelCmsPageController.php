@@ -68,6 +68,17 @@ class LaravelCmsPageController extends Controller
         //$data['page']->file_data = $data['file_data'];
         $data['helper'] = new LaravelCmsHelper;
 
+
+        $data['plugins'] = collect([]);
+        $plugin_ary = LaravelCmsHelper::getPlugins('page-tab-');
+        foreach ($plugin_ary as $plugin) {
+            $plugin_class = trim($plugin['php_class'] ?? '');
+            if ($plugin_class != '' && class_exists($plugin_class)) {
+                $data['plugins']->put($plugin['blade_file'], new $plugin_class);
+            }
+        }
+        //LaravelCmsHelper::debug($data['plugins']->toArray());
+
         return view('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.' . $template_file, $data);
     }
 

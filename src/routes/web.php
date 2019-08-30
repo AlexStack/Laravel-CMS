@@ -10,3 +10,9 @@ Route::group([
     Route::get(config('laravel-cms.homepage_route'), 'LaravelCmsPageController@index')->name('LaravelCmsPages.index');
     Route::get(config('laravel-cms.page_route_prefix') . '{slug}', 'LaravelCmsPageController@show')->name('LaravelCmsPages.show');
 });
+
+Route::group([
+    'namespace'  => 'AlexStack\LaravelCms\Helpers',
+], function () {
+    Route::post(config('laravel-cms.page_route_prefix') . 'Submit-Inquiry', 'LaravelCmsPluginInquiry@add')->name('LaravelCmsPluginInquiry.add');
+});

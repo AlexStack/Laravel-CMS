@@ -82,11 +82,13 @@ class LaravelCmsPluginInquiry
     //     return $option_ary;
     // }
 
-    // public function dashboard()
-    // {
-    //     $this->checkUser();
-    //     return redirect()->route('LaravelCmsAdminPages.index');
-    // }
+    static public function displayForm($page)
+    {
+        //LaravelCmsHelper::debug($s);
+        return view('laravel-cms::plugins.page-tab-contact-us-form.frontend-form-001', $page);
+
+        return 'displayForm displayForm ' . $page->id . ' - ' . route('LaravelCmsPluginInquiry.add');
+    }
 
     // public function index()
     // {
