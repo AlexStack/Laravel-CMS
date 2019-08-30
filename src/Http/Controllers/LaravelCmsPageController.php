@@ -123,5 +123,6 @@ class LaravelCmsPageController extends Controller
         }
 
         //LaravelCmsHelper::debug($sitemap);
+        return true;
     }
 }

@@ -5,8 +5,7 @@
    if ( !isset($input_attributes['class'])){
     $input_attributes['class'] = 'form-control input-'.$name;
    }
-   if ( isset($input_attributes2) &&  isset($type) && $type == 'file')
-    var_dump($input_attributes2);
+
 @endphp
 
 <div class="{{ $groupClass ?? 'form-group' }}">

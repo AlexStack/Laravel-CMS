@@ -37,7 +37,7 @@ class LaravelCmsPageAdminController extends Controller
         }
     }
 
-    public function extraPageTabs()
+    public function extraPageTabs($action = 'return_options', $form_data = null, $page = null)
     {
         $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/plugins';
 
@@ -45,16 +45,34 @@ class LaravelCmsPageAdminController extends Controller
             $app_view_dir = dirname(__FILE__, 3) . '/resources/views/plugins';
         }
         $dirs = glob($app_view_dir . "/page-tab-*");
-        //LaravelCmsHelper::debug($dirs);
+
         $option_ary = [];
         foreach ($dirs as $d) {
             if (file_exists($d . '/config.php')) {
                 $config_ary = include($d . '/config.php');
-                if (isset($config_ary['blade_file']) && file_exists($d . '/' . $config_ary['blade_file']  . '.blade.php')) {
+                if (isset($config_ary['blade_file']) && file_exists($d . '/' . $config_ary['blade_file']  . '.blade.php') && $config_ary['enabled']) {
                     $config_ary['blade_dir'] = basename($d);
                     $option_ary[] = $config_ary;
                 }
             }
+        }
+        if ($action == 'return_options') {
+            return $option_ary;
+        } else if (in_array($action, ['edit', 'store', 'update', 'destroy'])) {
+            $callback_ary = collect([]);
+            foreach ($option_ary as $plugin) {
+                $plugin_class = trim($plugin['php_class'] ?? '');
+                if ($plugin_class != '' && class_exists($plugin_class) && is_callable($plugin_class . '::' . $action)) {
+                    //echo $plugin_class . '::' . $action . '  --- ';
+                    $s = call_user_func($plugin_class . '::' . $action, $form_data, $page);
+                    $callback_ary->put($plugin['blade_file'], $s);
+                    //LaravelCmsHelper::debug($s->toArray());
+                } else {
+                    $callback_ary->put($plugin['blade_file'], null);
+                }
+            }
+            //LaravelCmsHelper::debug($callback_ary);
+            return $callback_ary;
         }
 
         //LaravelCmsHelper::debug($option_ary);
@@ -126,6 +144,10 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['helper'] = new LaravelCmsHelper;
 
+        $data['plugins'] = $this->extraPageTabs('edit', $id, $data['page_model']);
+
+        //LaravelCmsHelper::debug($data['plugins'], 'no_exit22');
+
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-edit', $data);
     }
 
@@ -136,6 +158,7 @@ class LaravelCmsPageAdminController extends Controller
         $data['parent_page_options'] = $this->parentPages();
         $data['template_file_options'] = $this->templateFileOption();
         $data['helper'] = new LaravelCmsHelper;
+        $data['page_tab_blades'] = $this->extraPageTabs();
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-create', $data);
     }
@@ -172,6 +195,8 @@ class LaravelCmsPageAdminController extends Controller
             $rs->save(['slug' => $this->generateSlug('', $rs->id)]);
         }
 
+        $this->extraPageTabs('store', $form_data, $rs);
+
         return redirect()->route(
             'LaravelCmsAdminPages.edit',
             ['id' => $rs->id]
@@ -203,6 +228,8 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['page_model'] = $page->update($form_data);
 
+        $this->extraPageTabs('update', $form_data, $page);
+
         return back()->withInput();
         //return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-edit', $data);
 
@@ -216,6 +243,8 @@ class LaravelCmsPageAdminController extends Controller
         $rs = LaravelCmsPage::find($id)->delete();
 
         //LaravelCmsHelper::debug($rs);
+
+        $this->extraPageTabs('destroy', $id);
 
         return redirect()->route(
             'LaravelCmsAdminPages.index'

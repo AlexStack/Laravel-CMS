@@ -105,7 +105,7 @@
 
     @foreach ( $page_tab_blades as $tab )
     <div class="tab-pane" id="{{$tab['blade_file']}}" role="tabpanel">
-        @include('laravel-cms::plugins/' . $tab['blade_dir'] . '.' . $tab['blade_file'] )
+        @include('laravel-cms::plugins/' . $tab['blade_dir'] . '.' . $tab['blade_file'], ['tab_data'=> ($plugins[$tab['blade_file']] ?? null) ] )
     </div>
     @endforeach
 
