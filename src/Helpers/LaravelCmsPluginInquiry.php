@@ -4,7 +4,7 @@ namespace AlexStack\LaravelCms\Helpers;
 
 use Illuminate\Http\Request;
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
-use AlexStack\LaravelCms\Models\LaravelCmsFile;
+use AlexStack\LaravelCms\Models\LaravelCmsInquiry;
 use AlexStack\LaravelCms\Models\LaravelCmsInquirySetting;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 
@@ -84,10 +84,45 @@ class LaravelCmsPluginInquiry
 
     static public function displayForm($page)
     {
-        //LaravelCmsHelper::debug($s);
-        return view('laravel-cms::plugins.page-tab-contact-us-form.frontend-form-001', $page);
+        $settings = LaravelCmsInquirySetting::where('page_id', $page->id)->first();
+        // LaravelCmsHelper::debug($page);
+        $data['page'] = $page;
+
+        return view('laravel-cms::plugins.page-tab-contact-us-form.' . ($settings->form_layout ?? 'frontend-form-001'), $data);
 
         return 'displayForm displayForm ' . $page->id . ' - ' . route('LaravelCmsPluginInquiry.add');
+    }
+
+    static public function submitForm(Request $request)
+    {
+        //
+        $form_data = $request->all();
+        $form_data['ip'] = $request->ip();
+
+        $inquiry = new LaravelCmsInquiry;
+        foreach ($inquiry->fillable as $field) {
+            if (isset($form_data[$field])) {
+                $inquiry->$field = trim($form_data[$field]);
+            }
+        }
+        $inquiry->save();
+
+        if ($inquiry) {
+            $settings = LaravelCmsInquirySetting::where('page_id', $form_data['page_id'])->first();
+            $result['success'] = true;
+            $result['success_content'] = $settings->success_content;
+            $result['form_data'] = $form_data;
+        } else {
+            $result['success'] = false;
+        }
+        return json_encode($result);
+
+
+        LaravelCmsHelper::debug($form_data);
+
+        // return view('laravel-cms::plugins.page-tab-contact-us-form.' . ($settings->form_layout ?? 'frontend-form-001'), $page);
+
+        // return 'displayForm displayForm ' . $page->id . ' - ' . route('LaravelCmsPluginInquiry.add');
     }
 
     // public function index()

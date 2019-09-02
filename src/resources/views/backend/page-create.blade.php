@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-<script>
+{{-- <script>
     function renderEditor(id, minHeight=120) {
         $(id).summernote({
             placeholder: '',
@@ -40,6 +40,6 @@
             renderEditor('#extra_content_3');
         }, 3000);
     });
-    </script>
+    </script> --}}
 
 @endsection
