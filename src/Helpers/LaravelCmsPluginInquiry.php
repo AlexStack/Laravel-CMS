@@ -86,11 +86,56 @@ class LaravelCmsPluginInquiry
     {
         $settings = LaravelCmsInquirySetting::where('page_id', $page->id)->first();
         // LaravelCmsHelper::debug($page);
-        $data['page'] = $page;
+        $data['page']           = $page;
+        $data['settings']       = $settings;
+        $data['dynamic_inputs'] = self::dynamicInputs($settings, $page);
 
         return view('laravel-cms::plugins.page-tab-contact-us-form.' . ($settings->form_layout ?? 'frontend-form-001'), $data);
 
         return 'displayForm displayForm ' . $page->id . ' - ' . route('LaravelCmsPluginInquiry.add');
+    }
+
+
+    static public function dynamicInputs($settings, $page)
+    {
+
+        $display_form_fields = strpos($settings->display_form_fields, '|') ? $settings->display_form_fields : 'first_name:Your Name:required | email | message:Message:required pattern="{5,5000}"';
+        $fields_ary = explode('|', $display_form_fields);
+        $input_str = '<input type="hidden" name="page_id" value="' . $page->id . '" />
+            <input type="hidden" name="page_title" value="' . $page->title . '" />';
+        foreach ($fields_ary as $field) {
+            $f_ary = explode(':', trim($field));
+            $f_ary[0] = trim($f_ary[0]);
+            if (!isset($f_ary[1])) {
+                $f_ary[1] = trim(ucwords(str_replace(['_', '-'], ' ', $f_ary[0])));
+            } else {
+                $f_ary[1] = trim($f_ary[1]);
+            }
+            if (isset($f_ary[2])) {
+                $attr = trim($f_ary[2]);
+            } else {
+                $attr = '';
+            }
+            $input_type = ($f_ary[0] == 'email') ? 'email' : 'text';
+
+            if ($f_ary[0] == 'message') {
+                $input_str .= '<div class="form-group">
+                <label for="message" class="label-message">' . $f_ary[1] . '</label>
+                    <textarea class="form-control input-message" name="message" cols="50" rows="10" id="message" ' . $attr . '></textarea>
+                </div>';
+            } else if ($f_ary[0] == 'submit') {
+                $input_str .= '<div id="laravel-cms-inquiry-form-results">
+                        <div class="error_message"></div>
+                        <button type="submit" class="btn btn-primary btn-submit">' . $f_ary[1] . '</button>
+                    </div>';
+            } else {
+                $input_str .= '<div class="form-group">
+                <label for="' . $f_ary[0] . '" class="label-' . $f_ary[0] . '">' . $f_ary[1] . '</label>
+                    <input class="form-control input-' . $f_ary[0] . '" name="' . $f_ary[0] . '" type="' .  $input_type . '" id="' . $f_ary[0] . '" ' . $attr . '>
+                </div>';
+            }
+        }
+        return $input_str;
     }
 
     static public function submitForm(Request $request)

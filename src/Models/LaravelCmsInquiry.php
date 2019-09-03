@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection
  * @property integer parent_id
  * @property integer page_id
- * @property string firstname
- * @property string lastname
+ * @property string first_name
+ * @property string last_name
  * @property string company_name
  * @property string email
  * @property string phone
@@ -62,8 +62,8 @@ class LaravelCmsInquiry extends Model
     public $fillable = [
         'parent_id',
         'page_id',
-        'firstname',
-        'lastname',
+        'first_name',
+        'last_name',
         'company_name',
         'email',
         'phone',
@@ -102,8 +102,8 @@ class LaravelCmsInquiry extends Model
         'id' => 'integer',
         'parent_id' => 'integer',
         'page_id' => 'integer',
-        'firstname' => 'string',
-        'lastname' => 'string',
+        'first_name' => 'string',
+        'last_name' => 'string',
         'company_name' => 'string',
         'email' => 'string',
         'phone' => 'string',

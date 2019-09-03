@@ -19,6 +19,10 @@
 
     {!! Form::textarea($name, null, $input_attributes); !!}
 
+@elseif ( $type == 'email')
+
+    {!! Form::email($name, null, $input_attributes); !!}
+
 @elseif ( $type == 'number')
 
     {!! Form::number($name, null, $input_attributes); !!}

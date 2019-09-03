@@ -4,24 +4,16 @@ contact us form
 
 {!! Form::model($_GET, ['route' => ['LaravelCmsPluginInquiry.submitForm'], 'method' => "POST", 'files'=>true, 'id'=>'laravel-cms-inquiry-form']) !!}
 
-<input type="hidden2" name="page_id" value="{{$page->id}}" />
-<input type="hidden2" name="page_title" value="{{$page->title}}" />
-<input type="hidden2" name="result_type" value="json" />
+<input type="hidden" name="page_id" value="{{$page->id}}" />
+<input type="hidden" name="page_title" value="{{$page->title}}" />
+<input type="hidden" name="result_type" value="json" />
 
+{!! $dynamic_inputs !!}
 
-@include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "firstname"])
-
-
-@include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "lastname"])
-
-
-
-@include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "message"])
-
-<div id="laravel-cms-inquiry-form-results">
+{{-- <div id="laravel-cms-inquiry-form-results">
     <div class="error_message"></div>
     <button type="submit" class="btn btn-primary btn-submit"><i class="fas fa-save mr-2"></i>Submit</button>
-</div>
+</div> --}}
 {{ Form::close() }}
 
 <script>
