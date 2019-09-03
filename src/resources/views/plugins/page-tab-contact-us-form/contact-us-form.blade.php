@@ -26,3 +26,11 @@ contact us form contact us form contact us form
 @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "success_title"])
 
 @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "success_content"])
+
+@include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "google_recaptcha_enabled", 'type'=>'select', 'label'=>'Google recaptcha', 'options'=>['0' => 'Disable', '1' => 'Enable'] ])
+
+
+@include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "google_recaptcha_css_class"])
+
+@include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.form-input', ['name' => "google_recaptcha_no_tick_msg"])
+

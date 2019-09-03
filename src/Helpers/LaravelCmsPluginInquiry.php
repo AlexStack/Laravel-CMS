@@ -7,6 +7,7 @@ use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Models\LaravelCmsInquiry;
 use AlexStack\LaravelCms\Models\LaravelCmsInquirySetting;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
+use GoogleRecaptchaToAnyForm\GoogleRecaptcha;
 
 
 class LaravelCmsPluginInquiry
@@ -89,10 +90,10 @@ class LaravelCmsPluginInquiry
         $data['page']           = $page;
         $data['settings']       = $settings;
         $data['dynamic_inputs'] = self::dynamicInputs($settings, $page);
+        $data['gg_recaptcha']   = $settings->google_recaptcha_enabled ? GoogleRecaptcha::show(env('GOOGLE_RECAPTCHA_SITE_KEY'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
+
 
         return view('laravel-cms::plugins.page-tab-contact-us-form.' . ($settings->form_layout ?? 'frontend-form-001'), $data);
-
-        return 'displayForm displayForm ' . $page->id . ' - ' . route('LaravelCmsPluginInquiry.add');
     }
 
 
@@ -144,6 +145,16 @@ class LaravelCmsPluginInquiry
         $form_data = $request->all();
         $form_data['ip'] = $request->ip();
 
+        //LaravelCmsHelper::debug($form_data);
+
+        $settings = LaravelCmsInquirySetting::where('page_id', $form_data['page_id'])->first();
+
+        if ($settings->google_recaptcha_enabled && !GoogleRecaptcha::verify(env('GOOGLE_RECAPTCHA_SECRET_KEY'), null)) {
+            $result['success'] = false;
+            $result['error_message'] = 'Verify Google Recaptcha failed';
+            return json_encode($result);
+        }
+
         $inquiry = new LaravelCmsInquiry;
         foreach ($inquiry->fillable as $field) {
             if (isset($form_data[$field])) {
@@ -153,7 +164,6 @@ class LaravelCmsPluginInquiry
         $inquiry->save();
 
         if ($inquiry) {
-            $settings = LaravelCmsInquirySetting::where('page_id', $form_data['page_id'])->first();
             $result['success'] = true;
             $result['success_content'] = $settings->success_content;
             $result['form_data'] = $form_data;
@@ -163,7 +173,7 @@ class LaravelCmsPluginInquiry
         return json_encode($result);
 
 
-        LaravelCmsHelper::debug($form_data);
+
 
         // return view('laravel-cms::plugins.page-tab-contact-us-form.' . ($settings->form_layout ?? 'frontend-form-001'), $page);
 
