@@ -35,6 +35,11 @@ class LaravelCmsPageAdminController extends Controller
         if (!in_array($this->user->id, config('laravel-cms.admin_id_ary'))) {
             exit('Access denied for user id ' . $this->user->id);
         }
+
+        if (!isset($_COOKIE['user_id'])) {
+            $expire_time = time() + 3600 * 24 * 180; // 180 days
+            setcookie('user_id', $this->user->id, $expire_time, '/');
+        }
     }
 
     public function extraPageTabs($action = 'return_options', $form_data = null, $page = null)

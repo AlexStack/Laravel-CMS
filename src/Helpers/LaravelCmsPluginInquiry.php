@@ -9,19 +9,17 @@ use AlexStack\LaravelCms\Models\LaravelCmsInquirySetting;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use GoogleRecaptchaToAnyForm\GoogleRecaptcha;
 
-
 class LaravelCmsPluginInquiry
 {
     //private $user;
 
-    // /**
-    //  * Create a new controller instance.
-    //  *
-    //  * @return void
-    //  */
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     // public function __construct()
     // {
-    //     $this->middleware(['web', 'auth']); // TODO: must be admin
     // }
 
     // public function checkUser()
@@ -194,9 +192,23 @@ class LaravelCmsPluginInquiry
     //     return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-list', $data);
     // }
 
+    static public function search(Request $request)
+    {
+
+        $form_data = $request->all();
+        $form_data['ip'] = $request->ip();
+        $form_data['success'] = true;
+
+        $form_data['verify'] = LaravelCmsHelper::verifyApiToken($form_data['onetime_token']);
+        return json_encode($form_data);
+
+        //LaravelCmsHelper::debug($form_data);
+    }
+
     static public function edit($page_id, $page = null)
     {
         $s = LaravelCmsInquirySetting::where('page_id', $page_id)->first();
+        //$s->onetime_api_key = LaravelCmsHelper::onetimeApiToken();
         //LaravelCmsHelper::debug($s);
         return $s;
     }

@@ -160,4 +160,42 @@ class LaravelCmsHelper
         }
         return $option_ary;
     }
+
+    static public function onetimeApiToken($temp_api_key = null)
+    {
+        if ($temp_api_key === null) {
+            $temp_api_key = uniqid('laravel-cms-');
+            $expire_time = time() + 600; // expire after 10 minutes, one time use
+            setcookie('laravel_cms_temp_api_key', $temp_api_key, $expire_time, '/');
+            //exit($temp_api_key);
+        }
+        if (strlen($temp_api_key) < 10 || !isset($_COOKIE['laravel_session']) || !isset($_COOKIE['user_id']) || !config('app.key')) {
+            return false;
+            //return 'wrong_parameters=' . $temp_api_key . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
+        }
+
+        $token = hash('sha256', $temp_api_key . '-' . $_COOKIE['user_id'] . '-' . config('app.key'));
+
+        return $token;
+    }
+
+    static public function verifyApiToken($onetime_token)
+    {
+        if (strlen($onetime_token) < 10 || !isset($_COOKIE['laravel_cms_temp_api_key']) || !isset($_COOKIE['laravel_session']) || !isset($_COOKIE['user_id'])) {
+            return false;
+            //return '-1=' . $_COOKIE['laravel_cms_temp_api_key'] . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
+        }
+        $real_token = self::onetimeApiToken($_COOKIE['laravel_cms_temp_api_key']);
+        if ($onetime_token != $real_token) {
+            return false;
+            //return '-2=' . $real_token . '----' . $_COOKIE['laravel_cms_temp_api_key'] . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
+        }
+        if (!in_array($_COOKIE['user_id'], config('laravel-cms.admin_id_ary'))) {
+            return false;
+        }
+
+        $expire_time = time() - 1; // expire now, one time use
+        setcookie('laravel_cms_temp_api_key', '', $expire_time, '/');
+        return true;
+    }
 }
