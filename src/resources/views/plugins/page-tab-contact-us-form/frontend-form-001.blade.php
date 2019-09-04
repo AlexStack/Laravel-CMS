@@ -1,6 +1,3 @@
-contact us form contact us form
-
-contact us form
 
 {!! Form::model($_GET, ['route' => ['LaravelCmsPluginInquiry.submitForm'], 'method' => "POST", 'files'=>true, 'id'=>'laravel-cms-inquiry-form']) !!}
 

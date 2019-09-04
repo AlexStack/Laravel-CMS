@@ -89,7 +89,7 @@ class LaravelCmsPluginInquiry
         $data['page']           = $page;
         $data['settings']       = $settings;
         $data['dynamic_inputs'] = self::dynamicInputs($settings, $page);
-        $data['gg_recaptcha']   = $settings->google_recaptcha_enabled ? GoogleRecaptcha::show(env('GOOGLE_RECAPTCHA_SITE_KEY'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
+        $data['gg_recaptcha']   = (isset($settings->google_recaptcha_enabled) && $settings->google_recaptcha_enabled) ? GoogleRecaptcha::show(env('GOOGLE_RECAPTCHA_SITE_KEY'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
 
 
         return view('laravel-cms::plugins.page-tab-contact-us-form.' . ($settings->form_layout ?? 'frontend-form-001'), $data);
@@ -99,7 +99,7 @@ class LaravelCmsPluginInquiry
     static public function dynamicInputs($settings, $page)
     {
 
-        $display_form_fields = strpos($settings->display_form_fields, '|') ? $settings->display_form_fields : 'first_name:Your Name:required | email | message:Message:required pattern="{5,5000}"';
+        $display_form_fields = (isset($settings->display_form_fields) && strpos($settings->display_form_fields, '|')) ? $settings->display_form_fields : 'first_name:Your Name:required | email | message:Message:required pattern="{5,5000}"  | submit';
         $fields_ary = explode('|', $display_form_fields);
         $input_str = '<input type="hidden" name="page_id" value="' . $page->id . '" />
             <input type="hidden" name="page_title" value="' . $page->title . '" />';
