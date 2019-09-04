@@ -12,7 +12,7 @@ use DB;
 
 class LaravelCmsPageAdminController extends Controller
 {
-    private $user;
+    private $user = null;
 
     /**
      * Create a new controller instance.
@@ -27,40 +27,14 @@ class LaravelCmsPageAdminController extends Controller
     public function checkUser()
     {
         // return true;
-        $this->user = Auth::user();
         if (!$this->user) {
-            exit('Can not get user info. Please logout and re-login again ');
-        }
-
-        if (!in_array($this->user->id, config('laravel-cms.admin_id_ary'))) {
-            exit('Access denied for user id ' . $this->user->id);
-        }
-
-        if (!isset($_COOKIE['user_id'])) {
-            $expire_time = time() + 3600 * 24 * 180; // 180 days
-            setcookie('user_id', $this->user->id, $expire_time, '/');
+            $this->user = LaravelCmsHelper::hasPermission();
         }
     }
 
     public function extraPageTabs($action = 'return_options', $form_data = null, $page = null)
     {
-        // $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/plugins';
 
-        // if (!file_exists($app_view_dir)) {
-        //     $app_view_dir = dirname(__FILE__, 3) . '/resources/views/plugins';
-        // }
-        // $dirs = glob($app_view_dir . "/page-tab-*");
-
-        // $option_ary = [];
-        // foreach ($dirs as $d) {
-        //     if (file_exists($d . '/config.php')) {
-        //         $config_ary = include($d . '/config.php');
-        //         if (isset($config_ary['blade_file']) && file_exists($d . '/' . $config_ary['blade_file']  . '.blade.php') && $config_ary['enabled']) {
-        //             $config_ary['blade_dir'] = basename($d);
-        //             $option_ary[] = $config_ary;
-        //         }
-        //     }
-        // }
         $option_ary = LaravelCmsHelper::getPlugins('page-tab-');
 
         //LaravelCmsHelper::debug($option_ary);
@@ -240,10 +214,6 @@ class LaravelCmsPageAdminController extends Controller
         $this->extraPageTabs('update', $form_data, $page);
 
         return back()->withInput();
-        //return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-edit', $data);
-
-        //return redirect()->route('user.edit_pictures', ['model_name'=>'Property4rent', 'id'=>$property4rent->id]);
-
     }
 
     public function destroy(Request $request, $id)

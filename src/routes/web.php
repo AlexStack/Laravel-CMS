@@ -16,5 +16,5 @@ Route::group([
 ], function () {
     Route::post(config('laravel-cms.page_route_prefix') . 'Submit-Inquiry', 'LaravelCmsPluginInquiry@submitForm')->name('LaravelCmsPluginInquiry.submitForm');
 
-    Route::post(config('laravel-cms.admin_route') . '/search-inquiries', 'LaravelCmsPluginInquiry@search')->name('LaravelCmsPluginInquiry.search');
+    Route::post(config('laravel-cms.admin_route') . '/search-inquiries', 'LaravelCmsPluginInquiry@search')->name('LaravelCmsPluginInquiry.search')->middleware(['web', 'auth']);
 });

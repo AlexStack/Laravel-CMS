@@ -4,9 +4,27 @@ namespace AlexStack\LaravelCms\Helpers;
 
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
 
-
 class LaravelCmsHelper
 {
+
+    static public function hasPermission()
+    {
+        // return true;
+        $user = \Auth::user();
+        if (!$user) {
+            exit('Can not get user info. Please logout and re-login again ');
+        }
+
+        if (!in_array($user->id, config('laravel-cms.admin_id_ary'))) {
+            exit('Access denied for user id ' . $user->id);
+        }
+
+        if (!isset($_COOKIE['user_id'])) {
+            $expire_time = time() + 3600 * 24 * 180; // 180 days
+            setcookie('user_id', $user->id, $expire_time, '/');
+        }
+        return $user;
+    }
 
     static public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')
     {
@@ -160,6 +178,8 @@ class LaravelCmsHelper
         }
         return $option_ary;
     }
+
+
 
     static public function onetimeApiToken($temp_api_key = null)
     {

@@ -46,8 +46,6 @@ $("#show-inquiries").click(function(event){
         url : '/cmsadmin/search-inquiries',
         type: 'POST',
         data : {
-            test: 990,
-            onetime_token: "{{$helper->onetimeApiToken()}}",
             _token: "{{ csrf_token() }}",
             page_id: "{{$page_model->id}}"
         },

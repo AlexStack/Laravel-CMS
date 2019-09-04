@@ -8,6 +8,7 @@ use AlexStack\LaravelCms\Models\LaravelCmsInquiry;
 use AlexStack\LaravelCms\Models\LaravelCmsInquirySetting;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use GoogleRecaptchaToAnyForm\GoogleRecaptcha;
+use App\Http\Controllers\Controller;
 
 class LaravelCmsPluginInquiry
 {
@@ -194,12 +195,13 @@ class LaravelCmsPluginInquiry
 
     static public function search(Request $request)
     {
+        $user = LaravelCmsHelper::hasPermission();
 
         $form_data = $request->all();
         $form_data['ip'] = $request->ip();
         $form_data['success'] = true;
 
-        $form_data['verify'] = LaravelCmsHelper::verifyApiToken($form_data['onetime_token']);
+        $form_data['user'] = $user->id;
         return json_encode($form_data);
 
         //LaravelCmsHelper::debug($form_data);
