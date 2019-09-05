@@ -50,7 +50,7 @@ class LaravelCmsHelper
         }
 
         if ($val === false || isset($param_ary[2])) {
-            $val = config('laravel-cms.' . $param_name);
+            $val = config('laravel-cms.' . $param_name) ?? env(strtoupper($param_name));
         }
 
         return $val;

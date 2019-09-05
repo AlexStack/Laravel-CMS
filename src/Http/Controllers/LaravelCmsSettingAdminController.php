@@ -115,6 +115,11 @@ class LaravelCmsSettingAdminController extends Controller
 
         $this->updateConfigFile();
 
+        if ($form_data['return_to_the_list']) {
+            return redirect()->route(
+                'LaravelCmsAdminSettings.index'
+            );
+        }
         return redirect()->route(
             'LaravelCmsAdminSettings.edit',
             ['id' => $rs->id]
@@ -138,7 +143,11 @@ class LaravelCmsSettingAdminController extends Controller
 
         $this->updateConfigFile();
 
-
+        if ($form_data['return_to_the_list']) {
+            return redirect()->route(
+                'LaravelCmsAdminSettings.index'
+            );
+        }
         return back()->withInput();
     }
 

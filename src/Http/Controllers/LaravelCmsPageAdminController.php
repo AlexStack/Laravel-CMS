@@ -183,6 +183,12 @@ class LaravelCmsPageAdminController extends Controller
 
         $this->extraPageTabs('store', $form_data, $rs);
 
+        if ($form_data['return_to_the_list']) {
+            return redirect()->route(
+                'LaravelCmsAdminPages.index'
+            );
+        }
+
         return redirect()->route(
             'LaravelCmsAdminPages.edit',
             ['id' => $rs->id]
@@ -216,6 +222,11 @@ class LaravelCmsPageAdminController extends Controller
 
         $this->extraPageTabs('update', $form_data, $page);
 
+        if ($form_data['return_to_the_list']) {
+            return redirect()->route(
+                'LaravelCmsAdminPages.index'
+            );
+        }
         return back()->withInput();
     }
 

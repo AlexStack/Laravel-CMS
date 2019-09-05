@@ -8,20 +8,25 @@ use AlexStack\LaravelCms\Models\LaravelCmsInquiry;
 use AlexStack\LaravelCms\Models\LaravelCmsInquirySetting;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use GoogleRecaptchaToAnyForm\GoogleRecaptcha;
-use App\Http\Controllers\Controller;
 
 class LaravelCmsPluginInquiry
 {
+    public $helper;
 
 
-    static public function displayForm($page)
+    public function __construct()
+    {
+        $this->helper = new LaravelCmsHelper;
+    }
+
+    public function displayForm($page)
     {
         $settings = LaravelCmsInquirySetting::where('page_id', $page->id)->first();
         // LaravelCmsHelper::debug($page);
         $data['page']           = $page;
         $data['settings']       = $settings;
         $data['dynamic_inputs'] = self::dynamicInputs($settings, $page);
-        $data['gg_recaptcha']   = (isset($settings->google_recaptcha_enabled) && $settings->google_recaptcha_enabled) ? GoogleRecaptcha::show(env('GOOGLE_RECAPTCHA_SITE_KEY'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
+        $data['gg_recaptcha']   = (isset($settings->google_recaptcha_enabled) && $settings->google_recaptcha_enabled) ? GoogleRecaptcha::show($this->helper->getCmsSetting('google_recaptcha_site_key'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
 
         return view('laravel-cms::plugins.page-tab-contact-us-form.' . ($settings->form_layout ?? 'frontend-form-001'), $data);
     }
@@ -69,7 +74,7 @@ class LaravelCmsPluginInquiry
         return $input_str;
     }
 
-    static public function submitForm(Request $request)
+    public function submitForm(Request $request)
     {
         //
         $form_data = $request->all();
@@ -79,7 +84,7 @@ class LaravelCmsPluginInquiry
 
         $settings = LaravelCmsInquirySetting::where('page_id', $form_data['page_id'])->first();
 
-        if ($settings->google_recaptcha_enabled && !GoogleRecaptcha::verify(env('GOOGLE_RECAPTCHA_SECRET_KEY'), null)) {
+        if ($settings->google_recaptcha_enabled && !GoogleRecaptcha::verify($this->helper->getCmsSetting('google_recaptcha_secret_key'), null)) {
             $result['success'] = false;
             $result['error_message'] = 'Verify Google Recaptcha failed';
             return json_encode($result);
@@ -105,9 +110,9 @@ class LaravelCmsPluginInquiry
 
 
 
-    static public function search(Request $request)
+    public function search(Request $request)
     {
-        $user = LaravelCmsHelper::hasPermission();
+        $user = $this->helper->hasPermission();
 
         $form_data = $request->all();
         $form_data['html_content'] = $request->ip();

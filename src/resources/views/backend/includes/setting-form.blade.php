@@ -35,3 +35,5 @@
 @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "abstract", "input_attributes"=>['rows'=>3]])
 
 @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "page_id"])
+
+<input type="hidden" name="return_to_the_list" value="">

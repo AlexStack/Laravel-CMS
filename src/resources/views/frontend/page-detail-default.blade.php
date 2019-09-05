@@ -32,7 +32,7 @@
 @include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.breadcrumb')
 
 
-{!! $plugins['contact-us-form']::displayForm($page) !!}
+{!! $plugins['contact-us-form']->displayForm($page) !!}
 
         </div>
     </div>

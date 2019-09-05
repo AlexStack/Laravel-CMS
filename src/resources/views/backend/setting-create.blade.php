@@ -9,9 +9,9 @@
 {!! Form::model($_GET, ['route' => ['LaravelCmsAdminSettings.store'], 'method' => "POST", 'files'=>true]) !!}
 @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.setting-form')
 
-<div>
-    <button type="submit" class="btn btn-primary"><i class="fas fa-tools mr-2"></i>Create a Setting</button>
-</div>
+@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.submit-button')
+
+
 {{ Form::close() }}
 
         </div>

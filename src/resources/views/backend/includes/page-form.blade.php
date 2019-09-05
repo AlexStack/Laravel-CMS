@@ -110,3 +110,5 @@
     @endforeach
 
 </div>
+
+<input type="hidden" name="return_to_the_list" value="">
