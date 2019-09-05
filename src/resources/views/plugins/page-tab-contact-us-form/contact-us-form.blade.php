@@ -1,5 +1,5 @@
 contact us form contact us form contact us form
-onetime token= {{$page_model->id}} -
+onetime token= -
 <button id="show-inquiries" type="button">Show Inquiries</button>
 <div  id="search-results"></div>
 @php
@@ -47,7 +47,7 @@ $("#show-inquiries").click(function(event){
         type: 'POST',
         data : {
             _token: "{{ csrf_token() }}",
-            page_id: "{{$page_model->id}}"
+            page_id: "{{ isset($page_model) ? $page_model->id : ''}}"
         },
 		// contentType: false,
 		// cache: false,

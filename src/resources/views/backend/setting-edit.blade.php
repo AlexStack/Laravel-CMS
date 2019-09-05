@@ -11,7 +11,7 @@
 
     <div class="row">
       <div class="col-md">
-          <button type="submit" class="btn btn-primary"><i class="far fa-save mr-2"></i>Save</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-tools mr-2"></i>Save</button>
       </div>
       <div class="col-md text-right">
           <button type="button" class="btn btn-danger" onclick="return confirmDelete(form);"><i class="fas fa-trash-alt mr-2" ></i>Delete</button>

@@ -56,7 +56,7 @@ class LaravelCmsHelper
         return $val;
     }
 
-    static public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')
+    public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')
     {
         if (!isset($img_obj->id)) {
             return self::assetUrl('images/no-image.png', false);
@@ -70,11 +70,11 @@ class LaravelCmsHelper
 
 
         if ($img_obj->suffix == 'svg' || ($width == null && $height == null)) {
-            $original_img_url = '/storage/' . config('laravel-cms.upload_dir') . '/' . $img_obj->path;
+            $original_img_url = '/storage/' . $this->getCmsSetting('upload_dir') . '/' . $img_obj->path;
             return $original_img_url;
         }
 
-        if (config('laravel-cms.image_encode') == 'jpg') {
+        if ($this->getCmsSetting('image_encode') == 'jpg') {
             $suffix = 'jpg';
         } else {
             $suffix = $img_obj->suffix;
@@ -82,13 +82,13 @@ class LaravelCmsHelper
 
         $filename   = $img_obj->id . '_' . ($width ?? 'auto') . '_' . ($height ?? 'auto') . '_' . $resize_type . '.' . $suffix;
 
-        $related_dir = 'storage/' . config('laravel-cms.upload_dir') . '/optimized/' . substr($img_obj->id, -2);
+        $related_dir = 'storage/' . $this->getCmsSetting('upload_dir') . '/optimized/' . substr($img_obj->id, -2);
 
         $abs_real_dir = public_path($related_dir);
         $abs_real_path = $abs_real_dir . '/' . $filename;
         $web_url = '/' . $related_dir . '/' . $filename;
 
-        if (file_exists($abs_real_path) && filemtime($abs_real_path) > time() - config('laravel-cms.image_reoptimize_time')) {
+        if (file_exists($abs_real_path) && filemtime($abs_real_path) > time() - $this->getCmsSetting('image_reoptimize_time')) {
             return $web_url;
             //return $abs_real_path . ' - already exists - ' . $web_url;
         }
@@ -97,7 +97,7 @@ class LaravelCmsHelper
             mkdir($abs_real_dir, 0755, true);
         }
 
-        $original_img = public_path('storage/' . config('laravel-cms.upload_dir') . '/' . $img_obj->path);
+        $original_img = public_path('storage/' . $this->getCmsSetting('upload_dir') . '/' . $img_obj->path);
 
         //self::debug($original_img);
 
@@ -144,11 +144,11 @@ class LaravelCmsHelper
     }
 
 
-    static public function url($page, $is_abs_link = false)
+    public function url($page, $is_abs_link = false)
     {
-        $slug_suffix = config('laravel-cms.slug_suffix');
+        $slug_suffix = $this->getCmsSetting('slug_suffix');
         if (!$page->slug) {
-            $page->slug = $page->id . config('laravel-cms.slug_suffix');
+            $page->slug = $page->id . $this->getCmsSetting('slug_suffix');
         }
         if (trim($page->redirect_url) != '') {
             return trim($page->redirect_url);
@@ -160,9 +160,9 @@ class LaravelCmsHelper
     }
 
 
-    static public function assetUrl($file, $with_modify_time = true, $is_backend = false)
+    public function assetUrl($file, $with_modify_time = true, $is_backend = false)
     {
-        $url = 'laravel-cms/' . config('laravel-cms.' . ($is_backend ? 'template_backend_dir' : 'template_frontend_dir')) . '/' . $file;
+        $url = 'laravel-cms/' . $this->getCmsSetting('' . ($is_backend ? 'template_backend_dir' : 'template_frontend_dir')) . '/' . $file;
         if ($with_modify_time) {
             $abs_real_path = public_path($url);
 

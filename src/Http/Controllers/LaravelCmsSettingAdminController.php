@@ -14,6 +14,7 @@ class LaravelCmsSettingAdminController extends Controller
 {
     private $user = null;
 
+    public $helper;
     /**
      * Create a new controller instance.
      *
@@ -22,13 +23,14 @@ class LaravelCmsSettingAdminController extends Controller
     public function __construct()
     {
         $this->middleware(['web', 'auth']); // TODO: must be admin
+        $this->helper = new LaravelCmsHelper;
     }
 
     public function checkUser()
     {
         // return true;
         if (!$this->user) {
-            $this->user = LaravelCmsHelper::hasPermission();
+            $this->user = $this->helper->hasPermission();
         }
     }
 
@@ -63,7 +65,7 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data['settings'] = LaravelCmsSetting::orderBy('id', 'desc')->get();
 
-        $data['helper'] = new LaravelCmsHelper;
+        $data['helper'] = $this->helper;
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-list', $data);
     }
@@ -75,7 +77,7 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data['setting'] = LaravelCmsSetting::find($id);
 
-        $data['helper'] = new LaravelCmsHelper;
+        $data['helper'] = $this->helper;
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-edit', $data);
     }
@@ -85,7 +87,7 @@ class LaravelCmsSettingAdminController extends Controller
         $this->checkUser();
 
 
-        $data['helper'] = new LaravelCmsHelper;
+        $data['helper'] = $this->helper;
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-create', $data);
     }

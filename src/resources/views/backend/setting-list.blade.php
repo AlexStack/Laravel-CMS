@@ -10,9 +10,9 @@
                     <li class="list-group-item list-group-item-action">
                         @php
                             if ( $item->enabled) {
-                                $icon =  '<i class="fas fa-list-alt ml-1  "></i>';
+                                $icon =  '<i class="fas fa-wrench ml-1  "></i>';
                             } else {
-                                $icon =  '<i class="fas fa-list-ul ml-1 "></i>';
+                                $icon =  '<i class="fas fa-hammer ml-1 "></i>';
                             }
                         @endphp
 

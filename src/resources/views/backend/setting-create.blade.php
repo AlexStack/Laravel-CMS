@@ -10,7 +10,7 @@
 @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.setting-form')
 
 <div>
-    <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-2"></i>Create a Setting</button>
+    <button type="submit" class="btn btn-primary"><i class="fas fa-tools mr-2"></i>Create a Setting</button>
 </div>
 {{ Form::close() }}
 

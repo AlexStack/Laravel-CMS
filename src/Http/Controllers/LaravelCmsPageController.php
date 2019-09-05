@@ -9,14 +9,16 @@ use App\Http\Controllers\Controller;
 
 class LaravelCmsPageController extends Controller
 {
-
+    public $helper;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
-    { }
+    {
+        $this->helper = new LaravelCmsHelper;
+    }
 
     /**
      * Show the application dashboard.
@@ -56,30 +58,30 @@ class LaravelCmsPageController extends Controller
         }
 
 
-        //LaravelCmsHelper::debug($data['page']->parent->toArray(), 'no_exit');
+        //$this->helper->debug($data['page']->parent->toArray(), 'no_exit');
 
 
         $data['file_data'] = json_decode($data['page']->file_data);
         if ($data['file_data'] == null) {
             $data['file_data'] = json_decode('{}');
         }
-        $data['file_data']->file_dir = asset('storage/' . config('laravel-cms.upload_dir'));
+        $data['file_data']->file_dir = asset('storage/' . $this->helper->getCmsSetting('upload_dir'));
 
         //$data['page']->file_data = $data['file_data'];
-        $data['helper'] = new LaravelCmsHelper;
+        $data['helper'] = $this->helper;
 
 
         $data['plugins'] = collect([]);
-        $plugin_ary = LaravelCmsHelper::getPlugins('page-tab-');
+        $plugin_ary = $this->helper->getPlugins('page-tab-');
         foreach ($plugin_ary as $plugin) {
             $plugin_class = trim($plugin['php_class'] ?? '');
             if ($plugin_class != '' && class_exists($plugin_class)) {
                 $data['plugins']->put($plugin['blade_file'], new $plugin_class);
             }
         }
-        //LaravelCmsHelper::debug($data['plugins']->toArray());
+        //$this->helper->debug($data['plugins']->toArray());
 
-        return view('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.' . $template_file, $data);
+        return view('laravel-cms::' . $this->helper->getCmsSetting('template_frontend_dir') .  '.' . $template_file, $data);
     }
 
 
@@ -127,13 +129,13 @@ class LaravelCmsPageController extends Controller
         if ($type == 'txt') {
             foreach ($new_pages as $page) {
                 if (trim($page->redirect_url) == '') {
-                    echo LaravelCmsHelper::url($page, true) . "\n";
+                    echo $this->helper->url($page, true) . "\n";
                 }
             }
             exit();
         }
 
-        //LaravelCmsHelper::debug($sitemap);
+        //$this->helper->debug($sitemap);
         return true;
     }
 }
