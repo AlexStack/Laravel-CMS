@@ -6,6 +6,14 @@ use AlexStack\LaravelCms\Models\LaravelCmsPage;
 
 class LaravelCmsHelper
 {
+    public $settings = [];
+    public function __construct()
+    {
+        $setting_file = storage_path('app/laravel-cms/settings.php');
+        if (file_exists($setting_file)) {
+            $this->settings = include($setting_file);
+        }
+    }
 
     static public function hasPermission()
     {
@@ -24,6 +32,28 @@ class LaravelCmsHelper
             setcookie('user_id', $user->id, $expire_time, '/');
         }
         return $user;
+    }
+
+    public function getCmsSetting($param_name)
+    {
+        $val = false;
+        $param_ary = explode('.', $param_name);
+        if (isset($param_ary[1])) {
+            $key_1 = $param_ary[0];
+            $key_2 = $param_ary[1];
+        } else {
+            $key_1 = 'global';
+            $key_2 = $param_ary[0];
+        }
+        if (isset($this->settings[$key_1]) && isset($this->settings[$key_1][$key_2])) {
+            $val = $this->settings[$key_1][$key_2];
+        }
+
+        if ($val === false || isset($param_ary[2])) {
+            $val = config('laravel-cms.' . $param_name);
+        }
+
+        return $val;
     }
 
     static public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')

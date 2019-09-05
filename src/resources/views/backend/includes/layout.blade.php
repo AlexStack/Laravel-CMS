@@ -24,7 +24,7 @@
         </style>
     </head>
     <body>
-        @include('laravel-cms::' . config('laravel-cms.template_backend_dir')  .  '.includes.header')
+        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir')  .  '.includes.header')
         @yield('content')
 
 <div class="container">

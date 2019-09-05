@@ -57,7 +57,7 @@ $("#show-inquiries").click(function(event){
             console.log('Submission was successful.');
             //console.log(data);
             if ( data.success ){
-                $("#search-results").html(data.success_content);
+                $("#search-results").html(data.html_content);
             } else {
                 $('#laravel-cms-inquiry-form .error_message').html('Error: ' + data.error_message);
             }

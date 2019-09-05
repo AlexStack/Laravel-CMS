@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.layout')
+@extends('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.layout')
 
 @section('content')
 
@@ -26,10 +26,10 @@
     {!! $page->sub_content !!}
 </div>
 
-@include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.sub-page-cards', ['sub_pages' => $page->children, 'card_class'=>'col-md-4 mb-4', 'img_width'=>150, 'img_height'=>100  ])
+@include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.sub-page-cards', ['sub_pages' => $page->children, 'card_class'=>'col-md-4 mb-4', 'img_width'=>150, 'img_height'=>100  ])
 
 
-@include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.breadcrumb')
+@include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.breadcrumb')
 
 
 {!! $plugins['contact-us-form']::displayForm($page) !!}

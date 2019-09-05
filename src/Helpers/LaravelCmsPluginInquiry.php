@@ -198,7 +198,7 @@ class LaravelCmsPluginInquiry
         $user = LaravelCmsHelper::hasPermission();
 
         $form_data = $request->all();
-        $form_data['ip'] = $request->ip();
+        $form_data['html_content'] = $request->ip();
         $form_data['success'] = true;
 
         $form_data['user'] = $user->id;

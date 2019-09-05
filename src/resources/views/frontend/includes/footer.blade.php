@@ -1,4 +1,4 @@
 <div class="container">
-    {!! config('laravel-cms.page_footer') !!}
+    {!! $helper->getCmsSetting('page_footer') !!}
 </div>
 

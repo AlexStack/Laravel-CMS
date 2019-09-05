@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . config('laravel-cms.template_backend_dir')  .  '.includes.layout')
+@extends('laravel-cms::' . $helper->getCmsSetting('template_backend_dir')  .  '.includes.layout')
 
 @section('content')
 <div class="container">
@@ -7,7 +7,7 @@
 
 {!! Form::model($page_model, ['route' => ['LaravelCmsAdminPages.update', $page_model->id], 'method' => "PUT", 'files'=>true]) !!}
 
-    @include('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.includes.page-form')
+    @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.page-form')
 
     <div class="row">
       <div class="col-md">
