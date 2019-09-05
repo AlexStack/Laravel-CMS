@@ -17,7 +17,7 @@
                         @endphp
 
                         {!! $icon !!}
-                        <a href="./settings/{{$item->id}}/edit" class="text-dark">
+                        <a href="./settings/{{$item->id}}/edit" class="{{$item->enabled ? 'text-dark font-weight-bold' : 'text-secondary'}}"  title="Sort Value: {{$item->sort_value??0}}">
                             [ {{$item->category}}
                                 @if ( $item->page_id)
                                     PageID:{{$item->page_id}}
@@ -26,20 +26,20 @@
                             {{$item->param_name}}
                         </a>
 
-                        <a href="./settings/{{$item->id}}/edit" class="text-dark"><i class="far fa-edit ml-1 mr-1"></i></a>
+                    <a href="./settings/{{$item->id}}/edit" class="{{$item->enabled ? 'text-dark' : 'text-secondary'}}"><i class="far fa-edit ml-1 mr-1" title="Sort Value: {{$item->sort_value??0}}"></i></a>
 
                         <span class="abstract">
                              ({!! \Illuminate\Support\Str::words($item->abstract, 20,'...')  !!})
                         </span>
 
-                        <a href="{{ route('LaravelCmsAdminSettings.create', ['category' => $item->category, 'page_id'=>$item->page_id]) }}" class="text-secondary" ><i class="far fa-plus-square ml-1"></i></a>
+                        <a href="{{ route('LaravelCmsAdminSettings.create', ['category' => $item->category, 'page_id'=>$item->page_id, 'input_attribute'=>$item->input_attribute, 'sort_value'=>($item->sort_value-1)]) }}" class="text-secondary" ><i class="far fa-plus-square ml-1"></i></a>
 
-                        <div class="param-value text-success">
+                        <div class="param-value {{$item->enabled ? 'text-success' : 'text-secondary'}}">
                             <i class="far fa-arrow-alt-circle-right ml-1 "></i> {{ str_limit($item->param_value, 100, '...')}}
                         </div>
                     </li>
                 @empty
-                    <li class="list-group-item list-group-item-action">No Setting yet, <a href="{{ route('LaravelCmsAdminSettings.create') }}">Create a new Setting</a> </a>
+                    <li class="list-group-item list-group-item-action">No Setting yet, <a href="{{ route('LaravelCmsAdminSettings.create', ['category' => 'global', 'page_id'=>null, 'input_attribute'=>'{"rows":1,"required":"required"}', 'sort_value'=>1000]) }}">Create a new Setting</a> </a>
                 @endforelse
             </ul>
 

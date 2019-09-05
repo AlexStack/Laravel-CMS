@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string param_name
  * @property integer page_id
  * @property string param_value
- * @property string input_type
+ * @property string input_attribute
  * @property string abstract
  * @property string category
  * @property boolean enabled
@@ -39,9 +39,10 @@ class LaravelCmsSetting extends Model
         'param_name',
         'page_id',
         'param_value',
-        'input_type',
+        'input_attribute',
         'abstract',
         'category',
+        'sort_value',
         'enabled'
     ];
 
@@ -55,10 +56,11 @@ class LaravelCmsSetting extends Model
         'param_name' => 'string',
         'page_id' => 'integer',
         'param_value' => 'string',
-        'input_type' => 'string',
+        'input_attribute' => 'string',
         'abstract' => 'string',
         'category' => 'string',
-        'enabled' => 'boolean'
+        'enabled' => 'boolean',
+        'sort_value' => 'integer',
     ];
 
     /**
@@ -68,7 +70,7 @@ class LaravelCmsSetting extends Model
      */
     public static $rules = [
         'id' => 'required',
-        'enabled' => 'required'
+        'param_name' => 'required'
     ];
 
     public function __construct()

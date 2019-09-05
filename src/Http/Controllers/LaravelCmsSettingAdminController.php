@@ -38,8 +38,12 @@ class LaravelCmsSettingAdminController extends Controller
     {
         $this->checkUser();
 
-        //return 'settings';
-        $settings = LaravelCmsSetting::where('enabled', 1)->orderBy('id', 'desc')->get(['param_name', 'param_value', 'category', 'page_id']);
+        //sort by asc to override with high priority value
+        $settings = LaravelCmsSetting::where('enabled', 1)
+            ->orderBy('sort_value', 'asc')
+            ->orderBy('id', 'asc')
+            ->get(['param_name', 'param_value', 'category', 'page_id']);
+
         $config_ary = [];
         foreach ($settings as $s) {
             if (trim($s['category']) != '' && trim($s['param_name']) != '') {
@@ -63,7 +67,7 @@ class LaravelCmsSettingAdminController extends Controller
     {
         $this->checkUser();
 
-        $data['settings'] = LaravelCmsSetting::orderBy('id', 'desc')->get();
+        $data['settings'] = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
 
         $data['helper'] = $this->helper;
 
