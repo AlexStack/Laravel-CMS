@@ -22,9 +22,19 @@
 </div>
 
 
-<div class="text-center mb-4 main-text">
+<div class="text-center mb-4 sub-content">
     {!! $page->sub_content !!}
 </div>
+
+{{-- Extra_text_1 external_link format: http://link_url | link_text --}}
+@php
+if ( strpos($page->extra_text_1, 'http') !== false && strpos($page->extra_text_1, '|') !== false ){
+    $external_link_ary = explode('|', $page->extra_text_1);
+    echo '<div class="text-center mb-4 external-link">
+        <a href="' . route('LaravelCmsPages.show','redirect-link',false) . '?url=' . urlencode(trim($external_link_ary[0])) . '" class="btn btn-primary" target="_blank" rel="nofollow" >' . trim($external_link_ary[1]) . '</a>
+    </div>';
+}
+@endphp
 
 @include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.sub-page-cards', ['sub_pages' => $page->children, 'card_class'=>'col-md-4 mb-4', 'img_width'=>150, 'img_height'=>100  ])
 

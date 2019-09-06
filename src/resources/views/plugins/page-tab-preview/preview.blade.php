@@ -10,9 +10,9 @@
 
 <div class="row  justify-content-center">
     <div class="col-md-5 text-right">
-        <a class="btn btn-secondary mb-3 mt-3" href="{{$page_url}}" target="mobile_iframe">Mobile Preview</a>
+        <a class="btn btn-secondary mb-3 mt-3 random-param" href="{{$page_url}}" target="mobile_iframe">Mobile Preview</a>
         <br/>
-        <a class="btn btn-info mb-3 mt-3" href="{{$page_url}}" target="_blank">Desktop Preview</a>
+        <a class="btn btn-info mb-3 mt-3 random-param" href="{{$page_url}}" target="_blank">Desktop Preview</a>
         <br/>
         <a class="btn btn-warning mb-3 mt-3" href="{{$purge_url}}" target="mobile_iframe">Purge Page Cache</a>
         <br/>
@@ -31,6 +31,11 @@
             $('#iframe_div').removeClass('no_iframe');
         }
     }, 1000);
+
+    // to avoid browser cache
+    $('a.random-param').click(function () {
+        $(this).attr('href',"{{$page_url}}?t=" + Math.random());
+    });
 </script>
 @else
     <script>

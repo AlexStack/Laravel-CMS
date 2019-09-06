@@ -35,6 +35,9 @@ class LaravelCmsPageController extends Controller
         if ($slug == 'sitemap.txt') {
             return $this->sitemap('txt');
         }
+        if ($slug == 'redirect-link') {
+            return $this->goExternalLink();
+        }
         $data['menus'] = $this->menus();
         if (is_numeric(str_replace('.html', '', $slug))) {
             $search_field = 'id';
@@ -137,5 +140,15 @@ class LaravelCmsPageController extends Controller
 
         //$this->helper->debug($sitemap);
         return true;
+    }
+
+    public function goExternalLink()
+    {
+        $s = request()->url;
+
+        header("X-Robots-Tag: noindex, nofollow", true);
+
+        //$this->helper->debug($s);
+        return redirect($s, 301);
     }
 }
