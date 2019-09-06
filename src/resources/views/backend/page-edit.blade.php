@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md">
 
-{!! Form::model($page_model, ['route' => ['LaravelCmsAdminPages.update', $page_model->id], 'method' => "PUT", 'files'=>true]) !!}
+{!! Form::model($page, ['route' => ['LaravelCmsAdminPages.update', $page->id], 'method' => "PUT", 'files'=>true]) !!}
 
     @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.page-form')
 
@@ -27,7 +27,7 @@
         var del_msg = "Confirm to delete?";
         if ( confirm(del_msg) ) {
             f._method.value  = 'DELETE';
-            f.action = "{{route('LaravelCmsAdminPages.destroy', $page_model->id)}}";
+            f.action = "{{route('LaravelCmsAdminPages.destroy', $page->id)}}";
             f.submit();
         }
     }

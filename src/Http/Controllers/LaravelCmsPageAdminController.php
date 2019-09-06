@@ -113,13 +113,13 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['page_tab_blades'] = $this->extraPageTabs();
 
-        $data['page_model'] = LaravelCmsPage::find($id);
+        $data['page'] = LaravelCmsPage::find($id);
         //$data['parent_page_options'] = array_merge(array(null=>"Top Level"),  $this->parentPages()->pluck('title', 'id')->toArray());
 
         $data['parent_page_options'] = $this->parentPages();
         $data['template_file_options'] = $this->templateFileOption();
 
-        $data['file_data'] = json_decode($data['page_model']->file_data);
+        $data['file_data'] = json_decode($data['page']->file_data);
         if ($data['file_data'] == null) {
             $data['file_data'] = json_decode('{}');
         }
@@ -130,7 +130,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['helper'] = $this->helper;
 
-        $data['plugins'] = $this->extraPageTabs('edit', $id, $data['page_model']);
+        $data['plugins'] = $this->extraPageTabs('edit', $id, $data['page']);
 
         //$this->helper->debug($data['plugins'], 'no_exit22');
 
@@ -218,7 +218,7 @@ class LaravelCmsPageAdminController extends Controller
         unset($form_data['_token']);
 
 
-        $data['page_model'] = $page->update($form_data);
+        $data['page'] = $page->update($form_data);
 
         $this->extraPageTabs('update', $form_data, $page);
 

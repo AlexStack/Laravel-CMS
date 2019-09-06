@@ -6,9 +6,9 @@ onetime token= -
     if ( isset($tab_data->success_title) ){
         foreach( $tab_data->toArray() as $k => $v )
         {
-            if ( !isset($page_model[$k]) )  {
+            if ( !isset($page[$k]) )  {
                 // Set default value on edit page
-                $page_model[$k] = $v;
+                $page[$k] = $v;
             }
         }
     }
@@ -47,7 +47,7 @@ $("#show-inquiries").click(function(event){
         type: 'POST',
         data : {
             _token: "{{ csrf_token() }}",
-            page_id: "{{ isset($page_model) ? $page_model->id : ''}}"
+            page_id: "{{ isset($page) ? $page->id : ''}}"
         },
 		// contentType: false,
 		// cache: false,
