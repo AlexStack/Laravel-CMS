@@ -9,7 +9,7 @@
 @endphp
 
 <div class="{{ $groupClass ?? 'form-group' }}">
-{!! Form::label($name, ($label ?? ucwords(str_replace('_',' ',$name))), ['class' => 'label-'.$name]); !!}
+    <label for="{{$name}}" class="label-{{$name}}">{!! $label ?? ucwords(str_replace('_',' ',$name)) !!}</label>
 
 @if ( !isset($type) || $type == 'text')
 

@@ -17,11 +17,11 @@
         <a class="nav-link" data-toggle="tab" href="#files" role="tab">Files</a>
     </li>
 
-    @if ( isset($page_model) )
+    {{-- @if ( isset($page_model) )
     <li class="nav-item">
         <a class="nav-link" href="{{$helper->url($page_model)}}" target="_blank"><i class="fas fa-eye mr-1"></i>Preview</a>
     </li>
-    @endif
+    @endif --}}
 
     @foreach ( $page_tab_blades as $tab )
     <li class="nav-item">
@@ -34,7 +34,7 @@
 <div class="tab-content">
     <div class="tab-pane active" id="main-content" role="tabpanel">
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "title"])
+        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "title", 'label'=>isset($page_model)? 'Title <a class="text-info ml-2 " href="' . $helper->url($page_model) . '" target="_blank" title="Preview"><i class="fas fa-external-link-square-alt"></i></a>': 'Title'])
 
         @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "menu_title"])
 

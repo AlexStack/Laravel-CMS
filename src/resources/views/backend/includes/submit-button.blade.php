@@ -3,5 +3,5 @@
 
     <button type="submit" class="btn btn-success" onclick="form.return_to_the_list.value=1;"><i class="fas fa-list-alt mr-2"></i>Save & Return to the list</button>
 
-    <i class="fas fa-times-circle ml-3 text-secondary" role="button" style="cursor:pointer;" onclick="jQuery('.fixed-bottom').removeClass();jQuery(this).hide();"></i>
+    <i class="fas fa-times-circle ml-3 text-secondary" title="Hide the buttons" style="cursor:pointer;" onclick="jQuery('.fixed-bottom').removeClass();jQuery(this).hide();"></i>
 </div>
