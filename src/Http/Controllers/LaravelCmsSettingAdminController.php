@@ -114,10 +114,13 @@ class LaravelCmsSettingAdminController extends Controller
         $form_data = $request->all();
         $form_data['user_id'] = $this->user->id ?? null;
 
-        if (!$this->helper->correctJsonFormat($form_data['param_value'])) {
+        $must_json = $form_data['category'] == 'plugins';
+        if (!$this->helper->correctJsonFormat($form_data['param_value'], $must_json)) {
             exit(sprintf($this->wrong_json_format_str, 'Param Value'));
         }
-        if (!$this->helper->correctJsonFormat($form_data['input_attribute'])) {
+
+        $must_json = trim($form_data['input_attribute']) != '';
+        if (!$this->helper->correctJsonFormat($form_data['input_attribute'], $must_json)) {
             exit(sprintf($this->wrong_json_format_str, 'Input Attribute'));
         }
 
@@ -156,10 +159,12 @@ class LaravelCmsSettingAdminController extends Controller
         unset($form_data['_method']);
         unset($form_data['_token']);
 
-        if (!$this->helper->correctJsonFormat($form_data['param_value'])) {
+        $must_json = $form_data['category'] == 'plugins';
+        if (!$this->helper->correctJsonFormat($form_data['param_value'], $must_json)) {
             exit(sprintf($this->wrong_json_format_str, 'Param Value'));
         }
-        if (!$this->helper->correctJsonFormat($form_data['input_attribute'])) {
+        $must_json = trim($form_data['input_attribute']) != '';
+        if (!$this->helper->correctJsonFormat($form_data['input_attribute'], $must_json)) {
             exit(sprintf($this->wrong_json_format_str, 'Input Attribute'));
         }
 
