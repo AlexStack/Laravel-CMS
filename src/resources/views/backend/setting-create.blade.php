@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md">
 
-{{-- {!! Form::open(['route' => ['LaravelCmsAdminPages.store'], 'method' => "POST", 'files'=>true]) !!} --}}
 
-{!! Form::model($_GET, ['route' => ['LaravelCmsAdminPages.store'], 'method' => "POST", 'files'=>true]) !!}
-
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.page-form')
+{!! Form::model($_GET, ['route' => ['LaravelCmsAdminSettings.store'], 'method' => "POST", 'files'=>true]) !!}
+@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.setting-form')
 
 @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.submit-button')
+
 
 {{ Form::close() }}
 
         </div>
     </div>
 </div>
+
 @endsection

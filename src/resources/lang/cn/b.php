@@ -1,0 +1,55 @@
+<?php
+
+return [
+    // layout
+    'setting' => '设置|设置s',
+    'main_content' => '主要内容',
+    'extra_content' => '附加内容',
+    'all_page' => '全部页面',
+    'create_new_page' => '添加新页面',
+    'save_and_continue_edit' => '保存并继续修改',
+    'save_and_return_to_the_list' => '保存并返回列表页',
+    'delete' => '删除',
+
+    // setting form
+    'param_name' => '参数名称',
+    'page_id' => '页面ID',
+    'param_value' => '参数内容',
+    'input_attribute' => '参数内容输入属性',
+    'abstract' => '简介',
+    'category' => '分类',
+    'enabled' => '激活',
+    'sort_value' => '排序值',
+
+    // page form
+    'title' => '标题',
+    'main_banner' => '横幅图片',
+    'menu_title' => '菜单短标题',
+    'main_image' => '主图片',
+    'sub_content' => '次要内容',
+    'menu_enabled' => '是否在菜单显示',
+    'status' => '状态',
+    'slug' => '网址标志',
+    'parent_page' => '上级页面',
+    'user_id' => '用户ID',
+    'created_at' => '创建时间',
+    'template_file' => '模版文件',
+    'meta_title' => 'META标题',
+    'meta_keywords' => 'META关键字',
+    'meta_description' => 'META描述',
+    'view_counts' => '浏览次数',
+    'tags' => '标签',
+    'extra_image_1' => '附加图片1',
+    'extra_text_1' => '附加文字1',
+    'extra_content_1' => '附加内容1',
+    'extra_image_2' => '附加图片2',
+    'extra_text_2' => '附加文字2',
+    'extra_content_2' => '附加内容2',
+    'extra_image_3' => '附加图片3',
+    'extra_text_3' => '附加文字3',
+    'extra_content_3' => '附加内容3',
+    'redirect_url' => '转向网址',
+    'file_data' => '文件JSON数据',
+    'special_text' => '特殊文字',
+
+];

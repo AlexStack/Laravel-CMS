@@ -9,14 +9,16 @@ use App\Http\Controllers\Controller;
 
 class LaravelCmsPageController extends Controller
 {
-
+    public $helper;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
-    { }
+    {
+        $this->helper = new LaravelCmsHelper;
+    }
 
     /**
      * Show the application dashboard.
@@ -25,13 +27,17 @@ class LaravelCmsPageController extends Controller
      */
     public function index()
     {
-        // return 'front-end cms';
-        // return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-list');
         return $this->show('homepage');
     }
 
     public function show($slug)
     {
+        if ($slug == 'sitemap.txt') {
+            return $this->sitemap('txt');
+        }
+        if ($slug == 'redirect-link') {
+            return $this->goExternalLink();
+        }
         $data['menus'] = $this->menus();
         if (is_numeric(str_replace('.html', '', $slug))) {
             $search_field = 'id';
@@ -55,19 +61,30 @@ class LaravelCmsPageController extends Controller
         }
 
 
-        //LaravelCmsHelper::debug($data['page']->parent->toArray(), 'no_exit');
+        //$this->helper->debug($data['page']->parent->toArray(), 'no_exit');
 
 
         $data['file_data'] = json_decode($data['page']->file_data);
         if ($data['file_data'] == null) {
             $data['file_data'] = json_decode('{}');
         }
-        $data['file_data']->file_dir = asset('storage/' . config('laravel-cms.upload_dir'));
+        $data['file_data']->file_dir = asset('storage/' . $this->helper->getCmsSetting('upload_dir'));
 
         //$data['page']->file_data = $data['file_data'];
-        $data['helper'] = new LaravelCmsHelper;
+        $data['helper'] = $this->helper;
 
-        return view('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.' . $template_file, $data);
+
+        $data['plugins'] = collect([]);
+        $plugin_ary = $this->helper->getPlugins('page-tab-');
+        foreach ($plugin_ary as $plugin) {
+            $plugin_class = trim($plugin['php_class'] ?? '');
+            if ($plugin_class != '' && class_exists($plugin_class)) {
+                $data['plugins']->put($plugin['blade_dir'], new $plugin_class);
+            }
+        }
+        //$this->helper->debug($data['plugins']);
+
+        return view('laravel-cms::' . $this->helper->getCmsSetting('template_frontend_dir') .  '.' . $template_file, $data);
     }
 
 
@@ -107,5 +124,31 @@ class LaravelCmsPageController extends Controller
         }
 
         return $result;
+    }
+
+    public function sitemap($type = 'txt')
+    {
+        $new_pages = LaravelCmsPage::where('status', 'publish')->orderBy('id', 'desc')->limit(2000)->get(['title', 'menu_title', 'id', 'parent_id', 'slug', 'redirect_url', 'menu_enabled']);
+        if ($type == 'txt') {
+            foreach ($new_pages as $page) {
+                if (trim($page->redirect_url) == '') {
+                    echo $this->helper->url($page, true) . "\n";
+                }
+            }
+            exit();
+        }
+
+        //$this->helper->debug($sitemap);
+        return true;
+    }
+
+    public function goExternalLink()
+    {
+        $s = request()->url;
+
+        header("X-Robots-Tag: noindex, nofollow", true);
+
+        //$this->helper->debug($s);
+        return redirect($s, 301);
     }
 }

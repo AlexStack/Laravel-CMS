@@ -5,12 +5,11 @@
    if ( !isset($input_attributes['class'])){
     $input_attributes['class'] = 'form-control input-'.$name;
    }
-   if ( isset($input_attributes2) &&  isset($type) && $type == 'file')
-    var_dump($input_attributes2);
+
 @endphp
 
 <div class="{{ $groupClass ?? 'form-group' }}">
-{!! Form::label($name, ($label ?? ucwords(str_replace('_',' ',$name))), ['class' => 'label-'.$name]); !!}
+    <label for="{{$name}}" class="label-{{$name}}">{!! $label ?? $helper->t('b.' . $name) !!}</label>
 
 @if ( !isset($type) || $type == 'text')
 
@@ -19,6 +18,10 @@
 @elseif ( $type == 'textarea')
 
     {!! Form::textarea($name, null, $input_attributes); !!}
+
+@elseif ( $type == 'email')
+
+    {!! Form::email($name, null, $input_attributes); !!}
 
 @elseif ( $type == 'number')
 

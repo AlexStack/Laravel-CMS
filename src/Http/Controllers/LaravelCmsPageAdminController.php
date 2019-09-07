@@ -12,7 +12,8 @@ use DB;
 
 class LaravelCmsPageAdminController extends Controller
 {
-    private $user;
+    private $user = null;
+    public $helper;
 
     /**
      * Create a new controller instance.
@@ -22,27 +23,54 @@ class LaravelCmsPageAdminController extends Controller
     public function __construct()
     {
         $this->middleware(['web', 'auth']); // TODO: must be admin
+
+        $this->helper = new LaravelCmsHelper;
     }
 
     public function checkUser()
     {
         // return true;
-        $this->user = Auth::user();
         if (!$this->user) {
-            exit('Can not get user info. Please logout and re-login again ');
+            $this->user = $this->helper->hasPermission();
+        }
+    }
+
+    public function extraPageTabs($action = 'return_options', $form_data = null, $page = null)
+    {
+
+        $option_ary = $this->helper->getPlugins('page-tab-');
+
+        //$this->helper->debug($option_ary);
+
+        if ($action == 'return_options') {
+            return $option_ary;
+        } else if (in_array($action, ['edit', 'store', 'update', 'destroy'])) {
+            $callback_ary = collect([]);
+            foreach ($option_ary as $plugin) {
+                $plugin_class = trim($plugin['php_class'] ?? '');
+                if ($plugin_class != '' && class_exists($plugin_class) && is_callable($plugin_class . '::' . $action)) {
+                    //echo $plugin_class . '::' . $action . '  --- ';
+                    $s = call_user_func($plugin_class . '::' . $action, $form_data, $page);
+                    $callback_ary->put($plugin['blade_file'], $s);
+                    //$this->helper->debug($s->toArray());
+                } else {
+                    $callback_ary->put($plugin['blade_file'], null);
+                }
+            }
+            //$this->helper->debug($callback_ary);
+            return $callback_ary;
         }
 
-        if (!in_array($this->user->id, config('laravel-cms.admin_id_ary'))) {
-            exit('Access denied for user id ' . $this->user->id);
-        }
+        //$this->helper->debug($option_ary);
+        return $option_ary;
     }
 
     public function templateFileOption()
     {
-        $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/' . config('laravel-cms.template_frontend_dir');
+        $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/' . $this->helper->getCmsSetting('template_frontend_dir');
 
         if (!file_exists($app_view_dir)) {
-            $app_view_dir = dirname(__FILE__, 3) . '/resources/views/' . config('laravel-cms.template_frontend_dir');
+            $app_view_dir = dirname(__FILE__, 3) . '/resources/views/' . $this->helper->getCmsSetting('template_frontend_dir');
         }
         $files = glob($app_view_dir . "/*.blade.php");
         foreach ($files as $f) {
@@ -74,35 +102,39 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['all_pages']  = json_decode(json_encode($all_page_ary), FALSE);
 
-        $data['helper'] = new LaravelCmsHelper;
+        $data['helper'] = $this->helper;
 
-        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-list', $data);
+        return view('laravel-cms::' . $this->helper->getCmsSetting('template_backend_dir') .  '.page-list', $data);
     }
 
     public function edit($id)
     {
         $this->checkUser();
 
+        $data['page_tab_blades'] = $this->extraPageTabs();
 
-
-        $data['page_model'] = LaravelCmsPage::find($id);
+        $data['page'] = LaravelCmsPage::find($id);
         //$data['parent_page_options'] = array_merge(array(null=>"Top Level"),  $this->parentPages()->pluck('title', 'id')->toArray());
 
         $data['parent_page_options'] = $this->parentPages();
         $data['template_file_options'] = $this->templateFileOption();
 
-        $data['file_data'] = json_decode($data['page_model']->file_data);
+        $data['file_data'] = json_decode($data['page']->file_data);
         if ($data['file_data'] == null) {
             $data['file_data'] = json_decode('{}');
         }
 
         // $this->debug($data['file_data'], 'exit');
 
-        $data['file_data']->file_dir = asset('storage/' . config('laravel-cms.upload_dir'));
+        $data['file_data']->file_dir = asset('storage/' . $this->helper->getCmsSetting('upload_dir'));
 
-        $data['helper'] = new LaravelCmsHelper;
+        $data['helper'] = $this->helper;
 
-        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-edit', $data);
+        $data['plugins'] = $this->extraPageTabs('edit', $id, $data['page']);
+
+        //$this->helper->debug($data['plugins'], 'no_exit22');
+
+        return view('laravel-cms::' . $this->helper->getCmsSetting('template_backend_dir') .  '.page-edit', $data);
     }
 
     public function create()
@@ -111,9 +143,10 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['parent_page_options'] = $this->parentPages();
         $data['template_file_options'] = $this->templateFileOption();
-        $data['helper'] = new LaravelCmsHelper;
+        $data['helper'] = $this->helper;
+        $data['page_tab_blades'] = $this->extraPageTabs();
 
-        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-create', $data);
+        return view('laravel-cms::' . $this->helper->getCmsSetting('template_backend_dir') .  '.page-create', $data);
     }
 
 
@@ -126,7 +159,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $all_file_data = [];
         $this->handleUpload($request, $form_data, $all_file_data);
-        //LaravelCmsHelper::debug($form_data, 'no_exit');
+        //$this->helper->debug($form_data, 'no_exit');
 
         $form_data['slug'] = $this->getSlug($form_data);
         // DB::enableQueryLog();
@@ -140,12 +173,20 @@ class LaravelCmsPageAdminController extends Controller
             }
         }
         $rs->save();
-        //LaravelCmsHelper::debug($rs);
+        //$this->helper->debug($rs);
 
         // $sql = DB::getQueryLog();
-        // LaravelCmsHelper::debug($sql);
+        // $this->helper->debug($sql);
         if ($rs->slug == null || trim($rs->slug) == '') {
             $rs->save(['slug' => $this->generateSlug('', $rs->id)]);
+        }
+
+        $this->extraPageTabs('store', $form_data, $rs);
+
+        if ($form_data['return_to_the_list']) {
+            return redirect()->route(
+                'LaravelCmsAdminPages.index'
+            );
         }
 
         return redirect()->route(
@@ -177,13 +218,16 @@ class LaravelCmsPageAdminController extends Controller
         unset($form_data['_token']);
 
 
-        $data['page_model'] = $page->update($form_data);
+        $data['page'] = $page->update($form_data);
 
+        $this->extraPageTabs('update', $form_data, $page);
+
+        if ($form_data['return_to_the_list']) {
+            return redirect()->route(
+                'LaravelCmsAdminPages.index'
+            );
+        }
         return back()->withInput();
-        //return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.page-edit', $data);
-
-        //return redirect()->route('user.edit_pictures', ['model_name'=>'Property4rent', 'id'=>$property4rent->id]);
-
     }
 
     public function destroy(Request $request, $id)
@@ -191,7 +235,9 @@ class LaravelCmsPageAdminController extends Controller
         $this->checkUser();
         $rs = LaravelCmsPage::find($id)->delete();
 
-        //LaravelCmsHelper::debug($rs);
+        //$this->helper->debug($rs);
+
+        $this->extraPageTabs('destroy', $id);
 
         return redirect()->route(
             'LaravelCmsAdminPages.index'
@@ -301,7 +347,7 @@ class LaravelCmsPageAdminController extends Controller
             $file_data
         );
 
-        $f->storeAs(dirname('public/' . config('laravel-cms.upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
+        $f->storeAs(dirname('public/' . $this->helper->getCmsSetting('upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
 
         return $new_file;
 
@@ -312,11 +358,11 @@ class LaravelCmsPageAdminController extends Controller
 
     public function generateSlug($slug, $def = null, $separate = '-')
     {
-        $slug_format = config('laravel-cms.slug_format');
-        $slug_suffix = config('laravel-cms.slug_suffix');
-        $separate    = config('laravel-cms.slug_separate') ?? $separate;
+        $slug_format = $this->helper->getCmsSetting('slug_format');
+        $slug_suffix = $this->helper->getCmsSetting('slug_suffix');
+        $separate    = $this->helper->getCmsSetting('slug_separate') ?? $separate;
 
-        if (config('laravel-cms.template_language') == 'cn') {
+        if ($this->helper->getCmsSetting('template_language') == 'cn') {
             if ($slug_format == 'from_title') {
                 $slug_format    = 'pinyin';
             }
@@ -368,8 +414,8 @@ class LaravelCmsPageAdminController extends Controller
 
     public function getSlug($form_data)
     {
-        $slug_format = config('laravel-cms.slug_format');
-        $slug_suffix = config('laravel-cms.slug_suffix');
+        $slug_format = $this->helper->getCmsSetting('slug_format');
+        $slug_suffix = $this->helper->getCmsSetting('slug_suffix');
 
         $default_slug = $slug_format == 'id' ? $form_data['id'] : ($form_data['menu_title'] ?? $form_data['title']);
         $new_slug = $this->generateSlug($form_data['slug'], $default_slug);

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{config('laravel-cms.template_language')}}">
+<html lang="{{$helper->getCmsSetting('template_language')}}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.9.0/css/all.min.css">
 
-        <link rel="icon" href="{{ config('laravel-cms.favicon_url') ?? 'favicon.ico'}}" />
+        <link rel="icon" href="{{ $helper->getCmsSetting('favicon_url') ?? 'favicon.ico'}}" />
 
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" crossorigin="anonymous"></script>
 
@@ -24,11 +24,11 @@
 
     </head>
     <body class="{{$page->template_file}} page-{{$page->id}} slug-{{str_replace('.html', '', $page->slug) }}">
-        @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.header')
+        @include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.header')
 
         @yield('content')
 
-        @include('laravel-cms::' . config('laravel-cms.template_frontend_dir') .  '.includes.footer')
+        @include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.footer')
 
         <script src="{{ $helper->assetUrl('js/bottom.js') }}"></script>
 

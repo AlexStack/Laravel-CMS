@@ -92,8 +92,10 @@ return [
     'table_name' => [
 
         'pages' => 'laravelcms_pages',
-
         'files' => 'laravelcms_files',
+        'settings' => 'laravelcms_settings',
+        'inquiries' => 'laravelcms_inquiries',
+        'inquiry_settings' => 'laravelcms_inquiry_settings',
     ],
 
     /*

@@ -5,16 +5,16 @@
     <div class="row justify-content-center">
         <div class="col-md">
 
-{!! Form::model($page, ['route' => ['LaravelCmsAdminPages.update', $page->id], 'method' => "PUT", 'files'=>true]) !!}
+{!! Form::model($setting, ['route' => ['LaravelCmsAdminSettings.update', $setting->id], 'method' => "PUT", 'files'=>true]) !!}
 
-    @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.page-form')
+    @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.setting-form')
 
     <div class="row">
       <div class="col-md">
           @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.submit-button')
       </div>
-      <div class="col-md text-right">
-          <button type="button" class="btn btn-danger " onclick="return confirmDelete(form);"><i class="fas fa-trash-alt mr-2" ></i>{{$helper->t('b.delete')}}</button>
+      <div class="col-md-auto text-right">
+          <button type="button" class="btn btn-danger" onclick="return confirmDelete(form);"><i class="fas fa-trash-alt mr-2" ></i>{{$helper->t('b.delete')}}</button>
       </div>
     </div>
       {{ Form::close() }}
@@ -22,12 +22,11 @@
     </div>
 </div>
 <script>
-
     function confirmDelete(f){
         var del_msg = "Confirm to delete?";
         if ( confirm(del_msg) ) {
             f._method.value  = 'DELETE';
-            f.action = "{{route('LaravelCmsAdminPages.destroy', $page->id)}}";
+            f.action = "{{route('LaravelCmsAdminSettings.destroy', $setting->id)}}";
             f.submit();
         }
     }
