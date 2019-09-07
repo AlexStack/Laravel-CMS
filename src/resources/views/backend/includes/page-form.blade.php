@@ -74,25 +74,25 @@
         @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "special_text"])
     </div>
     <div class="tab-pane" id="seo" role="tabpanel">
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "slug",'label'=>'Page URL(Filename/Slug)'])
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "meta_title", 'label'=>"Meta Title(Leave it empty will use Title instead)"])
+        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "slug"] )
+        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "meta_title" ])
         @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "meta_keywords"])
         @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "meta_description"])
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "tags",'label'=>'Multiple tags separate by comma ,'])
+        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "tags" ])
     </div>
 
     <div class="tab-pane" id="settings" role="tabpanel">
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "parent_id", 'type'=>'select', 'label'=>'Parent Page', 'options'=>$parent_page_options])
+            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "parent_id", 'type'=>'select', 'label'=>$helper->t('parent_page'), 'options'=>$parent_page_options])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "menu_enabled", 'type'=>'select', 'label'=>'Menu Enabled', 'options'=>['1' => 'Display In Menu', '0' => 'Hide In Menu'] ])
+            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "menu_enabled", 'type'=>'select', 'options'=>['1' => 'Display In Menu', '0' => 'Hide In Menu'] ])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "status", 'type'=>'select', 'label'=>'Status', 'options'=>['publish' => 'Publish', 'pending' => 'Pending'] ])
+            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "status", 'type'=>'select', 'options'=>['publish' => 'Publish', 'pending' => 'Pending'] ])
 
             @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "redirect_url" ])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "template_file", 'type'=>'select', 'label'=>'Blade Template for this page', 'options'=>$template_file_options])
+            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "template_file", 'type'=>'select', 'options'=>$template_file_options])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "sort_value",'type'=>'number', 'label'=>'Sort Value'])
+            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "sort_value",'type'=>'number' ])
 
             @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "view_counts",'type'=>'number' ])
 

@@ -24,12 +24,12 @@
 
 
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "enabled", 'type'=>'select', 'label'=>'Enable', 'options'=>['1' => 'Enable', '0' => 'Disable'] ])
+@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "enabled", 'type'=>'select', 'options'=>['1' => 'Enable', '0' => 'Disable'] ])
 
 @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "sort_value"])
 
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "input_attribute", 'type'=>'textarea', 'label'=>'Input Attribute', "input_attributes"  =>['rows'=>4]])
+@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "input_attribute", 'type'=>'textarea', "input_attributes"  =>['rows'=>4]])
 
 
 @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "abstract", "input_attributes"=>['rows'=>3]])
