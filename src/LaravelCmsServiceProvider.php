@@ -19,6 +19,9 @@ class LaravelCmsServiceProvider extends ServiceProvider
         // views
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'laravel-cms');
 
+        // Load translation
+        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'laravel-cms');
+
         // Load migrations
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
@@ -29,7 +32,7 @@ class LaravelCmsServiceProvider extends ServiceProvider
         $this->publishes([__DIR__ . '/resources/views' => base_path('resources/views/vendor/laravel-cms')], 'view');
 
         // Publish language files
-        // $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/laravel-cms')], 'lang');
+        $this->publishes([__DIR__ . '/resources/lang' => base_path('resources/lang/vendor/laravel-cms')], 'lang');
 
         // Publish public files and assets.
         $this->publishes([__DIR__ . '/assets' => public_path('/laravel-cms')], 'assets');

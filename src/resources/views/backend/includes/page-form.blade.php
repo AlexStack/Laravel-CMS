@@ -1,13 +1,13 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs mb-2" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#main-content" role="tab"><i class="fas fa-cube mr-1"></i>Main Content</a>
+        <a class="nav-link active" data-toggle="tab" href="#main-content" role="tab"><i class="fas fa-cube mr-1"></i>{{ $helper->t('b.main_content') }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#settings" role="tab"><i class="fas fa-cog mr-1"></i>Settings</a>
+        <a class="nav-link" data-toggle="tab" href="#settings" role="tab"><i class="fas fa-cog mr-1"></i>{{ $helper->t('b.setting',2) }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#extra-content" role="tab"><i class="fas fa-cubes mr-1"></i>Extra Content</a>
+        <a class="nav-link" data-toggle="tab" href="#extra-content" role="tab"><i class="fas fa-cubes mr-1"></i>{{ $helper->t('b.extra_content') }}</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#seo" role="tab"><i class="fas fa-globe mr-1"></i>SEO</a>
@@ -34,7 +34,7 @@
 <div class="tab-content">
     <div class="tab-pane active" id="main-content" role="tabpanel">
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "title", 'label'=>isset($page)? 'Title <a class="text-info ml-2 " href="' . $helper->url($page) . '" target="_blank" title="Preview"><i class="fas fa-external-link-square-alt"></i></a>': 'Title'])
+        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "title", 'label'=>isset($page)? $helper->t('b.title') . ' <a class="text-info ml-2 " href="' . $helper->url($page) . '" target="_blank" title="Preview"><i class="fas fa-external-link-square-alt"></i></a>': $helper->t('b.title')])
 
         @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "menu_title"])
 

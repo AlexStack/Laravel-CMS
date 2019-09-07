@@ -294,4 +294,23 @@ class LaravelCmsHelper
         }
         return 'not_json_format';
     }
+
+    // Combine trans() & trans_choice() & set default
+    static public function t($key, $param_1 = null, $param_2 = null)
+    {
+        $prefix = 'laravel-cms::';
+        if (is_numeric($param_1)) {
+            $s = is_array($param_2) ? trans_choice($prefix . $key, $param_1, $param_2) : trans_choice($prefix . $key, $param_1);
+        } else if (is_array($param_1)) {
+            $s = __($prefix . $key, $param_1);
+        } else {
+            $s = __($prefix . $key);
+        }
+        if (strpos($s, $prefix) !== false) {
+            $key_ary = explode('.', $key);
+            $s = ucwords(str_replace(['-', '_'], ' ', end($key_ary)));
+        }
+
+        return $s;
+    }
 }
