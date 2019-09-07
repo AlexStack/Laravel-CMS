@@ -15,6 +15,9 @@ class LaravelCmsSettingAdminController extends Controller
     private $user = null;
 
     public $helper;
+
+    private $wrong_json_format_str = '%s is NOT a Correct Json Format string! <hr> Please input a correct json format string. eg. use \\\\ instead of \, use " instead of \' , no comma for the last property<hr>Please make  { not at the begging or make  } not at the end if the input is not a json string';
+
     /**
      * Create a new controller instance.
      *
@@ -71,6 +74,13 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data['helper'] = $this->helper;
 
+        $data['categories'] =  json_decode($this->helper->getCmsSetting('categories.cms_setting_categories'), true);
+        if (!$data['categories']) {
+            $data['categories'] = [];
+        }
+
+        //$this->helper->debug($data['categories']);
+
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-list', $data);
     }
 
@@ -104,6 +114,12 @@ class LaravelCmsSettingAdminController extends Controller
         $form_data = $request->all();
         $form_data['user_id'] = $this->user->id ?? null;
 
+        if (!$this->helper->correctJsonFormat($form_data['param_value'])) {
+            exit(sprintf($this->wrong_json_format_str, 'Param Value'));
+        }
+        if (!$this->helper->correctJsonFormat($form_data['input_attribute'])) {
+            exit(sprintf($this->wrong_json_format_str, 'Input Attribute'));
+        }
 
         $rs = new LaravelCmsSetting;
         foreach ($rs->fillable as $field) {
@@ -116,8 +132,10 @@ class LaravelCmsSettingAdminController extends Controller
         $this->updateConfigFile();
 
         if ($form_data['return_to_the_list']) {
+
             return redirect()->route(
-                'LaravelCmsAdminSettings.index'
+                'LaravelCmsAdminSettings.index',
+                ['category' => $rs->category]
             );
         }
         return redirect()->route(
@@ -138,6 +156,12 @@ class LaravelCmsSettingAdminController extends Controller
         unset($form_data['_method']);
         unset($form_data['_token']);
 
+        if (!$this->helper->correctJsonFormat($form_data['param_value'])) {
+            exit(sprintf($this->wrong_json_format_str, 'Param Value'));
+        }
+        if (!$this->helper->correctJsonFormat($form_data['input_attribute'])) {
+            exit(sprintf($this->wrong_json_format_str, 'Input Attribute'));
+        }
 
         $data['setting'] = $setting->update($form_data);
 
@@ -145,7 +169,8 @@ class LaravelCmsSettingAdminController extends Controller
 
         if ($form_data['return_to_the_list']) {
             return redirect()->route(
-                'LaravelCmsAdminSettings.index'
+                'LaravelCmsAdminSettings.index',
+                ['category' => $form_data['category']]
             );
         }
         return back()->withInput();

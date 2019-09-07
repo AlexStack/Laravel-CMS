@@ -28,7 +28,7 @@ class LaravelCmsPluginInquiry
         $data['dynamic_inputs'] = self::dynamicInputs($settings, $page);
         $data['gg_recaptcha']   = (isset($settings->google_recaptcha_enabled) && $settings->google_recaptcha_enabled) ? GoogleRecaptcha::show($this->helper->getCmsSetting('google_recaptcha_site_key'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
 
-        return view('laravel-cms::plugins.page-tab-contact-us-form.' . ($settings->form_layout ?? 'frontend-form-001'), $data);
+        return view('laravel-cms::plugins.page-tab-inquiry-form.' . ($settings->form_layout ?? 'frontend-form-001'), $data);
     }
 
 

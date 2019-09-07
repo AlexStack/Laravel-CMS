@@ -79,10 +79,10 @@ class LaravelCmsPageController extends Controller
         foreach ($plugin_ary as $plugin) {
             $plugin_class = trim($plugin['php_class'] ?? '');
             if ($plugin_class != '' && class_exists($plugin_class)) {
-                $data['plugins']->put($plugin['blade_file'], new $plugin_class);
+                $data['plugins']->put($plugin['blade_dir'], new $plugin_class);
             }
         }
-        //$this->helper->debug($data['plugins']->toArray());
+        //$this->helper->debug($data['plugins']);
 
         return view('laravel-cms::' . $this->helper->getCmsSetting('template_frontend_dir') .  '.' . $template_file, $data);
     }

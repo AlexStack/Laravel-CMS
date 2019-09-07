@@ -187,8 +187,33 @@ class LaravelCmsHelper
         }
         return '';
     }
+    public function getPlugins($prefix = 'page-tab-')
+    {
+        if (!isset($this->settings['plugins']) || !is_array($this->settings['plugins'])) {
+            //return $this->getPluginsFromFile($prefix);
+            return [];
+            exit('no plugins in the settings');
+        }
 
-    static public function getPlugins($prefix = 'page-tab-')
+        $plugin_dir = base_path('resources/views/vendor/laravel-cms') . '/plugins';
+
+        if (!file_exists($plugin_dir)) {
+            $plugin_dir = dirname(__FILE__, 2) . '/resources/views/plugins';
+        }
+        $option_ary = [];
+        foreach ($this->settings['plugins'] as $k => $v) {
+            if (strpos($k, $prefix) !== false && strpos($v, '}')) {
+                $config_ary = json_decode($v, true);
+                if (isset($config_ary['blade_file']) &&  file_exists($plugin_dir . '/' . $k . '/' . $config_ary['blade_file'] . '.blade.php')) {
+                    $config_ary['blade_dir'] = $k;
+                    $option_ary[] = $config_ary;
+                }
+            }
+        }
+        //$this->debug($plugin_dir . '/' . $k . '/' . $config_ary['blade_file'] . '.blade.php');
+        return $option_ary;
+    }
+    static public function getPluginsFromFile($prefix = 'page-tab-')
     {
         $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/plugins';
 
@@ -247,5 +272,26 @@ class LaravelCmsHelper
         $expire_time = time() - 1; // expire now, one time use
         setcookie('laravel_cms_temp_api_key', '', $expire_time, '/');
         return true;
+    }
+
+    // check json format in case some input should be json but made a mistake
+    static public function correctJsonFormat($str, $must_json = false)
+    {
+        $str = trim($str);
+        if ($must_json) {
+            $json = json_decode($str);
+            if ($json === null) {
+                return false;
+            }
+            return true;
+        } elseif (substr($str, 0, 1) == '{' && substr($str, -1) == '}') {
+            // the str should be json
+            $json = json_decode($str);
+            if ($json === null) {
+                return false;
+            }
+            return true;
+        }
+        return 'not_json_format';
     }
 }

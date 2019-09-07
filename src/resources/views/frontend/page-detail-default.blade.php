@@ -42,7 +42,7 @@ if ( strpos($page->extra_text_1, 'http') !== false && strpos($page->extra_text_1
 @include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.breadcrumb')
 
 
-{!! $plugins['contact-us-form']->displayForm($page) !!}
+{!! isset($plugins['page-tab-inquiry-form']) ?? $plugins['page-tab-inquiry-form']->displayForm($page) !!}
 
         </div>
     </div>
