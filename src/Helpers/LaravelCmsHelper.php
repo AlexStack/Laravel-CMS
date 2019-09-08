@@ -202,9 +202,9 @@ class LaravelCmsHelper
             $plugin_dir = dirname(__FILE__, 2) . '/resources/views/plugins';
         }
         $option_ary = [];
-        foreach ($this->settings['plugins'] as $k => $v) {
-            if (strpos($k, $prefix) !== false && strpos($v, '}')) {
-                $config_ary = json_decode($v, true);
+        foreach ($this->settings['plugins'] as $k => $config_ary) {
+            if (strpos($k, $prefix) !== false ) {
+
                 if (isset($config_ary['blade_file']) &&  file_exists($plugin_dir . '/' . $k . '/' . $config_ary['blade_file'] . '.blade.php')) {
                     $config_ary['blade_dir'] = $k;
                     $option_ary[] = $config_ary;

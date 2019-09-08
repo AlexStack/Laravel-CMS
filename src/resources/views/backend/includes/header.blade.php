@@ -6,19 +6,23 @@
         </h2>
         </div>
         <div class="col-md align-middle text-right pt-3">
-        {{--
-            <a class="btn btn-success mr-3" href="{{ route('LaravelCmsAdminPages.index') }}" role="button"><i class="fas fa-home mr-1"></i>{{ $helper->t('all_page') }}</a>
-
-            <a class="btn btn-primary mr-3" href="{{ route('LaravelCmsAdminPages.create') }}" role="button"><i class="fas fa-plus-circle mr-1"></i>{{ $helper->t('create_new_page') }}</a>
-
-            <a class="btn btn-secondary" href="{{ route('LaravelCmsAdminSettings.index') }}" role="button"><i class="fas fa-cog mr-1"></i>CMS {{ $helper->t('settings') }}</a> --}}
-
             @php
-                $menu_links = json_decode($helper->s('categories.admin_menu_links'));
-                foreach($menu_links as $link){
-                    echo $link;
+                $menu_links = $helper->s('categories.admin_menu_links');
+                if ( is_array($menu_links)){
+                    foreach($menu_links as $link){
+                        echo $link;
+                    }
                 }
             @endphp
+
+            @if ( !is_array($menu_links) )
+                <a class="btn btn-success mr-3" href="{{ route('LaravelCmsAdminPages.index') }}" role="button"><i class="fas fa-home mr-1"></i>{{ $helper->t('all_page') }}</a>
+
+                <a class="btn btn-primary mr-3" href="{{ route('LaravelCmsAdminPages.create') }}" role="button"><i class="fas fa-plus-circle mr-1"></i>{{ $helper->t('create_new_page') }}</a>
+
+                <a class="btn btn-secondary" href="{{ route('LaravelCmsAdminSettings.index') }}" role="button"><i class="fas fa-cog mr-1"></i>CMS {{ $helper->t('settings') }}</a>
+            @endif
+
         </div>
     </div>
 </div>
