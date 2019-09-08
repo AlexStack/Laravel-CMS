@@ -2,7 +2,8 @@
 
 return [
     // layout
-    'setting' => '设置|设置s',
+    'setting' => '设置22|"设",-=>置\'s',
+    'settings' => '设置',
     'main_content' => '主要内容',
     'extra_content' => '附加内容',
     'all_page' => '全部页面',
@@ -20,6 +21,11 @@ return [
     'category' => '分类',
     'enabled' => '激活',
     'sort_value' => '排序值',
+    'plugin' => '插件',
+    'image' => '图片',
+    'global' => '全局',
+    'file' => '文件',
+    'manager' => '管理',
 
     // page form
     'title' => '标题',

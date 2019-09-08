@@ -11,6 +11,9 @@ Route::group([
 
     Route::get(config('laravel-cms.homepage_route'), 'LaravelCmsPageController@index')->name('LaravelCmsPages.index');
     Route::get(config('laravel-cms.page_route_prefix') . '{slug}', 'LaravelCmsPageController@show')->name('LaravelCmsPages.show');
+
+    Route::resource(config('laravel-cms.admin_route') . '/files', 'LaravelCmsFileAdminController',  ['names' => 'LaravelCmsAdminFiles']);
+
 });
 
 Route::group([
