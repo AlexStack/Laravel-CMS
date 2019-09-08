@@ -37,13 +37,14 @@ class LaravelCmsHelper
     public function getCmsSetting($param_name)
     {
         $val = false;
-        $param_ary = explode('.', $param_name);
-        if (isset($param_ary[1])) {
+        if (strpos($param_name, '.') !== false) {
+            $param_ary = explode('.', $param_name);
             $key_1 = $param_ary[0];
             $key_2 = $param_ary[1];
         } else {
             $key_1 = 'global';
-            $key_2 = $param_ary[0];
+            $key_2 = $param_name;
+            $param_ary = [$param_name];
         }
         if (isset($this->settings[$key_1]) && isset($this->settings[$key_1][$key_2])) {
             $val = $this->settings[$key_1][$key_2];
@@ -74,7 +75,7 @@ class LaravelCmsHelper
             return $original_img_url;
         }
 
-        if ($this->getCmsSetting('image_encode') == 'jpg') {
+        if ($this->getCmsSetting('image.image_encode') == 'jpg') {
             $suffix = 'jpg';
         } else {
             $suffix = $img_obj->suffix;
@@ -295,10 +296,21 @@ class LaravelCmsHelper
         return 'not_json_format';
     }
 
+    // alias of getCmsSetting() for short & clear code in template
+    public function s($param_name)
+    {
+        return $this->getCmsSetting($param_name);
+    }
+
+
     // Combine trans() & trans_choice() & set default
     static public function t($key, $param_1 = null, $param_2 = null)
     {
         $prefix = 'laravel-cms::';
+        if (strpos($key, '.') === false) {
+            $default_str = $key;
+            $key = 'b.' . $key;
+        }
         if (is_numeric($param_1)) {
             $s = is_array($param_2) ? trans_choice($prefix . $key, $param_1, $param_2) : trans_choice($prefix . $key, $param_1);
         } else if (is_array($param_1)) {
@@ -307,8 +319,12 @@ class LaravelCmsHelper
             $s = __($prefix . $key);
         }
         if (strpos($s, $prefix) !== false) {
-            $key_ary = explode('.', $key);
-            $s = ucwords(str_replace(['-', '_'], ' ', end($key_ary)));
+            if (!isset($default_str)) {
+                $key_ary        = explode('.', $key);
+                $default_str    = end($key_ary);
+            }
+
+            $s = ucwords(str_replace(['-', '_'], ' ', $default_str));
         }
 
         return $s;

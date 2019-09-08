@@ -9,7 +9,7 @@
 @endphp
 
 <div class="{{ $groupClass ?? 'form-group' }}">
-    <label for="{{$name}}" class="label-{{$name}}">{!! $label ?? $helper->t('b.' . $name) !!}</label>
+    <label for="{{$name}}" class="label-{{$name}}">{!! $label ?? $helper->t($name) !!}</label>
 
 @if ( !isset($type) || $type == 'text')
 
@@ -33,9 +33,18 @@
     @if ( isset($file_data) && property_exists($file_data, $name) && isset($file_data->$name) )
         <div class="form-group upload-img">
             <a href="{{$helper->imageUrl($file_data->$name, 'original','original') }}" target="_blank">
-                <img class="img-fluid img-thumbnail p-1" src="{{$helper->imageUrl($file_data->$name, 'w','100') }}" alt="" /></a>
+                <img class="img-fluid img-thumbnail p-1" src="{{$helper->imageUrl($file_data->$name, $helper->getCmsSetting('image.small_image_width'), $helper->getCmsSetting('image.small_image_height')) }}" alt="" /></a>
 
-            Delete: {!! Form::checkbox($name . '_delete', 1, $checked ?? false); !!}
+            {{$helper->t('delete') }}: {!! Form::checkbox($name . '_delete', 1, $checked ?? false); !!}
+
+            @if ( $name == 'main_image')
+            Insert Image:
+            <a href="#" onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, 'w','h') }}');return false;">Original Image</a>
+            -
+            <a href="#" onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, $helper->getCmsSetting('image.big_image_width'), 'h') }}');return false;">Big Image</a>
+            -
+            <a href="#" onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, $helper->getCmsSetting('image.small_image_width'), $helper->getCmsSetting('image.small_image_height')) }}');return false;">Small Image</a>
+            @endif
 
         </div>
     @endif

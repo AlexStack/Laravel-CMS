@@ -24,3 +24,11 @@ $(document).ready(function () {
     renderEditor("textarea.input-success_content");
   }, 4000);
 });
+
+
+function insertImageToEditor(editor_id, img_url) {
+  $(editor_id).summernote('insertImage', img_url, function ($image) {
+    $image.css('border', 0);
+    $image.attr('class', 'img-fluid');
+  });
+}

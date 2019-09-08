@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.layout')
+@extends('laravel-cms::' . $helper->s('template_frontend_dir') .  '.includes.layout')
 
 @section('content')
 
@@ -23,14 +23,14 @@
 
 <div class="row mb-4 img-cards">
     <div class="col-md-4 first-card">
-        @include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.image-card', ['extra_id' => 1, 'width'=>'auto', 'height'=>200 ])
+        @include('laravel-cms::' . $helper->s('template_frontend_dir') .  '.includes.image-card', ['extra_id' => 1, 'width'=>'auto', 'height'=>$helper->s('image.middle_image_height') ])
     </div>
     <div class="col-md-4 second-card">
-        @include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.image-card', ['extra_id' => 2, 'width'=>'auto', 'height'=>200 ])
+        @include('laravel-cms::' . $helper->s('template_frontend_dir') .  '.includes.image-card', ['extra_id' => 2, 'width'=>'auto', 'height'=>$helper->s('image.middle_image_height') ])
     </div>
 
     <div class="col-md-4 third-card">
-        @include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.image-card', ['extra_id' => 3, 'width'=>'auto', 'height'=>200 ])
+        @include('laravel-cms::' . $helper->s('template_frontend_dir') .  '.includes.image-card', ['extra_id' => 3, 'width'=>'auto', 'height'=>$helper->s('image.middle_image_height') ])
     </div>
 
 </div>
@@ -39,7 +39,7 @@
     {!! $page->sub_content !!}
 </div>
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.sub-page-cards', ['sub_pages' => $page->children, 'card_class'=>'col-md-6 mb-4', 'img_width'=>200, 'img_height'=>150 ])
+@include('laravel-cms::' . $helper->s('template_frontend_dir') .  '.includes.sub-page-cards', ['sub_pages' => $page->children, 'card_class'=>'col-md-6 mb-4', 'img_width'=>$helper->s('image.small_image_width'), 'img_height'=>$helper->s('image.small_image_height') ])
 
 
         </div>

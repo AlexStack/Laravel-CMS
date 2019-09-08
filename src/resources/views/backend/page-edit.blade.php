@@ -14,7 +14,7 @@
           @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.submit-button')
       </div>
       <div class="col-md text-right">
-          <button type="button" class="btn btn-danger " onclick="return confirmDelete(form);"><i class="fas fa-trash-alt mr-2" ></i>{{$helper->t('b.delete')}}</button>
+          <button type="button" class="btn btn-danger " onclick="return confirmDelete(form);"><i class="fas fa-trash-alt mr-2" ></i>{{$helper->t('delete')}}</button>
       </div>
     </div>
       {{ Form::close() }}
