@@ -3,6 +3,7 @@
 namespace AlexStack\LaravelCms\Helpers;
 
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
+use App;
 
 class LaravelCmsHelper
 {
@@ -13,6 +14,16 @@ class LaravelCmsHelper
         if (file_exists($setting_file)) {
             $this->settings = include($setting_file);
         }
+        if ( request()->is(substr(config('laravel-cms.admin_route'),1) . '/*') ) {
+            if ( App::getLocale() != $this->s('template.backend_language') ){
+                App::setLocale($this->s('template.backend_language'));
+            }
+        } else {
+            if ( App::getLocale() != $this->s('template.frontend_language') ){
+                App::setLocale($this->s('template.frontend_language'));
+            }
+        }
+        //echo App::getLocale() . config('laravel-cms.admin_route') .request()->url();
     }
 
     static public function hasPermission()
@@ -51,7 +62,7 @@ class LaravelCmsHelper
         }
 
         if ($val === false || isset($param_ary[2])) {
-            $val = config('laravel-cms.' . $param_name) ?? env(strtoupper($param_name));
+            $val = config('laravel-cms.' . $param_name);
         }
 
         return $val;
@@ -190,7 +201,7 @@ class LaravelCmsHelper
     }
     public function getPlugins($prefix = 'page-tab-')
     {
-        if (!isset($this->settings['plugins']) || !is_array($this->settings['plugins'])) {
+        if (!isset($this->settings['plugin']) || !is_array($this->settings['plugin'])) {
             //return $this->getPluginsFromFile($prefix);
             return [];
             exit('no plugins in the settings');
@@ -202,7 +213,7 @@ class LaravelCmsHelper
             $plugin_dir = dirname(__FILE__, 2) . '/resources/views/plugins';
         }
         $option_ary = [];
-        foreach ($this->settings['plugins'] as $k => $config_ary) {
+        foreach ($this->settings['plugin'] as $k => $config_ary) {
             if (strpos($k, $prefix) !== false ) {
 
                 if (isset($config_ary['blade_file']) &&  file_exists($plugin_dir . '/' . $k . '/' . $config_ary['blade_file'] . '.blade.php')) {

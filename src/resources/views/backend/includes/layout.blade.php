@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{$helper->s('template.language')}}">
+<html lang="{{$helper->s('template.backend_language')}}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">

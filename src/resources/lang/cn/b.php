@@ -27,6 +27,8 @@ return [
     'file' => '文件',
     'manager' => '管理',
     'template' => '模版',
+    'view' => '查看',
+    'preview' => '预览',
 
     // page form
     'title' => '标题',
