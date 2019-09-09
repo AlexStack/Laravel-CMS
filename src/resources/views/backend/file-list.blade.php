@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->getCmsSetting('template_backend_dir')  .  '.includes.layout')
+@extends('laravel-cms::' . $helper->s('template.backend_dir')  .  '.includes.layout')
 
 @section('content')
 <div class="row">

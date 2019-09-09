@@ -71,11 +71,11 @@ class LaravelCmsHelper
 
 
         if ($img_obj->suffix == 'svg' || ($width == null && $height == null)) {
-            $original_img_url = '/storage/' . $this->getCmsSetting('upload_dir') . '/' . $img_obj->path;
+            $original_img_url = '/storage/' . $this->s('file.upload_dir') . '/' . $img_obj->path;
             return $original_img_url;
         }
 
-        if ($this->getCmsSetting('image.image_encode') == 'jpg') {
+        if ($this->s('file.image_encode') == 'jpg') {
             $suffix = 'jpg';
         } else {
             $suffix = $img_obj->suffix;
@@ -83,13 +83,13 @@ class LaravelCmsHelper
 
         $filename   = $img_obj->id . '_' . ($width ?? 'auto') . '_' . ($height ?? 'auto') . '_' . $resize_type . '.' . $suffix;
 
-        $related_dir = 'storage/' . $this->getCmsSetting('upload_dir') . '/optimized/' . substr($img_obj->id, -2);
+        $related_dir = 'storage/' . $this->s('file.upload_dir') . '/optimized/' . substr($img_obj->id, -2);
 
         $abs_real_dir = public_path($related_dir);
         $abs_real_path = $abs_real_dir . '/' . $filename;
         $web_url = '/' . $related_dir . '/' . $filename;
 
-        if (file_exists($abs_real_path) && filemtime($abs_real_path) > time() - $this->getCmsSetting('image_reoptimize_time')) {
+        if (file_exists($abs_real_path) && filemtime($abs_real_path) > time() - $this->s('image_reoptimize_time')) {
             return $web_url;
             //return $abs_real_path . ' - already exists - ' . $web_url;
         }
@@ -98,7 +98,7 @@ class LaravelCmsHelper
             mkdir($abs_real_dir, 0755, true);
         }
 
-        $original_img = public_path('storage/' . $this->getCmsSetting('upload_dir') . '/' . $img_obj->path);
+        $original_img = public_path('storage/' . $this->s('file.upload_dir') . '/' . $img_obj->path);
 
         //self::debug($original_img);
 
@@ -147,9 +147,9 @@ class LaravelCmsHelper
 
     public function url($page, $is_abs_link = false)
     {
-        $slug_suffix = $this->getCmsSetting('slug_suffix');
+        $slug_suffix = $this->s('slug_suffix');
         if (!$page->slug) {
-            $page->slug = $page->id . $this->getCmsSetting('slug_suffix');
+            $page->slug = $page->id . $this->s('slug_suffix');
         }
         if (trim($page->redirect_url) != '') {
             return trim($page->redirect_url);
@@ -163,7 +163,7 @@ class LaravelCmsHelper
 
     public function assetUrl($file, $with_modify_time = true, $is_backend = false)
     {
-        $url = 'laravel-cms/' . $this->getCmsSetting('' . ($is_backend ? 'template_backend_dir' : 'template_frontend_dir')) . '/' . $file;
+        $url = 'laravel-cms/' . $this->s('' . ($is_backend ? 'template_backend_dir' : 'template_frontend_dir')) . '/' . $file;
         if ($with_modify_time) {
             $abs_real_path = public_path($url);
 

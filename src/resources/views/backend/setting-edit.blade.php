@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->getCmsSetting('template_backend_dir')  .  '.includes.layout')
+@extends('laravel-cms::' . $helper->s('template.backend_dir')  .  '.includes.layout')
 
 @section('content')
 <div class="container">
@@ -7,11 +7,11 @@
 
 {!! Form::model($setting, ['route' => ['LaravelCmsAdminSettings.update', $setting->id], 'method' => "PUT", 'files'=>true]) !!}
 
-    @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.setting-form')
+    @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.setting-form')
 
     <div class="row">
       <div class="col-md">
-          @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.submit-button')
+          @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.submit-button')
       </div>
       <div class="col-md-auto text-right">
           <button type="button" class="btn btn-danger" onclick="return confirmDelete(form);"><i class="fas fa-trash-alt mr-2" ></i>{{$helper->t('delete')}}</button>

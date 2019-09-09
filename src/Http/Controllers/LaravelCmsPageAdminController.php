@@ -67,10 +67,10 @@ class LaravelCmsPageAdminController extends Controller
 
     public function templateFileOption()
     {
-        $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/' . $this->helper->getCmsSetting('template_frontend_dir');
+        $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/' . $this->helper->s('template.frontend_dir');
 
         if (!file_exists($app_view_dir)) {
-            $app_view_dir = dirname(__FILE__, 3) . '/resources/views/' . $this->helper->getCmsSetting('template_frontend_dir');
+            $app_view_dir = dirname(__FILE__, 3) . '/resources/views/' . $this->helper->s('template.frontend_dir');
         }
         $files = glob($app_view_dir . "/*.blade.php");
         foreach ($files as $f) {
@@ -104,7 +104,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data['helper'] = $this->helper;
 
-        return view('laravel-cms::' . $this->helper->getCmsSetting('template_backend_dir') .  '.page-list', $data);
+        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-list', $data);
     }
 
     public function edit($id)
@@ -126,7 +126,7 @@ class LaravelCmsPageAdminController extends Controller
 
         // $this->debug($data['file_data'], 'exit');
 
-        $data['file_data']->file_dir = asset('storage/' . $this->helper->getCmsSetting('upload_dir'));
+        $data['file_data']->file_dir = asset('storage/' . $this->helper->s('upload_dir'));
 
         $data['helper'] = $this->helper;
 
@@ -134,7 +134,7 @@ class LaravelCmsPageAdminController extends Controller
 
         //$this->helper->debug($data['plugins'], 'no_exit22');
 
-        return view('laravel-cms::' . $this->helper->getCmsSetting('template_backend_dir') .  '.page-edit', $data);
+        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-edit', $data);
     }
 
     public function create()
@@ -146,7 +146,7 @@ class LaravelCmsPageAdminController extends Controller
         $data['helper'] = $this->helper;
         $data['page_tab_blades'] = $this->extraPageTabs();
 
-        return view('laravel-cms::' . $this->helper->getCmsSetting('template_backend_dir') .  '.page-create', $data);
+        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-create', $data);
     }
 
 
@@ -347,7 +347,7 @@ class LaravelCmsPageAdminController extends Controller
             $file_data
         );
 
-        $f->storeAs(dirname('public/' . $this->helper->getCmsSetting('upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
+        $f->storeAs(dirname('public/' . $this->helper->s('upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
 
         return $new_file;
 
@@ -358,11 +358,11 @@ class LaravelCmsPageAdminController extends Controller
 
     public function generateSlug($slug, $def = null, $separate = '-')
     {
-        $slug_format = $this->helper->getCmsSetting('slug_format');
-        $slug_suffix = $this->helper->getCmsSetting('slug_suffix');
-        $separate    = $this->helper->getCmsSetting('slug_separate') ?? $separate;
+        $slug_format = $this->helper->s('slug_format');
+        $slug_suffix = $this->helper->s('slug_suffix');
+        $separate    = $this->helper->s('slug_separate') ?? $separate;
 
-        if ($this->helper->getCmsSetting('template_language') == 'cn') {
+        if ($this->helper->s('template.language') == 'cn') {
             if ($slug_format == 'from_title') {
                 $slug_format    = 'pinyin';
             }
@@ -414,8 +414,8 @@ class LaravelCmsPageAdminController extends Controller
 
     public function getSlug($form_data)
     {
-        $slug_format = $this->helper->getCmsSetting('slug_format');
-        $slug_suffix = $this->helper->getCmsSetting('slug_suffix');
+        $slug_format = $this->helper->s('slug_format');
+        $slug_suffix = $this->helper->s('slug_suffix');
 
         $default_slug = $slug_format == 'id' ? $form_data['id'] : ($form_data['menu_title'] ?? $form_data['title']);
         $new_slug = $this->generateSlug($form_data['slug'], $default_slug);

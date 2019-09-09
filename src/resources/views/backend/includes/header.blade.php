@@ -7,7 +7,7 @@
         </div>
         <div class="col-md align-middle text-right pt-3">
             @php
-                $menu_links = $helper->s('categories.admin_menu_links');
+                $menu_links = $helper->s('category.admin_menu_links');
                 if ( is_array($menu_links)){
                     foreach($menu_links as $link){
                         echo $link;

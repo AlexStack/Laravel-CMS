@@ -26,6 +26,7 @@ return [
     'global' => '全局',
     'file' => '文件',
     'manager' => '管理',
+    'template' => '模版',
 
     // page form
     'title' => '标题',

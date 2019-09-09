@@ -1,8 +1,8 @@
 <header class="container ">
-    {!! $helper->getCmsSetting('page_top') !!}
+    {!! $helper->s('page_top') !!}
     <nav class="navbar navbar-expand-lg navbar-light top-nav">
         <a class="navbar-brand" href="{{ route('LaravelCmsPages.index', [], false) }}" title="Home">
-            <img src="{{ $helper->getCmsSetting('top_logo') ?? 'https://via.placeholder.com/250x70/ebf0f5/000000/?text=Top+Logo' }}" class="top-logo" />
+            <img src="{{ $helper->s('top_logo') ?? 'https://via.placeholder.com/250x70/ebf0f5/000000/?text=Top+Logo' }}" class="top-logo" />
         </a>
         <button
             class="navbar-toggler"

@@ -74,7 +74,7 @@ class LaravelCmsFileAdminController extends Controller
 
         $data['helper'] = $this->helper;
 
-        $data['categories'] =  json_decode($this->helper->getCmsSetting('categories.cms_setting_categories'), true);
+        $data['categories'] =  json_decode($this->helper->s('categories.cms_setting_categories'), true);
         if (!$data['categories']) {
             $data['categories'] = [];
         }

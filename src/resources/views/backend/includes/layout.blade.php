@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{$helper->s('template.language')}}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,7 +22,7 @@
         <link href="{{$helper->assetUrl('css/main.css', true, true) }}" rel="stylesheet">
     </head>
     <body>
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir')  .  '.includes.header')
+        @include('laravel-cms::' . $helper->s('template.backend_dir')  .  '.includes.header')
         @yield('content')
 
 <div class="container">

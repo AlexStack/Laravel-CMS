@@ -34,71 +34,71 @@
 <div class="tab-content">
     <div class="tab-pane active" id="main-content" role="tabpanel">
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "title", 'label'=>isset($page)? $helper->t('title') . ' <a class="text-info ml-2 " href="' . $helper->url($page) . '" target="_blank" title="Preview"><i class="fas fa-external-link-square-alt"></i></a>': $helper->t('title')])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "title", 'label'=>isset($page)? $helper->t('title') . ' <a class="text-info ml-2 " href="' . $helper->url($page) . '" target="_blank" title="Preview"><i class="fas fa-external-link-square-alt"></i></a>': $helper->t('title')])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "menu_title"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "menu_title"])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_banner", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_banner", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "main_content"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "main_content"])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_image", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_image", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "sub_content"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "sub_content"])
 
     </div>
 
 
     <div class="tab-pane" id="extra-content" role="tabpanel">
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "abstract"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "abstract"])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "extra_text_1"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "extra_text_1"])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "extra_content_1"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "extra_content_1"])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "extra_image_1", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "extra_image_1", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "extra_text_2"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "extra_text_2"])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "extra_content_2"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "extra_content_2"])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "extra_image_2", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "extra_image_2", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "extra_text_3"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "extra_text_3"])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "extra_content_3"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "extra_content_3"])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "extra_image_3", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "extra_image_3", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "special_text"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "special_text"])
     </div>
     <div class="tab-pane" id="seo" role="tabpanel">
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "slug"] )
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "meta_title" ])
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "meta_keywords"])
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "meta_description"])
-        @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "tags" ])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "slug"] )
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "meta_title" ])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "meta_keywords"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "meta_description"])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "tags" ])
     </div>
 
     <div class="tab-pane" id="settings" role="tabpanel">
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "parent_id", 'type'=>'select', 'label'=>$helper->t('parent_page'), 'options'=>$parent_page_options])
+            @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "parent_id", 'type'=>'select', 'label'=>$helper->t('parent_page'), 'options'=>$parent_page_options])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "menu_enabled", 'type'=>'select', 'options'=>['1' => 'Display In Menu', '0' => 'Hide In Menu'] ])
+            @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "menu_enabled", 'type'=>'select', 'options'=>['1' => 'Display In Menu', '0' => 'Hide In Menu'] ])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "status", 'type'=>'select', 'options'=>['publish' => 'Publish', 'pending' => 'Pending'] ])
+            @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "status", 'type'=>'select', 'options'=>['publish' => 'Publish', 'pending' => 'Pending'] ])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "redirect_url" ])
+            @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "redirect_url" ])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "template_file", 'type'=>'select', 'options'=>$template_file_options])
+            @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "template_file", 'type'=>'select', 'options'=>$template_file_options])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "sort_value",'type'=>'number' ])
+            @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "sort_value",'type'=>'number' ])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "view_counts",'type'=>'number' ])
+            @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "view_counts",'type'=>'number' ])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "created_at",'type'=>'text' ])
+            @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "created_at",'type'=>'text' ])
 
-            @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "user_id",'type'=>'number' ])
+            @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "user_id",'type'=>'number' ])
 
     </div>
     <div class="tab-pane" id="files" role="tabpanel">Files</div>

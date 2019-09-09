@@ -101,6 +101,31 @@ class LaravelCmsSettingAdminController extends Controller
         //return $config_str;
     }
 
+    public function getCategories($settings=null, $allow_html = true) {
+        if ( !$settings ){
+            $settings = LaravelCmsSetting::groupBy('category')->get(['category','category']);
+            //$settings = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
+        }
+        //$this->helper->debug($settings);
+        $custom_cats =  $this->helper->s('category.admin_setting_tabs');
+        if (!$custom_cats) {
+            $custom_cats = [];
+        }
+        $all_cats = $settings->pluck('category', 'category')->toArray();
+        $new_cats = array_merge($custom_cats, $all_cats);
+        array_walk($new_cats, function(&$item, $key) use($custom_cats, $allow_html){
+            if ( isset($custom_cats[$key])){
+                $item =  $custom_cats[$key];
+            } else{
+                $item = $this->helper->t($item);
+            }
+            if (!$allow_html){
+                $item = strip_tags($item);
+            }
+        });
+        return $new_cats;
+    }
+
     public function index()
     {
         $this->checkUser();
@@ -109,20 +134,7 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data['helper'] = $this->helper;
 
-        $custom_cats =  $this->helper->getCmsSetting('categories.cms_setting_categories');
-        if (!$custom_cats) {
-            $custom_cats = [];
-        }
-        $all_cats = $data['settings']->pluck('category', 'category')->toArray();
-        $new_cats = array_merge($custom_cats, $all_cats);
-        array_walk($new_cats, function(&$item, $key) use($custom_cats){
-            if ( isset($custom_cats[$key])){
-                $item =  $custom_cats[$key];
-            } else{
-                $item = $this->helper->t($item);
-            }
-        });
-        $data['categories'] = $new_cats;
+        $data['categories'] = $this->getCategories($data['settings'], true);
 
         //$this->helper->debug([$all_cats,$custom_cats, $new_cats]);
 
@@ -138,6 +150,8 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data['helper'] = $this->helper;
 
+        $data['categories'] = $this->getCategories(null, false);
+
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-edit', $data);
     }
 
@@ -147,6 +161,8 @@ class LaravelCmsSettingAdminController extends Controller
 
 
         $data['helper'] = $this->helper;
+
+        $data['categories'] = $this->getCategories(null, false);
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-create', $data);
     }
