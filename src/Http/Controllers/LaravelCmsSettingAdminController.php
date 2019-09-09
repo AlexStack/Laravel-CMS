@@ -37,6 +37,7 @@ class LaravelCmsSettingAdminController extends Controller
         }
     }
 
+    // store the settings as an array in a setting file to speed up
     public function updateConfigFile()
     {
         $this->checkUser();
@@ -108,12 +109,22 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data['helper'] = $this->helper;
 
-        $data['categories'] =  $this->helper->getCmsSetting('categories.cms_setting_categories');
-        if (!$data['categories']) {
-            $data['categories'] = [];
+        $custom_cats =  $this->helper->getCmsSetting('categories.cms_setting_categories');
+        if (!$custom_cats) {
+            $custom_cats = [];
         }
+        $all_cats = $data['settings']->pluck('category', 'category')->toArray();
+        $new_cats = array_merge($custom_cats, $all_cats);
+        array_walk($new_cats, function(&$item, $key) use($custom_cats){
+            if ( isset($custom_cats[$key])){
+                $item =  $custom_cats[$key];
+            } else{
+                $item = $this->helper->t($item);
+            }
+        });
+        $data['categories'] = $new_cats;
 
-        //$this->helper->debug($data['categories']);
+        //$this->helper->debug([$all_cats,$custom_cats, $new_cats]);
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-list', $data);
     }

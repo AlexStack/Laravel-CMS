@@ -19,9 +19,7 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
-        <style>
-            body {font-family: "Microsoft YaHei","微软雅黑", "PingFang SC","Arial"}
-        </style>
+        <link href="{{$helper->assetUrl('css/main.css', true, true) }}" rel="stylesheet">
     </head>
     <body>
         @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir')  .  '.includes.header')

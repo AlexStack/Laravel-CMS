@@ -8,14 +8,14 @@
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs mb-0" role="tablist">
-    @foreach ($settings->pluck('param_name', 'category') as $category => $param_name)
-<li class="nav-item">
+    {{-- @foreach ($settings->pluck('param_name', 'category') as $category => $param_name) --}}
+    @foreach ($categories as $category => $param_name)
+    <li class="nav-item">
         <a class="nav-link {{ isset($_GET['category']) ? ($_GET['category']== $category ? 'active' : '' ) : ($loop->first ? 'active' : '') }}" data-toggle="tab" href="#{{$category}}" role="tab">
-            @if ( isset($categories[$category]) )
-                {!! $categories[$category] !!}
-            @else
-                <i class="fas fa-cube mr-1"></i>{{ucfirst($category)}}
+            @if ( strpos($categories[$category],'class=') === false )
+                <i class="fas fa-cube mr-1"></i>
             @endif
+            {!! $categories[$category] !!}
         </a>
     </li>
     @endforeach
