@@ -48,16 +48,20 @@
 
             <a href="{{$helper->imageUrl($file, $helper->s('file.small_image_width'), $helper->s('file.small_image_height')) }}" target="_blank" title="{{ $helper->t('small_image') }}">S<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 
-            <a href="{{$helper->imageUrl($file, $helper->s('file.small_image_width'), $helper->s('file.small_image_height')) }}" target="_blank" title="{{ $helper->t('small_image') }}">D<i class="far fa-trash-alt ml-1 small text-secondary"></i></a>
+            <a href="#" onclick="return confirmDelete({{$file->id}})">D<i class="far fa-trash-alt ml-1 small text-secondary"></i></a>
 
         </div>
         @else
         <div class="file-icon">
-            <h1><a href="{{$helper->imageUrl($file, 'original','original') }}" target="_blank" title="{{$file->filename}}" class="d-block align-middle "><i class="fas fa-file-alt mr-1 align-middle"></i></a></h1>
+            <h1><a href="{{$helper->imageUrl($file, 'original','original') }}" target="_blank" title="{{$file->filename}}" class="d-block align-middle ">
+                    {!! $helper->fileIconCode($file->suffix) !!}
+            </a></h1>
         </div>
             <div class="text-info">
-                {{strtoupper($file->suffix)}} {{$helper->t('file')}}
+                <a href="{{$helper->imageUrl($file, 'original','original') }}" target="_blank" title="{{$file->filename}}" class="">{{strtoupper($file->suffix)}} {{$helper->t('file')}}<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
                 {{($file->filesize/1024 > 1000) ? round($file->filesize/1024/1024,2) . ' MB' : ($file->filesize/1024 > 10) ? round($file->filesize/1024) . ' KB' : round($file->filesize/1024, 1) . ' KB' }}
+
+                <a href="#" onclick="return confirmDelete({{$file->id}})">D<i class="far fa-trash-alt ml-1 small text-secondary"></i></a>
             </div>
         @endif
         <div class="title">
@@ -128,4 +132,21 @@
     </div>
 </div>
 
+<form action="{{ route('LaravelCmsAdminFiles.index') }}" method="POST" id="del_form">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    </form>
+<script>
+
+    function confirmDelete(id){
+        var f = document.getElementById('del_form');
+        var del_msg = "Confirm to delete?";
+        if ( confirm(del_msg) ) {
+            f._method.value  = 'DELETE';
+            f.action = "{{route('LaravelCmsAdminFiles.index')}}/" + id;
+            f.submit();
+        }
+        return false;
+    }
+</script>
 @endsection

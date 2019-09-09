@@ -100,8 +100,13 @@ class LaravelCmsHelper
         $abs_real_path = $abs_real_dir . '/' . $filename;
         $web_url = '/' . $related_dir . '/' . $filename;
 
-        if (file_exists($abs_real_path) && filemtime($abs_real_path) > time() - $this->s('image_reoptimize_time')) {
-            return $web_url;
+        if (file_exists($abs_real_path) ) {
+            $image_reoptimize_time = $this->s('image_reoptimize_time');
+            if ( $image_reoptimize_time == 0 ){
+                return $web_url;
+            } else if ( filemtime($abs_real_path) > time() - $this->s('image_reoptimize_time') ){
+                return $web_url;
+            }
             //return $abs_real_path . ' - already exists - ' . $web_url;
         }
 
@@ -111,6 +116,9 @@ class LaravelCmsHelper
 
         $original_img = public_path('storage/' . $this->s('file.upload_dir') . '/' . $img_obj->path);
 
+        if (!file_exists($original_img)) {
+            return $web_url;
+        }
         //self::debug($original_img);
 
         // resize the image to a width of 800 and constrain aspect ratio (auto height)
@@ -339,5 +347,45 @@ class LaravelCmsHelper
         }
 
         return $s;
+    }
+
+
+
+
+    static public function fileIconCode($mimeType, $return = 'code')
+    {
+        if (preg_match("/xls|xlsx|xlsb|csv/i", $mimeType)) {
+            $icon = 'excel';
+            $code = '<i class="fas fa-file-excel"></i>';
+        } else if (preg_match("/doc|docx|docm|dotx|dotm|docb/i", $mimeType)) {
+            $icon = 'word';
+            $code = '<i class="fas fa-file-word"></i>';
+        } else if (preg_match("/ppt/i", $mimeType)) {
+            $icon = 'powerpoint';
+            $code = '<i class="fas fa-file-powerpoint"></i>';
+        } else if (preg_match("/txt|html|php|conf|java|asp/i", $mimeType)) {
+            $icon = 'txt';
+            $code = '<i class="fas fa-file-alt"></i>';
+        } else if (preg_match("/pdf/i", $mimeType)) {
+            $icon = 'pdf';
+            $code = '<i class="fas fa-file-pdf"></i>';
+        } else if (preg_match("/mp4|wmv|avi/i", $mimeType)) {
+            $icon = 'video';
+            $code = '<i class="fas fa-file-video"></i>';
+        } else if (preg_match("/png|jpg|jpeg|gif|bmp|svg/i", $mimeType)) {
+            $icon = 'image';
+            $code = '<i class="fas fa-file-image"></i>';
+        } else if (preg_match("/zip|rar|gz|tar|7z/i", $mimeType)) {
+            $icon = 'zip';
+            $code = '<i class="far fa-file-archive"></i>';
+        } else {
+            $icon = 'file';
+            $code = '<i class="fas fa-file"></i>';
+        }
+        if ($return != 'code') {
+            return 'icon-' . $icon;
+        } else {
+            return $code;
+        }
     }
 }

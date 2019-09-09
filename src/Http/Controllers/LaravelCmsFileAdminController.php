@@ -190,10 +190,26 @@ class LaravelCmsFileAdminController extends Controller
     public function destroy(Request $request, $id)
     {
         $this->checkUser();
-        $rs = LaravelCmsSetting::find($id)->delete();
+
+        $file = LaravelCmsFile::find($id);
+
+        $original_file_path = public_path($this->helper->imageUrl($file));
+        if ( file_exists($original_file_path) ) {
+            unlink($original_file_path);
+        }
+        if ( $file->is_image ){
+            $small_img_path = public_path($this->helper->imageUrl($file, $this->helper->s('file.small_image_width')));
+
+            $all_images = glob( dirname($small_img_path) . "/" . $id . "_*");
+
+           // $this->helper->debug($all_images);
+           array_map('unlink', $all_images);
+        }
+
+        $file->delete();
 
         return redirect()->route(
-            'LaravelCmsAdminSettings.index'
+            'LaravelCmsAdminFiles.index'
         );
     }
 }
