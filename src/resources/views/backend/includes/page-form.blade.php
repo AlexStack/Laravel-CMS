@@ -34,15 +34,15 @@
 <div class="tab-content">
     <div class="tab-pane active" id="main-content" role="tabpanel">
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "title", 'label'=>isset($page)? $helper->t('title') . ' <a class="text-info ml-2 " href="' . $helper->url($page) . '" target="_blank" title="Preview"><i class="fas fa-external-link-square-alt"></i></a>': $helper->t('title')])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "title", 'label'=>isset($page)? $helper->t('title') . ' <a class="text-info ml-2 " href="' . $helper->url($page) . '" target="_blank" title="Preview"><i class="fas fa-external-link-square-alt"></i></a>': $helper->t('title'), 'input_attributes'=>['required'=>'required', 'minlength'=>3, 'pattern'=>".{3,}"]])
 
         @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "menu_title"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_banner", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_banner", 'input_attributes'=>['class'=>'form-control input-main_banner mb-3','accept'=>'image/*'] ])
 
         @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "main_content"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_image", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'file', 'name' => "main_image", 'input_attributes'=>['class'=>'form-control input-main_image mb-3','accept'=>'image/*'] ])
 
 
         @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "sub_content"])

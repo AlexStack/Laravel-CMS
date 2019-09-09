@@ -67,7 +67,9 @@ if ( $(".input-input_attribute").val().indexOf("}") !== -1 ){
             //readOnly：false,
             styleActiveLine: true,
             mode: 'application/json',
-            matchBrackets: true
+            matchBrackets: true,
+            lineWrapping: true,
+            htmlMode: true,
     });
 }
 </script>

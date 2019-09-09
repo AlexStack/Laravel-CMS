@@ -33,7 +33,7 @@
     @if ( isset($file_data) && property_exists($file_data, $name) && isset($file_data->$name) )
         <div class="form-group upload-img">
             <a href="{{$helper->imageUrl($file_data->$name, 'original','original') }}" target="_blank">
-                <img class="img-fluid img-thumbnail p-1" src="{{$helper->imageUrl($file_data->$name, $helper->s('file.small_image_width'), $helper->s('file.small_image_height')) }}" alt="" /></a>
+                <img class="img-fluid img-thumbnail p-1" src="{{$helper->imageUrl($file_data->$name, $helper->s('file.small_image_width'), $helper->s('file.small_image_height')) }}" style="max-height:{{$helper->s('file.small_image_height')}}px;" /></a>
 
             {{$helper->t('delete') }}: {!! Form::checkbox($name . '_delete', 1, $checked ?? false); !!}
 
