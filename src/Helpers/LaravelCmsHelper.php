@@ -80,8 +80,8 @@ class LaravelCmsHelper
             $height = null;
         }
 
-
-        if ($img_obj->suffix == 'svg' || ($width == null && $height == null)) {
+        //$this->debug($img_obj);
+        if ($img_obj->suffix == 'svg' || ($width == null && $height == null) || !isset($img_obj->is_image) || $img_obj->is_image == false) {
             $original_img_url = '/storage/' . $this->s('file.upload_dir') . '/' . $img_obj->path;
             return $original_img_url;
         }

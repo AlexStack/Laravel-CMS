@@ -4,7 +4,7 @@
         <a class="nav-link active" data-toggle="tab" href="#main-content" role="tab"><i class="fas fa-cube mr-1"></i>{{ $helper->t('main_content') }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#settings" role="tab"><i class="fas fa-cog mr-1"></i>{{ $helper->t('setting',2) }}</a>
+        <a class="nav-link" data-toggle="tab" href="#settings" role="tab"><i class="fas fa-cog mr-1"></i>{{ $helper->t('settings') }}</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#extra-content" role="tab"><i class="fas fa-cubes mr-1"></i>{{ $helper->t('extra_content') }}</a>

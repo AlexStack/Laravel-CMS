@@ -70,20 +70,26 @@ class LaravelCmsFileAdminController extends Controller
     {
         $this->checkUser();
 
-        $data['settings'] = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
+        $data['files'] = LaravelCmsFile::orderBy('id', 'desc')->get();
 
         $data['helper'] = $this->helper;
 
-        $data['categories'] =  json_decode($this->helper->s('categories.cms_setting_categories'), true);
-        if (!$data['categories']) {
-            $data['categories'] = [];
-        }
 
         //$this->helper->debug($data['categories']);
 
         return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.file-list', $data);
     }
 
+    public function show($id)
+    {
+        $this->checkUser();
+
+        if ( request()->generate_image && request()->width)   {
+            $file = LaravelCmsFile::find($id);
+            return redirect()->to($this->helper->imageUrl($file, request()->width, request()->height));
+        }
+
+    }
     public function edit($id)
     {
         $this->checkUser();

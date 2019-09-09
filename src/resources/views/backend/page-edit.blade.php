@@ -13,7 +13,7 @@
       <div class="col-md">
           @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.submit-button')
       </div>
-      <div class="col-md text-right">
+      <div class="col-md-auto text-right">
           <button type="button" class="btn btn-danger " onclick="return confirmDelete(form);"><i class="fas fa-trash-alt mr-2" ></i>{{$helper->t('delete')}}</button>
       </div>
     </div>
