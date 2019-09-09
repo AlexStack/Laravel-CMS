@@ -31,7 +31,7 @@
 
 <div class="row files">
 @foreach ($files as $file)
-    <div class="col-sm text-center text-truncate mb-5">
+    <div class="col-sm text-center text-truncate mb-5 file">
 
         @if ( $file->is_image)
         <div class="file-icon">

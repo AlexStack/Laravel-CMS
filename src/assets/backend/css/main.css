@@ -3,3 +3,39 @@
 }
 
 body {font-family: "Microsoft YaHei","微软雅黑", "PingFang SC","Arial"}
+
+
+.files .file:hover{
+  background-color: rgba(243, 247, 242, 0.658);
+}
+.files .fa-file-image {
+  color: #6f6feb;
+}
+
+.files .fa-file-word {
+  color: #08569f;
+}
+
+.files .fa-file-excel {
+  color: #11733a;
+}
+
+.files .fa-file-archive {
+  color: rgba(151, 136, 2, 0.753);
+}
+
+.files .fa-file-video {
+  color: #dd6808;
+}
+
+.files .fa-file-powerpoint{
+  color: rgb(210, 70, 37)
+}
+
+.files .fa-file-pdf{
+  color:#cc0a0b;
+}
+
+.files .fa-file-alt{
+  color:rgb(136, 135, 135);
+}
