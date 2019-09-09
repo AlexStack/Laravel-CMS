@@ -32,4 +32,44 @@
     }
 </script>
 
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/javascript/javascript.js"></script>
+
+<style>
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+</style>
+
+<script>
+
+if ( $(".input-param_value").is('textarea')){
+    var editor = CodeMirror.fromTextArea(document.getElementsByClassName("input-param_value")[0], {
+            lineNumbers: true,
+            //readOnly：false,
+            styleActiveLine: true,
+            mode: 'application/json',
+            matchBrackets: true,
+            lineWrapping: true,
+            htmlMode: true,
+    });
+}
+
+if ( $(".input-input_attribute").val().indexOf("}") !== -1 ){
+    var editor = CodeMirror.fromTextArea(document.getElementsByClassName("input-input_attribute")[0], {
+            lineNumbers: true,
+            //readOnly：false,
+            styleActiveLine: true,
+            mode: 'application/json',
+            matchBrackets: true
+    });
+}
+</script>
+
 @endsection
