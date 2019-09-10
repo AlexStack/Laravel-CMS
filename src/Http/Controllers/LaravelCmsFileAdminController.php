@@ -40,8 +40,12 @@ class LaravelCmsFileAdminController extends Controller
     public function index()
     {
         $this->checkUser();
-
-        $data['files'] = LaravelCmsFile::orderBy('updated_at', 'desc')->paginate($this->helper->s('file.number_per_page') ?? 12);;
+        $keyword = request()->keyword;
+        $data['files'] = LaravelCmsFile::when($keyword, function ($query, $keyword) {
+            return $query->where('title', 'like', '%' . trim($keyword) . '%');
+        })
+            ->orderBy('updated_at', 'desc')
+            ->paginate($this->helper->s('file.number_per_page') ?? 12);;
 
         $data['helper'] = $this->helper;
 

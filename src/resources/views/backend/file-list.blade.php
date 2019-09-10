@@ -13,7 +13,7 @@
         <div class="col-md">
 
             <div class="row justify-content-center upload-form">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     {!! Form::model($_GET, ['route' => ['LaravelCmsAdminFiles.store'], 'method' => "POST",
                     'files'=>true])
                     !!}
@@ -38,8 +38,8 @@
                     {{ Form::close() }}
                 </div>
 
-                @if ( isset($_REQUEST['editor_id']))
-                <div class="col-md-6">
+                @if ( isset($_REQUEST['editor_id']) && strlen($_REQUEST['editor_id'])>3)
+                <div class="col-md-5">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroupFileAddon02">
@@ -58,6 +58,30 @@
                 </div>
                 @endif
 
+                {{-- search form --}}
+                <div class="col-md-3">
+                    {!! Form::model($_GET, ['route' => ['LaravelCmsAdminFiles.index'], 'method' => "GET",
+                    'files'=>true])
+                    !!}
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i></span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="text" class="form-control" placeholder="Keyword" aria-label="Keyword"
+                                value="{{$_REQUEST['keyword'] ?? ''}}" aria-describedby="basic-addon2" name="keyword"
+                                id="keyword" />
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit"
+                                id="inputGroupFileAddon05">{{$helper->t('search')}}</button>
+                        </div>
+                    </div>
+                    <input name="editor_id" type="hidden" value="{{ $_REQUEST['editor_id'] ?? ''}}" />
+                    {{ Form::close() }}
+                </div>
 
             </div>
 
@@ -132,7 +156,7 @@
 
             <div class="row justify-content-center upload-form">
                 <div class="col-md-auto pagination">
-                    {{ $files->appends(['editor_id' =>$_REQUEST['editor_id']??null])->links() }}
+                    {{ $files->appends(['editor_id' =>$_REQUEST['editor_id']??null, 'keyword' =>$_REQUEST['keyword']??null])->links() }}
                 </div>
             </div>
         </div>
