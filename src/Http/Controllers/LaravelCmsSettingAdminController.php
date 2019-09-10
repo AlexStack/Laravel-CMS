@@ -64,30 +64,32 @@ class LaravelCmsSettingAdminController extends Controller
 
         $helper = $this->helper;
 
-        if ( strpos($config_str, '__(') !== false ){
+        if (strpos($config_str, '__(') !== false) {
             // replace __(str) to locale language string
             $config_str = preg_replace_callback(
                 "/__\((.*)\)/U",
-                function($matches) use($helper){
-                    $str = trim(str_replace(['\\','\'','"'],'',$matches[1]));
+                function ($matches) use ($helper) {
+                    $str = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
                     return addslashes($helper->t($str));
                 },
-                $config_str);
+                $config_str
+            );
         }
 
-        if ( strpos($config_str, 'ROUTE(') !== false ){
+        if (strpos($config_str, 'ROUTE(') !== false) {
             // replace __(str) to locale language string
             $config_str = preg_replace_callback(
                 "/ROUTE\((.*)\)/U",
-                function($matches) {
-                    $route_name = trim(str_replace(['\\','\'','"'],'',$matches[1]));
-                    if ( \Route::has($route_name) ){
+                function ($matches) {
+                    $route_name = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
+                    if (\Route::has($route_name)) {
                         return route($route_name, [], false);
                     } else {
-                        return '#route_not_defined_'.$matches[1];
+                        return '#route_not_defined_' . $matches[1];
                     }
                 },
-                $config_str);
+                $config_str
+            );
         }
 
         $config_file = storage_path('app/laravel-cms/settings.php');
@@ -101,9 +103,10 @@ class LaravelCmsSettingAdminController extends Controller
         //return $config_str;
     }
 
-    public function getCategories($settings=null, $allow_html = true) {
-        if ( !$settings ){
-            $settings = LaravelCmsSetting::groupBy('category')->get(['category','category']);
+    public function getCategories($settings = null, $allow_html = true)
+    {
+        if (!$settings) {
+            $settings = LaravelCmsSetting::groupBy('category')->get(['category', 'category']);
             //$settings = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
         }
         //$this->helper->debug($settings);
@@ -113,13 +116,13 @@ class LaravelCmsSettingAdminController extends Controller
         }
         $all_cats = $settings->pluck('category', 'category')->toArray();
         $new_cats = array_merge($custom_cats, $all_cats);
-        array_walk($new_cats, function(&$item, $key) use($custom_cats, $allow_html){
-            if ( isset($custom_cats[$key])){
+        array_walk($new_cats, function (&$item, $key) use ($custom_cats, $allow_html) {
+            if (isset($custom_cats[$key])) {
                 $item =  $custom_cats[$key];
-            } else{
+            } else {
                 $item = $this->helper->t($item);
             }
-            if (!$allow_html){
+            if (!$allow_html) {
                 $item = strip_tags($item);
             }
         });
@@ -229,9 +232,18 @@ class LaravelCmsSettingAdminController extends Controller
             exit(sprintf($this->wrong_json_format_str, 'Input Attribute'));
         }
 
+        if ($form_data['param_name'] == 'backend_language' && $setting->param_value != $form_data['param_value']) {
+            $need_update_config_file_twice = true;
+        }
+
         $data['setting'] = $setting->update($form_data);
 
         $this->updateConfigFile();
+
+        if (isset($need_update_config_file_twice)) {
+            $this->helper = new LaravelCmsHelper; // reload settings
+            $this->updateConfigFile(); // replace language variables
+        }
 
         if ($form_data['return_to_the_list']) {
             return redirect()->route(
