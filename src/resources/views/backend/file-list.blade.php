@@ -177,15 +177,31 @@
             } else if ( window.opener ){
                 var editor_page = window.opener;
             }
-            var html_str = '<img src="' + $(this).attr('href') + '" class="img-fluid content-img" />bb';
+
+            var link = $(this).attr('href');
+            if ( $(this).attr('href').indexOf('generate_image') != -1 ){
+                var ajax_data = $.ajax({
+                            type: "GET",
+                            url: $(this).attr('href') + '&return_url=yes',
+                            success: function(response) {
+                                console.log(response);
+                            },
+                            cache: false,
+                            async: false
+                        });
+                link = ajax_data.responseText;
+            }
+
+            var html_str = '<img src="' + link + '" class="img-fluid content-img" />';
 
             if ( $(this).hasClass('not_image')){
                 var link_txt = $(this).attr('title');
                 if ( $(this).hasClass('icon')){
                     link_txt = '<i class="' + $(this).find('i:first').attr('class') + ' mr-1"></i>' + link_txt;
                 }
-                html_str = ' <a href="' + $(this).attr('href') + '" class="content-file" target="_blank">' + link_txt + '</a> ';
+                html_str = ' <a href="' + link + '" class="content-file" target="_blank">' + link_txt + '</a> ';
             }
+
 
             if ( typeof(editor_page) !== 'undefined'){
                 editor_page.insertHtmlToEditor("{{ $_GET['editor_id'] ?? '.input-main_content'}}", html_str);
@@ -193,6 +209,7 @@
             } else {
                 console.log('editor_page callback failed');
             }
+
 
         });
     }

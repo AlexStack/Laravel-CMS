@@ -84,11 +84,14 @@ class LaravelCmsFileAdminController extends Controller
     {
         $this->checkUser();
 
-        if ( request()->generate_image && request()->width)   {
+        if (request()->generate_image && request()->width) {
             $file = LaravelCmsFile::find($id);
-            return redirect()->to($this->helper->imageUrl($file, request()->width, request()->height));
+            $url = $this->helper->imageUrl($file, request()->width, request()->height);
+            if (request()->return_url) {
+                return $url;
+            }
+            return redirect()->to($url);
         }
-
     }
     public function edit($id)
     {
@@ -194,16 +197,16 @@ class LaravelCmsFileAdminController extends Controller
         $file = LaravelCmsFile::find($id);
 
         $original_file_path = public_path($this->helper->imageUrl($file));
-        if ( file_exists($original_file_path) ) {
+        if (file_exists($original_file_path)) {
             unlink($original_file_path);
         }
-        if ( $file->is_image ){
+        if ($file->is_image) {
             $small_img_path = public_path($this->helper->imageUrl($file, $this->helper->s('file.small_image_width')));
 
-            $all_images = glob( dirname($small_img_path) . "/" . $id . "_*");
+            $all_images = glob(dirname($small_img_path) . "/" . $id . "_*");
 
-           // $this->helper->debug($all_images);
-           array_map('unlink', $all_images);
+            // $this->helper->debug($all_images);
+            array_map('unlink', $all_images);
         }
 
         $file->delete();
