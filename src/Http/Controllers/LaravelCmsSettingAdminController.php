@@ -241,7 +241,7 @@ class LaravelCmsSettingAdminController extends Controller
         $this->updateConfigFile();
 
         if (isset($need_update_config_file_twice)) {
-            $this->helper = new LaravelCmsHelper; // reload settings
+            $this->helper = new LaravelCmsHelper; // reload new settings
             $this->updateConfigFile(); // replace language variables
         }
 

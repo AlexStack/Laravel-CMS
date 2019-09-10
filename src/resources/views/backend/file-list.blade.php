@@ -88,6 +88,7 @@
 
             </div>
 
+            {{-- show files --}}
             <div class="row files">
                 @foreach ($files as $file)
                 <div class="col-sm text-center text-truncate mb-5 file">
@@ -107,24 +108,20 @@
                         <a href="{{$helper->imageUrl($file, 'original','original') }}" class="preview_link is_image"
                             target="_blank"
                             title="Original File Size: {{($file->filesize/1024 > 1000) ? round($file->filesize/1024/1024,2) . ' MB' : round($file->filesize/1024) . ' KB' }}">
-                            O<i class="fas fa-external-link-alt ml-1 small text-secondary"></i>
-                        </a>
+                            O<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 
 
                         <a href="{{ route('LaravelCmsAdminFiles.show',['file'=>$file->id, 'generate_image'=>'yes', 'width'=>$helper->s('file.big_image_width'), 'height'=>$helper->s('file.big_image_height')]) }}"
                             class="preview_link is_image" target="_blank" title="{{ $helper->t('large_image') }}">
-                            L<i class="fas fa-external-link-alt ml-1 small text-secondary"></i>
-                        </a>
+                            L<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 
                         <a href="{{ route('LaravelCmsAdminFiles.show',['file'=>$file->id, 'generate_image'=>'yes', 'width'=>$helper->s('file.middle_image_width'), 'height'=>$helper->s('file.middle_image_height')]) }}"
                             class="preview_link is_image" target="_blank" title="{{ $helper->t('middle_image') }}">
-                            M<i class="fas fa-external-link-alt ml-1 small text-secondary"></i>
-                        </a>
+                            M<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 
                         <a href="{{$helper->imageUrl($file, $helper->s('file.small_image_width'), $helper->s('file.small_image_height')) }}"
                             class="preview_link is_image" target="_blank" title="{{ $helper->t('small_image') }}">
-                            S<i class="fas fa-external-link-alt ml-1 small text-secondary"></i>
-                        </a>
+                            S<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 
                         <a href="#" onclick="return confirmDelete({{$file->id}})" class="del">D<i
                                 class="far fa-trash-alt ml-1 small text-secondary"></i></a>

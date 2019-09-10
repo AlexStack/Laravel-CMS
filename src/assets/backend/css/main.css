@@ -1,13 +1,16 @@
 .container {
-	max-width: 100%;
+  max-width: 100%;
 }
 
-body {font-family: "Microsoft YaHei","微软雅黑", "PingFang SC","Arial"}
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Arial"
+}
 
 
-.files .file:hover{
+.files .file:hover {
   background-color: rgba(243, 247, 242, 0.658);
 }
+
 .files .fa-file-image {
   color: #6f6feb;
 }
@@ -28,14 +31,21 @@ body {font-family: "Microsoft YaHei","微软雅黑", "PingFang SC","Arial"}
   color: #dd6808;
 }
 
-.files .fa-file-powerpoint{
+.files .fa-file-powerpoint {
   color: rgb(210, 70, 37)
 }
 
-.files .fa-file-pdf{
-  color:#cc0a0b;
+.files .fa-file-pdf {
+  color: #cc0a0b;
 }
 
-.files .fa-file-alt{
-  color:rgb(136, 135, 135);
+.files .fa-file-alt {
+  color: rgb(136, 135, 135);
+}
+
+.files a.preview_link:hover,
+.files a.preview_link:hover i {
+  color: #cc0a0b !important;
+  font-size: 110%;
+  font-weight: bold;
 }
