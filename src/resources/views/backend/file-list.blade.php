@@ -32,9 +32,33 @@
                                 id="inputGroupFileAddon04">{{$helper->t('upload')}}</button>
                         </div>
                     </div>
+
+
                     <input name="editor_id" type="hidden" value="{{ $_REQUEST['editor_id'] ?? ''}}" />
                     {{ Form::close() }}
                 </div>
+
+                @if ( isset($_REQUEST['editor_id']))
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon02">
+                                <i class="fas fa-image"></i></span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="text" class="form-control" placeholder="Image URL" aria-label="Username"
+                                aria-describedby="basic-addon1" name="image_url" id="image_url" />
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button"
+                                onclick="return insertRemoteUrl('#image_url')">
+                                {{$helper->t('insert')}}</button>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
             </div>
 
             <div class="row files">
@@ -137,30 +161,53 @@
         }
         return false;
     }
+
+    function insertRemoteUrl(url_id)  {
+        var link = $.trim($(url_id).val());
+        var external_class = ( link.indexOf('http') == -1 ) ? '' : 'external-link';
+        if ( link.match(/\.(jpeg|jpg|gif|png|svg|bmp|webp)$/) != null ){
+            var html_str = '<img src="' + link + '" class="img-fluid content-img '+ external_class + '" />';
+        } else {
+            var html_str = ' <a href="' + link + '" class="content-file '+ external_class + '" target="_blank"><i class="fas fa-link mr-1"></i>' + link + '</a> ';
+        }
+
+        return handleInsertToEditor(html_str);
+        //return false;
+    }
+
+    function handleInsertToEditor(html_str)   {
+        if ( window.parent ){
+            var editor_page = window.parent;
+        } else if ( window.opener ){
+            var editor_page = window.opener;
+        }else {
+            console.log('editor_page callback failed');
+            return false;
+        }
+        editor_page.insertHtmlToEditor("{{ $_GET['editor_id'] ?? 'textarea.input-main_content'}}", html_str);
+        editor_page.hideIframeModal('#iframe-modal');
+        return true;
+    }
+
     if ( window.location.href.indexOf('editor_id=textarea') != -1 ) {
         $('a.del').hide();
         $('.files a.preview_link').click(function(e)
         {
             e.preventDefault();
 
-            if ( window.parent ){
-                var editor_page = window.parent;
-            } else if ( window.opener ){
-                var editor_page = window.opener;
-            }
 
             var link = $(this).attr('href');
-            if ( $(this).attr('href').indexOf('generate_image') != -1 ){
+            if ( link.indexOf('generate_image') != -1 ){
                 var ajax_data = $.ajax({
                             type: "GET",
-                            url: $(this).attr('href') + '&return_url=yes',
+                            url: link + '&return_url=yes',
                             success: function(response) {
                                 //console.log(response);
                             },
                             cache: false,
                             async: false
                         });
-                link = ajax_data.responseText;
+                link = ajax_data.responseText; // ajax sync
             }
 
             var html_str = '<img src="' + link + '" class="img-fluid content-img" />';
@@ -174,13 +221,7 @@
             }
 
 
-            if ( typeof(editor_page) !== 'undefined'){
-                editor_page.insertHtmlToEditor("{{ $_GET['editor_id'] ?? '.input-main_content'}}", html_str);
-                editor_page.hideIframeModal('#iframe-modal');
-            } else {
-                console.log('editor_page callback failed');
-            }
-
+            handleInsertToEditor(html_str);
 
         });
     }
