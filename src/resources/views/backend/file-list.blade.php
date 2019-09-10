@@ -9,10 +9,11 @@
 </script>
 
 <div class="container">
-    <div class="row justify-content-center mt-2">
+    <div class="row justify-content-center">
         <div class="col-md">
 
-            <div class="row justify-content-center upload-form">
+            <div class="row justify-content-center header-forms">
+                {{-- upload form --}}
                 <div class="col-md-4">
                     {!! Form::model($_GET, ['route' => ['LaravelCmsAdminFiles.store'], 'method' => "POST",
                     'files'=>true])
@@ -20,7 +21,8 @@
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">{{$helper->t('file')}}</span>
+                            <span class="input-group-text" id="inputGroupFileAddon01">
+                                <i class="fas fa-upload"></i></span>
                         </div>
                         <div class="custom-file">
                             <input type="file" name="files[]" class="custom-file-input" id="inputGroupFile01"
@@ -38,6 +40,7 @@
                     {{ Form::close() }}
                 </div>
 
+                {{-- insert remote url to editor --}}
                 @if ( isset($_REQUEST['editor_id']) && strlen($_REQUEST['editor_id'])>3)
                 <div class="col-md-5">
                     <div class="input-group mb-3">
@@ -208,6 +211,8 @@
 
     if ( window.location.href.indexOf('editor_id=textarea') != -1 ) {
         $('a.del').hide();
+        $('.header-forms').addClass('sticky-top').addClass('bg-white').addClass('pt-2');
+
         $('.files a.preview_link').click(function(e)
         {
             e.preventDefault();

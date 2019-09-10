@@ -12,6 +12,8 @@ return [
     'save_and_return_to_the_list' => '保存并返回列表页',
     'delete' => '删除',
     'upload' => '上传',
+    'search' => '搜索',
+    'insert' => '插入',
 
     // setting form
     'param_name' => '参数名称',
