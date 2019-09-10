@@ -13,7 +13,7 @@
         <div class="col-md">
 
             <div class="row justify-content-center upload-form">
-                <div class="col-md-4">
+                <div class="col-md-5">
                     {!! Form::model($_GET, ['route' => ['LaravelCmsAdminFiles.store'], 'method' => "POST",
                     'files'=>true])
                     !!}
@@ -130,17 +130,10 @@
                 @endforeach
             </div>
 
-            <!-- Tab panes start -->
-            <style>
-                .list-group-item:first-child {
-                    border-top-left-radius: 0;
-                    border-top-right-radius: 0;
-                    border-top: 0;
-                }
-            </style>
-            <div class="tab-content">
-
-
+            <div class="row justify-content-center upload-form">
+                <div class="col-md-auto pagination">
+                    {{ $files->appends(['editor_id' =>$_REQUEST['editor_id']??null])->links() }}
+                </div>
             </div>
         </div>
     </div>
@@ -217,7 +210,7 @@
                 if ( $(this).hasClass('icon')){
                     link_txt = '<i class="' + $(this).find('i:first').attr('class') + ' mr-1"></i>' + link_txt;
                 }
-                html_str = ' <a href="' + link + '" class="content-file" target="_blank">' + link_txt + '</a> ';
+                html_str = '&nbsp;<a href="' + link + '" class="content-file" target="_blank">' + link_txt + '</a>&nbsp;';
             }
 
 

@@ -39,11 +39,12 @@ $input_attributes['class'] = 'form-control input-'.$name;
 
         {{$helper->t('delete') }}: {!! Form::checkbox($name . '_delete', 1, $checked ?? false); !!}
 
-        @if ( $name == 'main_image')
+        {{-- @if ( $name == 'main_image')
         Insert Image:
         <a href="#"
-            onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, 'w','h') }}');return false;">Original
-            Image</a>
+            onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, 'w','h') }}');return
+        false;">Original
+        Image</a>
         -
         <a href="#"
             onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, $helper->s('file.big_image_width'), 'h') }}');return false;">Big
@@ -53,12 +54,7 @@ $input_attributes['class'] = 'form-control input-'.$name;
             onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, $helper->s('file.small_image_width'), $helper->s('file.small_image_height')) }}');return false;">Small
             Image</a>
 
-        -
-
-        <a href="/cmsadmin/files?insert_files_to_editor=1" target="browser_image" class="show-modal">Test Browser
-            Image</a>
-
-        @endif
+        @endif --}}
 
     </div>
     @endif
