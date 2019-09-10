@@ -164,7 +164,7 @@
 
     function insertRemoteUrl(url_id)  {
         var link = $.trim($(url_id).val());
-        var external_class = ( link.indexOf('http') == -1 ) ? '' : 'external-link';
+        var external_class = ( link.match(/http:|https:/) == null || link.indexOf(location.hostname) != -1 ) ? '' : 'external-link';
         if ( link.match(/\.(jpeg|jpg|gif|png|svg|bmp|webp)$/) != null ){
             var html_str = '<img src="' + link + '" class="img-fluid content-img '+ external_class + '" />';
         } else {
