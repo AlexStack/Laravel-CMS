@@ -5,7 +5,6 @@
     document.write("<style> .file-icon {height: {{$helper->s('file.small_image_height')}}px; vertical-align: middle;}</style>");
     if ( window.location.href.indexOf('insert_files_to_editor') != -1 ) {
         $('.top-header').hide();
-
     }
 </script>
 
@@ -13,20 +12,14 @@
     <div class="row justify-content-center mt-2">
         <div class="col-md">
 
-
-
-
-            <a href="#"
-                onClick="opener.insertImageToEditor('.input-main_content','http://xinxilan.org.test/storage/laravel-cms-uploads/optimized/32/32_151_101_ratio.jpg');window.close();return false;">test
-                image</a>
-
             <div class="row files">
                 @foreach ($files as $file)
                 <div class="col-sm text-center text-truncate mb-5 file">
 
                     @if ( $file->is_image)
                     <div class="file-icon">
-                        <a href="{{$helper->imageUrl($file, 'original','original') }}" target="_blank"
+                        <a href="{{ route('LaravelCmsAdminFiles.show',['file'=>$file->id, 'generate_image'=>'yes', 'width'=>$helper->s('file.big_image_width'), 'height'=>$helper->s('file.big_image_height')]) }}"
+                            target="_blank"
                             title="Size: {{($file->filesize/1024 > 1000) ? round($file->filesize/1024/1024,2) . ' MB' : round($file->filesize/1024) . ' KB' }}"
                             class="preview_link is_image">
                             <img class="img-fluid rounded"
@@ -57,7 +50,7 @@
                             S<i class="fas fa-external-link-alt ml-1 small text-secondary"></i>
                         </a>
 
-                        <a href="#" onclick="return confirmDelete({{$file->id}})">D<i
+                        <a href="#" onclick="return confirmDelete({{$file->id}})" class="del">D<i
                                 class="far fa-trash-alt ml-1 small text-secondary"></i></a>
 
                     </div>
@@ -74,7 +67,7 @@
                             {{$helper->t('file')}}<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
                         {{($file->filesize/1024 > 1000) ? round($file->filesize/1024/1024,2) . ' MB' : ($file->filesize/1024 > 10) ? round($file->filesize/1024) . ' KB' : round($file->filesize/1024, 1) . ' KB' }}
 
-                        <a href="#" onclick="return confirmDelete({{$file->id}})">D<i
+                        <a href="#" onclick="return confirmDelete({{$file->id}})" class="del">D<i
                                 class="far fa-trash-alt ml-1 small text-secondary"></i></a>
                     </div>
                     @endif
@@ -168,6 +161,7 @@
         return false;
     }
     if ( window.location.href.indexOf('insert_files_to_editor') != -1 ) {
+        $('a.del').hide();
         $('.files a.preview_link').click(function(e)
         {
             e.preventDefault();
@@ -184,7 +178,7 @@
                             type: "GET",
                             url: $(this).attr('href') + '&return_url=yes',
                             success: function(response) {
-                                console.log(response);
+                                //console.log(response);
                             },
                             cache: false,
                             async: false

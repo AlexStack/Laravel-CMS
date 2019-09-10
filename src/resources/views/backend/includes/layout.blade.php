@@ -50,7 +50,7 @@
                 </div>
                 <div class="modal-body p-0 m-0">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="/laravel-cms/backend/images/top-logo.png"
+                        <iframe class="embed-responsive-item" src="data:text/html,Loading..."
                             id="modal-iframe"></iframe>
                     </div>
                 </div>
