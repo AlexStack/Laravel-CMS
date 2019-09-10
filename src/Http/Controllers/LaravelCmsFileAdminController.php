@@ -70,7 +70,7 @@ class LaravelCmsFileAdminController extends Controller
     {
         $this->checkUser();
 
-        $data['files'] = LaravelCmsFile::orderBy('id', 'desc')->get();
+        $data['files'] = LaravelCmsFile::orderBy('updated_at', 'desc')->get();
 
         $data['helper'] = $this->helper;
 
@@ -120,39 +120,19 @@ class LaravelCmsFileAdminController extends Controller
     {
         $this->checkUser();
 
+
         $form_data = $request->all();
         $form_data['user_id'] = $this->user->id ?? null;
 
-        $must_json = $form_data['category'] == 'plugins';
-        if (!$this->helper->correctJsonFormat($form_data['param_value'], $must_json)) {
-            exit(sprintf($this->wrong_json_format_str, 'Param Value'));
-        }
+        $all_file_data = [];
+        $this->handleUpload($request, $form_data, $all_file_data);
 
-        $must_json = trim($form_data['input_attribute']) != '';
-        if (!$this->helper->correctJsonFormat($form_data['input_attribute'], $must_json)) {
-            exit(sprintf($this->wrong_json_format_str, 'Input Attribute'));
-        }
+        //$this->helper->debug($all_file_data);
 
-        $rs = new LaravelCmsSetting;
-        foreach ($rs->fillable as $field) {
-            if (isset($form_data[$field])) {
-                $rs->$field = trim($form_data[$field]);
-            }
-        }
-        $rs->save();
 
-        $this->updateConfigFile();
-
-        if ($form_data['return_to_the_list']) {
-
-            return redirect()->route(
-                'LaravelCmsAdminSettings.index',
-                ['category' => $rs->category]
-            );
-        }
         return redirect()->route(
-            'LaravelCmsAdminSettings.edit',
-            ['id' => $rs->id]
+            'LaravelCmsAdminFiles.index',
+            ['editor_id' => $request->editor_id]
         );
     }
 
@@ -214,5 +194,60 @@ class LaravelCmsFileAdminController extends Controller
         return redirect()->route(
             'LaravelCmsAdminFiles.index'
         );
+    }
+
+
+
+    private function handleUpload($request, &$form_data, &$all_file_data = [])
+    {
+
+        $files = $request->file('files');
+
+        if ($request->hasFile('files')) {
+            foreach ($files as $file) {
+                $all_file_data[] = $this->uploadFile($file)->toArray();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function uploadFile($f)
+    {
+
+        // $file_data['user_id'] = $user->id;
+        $file_data['mimetype']  = $f->getMimeType();
+        $file_data['suffix']    = $f->getClientOriginalExtension();
+        $file_data['filename']  = $f->getClientOriginalName();
+        $file_data['title']     = $file_data['filename'];
+        $file_data['filesize']  = $f->getSize();
+        if (strpos($file_data['mimetype'], 'image/') !== false) {
+            $file_data['is_image']  = 1;
+        }
+        if (strpos($file_data['mimetype'], 'video/') !== false) {
+            $file_data['is_video']  = 1;
+        }
+        $file_data['filehash']  = sha1_file($f->path());
+
+        $file_data['path']  = substr($file_data['filehash'], -2) . '/' . $file_data['filehash'] . '.' . $file_data['suffix'];
+
+        // $abs_real_path = public_path('laravel-cms-uploads/' . $file_data['path']);
+
+        // if (!file_exists(dirname($abs_real_path))) {
+        //     mkdir(dirname($abs_real_path), 0755, true);
+        // }
+
+        $file_data['description']  = date('Y-m-d H:i:s'); // make some different otherwise the updated_at will not update
+        $new_file = LaravelCmsFile::updateOrCreate(
+            ['filehash' => $file_data['filehash']],
+            $file_data
+        );
+
+        $f->storeAs(dirname('public/' . $this->helper->s('upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
+
+        return $new_file;
+
+        // echo '<pre>111:' . var_export($new_file, true) . '</pre>';
+        // exit();
     }
 }

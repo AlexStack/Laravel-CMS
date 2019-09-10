@@ -3,7 +3,7 @@
 @section('content')
 <script>
     document.write("<style> .file-icon {height: {{$helper->s('file.small_image_height')}}px; vertical-align: middle;}</style>");
-    if ( window.location.href.indexOf('insert_files_to_editor') != -1 ) {
+    if ( window.location.href.indexOf('editor_id=textarea') != -1 ) {
         $('.top-header').hide();
     }
 </script>
@@ -11,6 +11,31 @@
 <div class="container">
     <div class="row justify-content-center mt-2">
         <div class="col-md">
+
+            <div class="row justify-content-center upload-form">
+                <div class="col-md-4">
+                    {!! Form::model($_GET, ['route' => ['LaravelCmsAdminFiles.store'], 'method' => "POST",
+                    'files'=>true])
+                    !!}
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">{{$helper->t('file')}}</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="files[]" class="custom-file-input" id="inputGroupFile01"
+                                onchange="form.submit()" aria-describedby="inputGroupFileAddon01" multiple />
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit"
+                                id="inputGroupFileAddon04">{{$helper->t('upload')}}</button>
+                        </div>
+                    </div>
+                    <input name="editor_id" type="hidden" value="{{ $_REQUEST['editor_id'] ?? ''}}" />
+                    {{ Form::close() }}
+                </div>
+            </div>
 
             <div class="row files">
                 @foreach ($files as $file)
@@ -93,54 +118,6 @@
 
 
             </div>
-            <!-- Tab panes end -->
-
-
-            {{--
-            <ul id="sortableList" class="list-group">
-                @foreach ($settings as $item)
-                    <li class="list-group-item list-group-item-action">
-                        @php
-                            if ( $item->enabled) {
-                                $icon =  '<i class="fas fa-wrench ml-1  "></i>';
-                            } else {
-                                $icon =  '<i class="fas fa-hammer ml-1 "></i>';
-                            }
-                        @endphp
-
-                        {!! $icon !!}
-                        <a href="./settings/{{$item->id}}/edit"
-            class="{{$item->enabled ? 'text-dark font-weight-bold' : 'text-secondary'}}" title="Sort Value:
-            {{$item->sort_value??0}}">
-            [ {{$item->category}}
-            @if ( $item->page_id)
-            PageID:{{$item->page_id}}
-            @endif
-            ] -
-            {{$item->param_name}}
-            </a>
-
-            <a href="./settings/{{$item->id}}/edit" class="{{$item->enabled ? 'text-dark' : 'text-secondary'}}"><i
-                    class="far fa-edit ml-1 mr-1" title="Sort Value: {{$item->sort_value??0}}"></i></a>
-
-            <span class="abstract">
-                ({!! \Illuminate\Support\Str::words($item->abstract, 20,'...') !!})
-            </span>
-
-            <a href="{{ route('LaravelCmsAdminSettings.create', ['category' => $item->category, 'page_id'=>$item->page_id, 'input_attribute'=>$item->input_attribute, 'sort_value'=>($item->sort_value-1)]) }}"
-                class="text-secondary"><i class="far fa-plus-square ml-1"></i></a>
-
-            <div class="param-value {{$item->enabled ? 'text-success' : 'text-secondary'}}">
-                <i class="far fa-arrow-alt-circle-right ml-1 "></i> {{ str_limit($item->param_value, 100, '...')}}
-            </div>
-            </li>
-            @empty
-            <li class="list-group-item list-group-item-action">No Setting yet, <a
-                    href="{{ route('LaravelCmsAdminSettings.create', ['category' => 'global', 'page_id'=>null, 'input_attribute'=>'{"rows":1,"required":"required"}', 'sort_value'=>1000]) }}">Create
-                    a new Setting</a> </a>
-                @endforeach
-                </ul> --}}
-
         </div>
     </div>
 </div>
@@ -160,7 +137,7 @@
         }
         return false;
     }
-    if ( window.location.href.indexOf('insert_files_to_editor') != -1 ) {
+    if ( window.location.href.indexOf('editor_id=textarea') != -1 ) {
         $('a.del').hide();
         $('.files a.preview_link').click(function(e)
         {

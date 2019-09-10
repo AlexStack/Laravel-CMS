@@ -11,6 +11,7 @@ return [
     'save_and_continue_edit' => '保存并继续修改',
     'save_and_return_to_the_list' => '保存并返回列表页',
     'delete' => '删除',
+    'upload' => '上传',
 
     // setting form
     'param_name' => '参数名称',
