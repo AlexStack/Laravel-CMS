@@ -21,6 +21,7 @@ php artisan vendor:publish --provider="AlexStack\LaravelCms\LaravelCmsServicePro
 // Create database tables and load test data
 php artisan migrate --path=./vendor/alexstack/laravel-cms/src/database/migrations/
 php artisan db:seed --class='AlexStack\LaravelCms\CmsPagesTableSeeder'
+php artisan db:seed --class='AlexStack\LaravelCms\CmsSettingsTableSeeder'
 
 // Now you can access the cms frontend site: http://yourdomain/cms-home
 

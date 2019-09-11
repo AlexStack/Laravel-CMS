@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateLaravelcmsInquiriesTable extends Migration
+class CreateCmsInquiriesTable extends Migration
 {
 
     /**

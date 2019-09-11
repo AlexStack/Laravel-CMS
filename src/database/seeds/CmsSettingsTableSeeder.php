@@ -1,5 +1,7 @@
 <?php
 
+namespace AlexStack\LaravelCms;
+
 use Illuminate\Database\Seeder;
 
 class CmsSettingsTableSeeder extends Seeder
@@ -29,10 +31,10 @@ class CmsSettingsTableSeeder extends Seeder
 </div>
 </div>',
                 'input_attribute' => '{"rows":15,"required":"required"}',
-                'abstract' => 'Display Form Fields1',
+                'abstract' => '',
                 'category' => 'global',
                 'enabled' => 1,
-                'sort_value' => 100,
+                'sort_value' => 980,
                 'created_at' => '2019-08-30 10:56:52',
                 'updated_at' => '2019-09-05 15:12:38',
                 'deleted_at' => NULL,
@@ -44,7 +46,7 @@ class CmsSettingsTableSeeder extends Seeder
                 'page_id' => NULL,
                 'param_value' => '/favicon.ico',
                 'input_attribute' => '{"rows":1,"required":"required"}',
-                'abstract' => '<br>',
+                'abstract' => '',
                 'category' => 'global',
                 'enabled' => 1,
                 'sort_value' => 80,
@@ -65,10 +67,10 @@ class CmsSettingsTableSeeder extends Seeder
 </div>
 </div>',
                 'input_attribute' => '{"rows":11,"required":"required"}',
-                'abstract' => '<br>',
+                'abstract' => NULL,
                 'category' => 'global',
                 'enabled' => 1,
-                'sort_value' => 111,
+                'sort_value' => 999,
                 'created_at' => '2019-09-03 09:11:34',
                 'updated_at' => '2019-09-11 11:31:43',
                 'deleted_at' => NULL,
@@ -144,7 +146,7 @@ class CmsSettingsTableSeeder extends Seeder
 "id":"Generate slug from page numeric id",
 "pinyin":"Generate slug from page title and translate to Chinese PinYin"},
 "required":"required"}',
-                'abstract' => '<br>',
+                'abstract' => NULL,
                 'category' => 'global',
                 'enabled' => 1,
                 'sort_value' => 45,

@@ -135,6 +135,11 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data['settings'] = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
 
+        if (empty($this->helper->settings)) {
+            $this->updateConfigFile(); // create settings file
+            $this->helper = new LaravelCmsHelper; // reload new settings
+        }
+
         $data['helper'] = $this->helper;
 
         $data['categories'] = $this->getCategories($data['settings'], true);

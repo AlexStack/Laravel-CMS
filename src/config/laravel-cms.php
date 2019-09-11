@@ -64,8 +64,13 @@ return [
     | File Upload Folder Name: /public/storage/xxx
     |--------------------------------------------------------------------------
     */
-    'upload_dir' => env('LARAVEL_CMS_UPLOAD_DIR', 'laravel-cms-uploads'),
+    'file' => [
+        'upload_dir' => env('LARAVEL_CMS_UPLOAD_DIR', 'laravel-cms-uploads'),
 
+        'image_reoptimize_time' => env('LARAVEL_CMS_IMAGE_REOPTIMIZE_TIME', 0),
+
+        'image_encode' => env('LARAVEL_CMS_IMAGE_ENCODE', 'jpg'),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Image Re-optimize Time (seconds)
@@ -76,9 +81,6 @@ return [
     |
     */
 
-    'image_reoptimize_time' => env('LARAVEL_CMS_IMAGE_REOPTIMIZE_TIME', 360000000),
-
-    'image_encode' => env('LARAVEL_CMS_IMAGE_ENCODE', 'jpg'),
 
     /*
     |--------------------------------------------------------------------------
@@ -91,11 +93,11 @@ return [
 
     'table_name' => [
 
-        'pages' => 'laravelcms_pages',
-        'files' => 'laravelcms_files',
-        'settings' => 'laravelcms_settings',
-        'inquiries' => 'laravelcms_inquiries',
-        'inquiry_settings' => 'laravelcms_inquiry_settings',
+        'pages' => 'cms_pages',
+        'files' => 'cms_files',
+        'settings' => 'cms_settings',
+        'inquiries' => 'cms_inquiries',
+        'inquiry_settings' => 'cms_inquiry_settings',
     ],
 
     /*
@@ -106,7 +108,9 @@ return [
     | Here you may configure a different template them
     |
     */
-    'template_frontend_dir' => 'frontend',
-    'template_backend_dir'  => 'backend',
-    'template_language'     => 'en',
+    'template' => [
+        'frontend_dir' => 'frontend',
+        'backend_dir'  => 'backend',
+        'language'     => 'en',
+    ]
 ];
