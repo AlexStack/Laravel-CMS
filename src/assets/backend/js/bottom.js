@@ -77,7 +77,7 @@ function showIframeModal(url, modal_id) {
   if (typeof modal_id == "undefined") {
     modal_id = "#iframe-modal";
   }
-  if (!$(modal_id + " iframe").hasClass("iframe-loaded")) {
+  if ($(modal_id + " iframe").attr("src").indexOf(url) == -1) {
     $(modal_id + " iframe").attr("src", url);
     $(modal_id + " iframe").addClass("iframe-loaded");
   }

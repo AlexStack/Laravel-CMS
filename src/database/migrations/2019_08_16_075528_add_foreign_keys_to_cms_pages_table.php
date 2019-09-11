@@ -39,12 +39,12 @@ class AddForeignKeysToCmsPagesTable extends Migration
     public function down()
     {
         Schema::table(config('laravel-cms.table_name.pages') ??  'cms_pages', function (Blueprint $table) {
-            $table->dropForeign('cms_pages_ibfk_1');
-            $table->dropForeign('cms_pages_ibfk_2');
-            $table->dropForeign('cms_pages_ibfk_3');
-            $table->dropForeign('cms_pages_ibfk_4');
-            $table->dropForeign('cms_pages_ibfk_5');
-            $table->dropForeign('cms_pages_ibfk_6');
+            $table->dropForeign('cms_pages_ibfk_main_image');
+            $table->dropForeign('cms_pages_ibfk_main_banner');
+            $table->dropForeign('cms_pages_ibfk_extra_image_1');
+            $table->dropForeign('cms_pages_ibfk_extra_image_2');
+            $table->dropForeign('cms_pages_ibfk_extra_image_3');
+            //$table->dropForeign('cms_pages_ibfk_user_id');
         });
     }
 }
