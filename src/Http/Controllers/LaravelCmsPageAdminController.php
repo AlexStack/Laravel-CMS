@@ -126,7 +126,7 @@ class LaravelCmsPageAdminController extends Controller
 
         // $this->debug($data['file_data'], 'exit');
 
-        $data['file_data']->file_dir = asset('storage/' . $this->helper->s('upload_dir'));
+        $data['file_data']->file_dir = asset('storage/' . $this->helper->s('file.upload_dir'));
 
         $data['helper'] = $this->helper;
 
@@ -347,7 +347,7 @@ class LaravelCmsPageAdminController extends Controller
             $file_data
         );
 
-        $f->storeAs(dirname('public/' . $this->helper->s('upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
+        $f->storeAs(dirname('public/' . $this->helper->s('file.upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
 
         return $new_file;
 

@@ -135,7 +135,7 @@ class LaravelCmsInquiry extends Model
 
     public function __construct()
     {
-        $this->table = config('laravel-cms.table_name.inquiries') ?? 'laravelcms_inquiries';
+        $this->table = config('laravel-cms.table_name.inquiries') ?? 'cms_inquiries';
     }
 
     /**

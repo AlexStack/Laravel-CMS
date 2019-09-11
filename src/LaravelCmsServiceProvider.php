@@ -36,6 +36,12 @@ class LaravelCmsServiceProvider extends ServiceProvider
 
         // Publish public files and assets.
         $this->publishes([__DIR__ . '/assets' => public_path('/laravel-cms')], 'assets');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Console\Commands\LaravelCMS::class,
+            ]);
+        }
     }
 
     /**

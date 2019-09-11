@@ -2,10 +2,17 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 
-class CreateLaravelcmsSettingsTable extends Migration
+class CreateCmsSettingsTable extends Migration
 {
-
+    private $config;
+    private $table_name;
+    public function __construct()
+    {
+        $this->config = include(base_path('config/laravel-cms.php'));
+        $this->table_name = $this->config['table_name']['settings'];
+    }
     /**
      * Run the migrations.
      *
@@ -13,7 +20,7 @@ class CreateLaravelcmsSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-cms.table_name.settings') ??  'cms_settings', function (Blueprint $table) {
+        Schema::create($this->table_name, function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('param_name', 190)->nullable()->index('param_name');
             $table->integer('page_id')->unsigned()->nullable()->index('page_id');
@@ -36,6 +43,6 @@ class CreateLaravelcmsSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('laravel-cms.table_name.settings') ??  'cms_settings');
+        Schema::drop($this->table_name);
     }
 }

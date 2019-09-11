@@ -2,10 +2,17 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 
 class CreateCmsPagesTable extends Migration
 {
-
+    private $config;
+    private $table_name;
+    public function __construct()
+    {
+        $this->config = include(base_path('config/laravel-cms.php'));
+        $this->table_name = $this->config['table_name']['pages'];
+    }
     /**
      * Run the migrations.
      *
@@ -13,7 +20,7 @@ class CreateCmsPagesTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-cms.table_name.pages') ?? 'cms_pages', function (Blueprint $table) {
+        Schema::create($this->table_name, function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('user_id')->unsigned()->nullable()->index('user_id');
             $table->integer('parent_id')->unsigned()->nullable()->index('parent_id');
@@ -61,6 +68,6 @@ class CreateCmsPagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('laravel-cms.table_name.pages') ?? 'cms_pages');
+        Schema::drop($this->table_name);
     }
 }

@@ -90,7 +90,7 @@ class LaravelCmsInquirySetting extends Model
 
     public function __construct()
     {
-        $this->table = config('laravel-cms.table_name.inquiry_settings') ?? 'laravelcms_inquiry_settings';
+        $this->table = config('laravel-cms.table_name.inquiry_settings') ?? 'cms_inquiry_settings';
     }
 
     /**

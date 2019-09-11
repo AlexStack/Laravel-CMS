@@ -6,7 +6,13 @@ use Illuminate\Database\Seeder;
 
 class CmsPagesTableSeeder extends Seeder
 {
-
+    private $config;
+    private $table_name;
+    public function __construct()
+    {
+        $this->config = include(base_path('config/laravel-cms.php'));
+        $this->table_name = $this->config['table_name']['pages'];
+    }
     /**
      * Auto generated seed file
      *
@@ -14,12 +20,9 @@ class CmsPagesTableSeeder extends Seeder
      */
     public function run()
     {
-        $table_name_files = config('laravel-cms.table_name.files') ?? 'cms_files';
-        $table_name_pages = config('laravel-cms.table_name.pages') ?? 'cms_pages';
+        \DB::table($this->table_name)->delete();
 
-        \DB::table($table_name_pages)->delete();
-
-        \DB::table($table_name_pages)->insert(array(
+        \DB::table($this->table_name)->insert(array(
             0 =>
             array(
                 'id' => 1,

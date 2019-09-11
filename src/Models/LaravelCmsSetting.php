@@ -26,7 +26,7 @@ class LaravelCmsSetting extends Model
 {
     //use SoftDeletes;
 
-    public $table = 'laravelcms_settings';
+    public $table = 'cms_settings';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';

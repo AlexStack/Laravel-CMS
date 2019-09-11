@@ -1,32 +1,40 @@
 # Amila Laravel CMS
 
 -   Simple Laravel CMS for any EXISTING or new Laravel website.
--   Only add 2 database tables, not effect your existing database tables.
+-   Only add a few database tables with prefix, not effect your existing database tables.
 -   You can easy custom the database table names, the page URL path(route) and the template(theme)
 -   Website is ready after install. Easy to use, simple enough but flexible.
 -   Basic Laravel syntax and habit, no need to learn a new "language"
 
-## How to install
+## How to install & uninstall
 
 ```php
-// Go to the laravel project folder and install via composer
-composer require alexstack/laravel-cms
-
-// Publish config file and view files
-// You can custom the database table name and route
-// by change the settings in config/laravel-cms.php
-php artisan vendor:publish --provider="AlexStack\LaravelCms\LaravelCmsServiceProvider"
-
-
-// Create database tables and load test data
-php artisan migrate --path=./vendor/alexstack/laravel-cms/src/database/migrations/
-php artisan db:seed --class='AlexStack\LaravelCms\CmsPagesTableSeeder'
+// Go to the laravel project folder and install it via composer
+// Initialize the CMS (You can set up database table prefix and locale here)
+composer require alexstack/laravel-cms && php artisan laravelcms
 
 // Now you can access the cms frontend site: http://yourdomain/cms-home
 
-// Access backend with the first user of your site: http://yourdomain/cmsadmin
+// Access the backend with the FIRST USER of your site: http://yourdomain/cmsadmin
+
+// Uninstall the CMS
+php artisan laravelcms --action=uninstall
 
 ```
+
+## Screenshot of the output of install command
+
+![image](docs/images/min/artisan-install-command-min.png)
+
+## Screenshot of the output of uninstall command
+
+![image](docs/images/min/artisan-uninstall-command-min.png)
+
+## Screenshot of the admin panel
+
+![image](docs/images/min/all-pages-min.png)
+![image](docs/images/min/settings-template-min.png)
+![image](docs/images/min/create-new-page-min.png)
 
 ## Error "Route [login] not defined" while access the backend /cmsadmin
 
@@ -42,20 +50,6 @@ php artisan migrate
 
 -   You can fix it by create a storage public link
 -   php artisan storage:link
-
-## Custom the cms database table name in config/laravel-cms.php
-
--   Here you can define your own database table name as you want
--   By default the table names are below:
-
-```php
-'table_name' => [
-
-    'pages' => 'laravelcms_pages',
-
-    'files' => 'laravelcms_files',
-]
-```
 
 ## Custom the cms route in config/laravel-cms.php
 
@@ -107,13 +101,16 @@ php artisan migrate
 ## How to set up a different template theme from the default?
 
 -   Copy the default theme folder /resources/views/laravel-cms/**frontend** to /resources/views/laravel-cms/**new_theme**
--   Change or add the blade files and the config.php in your **new_theme**
--   Change 'template_frontend_dir' => 'new_theme' in config/laravel-cms.php
+-   Change the frontend_dir in the settings page to **new_theme**
+-   Default value in config/laravel-cms.php
 
 ```php
-    'template_frontend_dir' => 'new_theme',
-    'template_backend_dir'  => 'backend',
-    'template_language'     => 'en',
+    'template' => [
+        'frontend_dir'      => 'frontend',
+        'backend_dir'       => 'backend',
+        'backend_language'  => 'en',
+        'frontend_language' => 'en',
+    ]
 ```
 
 -   run **php artisan config:cache** to load new config file
@@ -122,6 +119,7 @@ php artisan migrate
 
 ## Set default slug format and suffix for page SEO URL in config/laravel-cms.php
 
+-   You can change it in the settings page
 -   'slug_format' can be from_title, id, pinyin
 -   'slug_suffix' can be anything you want, empty means no suffix
 

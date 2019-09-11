@@ -14,12 +14,12 @@ class LaravelCmsHelper
         if (file_exists($setting_file)) {
             $this->settings = include($setting_file);
         }
-        if ( request()->is(substr(config('laravel-cms.admin_route'),1) . '/*') ) {
-            if ( App::getLocale() != $this->s('template.backend_language') ){
+        if (request()->is(substr(config('laravel-cms.admin_route'), 1) . '/*')) {
+            if (App::getLocale() != $this->s('template.backend_language')) {
                 App::setLocale($this->s('template.backend_language'));
             }
         } else {
-            if ( App::getLocale() != $this->s('template.frontend_language') ){
+            if (App::getLocale() != $this->s('template.frontend_language')) {
                 App::setLocale($this->s('template.frontend_language'));
             }
         }
@@ -100,11 +100,11 @@ class LaravelCmsHelper
         $abs_real_path = $abs_real_dir . '/' . $filename;
         $web_url = '/' . $related_dir . '/' . $filename;
 
-        if (file_exists($abs_real_path) ) {
+        if (file_exists($abs_real_path)) {
             $image_reoptimize_time = $this->s('image_reoptimize_time');
-            if ( $image_reoptimize_time == 0 ){
+            if ($image_reoptimize_time == 0) {
                 return $web_url;
-            } else if ( filemtime($abs_real_path) > time() - $this->s('image_reoptimize_time') ){
+            } else if (filemtime($abs_real_path) > time() - $this->s('image_reoptimize_time')) {
                 return $web_url;
             }
             //return $abs_real_path . ' - already exists - ' . $web_url;
@@ -182,7 +182,7 @@ class LaravelCmsHelper
 
     public function assetUrl($file, $with_modify_time = true, $is_backend = false)
     {
-        $url = 'laravel-cms/' . $this->s('' . ($is_backend ? 'template_backend_dir' : 'template_frontend_dir')) . '/' . $file;
+        $url = 'laravel-cms/' . $this->s('' . ($is_backend ? 'template.backend_dir' : 'template.frontend_dir')) . '/' . $file;
         if ($with_modify_time) {
             $abs_real_path = public_path($url);
 
@@ -222,7 +222,7 @@ class LaravelCmsHelper
         }
         $option_ary = [];
         foreach ($this->settings['plugin'] as $k => $config_ary) {
-            if (strpos($k, $prefix) !== false ) {
+            if (strpos($k, $prefix) !== false) {
 
                 if (isset($config_ary['blade_file']) &&  file_exists($plugin_dir . '/' . $k . '/' . $config_ary['blade_file'] . '.blade.php')) {
                     $config_ary['blade_dir'] = $k;
