@@ -9,9 +9,12 @@
 ## How to install & uninstall
 
 ```php
+// Make sure you already configured the database in the .env
 // Go to the laravel project folder and install it via composer
 // Initialize the CMS (You can set up database table prefix and locale here)
+
 composer require alexstack/laravel-cms && php artisan laravelcms
+
 
 // Now you can access the cms frontend site: http://yourdomain/cms-home
 

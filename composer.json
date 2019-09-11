@@ -1,6 +1,6 @@
 {
     "name": "alexstack/laravel-cms",
-    "description": "Simple laravel cms for existing or new laravel website. Only 2 database tables, not effect your existing database tables.",
+    "description": "Simple Bootstrap Laravel CMS for any EXISTING or new Laravel website. Only add few database tables with prefix, not effect your existing database tables. Amila Laravel CMS",
     "type": "vendor",
     "homepage": "https://github.com/AlexStack/Laravel-CMS/",
     "keywords": ["laravel", "laravel cms", "laravel blog", "laravel wordpress", "LaravelCMS", "amila laravel cms"],
@@ -16,10 +16,10 @@
         "php": ">=7.0.0",
         "ext-gd": "*",
         "ext-json": "*",
-        "laravel/framework": "^5.5",
+        "laravel/framework": ">=5.5",
         "intervention/image": "^2.4",
         "intervention/imagecache": "^2.3",
-        "laravelcollective/html": "^5.5",
+        "laravelcollective/html": ">=5.5",
         "overtrue/pinyin": "^4.0"
     },
     "autoload": {
