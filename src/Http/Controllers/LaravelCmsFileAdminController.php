@@ -189,7 +189,7 @@ class LaravelCmsFileAdminController extends Controller
             $file_data
         );
 
-        $f->storeAs(dirname('public/' . $this->helper->s('upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
+        $f->storeAs(dirname('public/' . $this->helper->s('file.upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
 
         return $new_file;
 

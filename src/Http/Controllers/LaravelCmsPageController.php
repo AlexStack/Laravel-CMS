@@ -68,7 +68,7 @@ class LaravelCmsPageController extends Controller
         if ($data['file_data'] == null) {
             $data['file_data'] = json_decode('{}');
         }
-        $data['file_data']->file_dir = asset('storage/' . $this->helper->s('upload_dir'));
+        $data['file_data']->file_dir = asset('storage/' . $this->helper->s('file.upload_dir'));
 
         //$data['page']->file_data = $data['file_data'];
         $data['helper'] = $this->helper;
