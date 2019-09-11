@@ -74,6 +74,7 @@ class LaravelCMS extends Command
             public_path('laravel-cms'),
             base_path('config/laravel-cms.php'),
             storage_path('app/laravel-cms'),
+            storage_path('app/public/laravel-cms-uploads'), // maybe changed
         ];
         foreach ($paths as $path) {
             if (file_exists($path)) {
