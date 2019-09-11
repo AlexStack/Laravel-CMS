@@ -6,7 +6,13 @@ use Illuminate\Database\Seeder;
 
 class CmsSettingsTableSeeder extends Seeder
 {
-
+    private $config;
+    private $table_name;
+    public function __construct()
+    {
+        $this->config = include(base_path('config/laravel-cms.php'));
+        $this->table_name = $this->config['table_name']['settings'];
+    }
     /**
      * Auto generated seed file
      *
@@ -15,11 +21,9 @@ class CmsSettingsTableSeeder extends Seeder
     public function run()
     {
 
-        $table_name_settings = config('laravel-cms.table_name.settings') ?? 'cms_settings';
+        \DB::table($this->table_name)->delete();
 
-        \DB::table($table_name_settings)->delete();
-
-        \DB::table($table_name_settings)->insert(array(
+        \DB::table($this->table_name)->insert(array(
             0 =>
             array(
                 'id' => 2,
@@ -27,7 +31,7 @@ class CmsSettingsTableSeeder extends Seeder
                 'page_id' => NULL,
                 'param_value' => '<div class="row justify-content-center">
 <div class="col-md pt-5 pb-5 text-center bg-light footer">
-<span class="small  text-secondary">Made with <i class="fas fa-heart"></i> by <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class=" text-secondary">Laravel CMS</a> @ ' . date('Y') . '</span>
+<span class="small  text-secondary">Made with <i class="fas fa-heart"></i> by <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class=" text-secondary">LaravelCms</a> @ ' . date('Y') . '</span>
 </div>
 </div>',
                 'input_attribute' => '{"rows":15,"required":"required"}',

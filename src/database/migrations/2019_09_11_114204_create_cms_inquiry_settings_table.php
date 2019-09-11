@@ -2,9 +2,17 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 
 class CreateCmsInquirySettingsTable extends Migration
 {
+    private $config;
+    private $table_name;
+    public function __construct()
+    {
+        $this->config = include(base_path('config/laravel-cms.php'));
+        $this->table_name = $this->config['table_name']['inquiry_settings'];
+    }
 
     /**
      * Run the migrations.
@@ -13,7 +21,7 @@ class CreateCmsInquirySettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-cms.table_name.inquiry_settings') ??  'cms_inquiry_settings', function (Blueprint $table) {
+        Schema::create($this->table_name, function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('form_layout')->nullable();
             $table->integer('page_id')->unsigned()->nullable()->index('page_id');
@@ -44,6 +52,6 @@ class CreateCmsInquirySettingsTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('laravel-cms.table_name.inquiry_settings') ??  'cms_inquiry_settings');
+        Schema::drop($this->table_name);
     }
 }

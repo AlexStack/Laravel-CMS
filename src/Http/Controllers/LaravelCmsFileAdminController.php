@@ -52,7 +52,7 @@ class LaravelCmsFileAdminController extends Controller
 
         //$this->helper->debug($data['categories']);
 
-        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.file-list', $data);
+        return view('laravel-cms::' . config('laravel-cms.template.backend_dir') .  '.file-list', $data);
     }
 
     public function show($id)
@@ -77,7 +77,7 @@ class LaravelCmsFileAdminController extends Controller
 
         $data['helper'] = $this->helper;
 
-        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-edit', $data);
+        return view('laravel-cms::' . config('laravel-cms.template.backend_dir') .  '.setting-edit', $data);
     }
 
     public function create()
@@ -87,7 +87,7 @@ class LaravelCmsFileAdminController extends Controller
 
         $data['helper'] = $this->helper;
 
-        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-create', $data);
+        return view('laravel-cms::' . config('laravel-cms.template.backend_dir') .  '.setting-create', $data);
     }
 
 

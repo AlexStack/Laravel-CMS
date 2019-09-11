@@ -146,7 +146,7 @@ class LaravelCmsSettingAdminController extends Controller
 
         //$this->helper->debug([$all_cats,$custom_cats, $new_cats]);
 
-        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-list', $data);
+        return view('laravel-cms::' . config('laravel-cms.template.backend_dir') .  '.setting-list', $data);
     }
 
     public function edit($id)
@@ -160,7 +160,7 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data['categories'] = $this->getCategories(null, false);
 
-        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-edit', $data);
+        return view('laravel-cms::' . config('laravel-cms.template.backend_dir') .  '.setting-edit', $data);
     }
 
     public function create()
@@ -172,7 +172,7 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data['categories'] = $this->getCategories(null, false);
 
-        return view('laravel-cms::' . config('laravel-cms.template_backend_dir') .  '.setting-create', $data);
+        return view('laravel-cms::' . config('laravel-cms.template.backend_dir') .  '.setting-create', $data);
     }
 
 

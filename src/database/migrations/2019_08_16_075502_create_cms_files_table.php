@@ -2,10 +2,17 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 
 class CreateCmsFilesTable extends Migration
 {
-
+    private $config;
+    private $table_name;
+    public function __construct()
+    {
+        $this->config = include(base_path('config/laravel-cms.php'));
+        $this->table_name = $this->config['table_name']['files'];
+    }
     /**
      * Run the migrations.
      *
@@ -13,7 +20,7 @@ class CreateCmsFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create(config('laravel-cms.table_name.files') ?? 'cms_files', function (Blueprint $table) {
+        Schema::create($this->table_name, function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('user_id')->unsigned()->nullable()->index('user_id');
             $table->string('title', 190)->nullable();
@@ -40,6 +47,8 @@ class CreateCmsFilesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(config('laravel-cms.table_name.files') ?? 'cms_files');
+        Schema::disableForeignKeyConstraints();
+        Schema::drop($this->table_name);
+        Schema::enableForeignKeyConstraints();
     }
 }

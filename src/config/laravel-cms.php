@@ -92,12 +92,11 @@ return [
     */
 
     'table_name' => [
-
-        'pages' => 'cms_pages',
-        'files' => 'cms_files',
-        'settings' => 'cms_settings',
-        'inquiries' => 'cms_inquiries',
-        'inquiry_settings' => 'cms_inquiry_settings',
+        'pages'             => 'cms_pages',
+        'files'             => 'cms_files',
+        'settings'          => 'cms_settings',
+        'inquiries'         => 'cms_inquiries',
+        'inquiry_settings'  => 'cms_inquiry_settings',
     ],
 
     /*
@@ -109,8 +108,9 @@ return [
     |
     */
     'template' => [
-        'frontend_dir' => 'frontend',
-        'backend_dir'  => 'backend',
-        'language'     => 'en',
+        'frontend_dir'      => 'frontend',
+        'backend_dir'       => 'backend',
+        'backend_language'  => 'en',
+        'frontend_language' => 'en',
     ]
 ];
