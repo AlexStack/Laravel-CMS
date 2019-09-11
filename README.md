@@ -1,6 +1,6 @@
 # Amila Laravel CMS
 
--   Simple Bootstrap Laravel CMS for any EXISTING Laravel 5.x or new Laravel 6 website.
+-   Free, open source Simple Bootstrap Laravel CMS for any EXISTING Laravel 5.x or new Laravel 6 website.
 -   Only add a few database tables with prefix, not effect your existing database tables.
 -   You can easy custom the database table names, the page URL path(route) and the template(theme)
 -   Website is ready after install. Easy to use, simple enough but flexible.
@@ -39,18 +39,20 @@ php artisan laravelcms --action=uninstall
 ![image](docs/images/min/settings-template-min.png)
 ![image](docs/images/min/create-new-page-min.png)
 
-## Set locale language to cn insetad of en
+## Set locale language to **cn** instead of **en**
 
 ![cn_image](docs/images/min/settings-global-cn-min.png)
 
-## Error "Route [login] not defined" while access the backend /cmsadmin
+## Error "Route [login] not defined" while access the backend /cmsadmin/
 
 -   This means you did not install Laravel Auth
--   Fix it by below commands:
+-   Can be fixed by the below commands:
 
 ```php
-php artisan make:auth
-php artisan migrate
+// Laravel 5.x
+php artisan make:auth && php artisan migrate
+// Laravel 6.x
+composer require laravel/ui && php artisan ui vue --auth
 ```
 
 ## How to log into the backend /cmsadmin/ ?
@@ -58,17 +60,35 @@ php artisan migrate
 - Amila CMS use your existing Laravel user system
 - You need to login with the FIRST USER of your site (user_id = 1)
 - You can add more admin users by change the admin_ary in config/laravel-cms.php
+- If you don't have any existing user, then register a new one via http://your-domain/register
 
 ## Why the uploaded image can not display (404 error)
 
 -   You can fix it by create a storage public link
--   php artisan storage:link
+-   **php artisan storage:link**
+- eg. The public/storage should link to ../storage/app/public, if the public/storage is a real folder, you should remove/rename it and run "php artisan storage:link" to set up the link.
 
 ## Custom the cms route in config/laravel-cms.php
 
--   **homepage_route**: This is the frontend homepage. By default it is /cms-home, you can change it to / after remove the existing / route in the routes/web.php
+-   **homepage_route**: This is the frontend homepage. By default it is /cms-home, you can change it to / then remove the existing / route in the routes/web.php
+```php
+# Change homepage_route to /  in config/laravel-cms.php
+'homepage_route'    => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/'),
+
+# Remove the existing / route in the routes/web.php
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+```
 -   **page_route_prefix**: This is the frontend page prefix. By default it is /cms-, it will match path like /cms-\*. You can change it to a folder like /xxx/ or anything like xxx-, eg. Page- Article-
+```php
+'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/Article-'),
+```
 -   **admin_route**: This is the backend admin page route, By default it is /cmsadmin
+```php
+'admin_route'       => env('LARAVEL_CMS_BACKEND_ROUTE', '/admin2019'),
+```
 -   After change the route, you will need to run below commands:
     -   php artisan config:cache
     -   or

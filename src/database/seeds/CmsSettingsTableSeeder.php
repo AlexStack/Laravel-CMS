@@ -31,7 +31,7 @@ class CmsSettingsTableSeeder extends Seeder
                 'page_id' => NULL,
                 'param_value' => '<div class="row justify-content-center">
 <div class="col-md pt-5 pb-5 text-center bg-light footer">
-<span class="small  text-secondary">Made with <i class="fas fa-heart"></i> by <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class=" text-secondary">LaravelCms</a> @ ' . date('Y') . '</span>
+<span class="small  text-secondary">Made with <i class="fas fa-heart"></i> by <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class=" text-secondary">Laravel CMS</a> @ ' . date('Y') . '</span>
 </div>
 </div>',
                 'input_attribute' => '{"rows":15,"required":"required"}',
