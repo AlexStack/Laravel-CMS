@@ -17,6 +17,7 @@
         "ext-gd": "*",
         "ext-json": "*",
         "laravel/framework": ">=5.5",
+        "laravel/helpers": ">=1.1",
         "intervention/image": "^2.4",
         "intervention/imagecache": "^2.3",
         "laravelcollective/html": ">=5.5",
