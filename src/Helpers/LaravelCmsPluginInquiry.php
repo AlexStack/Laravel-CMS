@@ -25,6 +25,9 @@ class LaravelCmsPluginInquiry
         // LaravelCmsHelper::debug($page);
         $data['page']           = $page;
         $data['settings']       = $settings;
+        if (!isset($settings->form_enabled) || !$settings->form_enabled) {
+            return '<!-- Inquiry form disabled for this page -->';
+        }
         $data['dynamic_inputs'] = self::dynamicInputs($settings, $page);
         $data['gg_recaptcha']   = (isset($settings->google_recaptcha_enabled) && $settings->google_recaptcha_enabled) ? GoogleRecaptcha::show($this->helper->s('google_recaptcha_site_key'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
 
@@ -102,6 +105,9 @@ class LaravelCmsPluginInquiry
             $result['success'] = true;
             $result['success_content'] = $settings->success_content;
             $result['form_data'] = $form_data;
+            if (trim(strip_tags($result['success_content'])) == '') {
+                $result['success_content'] = '<b>Thank you for submit the inquiry, we will get back to you ASAP.</b>';
+            }
         } else {
             $result['success'] = false;
         }
