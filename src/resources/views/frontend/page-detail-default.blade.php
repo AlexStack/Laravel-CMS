@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.layout')
+@extends('laravel-cms::' . $helper->s('template.frontend_dir') .  '.includes.layout')
 
 @section('content')
 
@@ -17,7 +17,7 @@
 
 <div class="text-center mb-4 main-image">
     @if ( isset($file_data->main_image) )
-        <img src="{{$helper->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
+        <img src="{{$helper->imageUrl($file_data->main_image, $helper->s('file.big_image_width')) }}" class="img-fluid" />
     @endif
 </div>
 
@@ -36,10 +36,10 @@ if ( strpos($page->extra_text_1, 'http') !== false && strpos($page->extra_text_1
 }
 @endphp
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.sub-page-cards', ['sub_pages' => $page->children, 'card_class'=>'col-md-4 mb-4', 'img_width'=>150, 'img_height'=>100  ])
+@include('laravel-cms::' . $helper->s('template.frontend_dir') .  '.includes.sub-page-cards', ['sub_pages' => $page->children, 'card_class'=>'col-md-4 mb-4', 'img_width'=>$helper->s('file.small_image_width'), 'img_height'=>$helper->s('file.big_image_height')  ])
 
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_frontend_dir') .  '.includes.breadcrumb')
+@include('laravel-cms::' . $helper->s('template.frontend_dir') .  '.includes.breadcrumb')
 
 
 {!! isset($plugins['page-tab-inquiry-form']) ?? $plugins['page-tab-inquiry-form']->displayForm($page) !!}

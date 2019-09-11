@@ -26,7 +26,7 @@ class LaravelCmsPluginInquiry
         $data['page']           = $page;
         $data['settings']       = $settings;
         $data['dynamic_inputs'] = self::dynamicInputs($settings, $page);
-        $data['gg_recaptcha']   = (isset($settings->google_recaptcha_enabled) && $settings->google_recaptcha_enabled) ? GoogleRecaptcha::show($this->helper->getCmsSetting('google_recaptcha_site_key'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
+        $data['gg_recaptcha']   = (isset($settings->google_recaptcha_enabled) && $settings->google_recaptcha_enabled) ? GoogleRecaptcha::show($this->helper->s('google_recaptcha_site_key'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
 
         return view('laravel-cms::plugins.page-tab-inquiry-form.' . ($settings->form_layout ?? 'frontend-form-001'), $data);
     }
@@ -84,7 +84,7 @@ class LaravelCmsPluginInquiry
 
         $settings = LaravelCmsInquirySetting::where('page_id', $form_data['page_id'])->first();
 
-        if ($settings->google_recaptcha_enabled && !GoogleRecaptcha::verify($this->helper->getCmsSetting('google_recaptcha_secret_key'), null)) {
+        if ($settings->google_recaptcha_enabled && !GoogleRecaptcha::verify($this->helper->s('google_recaptcha_secret_key'), null)) {
             $result['success'] = false;
             $result['error_message'] = 'Verify Google Recaptcha failed';
             return json_encode($result);

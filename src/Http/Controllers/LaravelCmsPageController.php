@@ -68,7 +68,7 @@ class LaravelCmsPageController extends Controller
         if ($data['file_data'] == null) {
             $data['file_data'] = json_decode('{}');
         }
-        $data['file_data']->file_dir = asset('storage/' . $this->helper->getCmsSetting('upload_dir'));
+        $data['file_data']->file_dir = asset('storage/' . $this->helper->s('upload_dir'));
 
         //$data['page']->file_data = $data['file_data'];
         $data['helper'] = $this->helper;
@@ -84,7 +84,7 @@ class LaravelCmsPageController extends Controller
         }
         //$this->helper->debug($data['plugins']);
 
-        return view('laravel-cms::' . $this->helper->getCmsSetting('template_frontend_dir') .  '.' . $template_file, $data);
+        return view('laravel-cms::' . $this->helper->s('template.frontend_dir') .  '.' . $template_file, $data);
     }
 
 

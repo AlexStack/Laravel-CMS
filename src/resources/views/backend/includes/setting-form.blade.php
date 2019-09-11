@@ -1,6 +1,6 @@
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "category","input_attributes"=>['required'=>'required','pattern'=>'[a-zA-Z0-9\-_]{2,60}']])
+@include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'select', 'name' => "category","input_attributes"=>['required'=>'required','pattern'=>'[a-zA-Z0-9\-_]{2,60}'], 'options'=>$categories])
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "param_name","input_attributes"=>['required'=>'required','pattern'=>'[a-zA-Z0-9\-_]{2,60}']])
+@include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "param_name","input_attributes"=>['required'=>'required','pattern'=>'[a-zA-Z0-9\-_]{2,60}']])
 
 @php
     $attr = isset($setting) ? json_decode($setting->input_attribute, TRUE) : [];
@@ -15,7 +15,7 @@
     }
 @endphp
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', [
+@include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', [
     'type'              => $input_type,
     'name'              => "param_value",
     'options'           => $select_options,
@@ -24,16 +24,16 @@
 
 
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "enabled", 'type'=>'select', 'options'=>['1' => 'Enable', '0' => 'Disable'] ])
+@include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "enabled", 'type'=>'select', 'options'=>['1' => 'Enable', '0' => 'Disable'] ])
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "sort_value"])
-
-
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['name' => "input_attribute", 'type'=>'textarea', "input_attributes"  =>['rows'=>4]])
+@include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "sort_value"])
 
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "abstract", "input_attributes"=>['rows'=>3]])
+@include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['name' => "input_attribute", 'type'=>'textarea', "input_attributes"  =>['rows'=>4]])
 
-@include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "page_id"])
+
+@include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'textarea', 'name' => "abstract", "input_attributes"=>['rows'=>3]])
+
+@include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.form-input', ['type'=>'text', 'name' => "page_id"])
 
 <input type="hidden" name="return_to_the_list" value="">

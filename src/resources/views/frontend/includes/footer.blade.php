@@ -1,4 +1,4 @@
 <div class="container">
-    {!! $helper->getCmsSetting('page_footer') !!}
+    {!! $helper->s('page_footer') !!}
 </div>
 

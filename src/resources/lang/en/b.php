@@ -2,8 +2,8 @@
 
 return [
 
-    'setting' => 'setting | settings',
-    'main_content' => 'main content',
+    'settings' => 'Settings',
+    'main_content' => 'Main Content',
     'extra_content' => 'Extra Content',
 
 ];

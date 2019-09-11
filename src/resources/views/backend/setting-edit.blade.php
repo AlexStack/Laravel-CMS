@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->getCmsSetting('template_backend_dir')  .  '.includes.layout')
+@extends('laravel-cms::' . $helper->s('template.backend_dir')  .  '.includes.layout')
 
 @section('content')
 <div class="container">
@@ -7,14 +7,14 @@
 
 {!! Form::model($setting, ['route' => ['LaravelCmsAdminSettings.update', $setting->id], 'method' => "PUT", 'files'=>true]) !!}
 
-    @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.setting-form')
+    @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.setting-form')
 
     <div class="row">
       <div class="col-md">
-          @include('laravel-cms::' . $helper->getCmsSetting('template_backend_dir') .  '.includes.submit-button')
+          @include('laravel-cms::' . $helper->s('template.backend_dir') .  '.includes.submit-button')
       </div>
       <div class="col-md-auto text-right">
-          <button type="button" class="btn btn-danger" onclick="return confirmDelete(form);"><i class="fas fa-trash-alt mr-2" ></i>{{$helper->t('b.delete')}}</button>
+          <button type="button" class="btn btn-danger" onclick="return confirmDelete(form);"><i class="fas fa-trash-alt mr-2" ></i>{{$helper->t('delete')}}</button>
       </div>
     </div>
       {{ Form::close() }}
@@ -30,6 +30,48 @@
             f.submit();
         }
     }
+</script>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/javascript/javascript.js"></script>
+
+<style>
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+</style>
+
+<script>
+
+if ( $(".input-param_value").is('textarea')){
+    var editor = CodeMirror.fromTextArea(document.getElementsByClassName("input-param_value")[0], {
+            lineNumbers: true,
+            //readOnly：false,
+            styleActiveLine: true,
+            mode: 'application/json',
+            matchBrackets: true,
+            lineWrapping: true,
+            htmlMode: true,
+    });
+}
+
+if ( $(".input-input_attribute").val().indexOf("}") !== -1 ){
+    var editor = CodeMirror.fromTextArea(document.getElementsByClassName("input-input_attribute")[0], {
+            lineNumbers: true,
+            //readOnly：false,
+            styleActiveLine: true,
+            mode: 'application/json',
+            matchBrackets: true,
+            lineWrapping: true,
+            htmlMode: true,
+    });
+}
 </script>
 
 @endsection
