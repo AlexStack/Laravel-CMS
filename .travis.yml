@@ -1,7 +1,7 @@
 language: php
 
 php:
-  - 7.1
+  - 7.2
 
 sudo: false
 
@@ -14,14 +14,15 @@ before_install:
 before_script:
   - cp .travis.env .env
   - composer self-update
-  - composer install --no-interaction
-  - php artisan migrate --no-interaction -vvv
+  - composer install --prefer-source --no-interaction --dev
+  - php artisan key:generate
+  - php artisan migrate
 
 install:
-  - composer install --prefer-dist --optmize-autoloader --quiet
+  - composer install --prefer-dist --quiet
 
 script:
-  - phpunit
+  - vendor/bin/phpunit
 
 services:
   - mysql
