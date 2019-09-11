@@ -1,0 +1,30 @@
+language: php
+
+php:
+  - 7.1
+
+sudo: false
+
+env:
+  - APP_DEBUG=false
+
+before_install:
+  - mysql -e 'CREATE DATABASE laravelcms_test;'
+
+before_script:
+  - cp .travis.env .env
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan migrate --no-interaction -vvv
+
+install:
+  - composer install --prefer-dist --optmize-autoloader --quiet
+
+script:
+  - phpunit
+
+services:
+  - mysql
+
+notifications:
+  email: false
