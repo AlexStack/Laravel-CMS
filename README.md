@@ -6,7 +6,7 @@
 -   Website is ready after install. Easy to use, simple enough but flexible.
 -   Basic Laravel 5.x /Laravel 6.x syntax and blade template, no need to learn a new "language"
 
-## How to install & uninstall (Require Laravel 5.x or Laravel 6.x)
+## How to install & uninstall (Support Laravel 5.x & Laravel 6.x)
 
 ```php
 // Make sure you already configured the database in the .env
@@ -38,6 +38,10 @@ php artisan laravelcms --action=uninstall
 ![image](docs/images/min/all-pages-min.png)
 ![image](docs/images/min/settings-template-min.png)
 ![image](docs/images/min/create-new-page-min.png)
+
+## Set locale language to cn insetad of en
+
+![cn_image](docs/images/min/settings-global-cn-min.png)
 
 ## Error "Route [login] not defined" while access the backend /cmsadmin
 
