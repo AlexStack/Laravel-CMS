@@ -112,5 +112,7 @@ return [
         'backend_dir'       => 'backend',
         'backend_language'  => 'en',
         'frontend_language' => 'en',
-    ]
+    ],
+
+    'cms_version' => '0.9.1',
 ];
