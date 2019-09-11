@@ -15,7 +15,6 @@ before_script:
   - cp .travis.env .env
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
-  - php artisan key:generate
   - php artisan migrate
 
 install:
