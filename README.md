@@ -1,17 +1,20 @@
 # Amila Laravel CMS
 
--   Simple Laravel CMS for any EXISTING or new Laravel website.
+-   Simple Bootstrap Laravel CMS for any EXISTING Laravel 5.x or new Laravel 6 website.
 -   Only add a few database tables with prefix, not effect your existing database tables.
 -   You can easy custom the database table names, the page URL path(route) and the template(theme)
 -   Website is ready after install. Easy to use, simple enough but flexible.
--   Basic Laravel syntax and habit, no need to learn a new "language"
+-   Basic Laravel 5.x /Laravel 6.x syntax and blade template, no need to learn a new "language"
 
-## How to install & uninstall
+## How to install & uninstall (Require Laravel 5.x or Laravel 6.x)
 
 ```php
+// Make sure you already configured the database in the .env
 // Go to the laravel project folder and install it via composer
 // Initialize the CMS (You can set up database table prefix and locale here)
+
 composer require alexstack/laravel-cms && php artisan laravelcms
+
 
 // Now you can access the cms frontend site: http://yourdomain/cms-home
 
