@@ -53,6 +53,12 @@ php artisan make:auth
 php artisan migrate
 ```
 
+## How to log into the backend /cmsadmin/ ?
+
+- Amila CMS use your existing Laravel user system
+- You need to login with the FIRST USER of your site (user_id = 1)
+- You can add more admin users by change the admin_ary in config/laravel-cms.php
+
 ## Why the uploaded image can not display (404 error)
 
 -   You can fix it by create a storage public link
