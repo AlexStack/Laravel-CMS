@@ -12,9 +12,10 @@ class LaravelCMS extends Command
      * @var string
      */
     protected $signature = 'laravelcms
-            {--action=initialize : initialize or install or uninstall}
-            {--table_prefix= : Default table_prefix is cms_}
-            {--locale= : Default locale is en}
+            {--a|action=initialize : initialize or install or uninstall}
+            {--p|table_prefix= : Default table_prefix is cms_}
+            {--l|locale= : Default locale is en}
+            {--s|silent=no : Silent mode yes or no}
             ';
 
     /**
@@ -58,8 +59,7 @@ class LaravelCMS extends Command
         $this->line('<fg=red>**** UNINSTALL Amila Laravel CMS ****</>');
         $this->line('<fg=red>****</>');
 
-
-        if (!$this->confirm('<fg=cyan>**** Remove the CMS database tables? ****</>', true)) {
+        if (trim($options['silent']) == 'no' && !$this->confirm('<fg=cyan>**** Remove the CMS database tables? ****</>', true)) {
             $this->error("User aborted! please run the command again.");
             exit();
         }
@@ -68,7 +68,7 @@ class LaravelCMS extends Command
             '--path' => './vendor/alexstack/laravel-cms/src/database/migrations/'
         ]);
 
-        if (!$this->confirm('<fg=cyan>**** Remove the CMS folders and files? ****</>', true)) {
+        if (trim($options['silent']) == 'no' && !$this->confirm('<fg=cyan>**** Remove the CMS folders and files? ****</>', true)) {
             $this->error("User aborted! please run the command again.");
             exit();
         }
@@ -129,7 +129,7 @@ class LaravelCMS extends Command
         $this->line("<fg=cyan>----> Database table prefix : </><fg=yellow>" . $table_prefix . "</>");
         $this->line("<fg=cyan>----> Locale language : </><fg=yellow>" . $app_locale . "</>");
 
-        if (trim($options['locale']) == '' || trim($options['table_prefix']) == '') {
+        if (trim($options['silent']) == 'no') {
             if (!$this->confirm('<fg=magenta>Please confirm the above settings?</>', true)) {
                 $this->error("User aborted! please run the command again.");
                 exit();
