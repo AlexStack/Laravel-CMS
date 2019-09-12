@@ -29,7 +29,6 @@ install:
   - composer install --prefer-dist --quiet
 
 script:
-  - cd cms
   - php artisan laravelcms --action=uninstall --silent=yes
 
 services:
