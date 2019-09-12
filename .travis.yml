@@ -18,9 +18,10 @@ before_install:
 before_script:
   - cp .travis.env .env
   - composer self-update
-  - composer require "laravel/laravel:${LARAVEL_VERSION}"
+  - composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+  - cd cms
   - composer show laravel/framework
-  - composer install --prefer-source --no-interaction --dev
+  - composer install --prefer-source --no-interaction
   - php artisan migrate
 
 install:
