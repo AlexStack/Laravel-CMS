@@ -11,12 +11,10 @@ env:
     - LARAVEL_VERSION=5.7.*
     - LARAVEL_VERSION=5.8.*
     - LARAVEL_VERSION=6.*
+    - APP_DEBUG=false
 
 matrix:
   fast_finish: true
-
-env:
-  - APP_DEBUG=false
 
 before_install:
   - mysql -e 'CREATE DATABASE laravelcms_test;'
