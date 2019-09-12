@@ -20,9 +20,9 @@ before_script:
   - composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
   - cd cms
   - composer show laravel/framework
-  - cp .travis.env .env
-  - composer install --prefer-source --no-interaction
-  - php artisan migrate
+  - cp -f ../.travis.env .env
+  - composer require alexstack/laravel-cms dev-alex_dev
+  - php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_
 
 install:
   - composer install --prefer-dist --quiet
