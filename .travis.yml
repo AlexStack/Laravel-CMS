@@ -1,0 +1,41 @@
+language: php
+
+php:
+  - 7.2
+  - 7.4snapshot
+
+sudo: false
+env:
+  matrix:
+    - LARAVEL_VERSION=5.*
+    - LARAVEL_VERSION=6.*
+
+matrix:
+  fast_finish: true
+
+before_install:
+  - mysql -e 'CREATE DATABASE laravelcms_test;'
+
+before_script:
+  - composer self-update
+  - composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+  - cd cms
+  - composer show laravel/framework
+  - cp -f ../.travis.env .env
+  - composer require alexstack/laravel-cms dev-$TRAVIS_BRANCH
+  - php artisan laravelcms --help
+  - php artisan laravelcms --action=initialize --locale=cn --table_prefix=travis_cms_  --silent=yes
+
+install:
+  - composer install --prefer-dist --quiet
+
+script:
+  - php artisan laravelcms --action=uninstall --silent=yes
+
+services:
+  - mysql
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
