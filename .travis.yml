@@ -21,7 +21,7 @@ before_script:
   - cd cms
   - composer show laravel/framework
   - cp -f ../.travis.env .env
-  - composer require alexstack/laravel-cms dev-alex_dev
+  - composer require alexstack/laravel-cms dev-$TRAVIS_BRANCH
   - php artisan laravelcms --action=initialize --locale=cn --table_prefix=travis_cms_
 
 install:
@@ -29,7 +29,7 @@ install:
 
 script:
   - cd cms
-  - php artisan laravelcms --action=uninstall
+  - php artisan laravelcms --action=uninstall --silent=yes
 
 services:
   - mysql
