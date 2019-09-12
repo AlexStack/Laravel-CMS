@@ -11,7 +11,11 @@ class LaravelCMS extends Command
      *
      * @var string
      */
-    protected $signature = 'laravelcms {--action=initialize : initialize or install or uninstall}';
+    protected $signature = 'laravelcms
+            {--action=initialize : initialize or install or uninstall}
+            {--table_prefix= : Default table_prefix is cms_}
+            {--locale= : Default locale is en}
+            ';
 
     /**
      * The console command description.
@@ -41,14 +45,14 @@ class LaravelCMS extends Command
         $options = $this->options();
         //var_dump($options);
         if ($options['action'] == 'initialize' || $options['action'] == 'install') {
-            $this->initializeCms();
+            $this->initializeCms($options);
         } else if ($options['action'] == 'uninstall') {
-            $this->uninstall();
+            $this->uninstall($options);
         } else {
             $this->error('Wrong action');
         }
     }
-    public function uninstall()
+    public function uninstall($options)
     {
         $this->line('<fg=red>****</>');
         $this->line('<fg=red>**** UNINSTALL Amila Laravel CMS ****</>');
@@ -103,32 +107,45 @@ class LaravelCMS extends Command
         $this->line('<fg=green>****</>');
     }
 
-    public function initializeCms()
+    public function initializeCms($options)
     {
         $this->line('<fg=red>****</>');
         $this->line('<fg=red>**** Initialize Amila Laravel CMS ****</>');
         $this->line('<fg=red>****</>');
 
+        if (trim($options['table_prefix']) == '') {
+            $table_prefix = $this->ask('Set up a database table prefix instead of the default', 'cms_');
+        } else {
+            $table_prefix = trim($options['table_prefix']);
+        }
 
-        $table_prefix = $this->ask('Set up a database table prefix instead of the default', 'cms_');
+        if (trim($options['locale']) == '') {
+            $app_locale = $this->ask('Set up a locale language instead of the default', config('app.locale'));
+        } else {
+            $app_locale = trim($options['locale']);
+        }
 
-        $app_lang = $this->ask('Set up a locale language instead of the default', config('app.locale'));
 
         $this->line("<fg=cyan>----> Database table prefix : </><fg=yellow>" . $table_prefix . "</>");
-        $this->line("<fg=cyan>----> Locale language : </><fg=yellow>" . $app_lang . "</>");
-        if (!$this->confirm('<fg=magenta>Please confirm the above settings?</>', true)) {
-            $this->error("User aborted! please run the command again.");
-            exit();
+        $this->line("<fg=cyan>----> Locale language : </><fg=yellow>" . $app_locale . "</>");
+
+        if (trim($options['locale']) == '' || trim($options['table_prefix']) == '') {
+            if (!$this->confirm('<fg=magenta>Please confirm the above settings?</>', true)) {
+                $this->error("User aborted! please run the command again.");
+                exit();
+            }
         }
+
+        //exit('This is debug test');
 
         $this->call('vendor:publish', [
             '--provider' => 'AlexStack\LaravelCms\LaravelCmsServiceProvider'
         ]);
 
-        if ($table_prefix != 'cms_' || $app_lang != 'en') {
+        if ($table_prefix != 'cms_' || $app_locale != 'en') {
             $config_str = str_replace(
                 ["=> 'cms_", "=> 'en"],
-                ["=> '" . $table_prefix, "=> '" . $app_lang],
+                ["=> '" . $table_prefix, "=> '" . $app_locale],
                 file_get_contents(dirname(__FILE__, 3) . '/config/laravel-cms.php')
             );
             file_put_contents(base_path('config/laravel-cms.php'), $config_str);
