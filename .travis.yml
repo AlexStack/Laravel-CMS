@@ -22,13 +22,14 @@ before_script:
   - composer show laravel/framework
   - cp -f ../.travis.env .env
   - composer require alexstack/laravel-cms dev-alex_dev
-  - php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_
+  - php artisan laravelcms --action=initialize --locale=cn --table_prefix=travis_cms_
 
 install:
   - composer install --prefer-dist --quiet
 
 script:
-  - vendor/bin/phpunit
+  - cd cms
+  - php artisan laravelcms --action=uninstall
 
 services:
   - mysql
