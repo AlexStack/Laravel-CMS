@@ -16,11 +16,11 @@ before_install:
   - mysql -e 'CREATE DATABASE laravelcms_test;'
 
 before_script:
-  - cp .travis.env .env
   - composer self-update
   - composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
   - cd cms
   - composer show laravel/framework
+  - cp .travis.env .env
   - composer install --prefer-source --no-interaction
   - php artisan migrate
 
