@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>
-        {{$page->meta_title ?? $page->title}}{{strlen($page->meta_title ?? $page->title) < 40 ? ' - ' . $helper->s('site_name') : ''}}
+        {{$page->meta_title ?? $page->title}}{{strlen($page->meta_title ?? $page->title) < 60 ? ' - ' . $helper->s('site_name') : ''}}
     </title>
     @if ( $page->meta_keywords )
     <meta name="keywords" content="{{$page->meta_keywords}}" />
