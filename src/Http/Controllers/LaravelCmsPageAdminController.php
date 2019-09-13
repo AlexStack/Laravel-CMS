@@ -90,7 +90,12 @@ class LaravelCmsPageAdminController extends Controller
     public function dashboard()
     {
         $this->checkUser();
-        return redirect()->route('LaravelCmsAdminPages.index');
+
+        if (empty($this->helper->settings)) {
+            return redirect()->route('LaravelCmsSettingPages.index');
+        } else {
+            return redirect()->route('LaravelCmsAdminPages.index');
+        }
     }
 
     public function index()
