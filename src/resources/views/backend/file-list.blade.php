@@ -16,6 +16,7 @@
                 {{-- upload form --}}
                 <div class="col-md-4">
                     {!! Form::model($_GET, ['route' => ['LaravelCmsAdminFiles.store'], 'method' => "POST",
+                    "id"=>"file_upload_form",
                     'files'=>true])
                     !!}
 
@@ -26,12 +27,13 @@
                         </div>
                         <div class="custom-file">
                             <input type="file" name="files[]" class="custom-file-input" id="inputGroupFile01"
-                                onchange="form.submit()" aria-describedby="inputGroupFileAddon01" multiple />
+                                required="required" onchange="$('#file_upload_form').trigger('submit');"
+                                aria-describedby="inputGroupFileAddon01" multiple />
                             <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                         </div>
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="submit"
-                                id="inputGroupFileAddon04">{{$helper->t('upload')}}</button>
+                                id="upload_button">{{$helper->t('upload')}}</button>
                         </div>
                     </div>
 
@@ -50,7 +52,7 @@
                         </div>
                         <div class="custom-file">
                             <input type="text" class="form-control" placeholder="Image URL" aria-label="Username"
-                                aria-describedby="basic-addon1" name="image_url" id="image_url" />
+                                required="required" aria-describedby="basic-addon1" name="image_url" id="image_url" />
                         </div>
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="button"
@@ -74,8 +76,8 @@
                         </div>
                         <div class="custom-file">
                             <input type="text" class="form-control" placeholder="Keyword" aria-label="Keyword"
-                                value="{{$_REQUEST['keyword'] ?? ''}}" aria-describedby="basic-addon2" name="keyword"
-                                id="keyword" />
+                                required="required" value="{{$_REQUEST['keyword'] ?? ''}}"
+                                aria-describedby="basic-addon2" name="keyword" id="keyword" />
                         </div>
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="submit"
@@ -244,5 +246,11 @@
 
         });
     }
+
+$( "#file_upload_form" ).submit(function( event ) {
+    $('#upload_button').addClass('disabled').html('<i class="fas fa-spinner fa-spin"></i>');
+    //event.preventDefault();
+    return true;
+});
 </script>
 @endsection
