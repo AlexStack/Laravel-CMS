@@ -203,7 +203,7 @@ class CmsSettingsTableSeeder extends Seeder
                 'input_attribute' => '{
 "rows":1,
 "required":"required",
-"pattern":"[a-zA-Z0-9\\\\-_\\\\\\\\]{2,30}"
+"pattern":"[a-zA-Z0-9\\\\-_/]{2,60}"
 }',
                 'abstract' => NULL,
                 'category' => 'file',

@@ -190,6 +190,16 @@ composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
 // Tips: You will need register a new user, the first user will be the admin user
 ```
 
+## How to upgrade the CMS?
+
+-   First, run composer require alexstack/laravel-cms to upgrade the package
+-   Then follow the document to upgrade database and template if needed
+-   Override the frontend tempalte if you didn't change anything
+
+```php
+php artisan vendor:publish --tag=view --force  --provider=AlexStack\LaravelCms\LaravelCmsServiceProvider
+```
+
 ## License
 
 -   MIT

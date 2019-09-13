@@ -115,5 +115,5 @@ return [
         'frontend_language' => 'en',
     ],
 
-    'cms_version' => '0.9.1',
+    'cms_version' => '0.10.1',
 ];
