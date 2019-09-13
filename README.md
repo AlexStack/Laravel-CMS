@@ -57,20 +57,21 @@ composer require laravel/ui && php artisan ui vue --auth
 
 ## How to log into the backend /cmsadmin/ ?
 
-- Amila CMS use your existing Laravel user system
-- You need to login with the FIRST USER of your site (user_id = 1)
-- You can add more admin users by change the admin_ary in config/laravel-cms.php
-- If you don't have any existing user, then register a new one via http://your-domain/register
+-   Amila CMS use your existing Laravel user system
+-   You need to login with the FIRST USER of your site (user_id = 1)
+-   You can add more admin users by change the admin_ary in config/laravel-cms.php
+-   If you don't have any existing user, then register a new one via http://your-domain/register
 
 ## Why the uploaded image can not display (404 error)
 
 -   You can fix it by create a storage public link
 -   **php artisan storage:link**
-- eg. The public/storage should link to ../storage/app/public, if the public/storage is a real folder, you should remove/rename it and run "php artisan storage:link" to set up the link.
+-   eg. The public/storage should link to ../storage/app/public, if the public/storage is a real folder, you should remove/rename it and run "php artisan storage:link" to set up the link.
 
 ## Custom the cms route in config/laravel-cms.php
 
 -   **homepage_route**: This is the frontend homepage. By default it is /cms-home, you can change it to / then remove the existing / route in the routes/web.php
+
 ```php
 # Change homepage_route to /  in config/laravel-cms.php
 'homepage_route'    => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/'),
@@ -81,14 +82,19 @@ composer require laravel/ui && php artisan ui vue --auth
 //     return view('welcome');
 // });
 ```
+
 -   **page_route_prefix**: This is the frontend page prefix. By default it is /cms-, it will match path like /cms-\*. You can change it to a folder like /xxx/ or anything like xxx-, eg. Page- Article-
+
 ```php
 'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/Article-'),
 ```
+
 -   **admin_route**: This is the backend admin page route, By default it is /cmsadmin
+
 ```php
 'admin_route'       => env('LARAVEL_CMS_BACKEND_ROUTE', '/admin2019'),
 ```
+
 -   After change the route, you will need to run below commands:
     -   php artisan config:cache
     -   or
@@ -160,6 +166,28 @@ composer require laravel/ui && php artisan ui vue --auth
     'slug_format'   => 'from_title',
     'slug_suffix'   => '.html',
     'slug_separate' => '-',
+```
+
+## How to set up a brand new Laravel 6.x website & install our CMS
+
+-   It's good for a local test
+
+```php
+// Install Laravel 6.x & the CMS package
+composer create-project --prefer-dist laravel/laravel cms && cd cms && composer require alexstack/laravel-cms
+
+// Then you need to change the database settings in the .env, after that initialize CMS
+cd cms & vi .env
+php artisan laravelcms
+
+// Or initialize the CMS with silent mode
+php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_  --silent=yes
+
+// Enable auth system for Laravel 6.x
+composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
+
+// Config the document root to point to the cms/public then you can access the backend
+// Tips: You will need register a new user, the first user will be the admin user
 ```
 
 ## License

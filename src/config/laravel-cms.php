@@ -8,6 +8,7 @@ return [
     | need to run "php artisan config:cache" after make a change
     |
     */
+    'site_name' => env('APP_NAME', 'My Site Name'),
     'top_logo' => env('LARAVEL_CMS_TOP_LOGO', 'https://raw.githubusercontent.com/AlexStack/Laravel-CMS/master/src/assets/frontend/images/top-logo.png'),
 
     'page_top' => '<div class="row justify-content-end">
