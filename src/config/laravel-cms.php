@@ -66,7 +66,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'file' => [
-        'upload_dir' => env('LARAVEL_CMS_UPLOAD_DIR', 'laravel-cms-uploads'),
+        'upload_dir' => env('LARAVEL_CMS_UPLOAD_DIR', 'laravel-cms/uploads'),
 
         'image_reoptimize_time' => env('LARAVEL_CMS_IMAGE_REOPTIMIZE_TIME', 0),
 

@@ -199,15 +199,15 @@ class CmsSettingsTableSeeder extends Seeder
                 'id' => 15,
                 'param_name' => 'upload_dir',
                 'page_id' => NULL,
-                'param_value' => 'laravel-cms-uploads',
+                'param_value' => 'laravel-cms/uploads',
                 'input_attribute' => '{
 "rows":1,
 "required":"required",
-"pattern":"[a-zA-Z0-9\\\\-_]{2,30}"
+"pattern":"[a-zA-Z0-9\\\\-_\\\\\\\\]{2,30}"
 }',
                 'abstract' => NULL,
                 'category' => 'file',
-                'enabled' => 1,
+                'enabled' => 0,
                 'sort_value' => 50,
                 'created_at' => '2019-09-05 13:51:25',
                 'updated_at' => '2019-09-09 13:38:14',
