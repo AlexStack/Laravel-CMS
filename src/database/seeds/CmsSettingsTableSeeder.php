@@ -407,8 +407,8 @@ class CmsSettingsTableSeeder extends Seeder
                 'param_name' => 'admin_menu_links',
                 'page_id' => NULL,
                 'param_value' => '{
-"all_page" : "<a class=\'btn btn-success mr-3\' href=\'ROUTE(LaravelCmsAdminPages.index)\' role=\'button\'><i class=\'fas fa-home mr-1\'></i>__(all_page)</a>",
-"create_new_page" : "<a class=\'btn btn-primary mr-3\' href=\'ROUTE(LaravelCmsAdminPages.create)\' role=\'button\'><i class=\'fas fa-plus-circle mr-1\'></i>__(create_new_page)</a>",
+"dashboard" : "<a class=\'btn btn-success mr-3\' href=\'ROUTE(LaravelCmsAdmin.index)\' role=\'button\'><i class=\'fas fa-home mr-1\'></i>__(dashboard)</a>",
+"all_page" : "<a class=\'btn btn-primary mr-3\' href=\'ROUTE(LaravelCmsAdminPages.index)\' role=\'button\'><i class=\'fas fa-atlas mr-1\'></i>__(all_page)</a>",
 "cms_settings" : "<a class=\'btn btn-secondary mr-3\' href=\'ROUTE(LaravelCmsAdminSettings.index)\' role=\'button\'><i class=\'fas fa-cog mr-1\'></i>CMS __(\'settings\') </a>",
 "file_manager": "<a class=\'btn btn-info\' href=\'ROUTE(LaravelCmsAdminFiles.index)\' role=\'button\'><i class=\'fas fa-file-alt mr-1\'></i>__(file) __(manager)</a>"
 }',

@@ -3,7 +3,9 @@
 Route::group([
     'namespace'  => 'AlexStack\LaravelCms\Http\Controllers',
 ], function () {
-    Route::get(config('laravel-cms.admin_route'), 'LaravelCmsPageAdminController@dashboard')->name('LaravelCmsAdmin.index');
+    Route::resource(config('laravel-cms.admin_route') . '/dashboard', 'LaravelCmsDashboardAdminController',  ['names' => 'LaravelCmsAdmin']);
+
+    Route::get(config('laravel-cms.admin_route'), 'LaravelCmsDashboardAdminController@dashboard');
 
     Route::resource(config('laravel-cms.admin_route') . '/pages', 'LaravelCmsPageAdminController',  ['names' => 'LaravelCmsAdminPages']);
 
@@ -13,7 +15,6 @@ Route::group([
     Route::get(config('laravel-cms.page_route_prefix') . '{slug}', 'LaravelCmsPageController@show')->name('LaravelCmsPages.show');
 
     Route::resource(config('laravel-cms.admin_route') . '/files', 'LaravelCmsFileAdminController',  ['names' => 'LaravelCmsAdminFiles']);
-
 });
 
 Route::group([
