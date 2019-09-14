@@ -23,7 +23,7 @@ class LaravelCmsHelper
                 App::setLocale($this->s('template.frontend_language'));
             }
         }
-        //echo App::getLocale() . config('laravel-cms.admin_route') .request()->url();
+        //echo App::getLocale() . ' - ' . config('laravel-cms.admin_route') . request()->url();
     }
 
     static public function hasPermission()

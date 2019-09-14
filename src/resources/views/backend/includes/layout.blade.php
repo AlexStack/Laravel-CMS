@@ -31,7 +31,7 @@
         <div class="row justify-content-center">
             <div class="col-md text-center mt-5 mb-5 footer">
                 <span class="small"><a href="https://github.com/AlexStack/Laravel-CMS" target="_blank"
-                        class="text-dark">Laravel CMS</a> v{{$helper->s('cms_version')}} @
+                        class="text-dark">Laravel CMS</a> @
                     {{date('Y')}}-{{date('Y')+1}}</span>
             </div>
         </div>

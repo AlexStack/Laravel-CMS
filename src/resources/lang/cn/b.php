@@ -15,6 +15,10 @@ return [
     'search' => '搜索',
     'insert' => '插入',
 
+    // dashboard
+    'dashboard' => '管理面板',
+    'cms_version_notice' => '感谢您选择 Amila Laravel CMS, 目前已安装的CMS版本是 :current，已发布的最新的版本是 :latest ',
+
     // setting form
     'param_name' => '参数名称',
     'page_id' => '页面ID',
