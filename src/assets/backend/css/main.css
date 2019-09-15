@@ -32,6 +32,18 @@ a:hover,
   padding: .25em .1em;
 }
 
+.latest ul li:nth-child(2) .badge-secondary {
+  background-color: #379dd8;
+}
+
+.latest ul li:nth-child(3) .badge-secondary {
+  background-color: #8dc63a;
+}
+
+.latest ul li:nth-child(4) .badge-secondary {
+  background-color: #f59516;
+}
+
 
 /* file manager */
 
