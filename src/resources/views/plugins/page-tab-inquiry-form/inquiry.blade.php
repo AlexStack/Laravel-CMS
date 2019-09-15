@@ -3,6 +3,7 @@ onetime token= -
 <button id="show-inquiries" type="button">Show Inquiries</button>
 <div id="search-results"></div>
 @php
+$form_enabled_label = $helper->t('form_enabled');
 if ( isset($tab_data->success_title) ){
 foreach( $tab_data->toArray() as $k => $v )
 {
@@ -11,14 +12,15 @@ if ( !isset($page[$k]) ) {
 $page[$k] = $v;
 }
 }
+$form_enabled_label .= "(ID:$tab_data->id)";
 }
 @endphp
 
 
 
 @include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
-"form_enabled", 'type'=>'select', 'label'=>'Form Enabled', 'options'=>['0' => 'Disable', '1' => 'Enable Contact Us Form
-for this page'] ])
+"form_enabled", 'label'=> $form_enabled_label, 'type'=>'select', 'options'=>['0' => $helper->t('disable'), '1' =>
+$helper->t('enable')] ])
 
 
 @include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
@@ -38,8 +40,8 @@ for this page'] ])
 'name' => "success_content"])
 
 @include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
-"google_recaptcha_enabled", 'type'=>'select', 'label'=>'Google recaptcha', 'options'=>['0' => 'Disable', '1' =>
-'Enable'] ])
+"google_recaptcha_enabled", 'type'=>'select', 'options'=>['' => $helper->t('default'),'0' => $helper->t('disable'),
+'1'=> $helper->t('enable')] ])
 
 
 @include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
