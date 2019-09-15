@@ -33,7 +33,7 @@
                     border-top: 0;
                 }
             </style>
-            <div class="tab-content">
+            <div class="tab-content all-settings">
 
                 {{-- @foreach ($settings->pluck('param_name', 'category') as $category => $param_name) --}}
                 @foreach ($categories as $category => $param_name)
@@ -53,7 +53,7 @@
 
                         {!! $icon !!}
                         <a href="./settings/{{$item->id}}/edit"
-                            class="{{$item->enabled ? 'text-dark font-weight-bold' : 'text-secondary'}}"
+                            class="{{$item->enabled ? 'font-weight-bold' : 'text-secondary'}}"
                             title="Sort Value: {{$item->sort_value??0}}">
                             {{$item->category}}.{{$item->param_name}}
                             @if ( $item->page_id)
@@ -62,8 +62,8 @@
                         </a>
 
                         <a href="./settings/{{$item->id}}/edit"
-                            class="{{$item->enabled ? 'text-dark' : 'text-secondary'}}"><i class="far fa-edit ml-1 mr-1"
-                                title="Sort Value: {{$item->sort_value??0}}"></i></a>
+                            class="{{$item->enabled ? 'text-secondary' : 'text-secondary'}}"><i
+                                class="far fa-edit ml-1 mr-1" title="Sort Value: {{$item->sort_value??0}}"></i></a>
 
                         <span class="abstract">
                             @if ( trim(strip_tags($item->abstract)) != '' )

@@ -16,10 +16,14 @@ return [
     'insert' => '插入',
     'submit' => '提交',
     'default' => '默认',
+    'page' => '页面',
+    'pages' => '页面',
+    'files' => '文件',
 
     // dashboard
     'dashboard' => '管理面板',
     'cms_version_notice' => '感谢您选择 Amila Laravel CMS, 目前已安装的CMS版本是 :current，已发布的最新的版本是 :latest ',
+    'latest_name' => '最新修改的:name',
 
     // setting form
     'param_name' => '参数名称',
@@ -54,6 +58,7 @@ return [
     'parent_page' => '上级页面',
     'user_id' => '用户ID',
     'created_at' => '创建时间',
+    'updated_at' => '修改时间',
     'template_file' => '模版文件',
     'meta_title' => 'META标题',
     'meta_keywords' => 'META关键字',
