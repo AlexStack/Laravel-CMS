@@ -44,7 +44,8 @@
                         <a href="{{ route('LaravelCmsAdminPages.index') }}">
                             {{$helper->t('latest_name',['name'=>$helper->t('pages')])}}</a>
                         <a href="{{ route('LaravelCmsAdminPages.create', ['menu_enabled'=>0]) }}"
-                            title="{{$helper->t('create_new_page')}}"><i class="far fa-plus-square ml-3"></i></a>
+                            title="{{$helper->t('create_new_page')}}"><i
+                                class="far fa-plus-square ml-3 shadow-sm"></i></a>
                     </h4>
                 </li>
 
@@ -81,6 +82,20 @@
                     </a></li>
                 @endforeach
             </ul>
+        </div>
+
+        {{-- software versions --}}
+
+        <div class="mt-5 text-secondary software-version">
+            <i class="fab fa-laravel text-warning font-weight-bold"></i> Laravel Version {{app()->version()}}
+            <i class="fab fa-php text-primary ml-5"></i> PHP Version {{ phpversion() }}
+
+            @if ( strpos(PHP_OS, 'WIN') !== false )
+            <i class="fab fa-windows text-info ml-5"></i>
+            @else
+            <i class="fab fa-linux text-info ml-5"></i>
+            @endif
+            Server OS is {{ php_uname('s r v m') }}
         </div>
 
         {{-- End main content --}}
