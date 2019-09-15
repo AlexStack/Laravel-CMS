@@ -1,5 +1,5 @@
-
-{!! Form::model($_GET, ['route' => ['LaravelCmsPluginInquiry.submitForm'], 'method' => "POST", 'files'=>true, 'id'=>'laravel-cms-inquiry-form']) !!}
+{!! Form::model($_GET, ['route' => ['LaravelCmsPluginInquiry.submitForm'], 'method' => "POST", 'files'=>true,
+'id'=>'laravel-cms-inquiry-form']) !!}
 
 <input type="hidden" name="result_type" value="json" />
 
@@ -14,7 +14,7 @@
 {!! $gg_recaptcha !!}
 
 <script>
-$("#laravel-cms-inquiry-form").submit(function(event){
+    $("#laravel-cms-inquiry-form").submit(function(event){
     event.preventDefault();
     $.ajax({
         url : $(this).attr("action"),
@@ -28,7 +28,9 @@ $("#laravel-cms-inquiry-form").submit(function(event){
             console.log('Submission was successful.');
             //console.log(data);
             if ( data.success ){
+                $("#laravel-cms-inquiry-form .form-group").fadeOut('slow');
                 $("#laravel-cms-inquiry-form-results").html(data.success_content);
+
             } else {
                 $('#laravel-cms-inquiry-form .error_message').html('Error: ' + data.error_message);
             }

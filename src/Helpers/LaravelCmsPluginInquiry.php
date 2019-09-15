@@ -19,58 +19,91 @@ class LaravelCmsPluginInquiry
         $this->helper = new LaravelCmsHelper;
     }
 
+    public function getFormSettings($page_id)
+    {
+
+        $settings = LaravelCmsInquirySetting::where('page_id', $page_id)->first();
+
+        if (!isset($settings->form_enabled) || !$settings->form_enabled) {
+            return null;
+        }
+        $default_setting_id = $settings->default_setting_id ?? $this->helper->s('default_inquiry_form_setting_id');
+        if ($default_setting_id) {
+            $default_settings = LaravelCmsInquirySetting::where('id', $default_setting_id)->first();
+        }
+        $new_settings = clone $settings;
+        foreach ($settings->toArray() as $key => $value) {
+            if ($new_settings[$key] === null) {
+                $new_settings[$key] = $default_settings[$key];
+            } else if ($key == 'success_content' && strlen(trim(strip_tags($new_settings[$key]))) < 4) {
+                $new_settings[$key] = $default_settings[$key];
+            }
+        }
+
+        //$this->helper->debug([$settings->toArray(), $default_settings->toArray(), $new_settings->toArray()]);
+
+        return $new_settings;
+    }
+
     public function displayForm($page)
     {
-        $settings = LaravelCmsInquirySetting::where('page_id', $page->id)->first();
+        $settings = $this->getFormSettings($page->id);
         // LaravelCmsHelper::debug($page);
-        $data['page']           = $page;
-        $data['settings']       = $settings;
-        if (!isset($settings->form_enabled) || !$settings->form_enabled) {
+
+        if (!$settings) {
             return '<!-- Inquiry form disabled for this page -->';
         }
-        $data['dynamic_inputs'] = self::dynamicInputs($settings, $page);
+
+        $data['page']           = $page;
+        $data['settings']       = $settings;
+
+        $data['dynamic_inputs'] = $this->dynamicInputs($settings, $page);
         $data['gg_recaptcha']   = (isset($settings->google_recaptcha_enabled) && $settings->google_recaptcha_enabled) ? GoogleRecaptcha::show($this->helper->s('google_recaptcha_site_key'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
 
         return view('laravel-cms::plugins.page-tab-inquiry-form.' . ($settings->form_layout ?? 'frontend-form-001'), $data);
     }
 
 
-    static public function dynamicInputs($settings, $page)
+    public function dynamicInputs($settings, $page)
     {
 
-        $display_form_fields = (isset($settings->display_form_fields) && strpos($settings->display_form_fields, '|')) ? $settings->display_form_fields : 'first_name:Your Name:required | email | message:Message:required pattern="{5,5000}"  | submit';
-        $fields_ary = explode('|', $display_form_fields);
+        // $display_form_fields = (isset($settings->display_form_fields) && strpos($settings->display_form_fields, '|')) ? $settings->display_form_fields : 'first_name:' . $this->helper->t('your_name') . ':required | email:' . $this->helper->t('email') . ' | message:' . $this->helper->t('message') . ':required pattern="{5,5000}"  | submit:' . $this->helper->t('submit') . '';
+
+        $fields_obj = json_decode($settings->display_form_fields);
+        //$this->helper->debug($fields_obj);
+
+        // $fields_ary = explode('|', $display_form_fields);
         $input_str = '<input type="hidden" name="page_id" value="' . $page->id . '" />
             <input type="hidden" name="page_title" value="' . $page->title . '" />';
-        foreach ($fields_ary as $field) {
-            $f_ary = explode(':', trim($field));
-            $f_ary[0] = trim($f_ary[0]);
-            if (!isset($f_ary[1])) {
-                $f_ary[1] = trim(ucwords(str_replace(['_', '-'], ' ', $f_ary[0])));
-            } else {
-                $f_ary[1] = trim($f_ary[1]);
-            }
-            if (isset($f_ary[2])) {
-                $attr = trim($f_ary[2]);
-            } else {
-                $attr = '';
-            }
-            $input_type = ($f_ary[0] == 'email') ? 'email' : 'text';
+        foreach ($fields_obj as $f) {
+            // $f_ary = explode(':', trim($field));
+            // $f_ary[0] = trim($f_ary[0]);
+            // if (!isset($f_ary[1])) {
+            //     $f_ary[1] = trim(ucwords(str_replace(['_', '-'], ' ', $f_ary[0])));
+            // } else {
+            //     $f_ary[1] = trim($f_ary[1]);
+            // }
+            // if (isset($f_ary[2])) {
+            //     $attr = trim($f_ary[2]);
+            // } else {
+            //     $attr = '';
+            // }
+            $input_type = ($f->field == 'email') ? 'email' : 'text';
 
-            if ($f_ary[0] == 'message') {
+            if ($f->field == 'message') {
                 $input_str .= '<div class="form-group">
-                <label for="message" class="label-message">' . $f_ary[1] . '</label>
-                    <textarea class="form-control input-message" name="message" cols="50" rows="10" id="message" ' . $attr . '></textarea>
+                <label for="message" class="label-message">' . $f->text . '</label>
+                    <textarea class="form-control input-message" name="message" cols="50" rows="10" id="message" ' . $f->attr  . '></textarea>
                 </div>';
-            } else if ($f_ary[0] == 'submit') {
+            } else if ($f->field == 'submit') {
                 $input_str .= '<div id="laravel-cms-inquiry-form-results">
                         <div class="error_message"></div>
-                        <button type="submit" class="btn btn-primary btn-submit">' . $f_ary[1] . '</button>
+                        <button type="submit" class="btn btn-primary btn-submit">' . $f->text  . '</button>
                     </div>';
             } else {
                 $input_str .= '<div class="form-group">
-                <label for="' . $f_ary[0] . '" class="label-' . $f_ary[0] . '">' . $f_ary[1] . '</label>
-                    <input class="form-control input-' . $f_ary[0] . '" name="' . $f_ary[0] . '" type="' .  $input_type . '" id="' . $f_ary[0] . '" ' . $attr . '>
+                <label for="' . $f->field . '" class="label-' . $f->field . '">' . $f->text  . '</label>
+                    <input class="form-control input-' . $f->field . '" name="' . $f->field . '" type="' .  $input_type . '" id="' . $f->field . '" ' . $f->attr . '>
                 </div>';
             }
         }
@@ -84,8 +117,7 @@ class LaravelCmsPluginInquiry
         $form_data['ip'] = $request->ip();
 
         //LaravelCmsHelper::debug($form_data);
-
-        $settings = LaravelCmsInquirySetting::where('page_id', $form_data['page_id'])->first();
+        $settings = $this->getFormSettings($form_data['page_id']);
 
         if ($settings->google_recaptcha_enabled && !GoogleRecaptcha::verify($this->helper->s('google_recaptcha_secret_key'), null)) {
             $result['success'] = false;
@@ -130,7 +162,7 @@ class LaravelCmsPluginInquiry
         //LaravelCmsHelper::debug($form_data);
     }
 
-    static public function edit($page_id, $page = null)
+    public function edit($page_id, $page = null)
     {
         $s = LaravelCmsInquirySetting::where('page_id', $page_id)->first();
 
@@ -138,16 +170,20 @@ class LaravelCmsPluginInquiry
     }
 
 
-    static public function store($form_data, $page = null)
+    public function store($form_data, $page = null)
     {
-        return self::update($form_data, $page);
+        return $this->update($form_data, $page);
     }
 
-    static public function update($form_data, $page = null)
+    public function update($form_data, $page = null)
     {
         $setting_data = $form_data;
         $setting_data['page_id']    = $page->id;
         $setting_data['id']         = null;
+
+        if (trim($form_data['display_form_fields']) != '' && !$this->helper->correctJsonFormat($form_data['display_form_fields'], true)) {
+            exit(sprintf('$this->wrong_json_format_str', 'Param Value'));
+        }
 
         $s = LaravelCmsInquirySetting::updateOrCreate(
             ['page_id' => $page->id],
@@ -157,7 +193,7 @@ class LaravelCmsPluginInquiry
         return $s;
     }
 
-    static public function destroy($page_id)
+    public function destroy($page_id)
     {
 
         $rs = LaravelCmsInquirySetting::where('page_id', $page_id)->delete();

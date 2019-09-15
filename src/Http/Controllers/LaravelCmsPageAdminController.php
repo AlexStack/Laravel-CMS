@@ -50,7 +50,8 @@ class LaravelCmsPageAdminController extends Controller
                 $plugin_class = trim($plugin['php_class'] ?? '');
                 if ($plugin_class != '' && class_exists($plugin_class) && is_callable($plugin_class . '::' . $action)) {
                     //echo $plugin_class . '::' . $action . '  --- ';
-                    $s = call_user_func($plugin_class . '::' . $action, $form_data, $page);
+                    //$s = call_user_func($plugin_class . '::' . $action, $form_data, $page);
+                    $s = call_user_func(array(new $plugin_class, $action), $form_data, $page);
                     $callback_ary->put($plugin['blade_file'], $s);
                     //$this->helper->debug($s->toArray());
                 } else {
