@@ -43,7 +43,7 @@
                     <h4>
                         <a href="{{ route('LaravelCmsAdminPages.index') }}">
                             {{$helper->t('latest_name',['name'=>$helper->t('pages')])}}</a>
-                        <a href="{{ route('LaravelCmsAdminPages.create', ['menu_enabled'=>0]) }}"
+                        <a href="{{ route('LaravelCmsAdminPages.create', ['menu_enabled'=>0,'switch_nav_tab'=>'settings']) }}"
                             title="{{$helper->t('create_new_page')}}"><i
                                 class="far fa-plus-square ml-3 shadow-sm"></i></a>
                     </h4>
@@ -95,7 +95,8 @@
             @else
             <i class="fab fa-linux text-info ml-5"></i>
             @endif
-            Server OS is {{ php_uname('s r v m') }}
+            Server OS is
+            {{ strpos(ini_get('disable_functions'),'php_uname') === false ? php_uname('s') . ' ' . php_uname('r') : PHP_OS }}
         </div>
 
         {{-- End main content --}}

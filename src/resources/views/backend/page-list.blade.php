@@ -63,7 +63,8 @@
 
                     @if ( $item->slug == 'homepage')
                     <span clas="create_top_new_page">
-                        <a class='btn btn-outline-primary btn-sm ml-3' href='{{route('LaravelCmsAdminPages.create')}}'
+                        <a class='btn btn-outline-primary btn-sm ml-3'
+                            href='{{route('LaravelCmsAdminPages.create',['switch_nav_tab'=>'settings'])}}'
                             role='button'>
                             <i class='fas fa-plus-circle mr-1'></i>{{$helper->t('create_new_page')}}</a>
                     </span>
