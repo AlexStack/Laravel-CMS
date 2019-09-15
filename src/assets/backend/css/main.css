@@ -6,6 +6,46 @@ body {
   font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Arial"
 }
 
+a {
+  color: #565658;
+}
+
+a:hover,
+.nav-tabs a:hover {
+  color: #ef237b;
+}
+
+.all-pages a.text-secondary:hover,
+.all-settings a.text-secondary:hover {
+  color: #007bff !important;
+}
+
+
+.nav-tabs a {
+  color: #379dd8;
+}
+
+/* dashboard */
+
+.latest span.badge {
+  width: 1.15rem;
+  padding: .25em .1em;
+}
+
+.latest ul li:nth-child(2) .badge-secondary {
+  background-color: #379dd8;
+}
+
+.latest ul li:nth-child(3) .badge-secondary {
+  background-color: #8dc63a;
+}
+
+.latest ul li:nth-child(4) .badge-secondary {
+  background-color: #f59516;
+}
+
+
+/* file manager */
 
 .files .file:hover {
   background-color: rgba(243, 247, 242, 0.658);

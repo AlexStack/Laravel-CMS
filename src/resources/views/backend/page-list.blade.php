@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center mt-2">
         <div class="col-md">
-            <ul id="sortableList" class="list-group">
+            <ul id="sortableList" class="list-group all-pages">
                 @forelse ($all_pages as $item)
                 <li class="list-group-item list-group-item-action">
                     <i class="fas fa-arrows-alt text-light handle"></i>
@@ -39,7 +39,7 @@
                     @endphp
 
                     {!! $icon !!}
-                    <a href="./pages/{{$item->id}}/edit" class="text-dark">
+                    <a href="./pages/{{$item->id}}/edit">
                         @if ( $item->menu_title)
                         [ {{$item->menu_title}} ] -
                         @endif

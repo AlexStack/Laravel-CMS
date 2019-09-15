@@ -4,6 +4,7 @@ namespace AlexStack\LaravelCms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
+use AlexStack\LaravelCms\Models\LaravelCmsSetting;
 use AlexStack\LaravelCms\Models\LaravelCmsFile;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use App\Http\Controllers\Controller;
@@ -53,6 +54,18 @@ class LaravelCmsDashboardAdminController extends Controller
             //$data['cms_version'] =
         }
 
+        $data['latest_pages'] = LaravelCmsPage::orderBy('updated_at', 'desc')
+            ->limit(10)
+            ->get(['id', 'title', 'menu_title', 'created_at', 'updated_at']);
+
+        $data['latest_settings'] = LaravelCmsSetting::orderBy('updated_at', 'desc')
+            ->limit(10)
+            ->get(['id', 'category', 'param_name', 'created_at', 'updated_at']);
+
+        $data['latest_files'] = LaravelCmsFile::orderBy('updated_at', 'desc')
+            ->limit(10)
+            ->get();
+
 
         if (empty($this->helper->settings)) {
             return redirect()->route('LaravelCmsSettingPages.index');
@@ -65,6 +78,9 @@ class LaravelCmsDashboardAdminController extends Controller
 
     public function dashboard()
     {
+        if (empty($this->helper->settings)) {
+            return redirect()->route('LaravelCmsSettingPages.index');
+        }
         return redirect()->route('LaravelCmsAdmin.index');
     }
 }

@@ -37,8 +37,8 @@ class CreateCmsInquirySettingsTable extends Migration
             $table->text('google_recaptcha_secret_key', 16777215)->nullable();
             $table->string('google_recaptcha_css_class')->nullable();
             $table->string('google_recaptcha_no_tick_msg')->nullable();
-            $table->boolean('google_recaptcha_enabled')->default(0)->index('google_recaptcha_enabled');
-            $table->boolean('form_enabled')->default(0)->index('form_enabled');
+            $table->boolean('google_recaptcha_enabled')->default(0)->nullable()->index('google_recaptcha_enabled');
+            $table->boolean('form_enabled')->default(0)->nullable()->index('form_enabled');
             $table->timestamps();
             $table->softDeletes()->index('deleted_at');
         });
