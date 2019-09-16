@@ -21,6 +21,7 @@ return [
     'files' => '文件',
     'homepage' => '首页',
     'all' => '全部',
+    'form' => '表单',
 
     // dashboard
     'dashboard' => '管理面板',
@@ -83,12 +84,15 @@ return [
 
 
     // inquiry form
-    'inquiry_form' => '咨询表单',
+    'inquiry' => '咨询',
     'form_layout' => '表单式样模版',
     'default_setting_id' => '读取默认设置表单ID (如果表单激活且此值为空，则会读取CMS首页的表单设置)',
     'inquiries' => '咨询',
     'inquire' => '咨询',
     'no_result' => '没有任何结果',
+    'delete_message' => '请确定要删除此内容？',
+    'total' => '总共',
+
 
     //'form_layout_filename' => 'string',
     'display_form_fields' => '表单显示字段',

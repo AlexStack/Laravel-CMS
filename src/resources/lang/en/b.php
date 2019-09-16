@@ -8,5 +8,7 @@ return [
     'main_content' => 'Main Content',
     'extra_content' => 'Extra Content',
 
+    'delete_message' => 'Please confirm that you want delete this item?',
+
 
 ];

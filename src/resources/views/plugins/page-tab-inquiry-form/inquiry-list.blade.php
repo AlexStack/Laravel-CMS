@@ -65,13 +65,21 @@
             {{-- show inquiries --}}
             <div class="row justify-content-center inquiries">
                 @forelse ($inquiries as $item)
-                <div class="col-xl-10 col-lg-11 col-md-12 mb-4">
+                <div class="col-xl-10 col-lg-11 col-md-12 mb-4 inquiry" id="inquiry-{{$item->id}}">
                     <div class="card">
-                        <div class="card-header text-truncate">
-                            <i class="text-info fas fa-user-edit"></i> <a
-                                href="{{ route('LaravelCmsAdminPages.edit', ['page' => $item->page_id]) }}">{{$item->page_title}}</a>
-                            <span class="text-secondary">({{$item->created_at}})</span>
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col text-truncate">
+                                    <i class="text-info fas fa-user-edit"></i> <a
+                                        href="{{ route('LaravelCmsAdminPages.edit', ['page' => $item->page_id]) }}">{{$item->page_title}}</a>
+                                    <span class="text-secondary">({{$item->created_at}})</span>
+                                </div>
 
+                                <div class="col-auto">
+                                    <a href="#del-{{$item->id}}" class="delete-link" data-id="{{$item->id}}"><i
+                                            class="far fa-trash-alt"></i></a>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="text-secondary card-title">
@@ -101,26 +109,66 @@
                 <div class="col-md-auto pagination">
                     {{ $inquiries->appends(['keyword' =>$_REQUEST['keyword']??null, 'page_id' =>$_REQUEST['page_id']??null])->links() }}
                 </div>
+                <div class="w-100"></div>
+                <div class="col-md-auto">
+                        <div class="total">{{ $helper->t('total') }} <span id="total_number">{{ $inquiries->total() }}</span> {{ $helper->t('inquiries') }}</div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<form action="{{ route('LaravelCmsPluginInquiry.index') }}" method="POST" id="del_form">
+{{-- <form action="{{ route('LaravelCmsPluginInquiry.index') }}" method="POST" id="del_form">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-</form>
+</form> --}}
 <script>
     function confirmDelete(id){
-        var f = document.getElementById('del_form');
-        var del_msg = "Confirm to delete?";
-        if ( confirm(del_msg) ) {
-            f._method.value  = 'DELETE';
-            f.action = "{{route('LaravelCmsPluginInquiry.index')}}/" + id;
-            f.submit();
+        if ( !confirm("{{$helper->t('delete_message')}}") ) {
+            return false;
         }
+
+        $.ajax({
+            url : "{{route('LaravelCmsPluginInquiry.index')}}/" + id,
+            type: 'DELETE',
+            data : {
+                _token: "{{ csrf_token() }}",
+                result_type: "json"
+            },
+            // contentType: false,
+            // cache: false,
+            // processData:false,
+            dataType: 'json',
+            success: function (data) {
+                console.log('Submission was successful.');
+                //console.log(data);
+                if ( data.success ){
+                    $('#inquiry-'+ id).fadeOut('slow');
+                    $('#total_number').text( $('#total_number').text()-1 );
+                } else {
+                    alert('Error: ' + data.error_message);
+                }
+            },
+            error: function (data) {
+                console.log('laravel-cms-inquiry-delete : An error occurred.');
+                console.log(data);
+            },
+        }).done(function(data){
+            // console.log('laravel-cms-inquiry-delete submitted');
+            // console.log(data);
+        });
+
         return false;
     }
+
+
+    $(function(){
+        $('.inquiries a.delete-link').click(function(e){
+            e.preventDefault();
+            var id = $(this).data('id');
+            confirmDelete(id);
+        })
+    });
 
 </script>
 @endsection

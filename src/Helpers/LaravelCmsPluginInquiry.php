@@ -40,7 +40,7 @@ class LaravelCmsPluginInquiry
             })
             ->orderBy('id', 'desc')
             //->toSql();
-            ->paginate(20);
+            ->paginate($this->helper->s('inquiry.number_per_page') ?? 20);
         //$this->helper->debug($data['inquiries']);
 
         $data['helper'] = $this->helper;
@@ -225,12 +225,20 @@ class LaravelCmsPluginInquiry
         return $s;
     }
 
-    public function destroy($page_id)
+    public function destroy($id)
     {
 
-        $rs = LaravelCmsInquirySetting::where('page_id', $page_id)->delete();
+        $rs = LaravelCmsInquiry::where('id', $id)->delete();
 
         //LaravelCmsHelper::debug($rs);
+        if ( request()->result_type == 'json') {
+            $result['success'] = $rs;
+            $result['success_content'] = 'Inquire id ' . $id . ' deleted';
+            $result['error_message'] = 'Delete inquire id ' . $id . ' failed!';
+
+            return json_encode($result);
+
+        }
 
         return $rs;
     }

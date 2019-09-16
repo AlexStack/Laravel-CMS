@@ -268,7 +268,7 @@ class CmsSettingsTableSeeder extends Seeder
                 'page_id' => NULL,
                 'param_value' => '{
 "blade_file" : "inquiry",
-"tab_name" : "<i class=\'fas fa-edit mr-1\'></i>__(inquiry_form)",
+"tab_name" : "<i class=\'fas fa-edit mr-1\'></i>__(inquiry,form)",
 "php_class"  : "AlexStack\\\\LaravelCms\\\\Helpers\\\\LaravelCmsPluginInquiry"
 }',
                 'input_attribute' => '{
