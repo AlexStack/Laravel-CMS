@@ -135,7 +135,16 @@ class LaravelCmsFileAdminController extends Controller
             array_map('unlink', $all_images);
         }
 
-        $file->delete();
+        $rs = $file->delete();
+
+        if ( request()->result_type == 'json') {
+            $result['success'] = $rs;
+            $result['success_content'] = 'Id ' . $id . ' deleted';
+            $result['error_message'] = 'Delete id ' . $id . ' failed!';
+
+            return json_encode($result);
+
+        }
 
         return redirect()->route(
             'LaravelCmsAdminFiles.index'
