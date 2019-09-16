@@ -20,6 +20,7 @@ return [
     'pages' => '页面',
     'files' => '文件',
     'homepage' => '首页',
+    'all' => '全部',
 
     // dashboard
     'dashboard' => '管理面板',
@@ -85,6 +86,10 @@ return [
     'inquiry_form' => '咨询表单',
     'form_layout' => '表单式样模版',
     'default_setting_id' => '读取默认设置表单ID (如果表单激活且此值为空，则会读取CMS首页的表单设置)',
+    'inquiries' => '咨询',
+    'inquire' => '咨询',
+    'no_result' => '没有任何结果',
+
     //'form_layout_filename' => 'string',
     'display_form_fields' => '表单显示字段',
     'mail_from' => '提醒邮件发送者Email地址',
@@ -98,7 +103,8 @@ return [
     'google_recaptcha_no_tick_msg' => '谷歌验证码没打勾的提示',
     'google_recaptcha_enabled' => '是否开启谷歌验证码',
     'form_enabled' => '是否激活并显示表单',
-    'your_name' => '您的名字',
+    'your' => '您的',
+    'name' => '名字',
     'first_name' => '名字',
     'last_name' => '姓氏',
     'company_name' => '公司名称',
