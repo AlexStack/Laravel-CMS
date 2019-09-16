@@ -70,9 +70,6 @@ class LaravelCmsSettingAdminController extends Controller
                 "/__\((.*)\)/U",
                 function ($matches) use ($helper) {
                     $str = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
-                    if ( strpos($str, ',') ){
-                        return addslashes($helper->t(explode(',',$str)));
-                    }
                     return addslashes($helper->t($str));
                 },
                 $config_str
@@ -85,7 +82,7 @@ class LaravelCmsSettingAdminController extends Controller
                 "/ROUTE\((.*)\)/U",
                 function ($matches) {
                     $route_name = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
-                    if ( strpos($route_name, ',') ){
+                    if (strpos($route_name, ',')) {
                         $route_ary = explode(',', $route_name);
                         $route_name = trim($route_ary[0]);
                         $route_param = trim($route_ary[1]);

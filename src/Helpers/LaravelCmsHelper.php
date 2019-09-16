@@ -331,18 +331,18 @@ class LaravelCmsHelper
     // Combine trans() & trans_choice() & set default
     public function t($key, $param_1 = null, $param_2 = null)
     {
-        if ( is_array($key) ){
-            if ( $param_1 == null ){
+        if (strpos($key, ',') !== false) {
+            if ($param_1 == null) {
                 $separator = ' ';
-                if ( in_array(App::getLocale(), ['cn','zh'])){
+                if (in_array(App::getLocale(), ['cn', 'zh'])) {
                     $separator = '';
                 }
             } else {
                 $separator = $param_1;
             }
             $s = [];
-            foreach($key as $k){
-                $s[] = $this->t($k);
+            foreach (explode(',', $key) as $k) {
+                $s[] = $this->t(trim($k));
             }
             return implode($separator, $s);
         }

@@ -13,7 +13,7 @@ $form_enabled_label .= "(ID:$tab_data->id)" . ' <a
     href="' . route('LaravelCmsPluginInquiry.index','page_id='.$page->id) . '"
     class="btn btn-outline-info btn-sm ml-3"><i class="fas fa-user-edit  mr-1"></i>'
     .
-    $helper->t(['view','inquiries']) .
+    $helper->t('view, inquiries') .
     '</a>';
 }
 @endphp
