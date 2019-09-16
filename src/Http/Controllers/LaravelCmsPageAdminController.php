@@ -95,7 +95,7 @@ class LaravelCmsPageAdminController extends Controller
     //     $data['helper'] = $this->helper;
 
     //     if (empty($this->helper->settings)) {
-    //         return redirect()->route('LaravelCmsSettingPages.index');
+    //         return redirect()->route('LaravelCmsAdminSettings.index');
     //     } else {
     //         //return redirect()->route('LaravelCmsAdminPages.index');
     //         return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.dashboard', $data);
