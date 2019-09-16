@@ -2,17 +2,18 @@
 
 @section('content')
 
-<div class="container">
+<div class="container dashboard">
     <div class="row justify-content-center mt-2">
         {{-- Start main content --}}
 
         <div class="col-md-auto text-center">
 
             <h1>{{ $helper->t('dashboard')}}</h1>
-            {!! $helper->t('cms_version_notice', [
-            'current'=>'<span class="text-success font-weight-bold current_version">' . $cms_version .'</span>',
-            'latest'=>'<span class="text-danger font-weight-bold latest_version">***</span>'
-            ]) !!}
+            <div class="cms-version-notice">{!! $helper->t('cms_version_notice', [
+                'current'=>'<span class="text-success font-weight-bold current_version">' . $cms_version .'</span>',
+                'latest'=>'<span class="text-danger font-weight-bold latest_version">***</span>'
+                ]) !!}</div>
+
         </div>
 
         <div class="w-100 mb-4"></div>

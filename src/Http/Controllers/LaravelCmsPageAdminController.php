@@ -326,43 +326,6 @@ class LaravelCmsPageAdminController extends Controller
         $form_data['file_data'] = json_encode($all_file_data);
     }
 
-    // public function uploadFile($f)
-    // {
-
-    //     // $file_data['user_id'] = $user->id;
-    //     $file_data['mimetype']  = $f->getMimeType();
-    //     $file_data['suffix']    = $f->getClientOriginalExtension();
-    //     $file_data['filename']  = $f->getClientOriginalName();
-    //     $file_data['title']     = $file_data['filename'];
-    //     $file_data['filesize']  = $f->getSize();
-    //     if (strpos($file_data['mimetype'], 'image/') !== false) {
-    //         $file_data['is_image']  = 1;
-    //     }
-    //     if (strpos($file_data['mimetype'], 'video/') !== false) {
-    //         $file_data['is_video']  = 1;
-    //     }
-    //     $file_data['filehash']  = sha1_file($f->path());
-
-    //     $file_data['path']  = substr($file_data['filehash'], -2) . '/' . $file_data['filehash'] . '.' . $file_data['suffix'];
-
-    //     // $abs_real_path = public_path('laravel-cms-uploads/' . $file_data['path']);
-
-    //     // if (!file_exists(dirname($abs_real_path))) {
-    //     //     mkdir(dirname($abs_real_path), 0755, true);
-    //     // }
-
-    //     $new_file = LaravelCmsFile::updateOrCreate(
-    //         ['filehash' => $file_data['filehash']],
-    //         $file_data
-    //     );
-
-    //     $f->storeAs(dirname('public/' . $this->helper->s('file.upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
-
-    //     return $new_file;
-
-    //     // echo '<pre>111:' . var_export($new_file, true) . '</pre>';
-    //     // exit();
-    // }
 
 
     public function generateSlug($slug, $def = null, $separate = '-')

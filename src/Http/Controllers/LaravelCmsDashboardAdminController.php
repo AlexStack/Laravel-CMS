@@ -83,4 +83,19 @@ class LaravelCmsDashboardAdminController extends Controller
         }
         return redirect()->route('LaravelCmsAdmin.index');
     }
+
+
+    public function show ($id) {
+        if ( $id == 'logout'){
+            return $this->logout();
+        }
+    }
+
+
+    public function logout () {
+        //logout user
+        auth()->logout();
+        // redirect to homepage
+        return redirect('/');
+    }
 }

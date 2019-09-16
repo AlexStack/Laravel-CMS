@@ -19,11 +19,13 @@ return [
     'page' => '页面',
     'pages' => '页面',
     'files' => '文件',
+    'homepage' => '首页',
 
     // dashboard
     'dashboard' => '管理面板',
     'cms_version_notice' => '感谢您选择 Amila Laravel CMS, 目前已安装的CMS版本是 :current，已发布的最新的版本是 :latest ',
     'latest_name' => '最新修改的:name',
+    'logout' => '安全退出',
 
     // setting form
     'param_name' => '参数名称',
@@ -109,7 +111,7 @@ return [
     'city' => '城市',
     'state' => '省份',
     'country' => '国家',
-    'website' => '网站地址',
+    'website' => '网站',
     'locale' => '语言区域',
     'page_title' => '页面标题',
     'my_date' => '日期',
