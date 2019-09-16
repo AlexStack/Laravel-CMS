@@ -311,7 +311,7 @@ class CmsSettingsTableSeeder extends Seeder
                 'param_name' => 'admin_setting_tabs',
                 'page_id' => NULL,
                 'param_value' => '{
-"global" : "<i class=\'fas fa-cog mr-1\'></i>__(global) __(settings)",
+"global" : "<i class=\'fas fa-cog mr-1\'></i>__(global,settings)",
 "template" : "<i class=\'fas fa-globe mr-1\'></i>__(template)",
 "plugin" : "<i class=\'fas fa-cogs mr-1\'></i>__(plugin)",
 "file" : "<i class=\'fas fa-image mr-1\'></i>__(file)",
@@ -411,7 +411,7 @@ class CmsSettingsTableSeeder extends Seeder
 
 "all_page" : "<a class=\'btn btn-primary mr-3\' href=\'ROUTE(LaravelCmsAdminPages.index)\' role=\'button\'><i class=\'fas fa-atlas mr-1\'></i>__(all_page)</a>",
 "cms_settings" : "<a class=\'btn btn-secondary mr-3\' href=\'ROUTE(LaravelCmsAdminSettings.index)\' role=\'button\'><i class=\'fas fa-cog mr-1\'></i>CMS __(\'settings\') </a>",
-"file_manager": "<a class=\'btn btn-info\' href=\'ROUTE(LaravelCmsAdminFiles.index)\' role=\'button\'><i class=\'fas fa-file-alt mr-1\'></i>__(file) __(manager)</a>"
+"file_manager": "<a class=\'btn btn-info\' href=\'ROUTE(LaravelCmsAdminFiles.index)\' role=\'button\'><i class=\'fas fa-file-alt mr-1\'></i>__(file,manager)</a>"
 }',
                 'input_attribute' => '{"rows":11,"required":"required"}',
                 'abstract' => NULL,
