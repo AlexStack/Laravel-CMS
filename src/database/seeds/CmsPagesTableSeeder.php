@@ -25,7 +25,7 @@ class CmsPagesTableSeeder extends Seeder
         \DB::table($this->table_name)->insert(array(
             0 =>
             array(
-                'id' => 1,
+                'id' => 5,
                 'user_id' => NULL,
                 'parent_id' => NULL,
                 'menu_enabled' => 1,
@@ -149,7 +149,7 @@ class CmsPagesTableSeeder extends Seeder
             ),
             4 =>
             array(
-                'id' => 5,
+                'id' => 1,
                 'user_id' => NULL,
                 'parent_id' => NULL,
                 'menu_enabled' => 1,
@@ -165,7 +165,7 @@ class CmsPagesTableSeeder extends Seeder
                 'main_banner' => NULL,
                 'main_image' => NULL,
                 'sub_content' => NULL,
-                'main_content' => '<p>This is the home page main content. </p><p>You can change it <a href="/laravelCms/pages">in the cms backend</a>: </p><p>Please keep only one <span style="font-weight: bold;">slug </span>settings in the SEO tab as <span style="color: rgb(156, 0, 255); font-weight: bold;">homepage</span>.</p><p><a href="/laravelCms/pages">Click here go to the cms backend,</a> you will need to log in as the first user on the website.</p><p><br></p><p><br></p><p><br></p>',
+                'main_content' => '<p>This is the home page main content. </p><p>You can change it in the cms backend : </p><p>Please keep only one <span style="font-weight: bold;">slug </span>settings in the SEO tab as <span style="color: rgb(156, 0, 255); font-weight: bold;">homepage</span>.</p><p><a href="/cmsadmin/">Click here go to the cms backend,</a> you will need to log in as the first user on the website.</p><p><br></p><p><br></p><p><br></p>',
                 'sort_value' => NULL,
                 'view_counts' => NULL,
                 'tags' => NULL,

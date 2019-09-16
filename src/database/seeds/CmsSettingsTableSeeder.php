@@ -407,7 +407,8 @@ class CmsSettingsTableSeeder extends Seeder
                 'param_name' => 'admin_menu_links',
                 'page_id' => NULL,
                 'param_value' => '{
-"dashboard" : "<a class=\'btn btn-success mr-3\' href=\'ROUTE(LaravelCmsAdmin.index)\' role=\'button\'><i class=\'fas fa-home mr-1\'></i>__(dashboard)</a>",
+"dashboard" : {"style" : "dropdown",      "button" : "<a class=\'btn btn-success mr-3 dropdown-toggle\' href=\'ROUTE(LaravelCmsAdmin.index)\' role=\'button\'  data-toggle=\'dropdown\' aria-haspopup=\'true\' aria-expanded=\'false\'><i class=\'fas fa-home mr-1\'></i>__(dashboard)</a>",      "items" : [        	"<a class=\'dropdown-item\' href=\'ROUTE(LaravelCmsAdmin.index)\' ><i class=\'fas fa-tachometer-alt mr-1 text-success\'></i>__(dashboard)</a>",        	"<a class=\'dropdown-item\' href=\'ROUTE(LaravelCmsPages.index)\' target=\'_blank\'><i class=\'fas fa-eye mr-1 text-primary\'></i>__(preview,website)</a>",            "<a class=\'dropdown-item\' href=\'ROUTE(LaravelCmsPluginInquiry.index)\'><i class=\'fas fa-user-edit mr-1 text-info\'></i>__(all,inquiries)</a>",        	"<a class=\'dropdown-item\' href=\'ROUTE(LaravelCmsAdmin.show, \'logout\')\'><i class=\'fas fa-sign-out-alt mr-2 text-warning\'></i>__(logout)</a>"]},
+
 "all_page" : "<a class=\'btn btn-primary mr-3\' href=\'ROUTE(LaravelCmsAdminPages.index)\' role=\'button\'><i class=\'fas fa-atlas mr-1\'></i>__(all_page)</a>",
 "cms_settings" : "<a class=\'btn btn-secondary mr-3\' href=\'ROUTE(LaravelCmsAdminSettings.index)\' role=\'button\'><i class=\'fas fa-cog mr-1\'></i>CMS __(\'settings\') </a>",
 "file_manager": "<a class=\'btn btn-info\' href=\'ROUTE(LaravelCmsAdminFiles.index)\' role=\'button\'><i class=\'fas fa-file-alt mr-1\'></i>__(file) __(manager)</a>"
