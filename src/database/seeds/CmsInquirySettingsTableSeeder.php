@@ -4,6 +4,7 @@ namespace AlexStack\LaravelCms;
 
 use Illuminate\Database\Seeder;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
+use App;
 
 class CmsInquirySettingsTableSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class CmsInquirySettingsTableSeeder extends Seeder
         $this->config = include(base_path('config/laravel-cms.php'));
         $this->table_name = $this->config['table_name']['inquiry_settings'];
         $this->helper = new LaravelCmsHelper;
+        App::setLocale($this->config['template']['backend_language']);
     }
 
 
