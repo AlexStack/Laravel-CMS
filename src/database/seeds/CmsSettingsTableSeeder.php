@@ -311,7 +311,7 @@ class CmsSettingsTableSeeder extends Seeder
                 'param_name' => 'admin_setting_tabs',
                 'page_id' => NULL,
                 'param_value' => '{
-"global" : "<i class=\'fas fa-cog mr-1\'></i>__(global) __(settings)",
+"global" : "<i class=\'fas fa-cog mr-1\'></i>__(global,settings)",
 "template" : "<i class=\'fas fa-globe mr-1\'></i>__(template)",
 "plugin" : "<i class=\'fas fa-cogs mr-1\'></i>__(plugin)",
 "file" : "<i class=\'fas fa-image mr-1\'></i>__(file)",
@@ -407,10 +407,11 @@ class CmsSettingsTableSeeder extends Seeder
                 'param_name' => 'admin_menu_links',
                 'page_id' => NULL,
                 'param_value' => '{
-"dashboard" : "<a class=\'btn btn-success mr-3\' href=\'ROUTE(LaravelCmsAdmin.index)\' role=\'button\'><i class=\'fas fa-home mr-1\'></i>__(dashboard)</a>",
+"dashboard" : {"style" : "dropdown",      "button" : "<a class=\'btn btn-success mr-3 dropdown-toggle\' href=\'ROUTE(LaravelCmsAdmin.index)\' role=\'button\'  data-toggle=\'dropdown\' aria-haspopup=\'true\' aria-expanded=\'false\'><i class=\'fas fa-home mr-1\'></i>__(dashboard)</a>",      "items" : [        	"<a class=\'dropdown-item\' href=\'ROUTE(LaravelCmsAdmin.index)\' ><i class=\'fas fa-tachometer-alt mr-1 text-success\'></i>__(dashboard)</a>",        	"<a class=\'dropdown-item\' href=\'ROUTE(LaravelCmsPages.index)\' target=\'_blank\'><i class=\'fas fa-eye mr-1 text-primary\'></i>__(preview,website)</a>",            "<a class=\'dropdown-item\' href=\'ROUTE(LaravelCmsPluginInquiry.index)\'><i class=\'fas fa-user-edit mr-1 text-info\'></i>__(all,inquiries)</a>",        	"<a class=\'dropdown-item\' href=\'ROUTE(LaravelCmsAdmin.show, \'logout\')\'><i class=\'fas fa-sign-out-alt mr-2 text-warning\'></i>__(logout)</a>"]},
+
 "all_page" : "<a class=\'btn btn-primary mr-3\' href=\'ROUTE(LaravelCmsAdminPages.index)\' role=\'button\'><i class=\'fas fa-atlas mr-1\'></i>__(all_page)</a>",
 "cms_settings" : "<a class=\'btn btn-secondary mr-3\' href=\'ROUTE(LaravelCmsAdminSettings.index)\' role=\'button\'><i class=\'fas fa-cog mr-1\'></i>CMS __(\'settings\') </a>",
-"file_manager": "<a class=\'btn btn-info\' href=\'ROUTE(LaravelCmsAdminFiles.index)\' role=\'button\'><i class=\'fas fa-file-alt mr-1\'></i>__(file) __(manager)</a>"
+"file_manager": "<a class=\'btn btn-info\' href=\'ROUTE(LaravelCmsAdminFiles.index)\' role=\'button\'><i class=\'fas fa-file-alt mr-1\'></i>__(file,manager)</a>"
 }',
                 'input_attribute' => '{"rows":11,"required":"required"}',
                 'abstract' => NULL,
@@ -449,6 +450,36 @@ class CmsSettingsTableSeeder extends Seeder
                 'sort_value' => 89,
                 'created_at' => '2019-09-11 09:51:57',
                 'updated_at' => '2019-09-11 10:02:16',
+                'deleted_at' => NULL,
+            ),
+            25 =>
+            array(
+                'id' => 34,
+                'param_name' => 'site_name',
+                'page_id' => NULL,
+                'param_value' => config('app.name'),
+                'input_attribute' => '{"rows":1,"required":"required"}',
+                'abstract' => '',
+                'category' => 'global',
+                'enabled' => 1,
+                'sort_value' => 8888,
+                'created_at' => '2019-09-15 11:47:18',
+                'updated_at' => '2019-09-16 11:31:52',
+                'deleted_at' => NULL,
+            ),
+            26 =>
+            array(
+                'id' => 35,
+                'param_name' => 'default_inquiry_form_setting_id',
+                'page_id' => NULL,
+                'param_value' => '1',
+                'input_attribute' => '{"rows":1,"required":"required"}',
+                'abstract' => NULL,
+                'category' => 'global',
+                'enabled' => 1,
+                'sort_value' => 68,
+                'created_at' => '2019-09-05 17:11:23',
+                'updated_at' => '2019-09-05 17:11:23',
                 'deleted_at' => NULL,
             ),
         ));

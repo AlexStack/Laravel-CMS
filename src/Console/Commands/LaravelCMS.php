@@ -167,6 +167,11 @@ class LaravelCMS extends Command
             '--class' => 'AlexStack\LaravelCms\CmsPagesTableSeeder'
         ]);
 
+
+        $this->call('db:seed', [
+            '--class' => 'AlexStack\LaravelCms\CmsInquirySettingsTableSeeder'
+        ]);
+
         // success message
         $this->line('<fg=red>****</>');
         $this->line('<fg=red>**** Laravel CMS Initialized ****</>');

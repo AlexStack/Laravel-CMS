@@ -6,7 +6,7 @@
         <div class="col-md">
 
             {!! Form::model($page, ['route' => ['LaravelCmsAdminPages.update', $page->id], 'method' => "PUT",
-            'files'=>true]) !!}
+            'files'=>true, 'id'=>'page_content_form']) !!}
 
             @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.page-form')
 

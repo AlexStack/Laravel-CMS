@@ -82,8 +82,13 @@ class LaravelCmsSettingAdminController extends Controller
                 "/ROUTE\((.*)\)/U",
                 function ($matches) {
                     $route_name = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
+                    if (strpos($route_name, ',')) {
+                        $route_ary = explode(',', $route_name);
+                        $route_name = trim($route_ary[0]);
+                        $route_param = trim($route_ary[1]);
+                    }
                     if (\Route::has($route_name)) {
-                        return route($route_name, [], false);
+                        return route($route_name, $route_param ?? [], false);
                     } else {
                         return '#route_not_defined_' . $matches[1];
                     }
@@ -212,7 +217,7 @@ class LaravelCmsSettingAdminController extends Controller
         }
         return redirect()->route(
             'LaravelCmsAdminSettings.edit',
-            ['id' => $rs->id]
+            ['setting' => $rs->id]
         );
     }
 

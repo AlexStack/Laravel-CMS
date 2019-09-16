@@ -12,11 +12,43 @@ use GoogleRecaptchaToAnyForm\GoogleRecaptcha;
 class LaravelCmsPluginInquiry
 {
     public $helper;
+    private $user = null;
 
 
     public function __construct()
     {
         $this->helper = new LaravelCmsHelper;
+    }
+
+    public function index()
+    {
+        if (!$this->user) {
+            $this->user = $this->helper->hasPermission();
+        }
+        $keyword = request()->keyword;
+        $page_id = request()->page_id;
+        $data['inquiries'] = LaravelCmsInquiry::when($page_id, function ($query) use ($page_id) {
+            return $query->where('page_id', $page_id);
+        })
+            ->when($keyword, function ($query) use ($keyword) {
+                return $query->where(function ($query) use ($keyword) {
+                    $query->where('message', 'like', '%' . trim($keyword) . '%')
+                        ->orWhere('last_name', 'like', '%' . $keyword . '%')
+                        ->orWhere('first_name', 'like', '%' . trim($keyword) . '%')
+                        ->orWhere('company_name', 'like', '%' . trim($keyword) . '%');
+                });
+            })
+            ->orderBy('id', 'desc')
+            //->toSql();
+            ->paginate(20);
+        //$this->helper->debug($data['inquiries']);
+
+        $data['helper'] = $this->helper;
+
+
+        //$this->helper->debug($data['inquiries']->toArray());
+
+        return view('laravel-cms::plugins.page-tab-inquiry-form.inquiry-list', $data);
     }
 
     public function getFormSettings($page_id)

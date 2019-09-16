@@ -44,6 +44,11 @@ a:hover,
   background-color: #f59516;
 }
 
+.menu-links .dropdown-item {
+  padding: 0.25rem 1rem;
+}
+
+
 
 /* file manager */
 

@@ -68,7 +68,7 @@ class LaravelCmsDashboardAdminController extends Controller
 
 
         if (empty($this->helper->settings)) {
-            return redirect()->route('LaravelCmsSettingPages.index');
+            return redirect()->route('LaravelCmsAdminSettings.index');
         } else {
             //return redirect()->route('LaravelCmsAdminPages.index');
             return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.dashboard', $data);
@@ -79,8 +79,23 @@ class LaravelCmsDashboardAdminController extends Controller
     public function dashboard()
     {
         if (empty($this->helper->settings)) {
-            return redirect()->route('LaravelCmsSettingPages.index');
+            return redirect()->route('LaravelCmsAdminSettings.index');
         }
         return redirect()->route('LaravelCmsAdmin.index');
+    }
+
+
+    public function show ($id) {
+        if ( $id == 'logout'){
+            return $this->logout();
+        }
+    }
+
+
+    public function logout () {
+        //logout user
+        auth()->logout();
+        // redirect to homepage
+        return redirect('/');
     }
 }

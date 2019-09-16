@@ -1,10 +1,7 @@
-contact us form contact us form contact us form
-onetime token= -
-<button id="show-inquiries" type="button">Show Inquiries</button>
 <div id="search-results"></div>
 @php
 $form_enabled_label = $helper->t('form_enabled');
-if ( isset($tab_data->success_title) ){
+if ( isset($tab_data->form_enabled) ){
 foreach( $tab_data->toArray() as $k => $v )
 {
 if ( !isset($page[$k]) ) {
@@ -12,7 +9,12 @@ if ( !isset($page[$k]) ) {
 $page[$k] = $v;
 }
 }
-$form_enabled_label .= "(ID:$tab_data->id)";
+$form_enabled_label .= "(ID:$tab_data->id)" . ' <a
+    href="' . route('LaravelCmsPluginInquiry.index','page_id='.$page->id) . '"
+    class="btn btn-outline-info btn-sm ml-3"><i class="fas fa-user-edit  mr-1"></i>'
+    .
+    $helper->t('view, inquiries') .
+    '</a>';
 }
 @endphp
 

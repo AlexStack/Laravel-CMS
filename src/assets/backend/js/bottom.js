@@ -41,6 +41,79 @@ function renderEditor(id, minHeight = 120) {
   $(label_class).html($(label_class).html() + browser_img_str);
 }
 
+function insertImageToEditor(editor_id, img_url) {
+  var HTMLstring =
+    '<img src="' + img_url + '" class="img-fluid content-img" />';
+  $(editor_id).summernote("pasteHTML", HTMLstring);
+
+  // $(editor_id).summernote("insertImage", img_url, function ($image) {
+  //   $image.css("border", 0);
+  //   $image.attr("class", "img-fluid");
+  // });
+}
+
+function insertHtmlToEditor(editor_id, html_str) {
+  $(editor_id).summernote("pasteHTML", html_str);
+}
+
+function showIframeModal(url, modal_id) {
+  if (typeof modal_id == "undefined") {
+    modal_id = "#iframe-modal";
+  }
+  if (
+    $(modal_id + " iframe").attr("src").indexOf(url) == -1
+  ) {
+    $(modal_id + " iframe").attr("src", url);
+    $(modal_id + " iframe").addClass("iframe-loaded");
+  }
+  $(modal_id).modal("show");
+  return false;
+}
+
+function hideIframeModal(modal_id) {
+  if (typeof modal_id == "undefined") {
+    modal_id = "#iframe-modal";
+  }
+  $(modal_id).modal("hide");
+  return false;
+}
+
+function switchNavTab(nav_tab_id) {
+  if (nav_tab_id == "") {
+    return false;
+  }
+  $('.nav-tabs a[href="#' + nav_tab_id + '"]').trigger("click");
+  $('#page_content_form button[type="submit"]').click(function (e) {
+    if ($("#page_content_form .input-title").val() == "") {
+      $('.nav-tabs a[href="#main-content"]').trigger("click");
+      return false;
+    }
+    return true;
+  });
+}
+
+function sortableList(list_id) {
+  $("#sortableList").sortable({
+    handle: ".handle", // handle's class
+    animation: 150,
+    // Element dragging ended
+    onEnd: function ( /**Event*/ evt) {
+      var itemEl = evt.item; // dragged HTMLElement
+      evt.to; // target list
+      evt.from; // previous list
+      evt.oldIndex; // element's old index within old parent
+      evt.newIndex; // element's new index within new parent
+      evt.oldDraggableIndex; // element's old index within old parent, only counting draggable elements
+      evt.newDraggableIndex; // element's new index within new parent, only counting draggable elements
+      evt.clone; // the clone element
+      evt.pullMode; // when item is in another sortable: `"clone"` if cloning, `true` if moving
+      //console.log(evt);
+    }
+  });
+}
+
+// Implement functions when document is ready
+
 $(document).ready(function () {
   renderEditor("textarea.input-main_content", 200);
   setTimeout(function () {
@@ -58,37 +131,3 @@ $(document).ready(function () {
     renderEditor("textarea.input-success_content");
   }, 4000);
 });
-
-function insertImageToEditor(editor_id, img_url) {
-  var HTMLstring = '<img src="' + img_url + '" class="img-fluid content-img" />';
-  $(editor_id).summernote("pasteHTML", HTMLstring);
-
-  // $(editor_id).summernote("insertImage", img_url, function ($image) {
-  //   $image.css("border", 0);
-  //   $image.attr("class", "img-fluid");
-  // });
-}
-
-function insertHtmlToEditor(editor_id, html_str) {
-  $(editor_id).summernote("pasteHTML", html_str);
-}
-
-function showIframeModal(url, modal_id) {
-  if (typeof modal_id == "undefined") {
-    modal_id = "#iframe-modal";
-  }
-  if ($(modal_id + " iframe").attr("src").indexOf(url) == -1) {
-    $(modal_id + " iframe").attr("src", url);
-    $(modal_id + " iframe").addClass("iframe-loaded");
-  }
-  $(modal_id).modal("show");
-  return false;
-}
-
-function hideIframeModal(modal_id) {
-  if (typeof modal_id == "undefined") {
-    modal_id = "#iframe-modal";
-  }
-  $(modal_id).modal("hide");
-  return false;
-}

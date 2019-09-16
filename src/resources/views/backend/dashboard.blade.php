@@ -2,17 +2,18 @@
 
 @section('content')
 
-<div class="container">
+<div class="container dashboard">
     <div class="row justify-content-center mt-2">
         {{-- Start main content --}}
 
         <div class="col-md-auto text-center">
 
             <h1>{{ $helper->t('dashboard')}}</h1>
-            {!! $helper->t('cms_version_notice', [
-            'current'=>'<span class="text-success font-weight-bold current_version">' . $cms_version .'</span>',
-            'latest'=>'<span class="text-danger font-weight-bold latest_version">***</span>'
-            ]) !!}
+            <div class="cms-version-notice">{!! $helper->t('cms_version_notice', [
+                'current'=>'<span class="text-success font-weight-bold current_version">' . $cms_version .'</span>',
+                'latest'=>'<span class="text-danger font-weight-bold latest_version">***</span>'
+                ]) !!}</div>
+
         </div>
 
         <div class="w-100 mb-4"></div>
@@ -43,7 +44,7 @@
                     <h4>
                         <a href="{{ route('LaravelCmsAdminPages.index') }}">
                             {{$helper->t('latest_name',['name'=>$helper->t('pages')])}}</a>
-                        <a href="{{ route('LaravelCmsAdminPages.create', ['menu_enabled'=>0]) }}"
+                        <a href="{{ route('LaravelCmsAdminPages.create', ['menu_enabled'=>0,'switch_nav_tab'=>'settings']) }}"
                             title="{{$helper->t('create_new_page')}}"><i
                                 class="far fa-plus-square ml-3 shadow-sm"></i></a>
                     </h4>
@@ -95,7 +96,8 @@
             @else
             <i class="fab fa-linux text-info ml-5"></i>
             @endif
-            Server OS is {{ php_uname('s r v m') }}
+            Server OS is
+            {{ strpos(ini_get('disable_functions'),'php_uname') === false ? php_uname('s') . ' ' . php_uname('r') : PHP_OS }}
         </div>
 
         {{-- End main content --}}
