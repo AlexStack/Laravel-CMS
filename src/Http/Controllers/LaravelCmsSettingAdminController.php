@@ -217,7 +217,7 @@ class LaravelCmsSettingAdminController extends Controller
         }
         return redirect()->route(
             'LaravelCmsAdminSettings.edit',
-            ['id' => $rs->id]
+            ['setting' => $rs->id]
         );
     }
 

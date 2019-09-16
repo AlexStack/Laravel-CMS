@@ -467,6 +467,21 @@ class CmsSettingsTableSeeder extends Seeder
                 'updated_at' => '2019-09-16 11:31:52',
                 'deleted_at' => NULL,
             ),
+            26 =>
+            array(
+                'id' => 35,
+                'param_name' => 'default_inquiry_form_setting_id',
+                'page_id' => NULL,
+                'param_value' => '1',
+                'input_attribute' => '{"rows":1,"required":"required"}',
+                'abstract' => NULL,
+                'category' => 'global',
+                'enabled' => 1,
+                'sort_value' => 68,
+                'created_at' => '2019-09-05 17:11:23',
+                'updated_at' => '2019-09-05 17:11:23',
+                'deleted_at' => NULL,
+            ),
         ));
     }
 }
