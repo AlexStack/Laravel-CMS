@@ -87,14 +87,15 @@
 
         {{-- software versions --}}
 
-        <div class="m-3 text-secondary software-version">
-            <i class="fab fa-laravel text-warning font-weight-bold"></i> Laravel {{$helper->t('version')}}  {{app()->version()}}
-            <i class="fab fa-php text-primary ml-5"></i> PHP {{$helper->t('version')}} {{ phpversion() }}
+        <div class="m-3 text-secondary text-truncate software-version">
+            <i class="fab fa-laravel text-warning font-weight-bold"></i> Laravel {{$helper->t('version')}}
+            {{app()->version()}}
+            <i class="fab fa-php text-primary ml-4"></i> PHP {{$helper->t('version')}} {{ phpversion() }}
 
             @if ( strpos(PHP_OS, 'WIN') !== false )
-            <i class="fab fa-windows text-info ml-5"></i>
+            <i class="fab fa-windows text-info ml-4"></i>
             @else
-            <i class="fab fa-linux text-info ml-5"></i>
+            <i class="fab fa-linux text-info ml-4"></i>
             @endif
             {{$helper->t('server_os')}}
             {{ strpos(ini_get('disable_functions'),'php_uname') === false ? php_uname('s') . ' ' . php_uname('r') : PHP_OS }}

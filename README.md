@@ -193,9 +193,31 @@ composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
 ## How to upgrade the CMS?
 
 -   Run below command in your Laravel project folder
+-   It will ask whether you want to copy the new view,asset and language files to your project
 
 ```php
 composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrade
+```
+
+-   screenshot
+
+```php
+****
+**** Upgrade Amila Laravel CMS ****
+****
+
+ **** Upgrade the CMS database tables? **** (yes/no) [yes]:
+ >
+
+Nothing to migrate.
+
+ **** Copy the CMS backend & frontend view & asset files? **** (yes/no) [yes]:
+ >
+
+- Backup folder: views/backend-bak-20190917024943
+- Backup folder: views/frontend-bak-20190917024943
+- Backup folder: plugins/page-tab-inquiry-form-bak-20190917024943
+- Backup folder: plugins/page-tab-preview-bak-20190917024943
 ```
 
 ## License

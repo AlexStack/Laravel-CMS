@@ -21,6 +21,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
     <link href="{{$helper->assetUrl('css/main.css', true, true) }}" rel="stylesheet">
+    <script>
+        var admin_route = "{{config('laravel-cms.admin_route')}}";
+    </script>
 </head>
 
 <body>

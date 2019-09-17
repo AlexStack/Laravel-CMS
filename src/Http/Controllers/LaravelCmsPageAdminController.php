@@ -88,19 +88,6 @@ class LaravelCmsPageAdminController extends Controller
         return $option_ary;
     }
 
-    // public function dashboard()
-    // {
-    //     $this->checkUser();
-
-    //     $data['helper'] = $this->helper;
-
-    //     if (empty($this->helper->settings)) {
-    //         return redirect()->route('LaravelCmsAdminSettings.index');
-    //     } else {
-    //         //return redirect()->route('LaravelCmsAdminPages.index');
-    //         return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.dashboard', $data);
-    //     }
-    // }
 
     public function index()
     {
@@ -200,7 +187,7 @@ class LaravelCmsPageAdminController extends Controller
 
         return redirect()->route(
             'LaravelCmsAdminPages.edit',
-            ['id' => $rs->id]
+            ['page' => $rs->id]
         );
     }
 
