@@ -93,7 +93,7 @@
             {{-- show files --}}
             <div class="row files">
                 @foreach ($files as $file)
-                <div class="col-sm text-center text-truncate mb-5 file">
+                <div class="col-sm text-center text-truncate mb-5 file" id="file-{{$file->id}}">
 
                     @if ( $file->is_image)
                     <div class="file-icon">
@@ -125,7 +125,7 @@
                             class="preview_link is_image" target="_blank" title="{{ $helper->t('small_image') }}">
                             S<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 
-                        <a href="#" onclick="return confirmDelete({{$file->id}})" class="del">D<i
+                        <a href="#del-{{$file->id}}" class="delete-link" data-id="{{$file->id}}">D<i
                                 class="far fa-trash-alt ml-1 small text-secondary"></i></a>
 
                     </div>
@@ -157,27 +157,70 @@
             </div>
 
             <div class="row justify-content-center upload-form">
-                <div class="col-md-auto pagination">
+                <div class="col-md-auto  justify-content-center pagination">
                     {{ $files->appends(['editor_id' =>$_REQUEST['editor_id']??null, 'keyword' =>$_REQUEST['keyword']??null])->links() }}
+                </div>
+                <div class="w-100"></div>
+                <div class="col-md-auto text-center">
+                        <div class="total">{{ $helper->t('total') }} <span id="total_number">{{ $files->total() }}</span> {{ $helper->t('files') }}</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<form action="{{ route('LaravelCmsAdminFiles.index') }}" method="POST" id="del_form">
+{{-- <form action="{{ route('LaravelCmsAdminFiles.index') }}" method="POST" id="del_form">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-</form>
+</form> --}}
 <script>
+    // function confirmDelete(id){
+    //     var f = document.getElementById('del_form');
+    //     var del_msg = "Confirm to delete?";
+    //     if ( confirm(del_msg) ) {
+    //         f._method.value  = 'DELETE';
+    //         f.action = "{{route('LaravelCmsAdminFiles.index')}}/" + id;
+    //         f.submit();
+    //     }
+    //     return false;
+    // }
+
+
     function confirmDelete(id){
-        var f = document.getElementById('del_form');
-        var del_msg = "Confirm to delete?";
-        if ( confirm(del_msg) ) {
-            f._method.value  = 'DELETE';
-            f.action = "{{route('LaravelCmsAdminFiles.index')}}/" + id;
-            f.submit();
+        if ( !confirm("{{$helper->t('delete_message')}}") ) {
+            return false;
         }
+
+        $.ajax({
+            url : "{{route('LaravelCmsAdminFiles.index')}}/" + id,
+            type: 'DELETE',
+            data : {
+                _token: "{{ csrf_token() }}",
+                result_type: "json"
+            },
+            // contentType: false,
+            // cache: false,
+            // processData:false,
+            dataType: 'json',
+            success: function (data) {
+                console.log('Submission was successful.');
+                //console.log(data);
+                if ( data.success ){
+                    $('#file-'+ id).fadeOut('slow');
+                    $('#total_number').text( $('#total_number').text()-1 );
+                } else {
+                    alert('Error: ' + data.error_message);
+                }
+            },
+            error: function (data) {
+                console.log('laravel-cms-file-delete : An error occurred.');
+                console.log(data);
+            },
+        }).done(function(data){
+            // console.log('laravel-cms-file-delete submitted');
+            // console.log(data);
+        });
+
         return false;
     }
 
@@ -208,49 +251,57 @@
         return true;
     }
 
-    if ( window.location.href.indexOf('editor_id=textarea') != -1 ) {
-        $('a.del').hide();
-        $('.header-forms').addClass('sticky-top').addClass('bg-white').addClass('pt-2');
 
-        $('.files a.preview_link').click(function(e)
-        {
-            e.preventDefault();
+    $(function(){
 
+        if ( window.location.href.indexOf('editor_id=textarea') != -1 ) {
+            $('a.delete-link').hide();
+            $('.header-forms').addClass('sticky-top').addClass('bg-white').addClass('pt-2');
 
-            var link = $(this).attr('href');
-            if ( link.indexOf('generate_image') != -1 ){
-                var ajax_data = $.ajax({
-                            type: "GET",
-                            url: link + '&return_url=yes',
-                            success: function(response) {
-                                //console.log(response);
-                            },
-                            cache: false,
-                            async: false
-                        });
-                link = ajax_data.responseText; // ajax sync
-            }
+            $('.files a.preview_link').click(function(e)
+            {
+                e.preventDefault();
 
-            var html_str = '<img src="' + link + '" class="img-fluid content-img" />';
-
-            if ( $(this).hasClass('not_image')){
-                var link_txt = $(this).attr('title');
-                if ( $(this).hasClass('icon')){
-                    link_txt = '<i class="' + $(this).find('i:first').attr('class') + ' mr-1"></i>' + link_txt;
+                var link = $(this).attr('href');
+                if ( link.indexOf('generate_image') != -1 ){
+                    var ajax_data = $.ajax({
+                                type: "GET",
+                                url: link + '&return_url=yes',
+                                success: function(response) {
+                                    //console.log(response);
+                                },
+                                cache: false,
+                                async: false
+                            });
+                    link = ajax_data.responseText; // ajax sync
                 }
-                html_str = '&nbsp;<a href="' + link + '" class="content-file" target="_blank">' + link_txt + '</a>&nbsp;';
-            }
 
+                var html_str = '<img src="' + link + '" class="img-fluid content-img" />';
 
-            handleInsertToEditor(html_str);
+                if ( $(this).hasClass('not_image')){
+                    var link_txt = $(this).attr('title');
+                    if ( $(this).hasClass('icon')){
+                        link_txt = '<i class="' + $(this).find('i:first').attr('class') + ' mr-1"></i>' + link_txt;
+                    }
+                    html_str = '&nbsp;<a href="' + link + '" class="content-file" target="_blank">' + link_txt + '</a>&nbsp;';
+                }
+                handleInsertToEditor(html_str);
+            });
+        }
 
+        $('.files a.delete-link').click(function(e){
+            e.preventDefault();
+            var id = $(this).data('id');
+            confirmDelete(id);
         });
-    }
 
-$( "#file_upload_form" ).submit(function( event ) {
-    $('#upload_button').addClass('disabled').html('<i class="fas fa-spinner fa-spin"></i>');
-    //event.preventDefault();
-    return true;
-});
+        $( "#file_upload_form" ).submit(function( e ) {
+            $('#upload_button').addClass('disabled').html('<i class="fas fa-spinner fa-spin"></i>');
+            //e.preventDefault();
+            return true;
+        });
+    });
+
+
 </script>
 @endsection

@@ -19,7 +19,7 @@
         <div class="w-100 mb-4"></div>
 
         {{-- latest-settings --}}
-        <div class="col-md-4 latest latest-settings">
+        <div class="col-md-4 mb-2  latest latest-settings">
 
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action bg-light header">
@@ -37,7 +37,7 @@
         </div>
 
         {{-- latest-pages --}}
-        <div class="col-md-4 latest latest-pages">
+        <div class="col-md-4 mb-2  latest latest-pages">
 
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action bg-light header">
@@ -66,7 +66,7 @@
         </div>
 
         {{-- latest-files --}}
-        <div class="col-md-4 latest latest-files">
+        <div class="col-md-4 mb-2  latest latest-files">
 
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action bg-light header">
@@ -87,16 +87,16 @@
 
         {{-- software versions --}}
 
-        <div class="mt-5 text-secondary software-version">
-            <i class="fab fa-laravel text-warning font-weight-bold"></i> Laravel Version {{app()->version()}}
-            <i class="fab fa-php text-primary ml-5"></i> PHP Version {{ phpversion() }}
+        <div class="m-3 text-secondary software-version">
+            <i class="fab fa-laravel text-warning font-weight-bold"></i> Laravel {{$helper->t('version')}}  {{app()->version()}}
+            <i class="fab fa-php text-primary ml-5"></i> PHP {{$helper->t('version')}} {{ phpversion() }}
 
             @if ( strpos(PHP_OS, 'WIN') !== false )
             <i class="fab fa-windows text-info ml-5"></i>
             @else
             <i class="fab fa-linux text-info ml-5"></i>
             @endif
-            Server OS is
+            {{$helper->t('server_os')}}
             {{ strpos(ini_get('disable_functions'),'php_uname') === false ? php_uname('s') . ' ' . php_uname('r') : PHP_OS }}
         </div>
 
