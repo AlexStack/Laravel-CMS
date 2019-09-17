@@ -20,7 +20,8 @@
         "intervention/image": "^2.4",
         "intervention/imagecache": "^2.3",
         "laravelcollective/html": ">=5.5",
-        "overtrue/pinyin": "^4.0"
+        "overtrue/pinyin": "^4.0",
+        "alexstack/google-recaptcha-to-any-form": "^1.4"
     },
     "autoload": {
         "psr-4": {
