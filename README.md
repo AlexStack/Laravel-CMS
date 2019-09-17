@@ -222,7 +222,7 @@ Nothing to migrate.
 
 ## License
 
--   MIT
+-   The Amila Laravel CMS is open-source software licensed under the MIT license.
 
 ```
 

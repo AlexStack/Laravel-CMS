@@ -3,6 +3,7 @@
 namespace AlexStack\LaravelCms\Console\Commands;
 
 use Illuminate\Console\Command;
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 
 class LaravelCMS extends Command
 {
@@ -51,6 +52,8 @@ class LaravelCMS extends Command
             $this->uninstall($options);
         } else if ($options['action'] == 'upgrade'  || $options['action'] == 'update') {
             $this->upgrade($options);
+        } else if ($options['action'] == 'clear'  || $options['action'] == 'clean') {
+            $this->clearCache($options);
         } else {
             $this->error('Wrong action');
         }
@@ -157,6 +160,7 @@ class LaravelCMS extends Command
             ]);
         }
 
+        $this->clearCache($options);
 
         // success message
         $this->line('<fg=red>****</>');
@@ -292,6 +296,8 @@ class LaravelCMS extends Command
             '--class' => 'AlexStack\LaravelCms\CmsInquirySettingsTableSeeder'
         ]);
 
+        $this->clearCache($options);
+
         // success message
         $this->line('<fg=red>****</>');
         $this->line('<fg=red>**** Laravel CMS Initialized ****</>');
@@ -303,5 +309,17 @@ class LaravelCMS extends Command
         $this->line('<fg=green>****</>');
         $this->line('<fg=green>**** Have a good day!  ****</>');
         $this->line('<fg=green>****</>');
+    }
+
+
+    public function clearCache($options)
+    {
+        $this->call('config:clear');
+        $this->call('route:clear');
+        $helper  =  new LaravelCmsHelper;
+        $rs = $helper->rewriteConfigFile();
+        if ($rs) {
+            $this->line('<fg=green>Re-create the setting file: storage\app\laravel-cms\settings.php</>');
+        }
     }
 }
