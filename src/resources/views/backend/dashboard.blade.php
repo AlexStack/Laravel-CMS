@@ -37,7 +37,7 @@
         </div>
 
         {{-- latest-pages --}}
-        <div class="col-md-4 mb-2  latest latest-pages order-md-first">
+        <div class="col-md-4 mb-2  latest latest-pages">
 
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action bg-light header">

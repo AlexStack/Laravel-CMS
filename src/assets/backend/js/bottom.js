@@ -112,6 +112,27 @@ function sortableList(list_id) {
   });
 }
 
+
+
+
+function adjustSmallScreen()   {
+  if ($(window).width() > 700) {
+      return false;
+  }
+  $('.menu-links .btn').addClass('btn-sm text-truncate').css('width','2rem');
+  $('.menu-links .btn i').addClass('pr-5');
+  $('.menu-links').addClass('pl-0 pr-1').css('overflow','visible');
+  $('.menu-logo').addClass('pr-0');
+  $('.latest-settings').addClass('order-last');
+  $('.save-buttons .btn').addClass('btn-sm mr-1').removeClass('mr-3');
+  $('.save-buttons a.text-secondary').removeClass('ml-3');
+
+  $('#iframe-modal .embed-responsive').css('height','600px');
+}
+
+
+
+
 // Implement functions when document is ready
 
 $(document).ready(function () {
@@ -130,4 +151,6 @@ $(document).ready(function () {
   setTimeout(function () {
     renderEditor("textarea.input-success_content");
   }, 4000);
+
+  adjustSmallScreen();
 });

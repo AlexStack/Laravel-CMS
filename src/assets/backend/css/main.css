@@ -94,3 +94,11 @@ a:hover,
   font-size: 110%;
   font-weight: bold;
 }
+
+@media screen and (max-width: 700px) {
+  .menu-links {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+  }
+}

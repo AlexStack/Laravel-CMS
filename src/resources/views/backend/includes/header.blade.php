@@ -7,7 +7,7 @@
                         alt="Laravel CMS" /></a>
             </h2>
         </div>
-        <div class="col text-truncate text-right pt-3 menu-links">
+        <div class="col text-right pt-3 menu-links">
             @php
             $menu_links = $helper->s('category.admin_menu_links');
             if ( is_array($menu_links)){
