@@ -47,12 +47,132 @@ class LaravelCMS extends Command
         //var_dump($options);
         if ($options['action'] == 'initialize' || $options['action'] == 'install') {
             $this->initializeCms($options);
-        } else if ($options['action'] == 'uninstall') {
+        } else if ($options['action'] == 'uninstall' || $options['action'] == 'remove') {
             $this->uninstall($options);
+        } else if ($options['action'] == 'upgrade'  || $options['action'] == 'update') {
+            $this->upgrade($options);
         } else {
             $this->error('Wrong action');
         }
     }
+
+
+    public function upgrade($options)
+    {
+        $this->line('<fg=red>****</>');
+        $this->line('<fg=red>**** Upgrade Amila Laravel CMS ****</>');
+        $this->line('<fg=red>****</>');
+
+        if (trim($options['silent']) != 'no' || $this->confirm('<fg=cyan>**** Upgrade the CMS database tables? ****</>', true)) {
+            $this->call('migrate', [
+                '--path' => './vendor/alexstack/laravel-cms/src/database/migrations/'
+            ]);
+            // other database changes
+
+        }
+
+        // override view & asset files
+        if (trim($options['silent']) != 'no' || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend view & asset files? ****</>', true)) {
+            // rename the old folders
+            $vendor_view_path = dirname(__FILE__, 3) . '/resources/views';
+            $app_view_path = base_path('resources/views/vendor/laravel-cms');
+
+            // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
+            // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
+
+            $vendor_view_folders = glob($vendor_view_path . '/*', GLOB_ONLYDIR);
+            foreach ($vendor_view_folders as $folder) {
+                $folder_name = basename($folder);
+                if ($folder_name != 'plugins' && file_exists($app_view_path . '/' . $folder_name)) {
+                    $new_name = $folder_name . '-bak-' . date("YmdHis");
+                    rename($app_view_path . '/' . $folder_name, $app_view_path . '/' . $new_name);
+                    $this->line('<fg=green>- Backup folder:</> views/' . $new_name);
+                }
+            }
+            $vendor_plugin_folders = glob($vendor_view_path . '/plugins/*', GLOB_ONLYDIR);
+            foreach ($vendor_plugin_folders as $folder) {
+                $folder_name = basename($folder);
+                if (file_exists($app_view_path . '/plugins/' . $folder_name)) {
+                    $new_name = $folder_name . '-bak-' . date("YmdHis");
+                    rename($app_view_path . '/plugins/' . $folder_name, $app_view_path . '/plugins/' . $new_name);
+                    $this->line('<fg=green>- Backup folder:</> plugins/' . $new_name);
+                }
+            }
+
+            //var_dump($vendor_plugin_folders);
+            $this->call('vendor:publish', [
+                '--tag' => 'laravel-cms-views',
+                '--force' => 1,
+            ]);
+
+
+            // override asset files
+
+            // rename the old folders
+            $vendor_view_path = dirname(__FILE__, 3) . '/assets';
+            $app_view_path = public_path('laravel-cms');
+
+            // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
+            // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
+
+            $vendor_view_folders = glob($vendor_view_path . '/*', GLOB_ONLYDIR);
+            foreach ($vendor_view_folders as $folder) {
+                $folder_name = basename($folder);
+                if (file_exists($app_view_path . '/' . $folder_name)) {
+                    $new_name = $folder_name . '-bak-' . date("YmdHis");
+                    rename($app_view_path . '/' . $folder_name, $app_view_path . '/' . $new_name);
+                    $this->line('<fg=green>- Backup folder:</> public/laravel-cms/' . $new_name);
+                }
+            }
+            //var_dump($vendor_view_folders);
+            $this->call('vendor:publish', [
+                '--tag' => 'laravel-cms-assets',
+                '--force' => 1,
+            ]);
+        }
+
+
+        // override lang files
+        if (trim($options['silent']) != 'no' || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend language files? ****</>', true)) {
+            // rename the old folders
+            $vendor_view_path = dirname(__FILE__, 3) . '/resources/lang';
+            $app_view_path = base_path('resources/lang/vendor/laravel-cms');
+
+            // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
+            // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
+
+            $vendor_view_folders = glob($vendor_view_path . '/*', GLOB_ONLYDIR);
+            foreach ($vendor_view_folders as $folder) {
+                $folder_name = basename($folder);
+                if (file_exists($app_view_path . '/' . $folder_name)) {
+                    $new_name = $folder_name . '-bak-' . date("YmdHis");
+                    rename($app_view_path . '/' . $folder_name, $app_view_path . '/' . $new_name);
+                    $this->line('<fg=green>- Backup folder:</> lang/' . $new_name);
+                }
+            }
+            //var_dump($vendor_plugin_folders);
+            $this->call('vendor:publish', [
+                '--tag' => 'laravel-cms-lang',
+                '--force' => 1,
+            ]);
+        }
+
+
+        // success message
+        $this->line('<fg=red>****</>');
+        $this->line('<fg=red>**** Laravel CMS Upgraded ****</>');
+        $this->line('<fg=red>****</>');
+        $this->line('<fg=cyan>****</>');
+        $this->line('<fg=cyan>**** Admin panel: <fg=yellow>' . config('app.url') . '</><fg=magenta>/cmsadmin/</> ****</>');
+        $this->line('<fg=cyan>**** Access here: <fg=yellow>' . config('app.url') . '</><fg=magenta>/cmsadmin/</> ****</>');
+        $this->line('<fg=cyan>****</>');
+        $this->line('<fg=green>****</>');
+        $this->line('<fg=green>**** Have a good day!  ****</>');
+        $this->line('<fg=green>****</>');
+    }
+
+
+
     public function uninstall($options)
     {
         $this->line('<fg=red>****</>');
