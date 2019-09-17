@@ -192,12 +192,10 @@ composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
 
 ## How to upgrade the CMS?
 
--   First, run composer require alexstack/laravel-cms to upgrade the package
--   Then follow the document to upgrade database and template if needed
--   Override the frontend tempalte if you didn't change anything
+-   Run below command in your Laravel project folder
 
 ```php
-php artisan vendor:publish --tag=view --force  --provider=AlexStack\LaravelCms\LaravelCmsServiceProvider
+composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrade
 ```
 
 ## License

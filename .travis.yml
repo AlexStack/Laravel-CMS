@@ -30,6 +30,7 @@ install:
   - composer install --prefer-dist --quiet
 
 script:
+  - php artisan laravelcms --action=upgrade --silent=yes
   - php artisan laravelcms --action=uninstall --silent=yes
 
 services:
