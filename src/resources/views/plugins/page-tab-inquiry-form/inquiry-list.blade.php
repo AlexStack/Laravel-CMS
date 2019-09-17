@@ -106,11 +106,11 @@
             </div>
 
             <div class="row justify-content-center upload-form">
-                <div class="col-md-auto pagination">
+                <div class="col-md-auto  justify-content-center pagination">
                     {{ $inquiries->appends(['keyword' =>$_REQUEST['keyword']??null, 'page_id' =>$_REQUEST['page_id']??null])->links() }}
                 </div>
                 <div class="w-100"></div>
-                <div class="col-md-auto">
+                <div class="col-md-auto  text-center">
                         <div class="total">{{ $helper->t('total') }} <span id="total_number">{{ $inquiries->total() }}</span> {{ $helper->t('inquiries') }}</div>
                 </div>
             </div>

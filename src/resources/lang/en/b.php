@@ -10,5 +10,5 @@ return [
 
     'delete_message' => 'Please confirm that you want delete this item?',
 
-
+    'server_os' => 'Server OS is',
 ];

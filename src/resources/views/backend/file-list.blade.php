@@ -157,11 +157,11 @@
             </div>
 
             <div class="row justify-content-center upload-form">
-                <div class="col-md-auto pagination">
+                <div class="col-md-auto  justify-content-center pagination">
                     {{ $files->appends(['editor_id' =>$_REQUEST['editor_id']??null, 'keyword' =>$_REQUEST['keyword']??null])->links() }}
                 </div>
                 <div class="w-100"></div>
-                <div class="col-md-auto">
+                <div class="col-md-auto text-center">
                         <div class="total">{{ $helper->t('total') }} <span id="total_number">{{ $files->total() }}</span> {{ $helper->t('files') }}</div>
                 </div>
             </div>

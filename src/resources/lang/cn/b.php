@@ -28,6 +28,8 @@ return [
     'cms_version_notice' => '感谢您选择 Amila Laravel CMS, 目前已安装的CMS版本是 :current，已发布的最新的版本是 :latest ',
     'latest_name' => '最新修改的:name',
     'logout' => '安全退出',
+    'version' => '版本',
+    'server_os' => '服务器系统',
 
     // setting form
     'param_name' => '参数名称',
