@@ -59,7 +59,7 @@ class LaravelCmsPluginInquiry
         if (!isset($settings->form_enabled) || !$settings->form_enabled) {
             return null;
         }
-        $default_setting_id = $settings->default_setting_id ?? $this->helper->s('default_inquiry_form_setting_id');
+        $default_setting_id = $settings->default_setting_id ?? $this->helper->s('inquiry.default_setting_id');
         if ($default_setting_id) {
             $default_settings = LaravelCmsInquirySetting::where('id', $default_setting_id)->first();
         }
@@ -231,13 +231,12 @@ class LaravelCmsPluginInquiry
         $rs = LaravelCmsInquiry::where('id', $id)->delete();
 
         //LaravelCmsHelper::debug($rs);
-        if ( request()->result_type == 'json') {
+        if (request()->result_type == 'json') {
             $result['success'] = $rs;
             $result['success_content'] = 'Inquire id ' . $id . ' deleted';
             $result['error_message'] = 'Delete inquire id ' . $id . ' failed!';
 
             return json_encode($result);
-
         }
 
         return $rs;
