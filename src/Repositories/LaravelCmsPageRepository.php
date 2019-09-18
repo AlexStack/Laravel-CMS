@@ -5,58 +5,8 @@ namespace AlexStack\LaravelCms\Repositories;
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Repositories\BaseRepository;
 
-/**
- * Class LaravelCmsPageRepository
- * @package App\Repositories
- * @version September 18, 2019, 3:01 am UTC
- */
-
 class LaravelCmsPageRepository extends BaseRepository
 {
-
-    protected $fieldSearchable = [
-        'user_id',
-        'parent_id',
-        'menu_enabled',
-        'status',
-        'title',
-        'menu_title',
-        'slug',
-        'template_file',
-        'meta_title',
-        'meta_keywords',
-        'meta_description',
-        'abstract',
-        'main_banner',
-        'main_image',
-        'sub_content',
-        'main_content',
-        'sort_value',
-        'view_counts',
-        'tags',
-        'extra_image_1',
-        'extra_text_1',
-        'extra_content_1',
-        'extra_image_2',
-        'extra_text_2',
-        'extra_content_2',
-        'extra_image_3',
-        'extra_text_3',
-        'extra_content_3',
-        'special_text',
-        'file_data',
-        'redirect_url'
-    ];
-
-    /**
-     * Return searchable fields
-     *
-     * @return array
-     */
-    public function getFieldsSearchable()
-    {
-        return $this->fieldSearchable;
-    }
 
     /**
      * Configure the Model
@@ -82,6 +32,17 @@ class LaravelCmsPageRepository extends BaseRepository
 
         return $data;
     }
+
+    public function create()
+    {
+        $data['parent_page_options'] = $this->parentPages();
+        $data['template_file_options'] = $this->templateFileOption();
+        $data['helper'] = $this->helper;
+        $data['page_tab_blades'] = $this->extraPageTabs();
+
+        return $data;
+    }
+
 
     public function store($form_data)
     {
@@ -188,6 +149,8 @@ class LaravelCmsPageRepository extends BaseRepository
 
         return $rs;
     }
+
+
 
 
     /**

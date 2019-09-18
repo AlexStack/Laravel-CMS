@@ -36,7 +36,7 @@ abstract class BaseRepository
      *
      * @return array
      */
-    abstract public function getFieldsSearchable();
+    // abstract public function getFieldsSearchable();
 
     /**
      * Configure the Model
@@ -126,13 +126,13 @@ abstract class BaseRepository
     }
 
     /**
-     * Create model record
+     * Store model record (new record)
      *
      * @param array $input
      *
      * @return Model
      */
-    public function create($input)
+    public function store($input)
     {
         $model = $this->model->newInstance($input);
 

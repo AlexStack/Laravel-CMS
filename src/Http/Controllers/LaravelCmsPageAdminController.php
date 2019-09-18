@@ -44,10 +44,7 @@ class LaravelCmsPageAdminController extends Controller
     {
         $this->checkUser();
 
-        $data['parent_page_options'] = $this->parentPages();
-        $data['template_file_options'] = $this->templateFileOption();
-        $data['helper'] = $this->helper;
-        $data['page_tab_blades'] = $this->extraPageTabs();
+        $data = $this->repo->create();
 
         return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-create', $data);
     }
@@ -63,15 +60,10 @@ class LaravelCmsPageAdminController extends Controller
         $rs = $this->repo->store($form_data);
 
         if ($form_data['return_to_the_list']) {
-            return redirect()->route(
-                'LaravelCmsAdminPages.index'
-            );
+            return redirect()->route('LaravelCmsAdminPages.index');
         }
 
-        return redirect()->route(
-            'LaravelCmsAdminPages.edit',
-            ['page' => $rs->id]
-        );
+        return redirect()->route('LaravelCmsAdminPages.edit', ['page' => $rs->id]);
     }
 
     public function edit($id)
@@ -86,17 +78,14 @@ class LaravelCmsPageAdminController extends Controller
     public function update(Request $request, $page)
     {
         $this->checkUser();
-        $page_id = $page;
 
         $form_data = $request->all();
         $form_data['user_id'] = $form_data['user_id'] ?? $this->user->id;
 
-        $rs = $this->repo->update($form_data, $page_id);
+        $rs = $this->repo->update($form_data, $page);
 
         if ($form_data['return_to_the_list']) {
-            return redirect()->route(
-                'LaravelCmsAdminPages.index'
-            );
+            return redirect()->route('LaravelCmsAdminPages.index');
         }
         return back()->withInput();
     }
@@ -107,8 +96,6 @@ class LaravelCmsPageAdminController extends Controller
         $this->checkUser();
         $rs = $this->repo->destroy($id);
 
-        return redirect()->route(
-            'LaravelCmsAdminPages.index'
-        );
+        return redirect()->route('LaravelCmsAdminPages.index');
     }
 }
