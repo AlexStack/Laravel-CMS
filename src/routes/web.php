@@ -7,7 +7,7 @@ Route::group([
 
     Route::get(config('laravel-cms.admin_route'), 'LaravelCmsDashboardAdminController@dashboard');
 
-    Route::resource(config('laravel-cms.admin_route') . '/pages', 'LaravelCmsPageAdminController',  ['names' => 'LaravelCmsAdminPages']);
+    Route::resource(config('laravel-cms.admin_route') . '/pages', 'LaravelCmsPageAdminController',  ['names' => 'LaravelCmsAdminPages'])->middleware(['web', 'auth']);
 
     Route::resource(config('laravel-cms.admin_route') . '/settings', 'LaravelCmsSettingAdminController',  ['names' => 'LaravelCmsAdminSettings']);
 

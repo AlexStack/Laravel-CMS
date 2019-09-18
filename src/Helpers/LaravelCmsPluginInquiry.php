@@ -213,7 +213,7 @@ class LaravelCmsPluginInquiry
         $setting_data['page_id']    = $page->id;
         $setting_data['id']         = null;
 
-        if (trim($form_data['display_form_fields']) != '' && !$this->helper->correctJsonFormat($form_data['display_form_fields'], true)) {
+        if (isset($form_data['display_form_fields']) && trim($form_data['display_form_fields']) != '' && !$this->helper->correctJsonFormat($form_data['display_form_fields'], true)) {
             exit(sprintf('$this->wrong_json_format_str', 'Param Value'));
         }
 
