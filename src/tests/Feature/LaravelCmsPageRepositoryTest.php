@@ -25,6 +25,9 @@ class LaravelCmsPageRepositoryTest extends TestCase
         $this->laravelCmsPageRepo = \App::make(LaravelCmsPageRepository::class);
 
         $this->laravelCmsPageRepo->setHelper(new LaravelCmsHelper);
+
+        $factory_path = dirname(__FILE__, 3) . '/database/factories';
+        $this->app->make(\Illuminate\Database\Eloquent\Factory::class)->load($factory_path);
     }
 
     /**
