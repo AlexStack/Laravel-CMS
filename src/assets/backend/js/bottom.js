@@ -30,7 +30,7 @@ function renderEditor(id, minHeight = 120) {
 
   var label_class = id.replace("textarea.input-", "label.label-");
   var browser_img_url =
-    "/cmsadmin/files?insert_files_to_editor=1&editor_id=" + id;
+    admin_route + "/files?insert_files_to_editor=1&editor_id=" + id;
   var browser_img_str =
     '<a href="' +
     browser_img_url +
@@ -115,19 +115,19 @@ function sortableList(list_id) {
 
 
 
-function adjustSmallScreen()   {
+function adjustSmallScreen() {
   if ($(window).width() > 700) {
-      return false;
+    return false;
   }
-  $('.menu-links .btn').addClass('btn-sm text-truncate').css('width','2rem');
+  $('.menu-links .btn').addClass('btn-sm text-truncate').css('width', '2rem');
   $('.menu-links .btn i').addClass('pr-5');
-  $('.menu-links').addClass('pl-0 pr-1').css('overflow','visible');
+  $('.menu-links').addClass('pl-0 pr-1').css('overflow', 'visible');
   $('.menu-logo').addClass('pr-0');
   $('.latest-settings').addClass('order-last');
   $('.save-buttons .btn').addClass('btn-sm mr-1').removeClass('mr-3');
   $('.save-buttons a.text-secondary').removeClass('ml-3');
 
-  $('#iframe-modal .embed-responsive').css('height','600px');
+  $('#iframe-modal .embed-responsive').css('height', '600px');
 }
 
 

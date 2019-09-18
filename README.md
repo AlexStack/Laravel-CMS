@@ -95,10 +95,11 @@ composer require laravel/ui && php artisan ui vue --auth
 'admin_route'       => env('LARAVEL_CMS_BACKEND_ROUTE', '/admin2019'),
 ```
 
--   After change the route, you will need to run below commands:
-    -   php artisan config:cache
-    -   or
-    -   php artisan optimize
+-   **After change the route, you will need to run below commands:**
+
+```php
+php artisan laravelcms --action=clear
+```
 
 ## Display an image with different size in the frontend Laravel .blade.php template file
 
@@ -193,14 +194,19 @@ composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
 ## How to upgrade the CMS?
 
 -   Run below command in your Laravel project folder
+-   It will ask whether you want to copy the new view,asset and language files to your project
 
 ```php
 composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrade
 ```
 
+-   Upgrade screenshot
+
+![image](docs/images/min/laravel-cms-upgrade-min.png)
+
 ## License
 
--   MIT
+-   The Amila Laravel CMS is open-source software licensed under the MIT license.
 
 ```
 

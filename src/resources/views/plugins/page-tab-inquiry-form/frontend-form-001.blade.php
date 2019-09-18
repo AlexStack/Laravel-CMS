@@ -1,3 +1,4 @@
+<a name="inquiry_form"></a>
 {!! Form::model($_GET, ['route' => ['LaravelCmsPluginInquiry.submitForm'], 'method' => "POST", 'files'=>true,
 'id'=>'laravel-cms-inquiry-form']) !!}
 
