@@ -91,9 +91,9 @@ abstract class BaseRepository
 
         if (count($search)) {
             foreach ($search as $key => $value) {
-                if (in_array($key, $this->getFieldsSearchable())) {
-                    $query->where($key, $value);
-                }
+                //if (in_array($key, $this->getFieldsSearchable())) {
+                $query->where($key, $value);
+                //}
             }
         }
 
@@ -184,7 +184,7 @@ abstract class BaseRepository
      *
      * @return bool|mixed|null
      */
-    public function delete($id)
+    public function destroy($id)
     {
         $query = $this->model->newQuery();
 
@@ -192,6 +192,7 @@ abstract class BaseRepository
 
         return $model->delete();
     }
+
 
     public function setHelper($helper)
     {
