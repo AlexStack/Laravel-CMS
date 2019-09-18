@@ -95,10 +95,11 @@ composer require laravel/ui && php artisan ui vue --auth
 'admin_route'       => env('LARAVEL_CMS_BACKEND_ROUTE', '/admin2019'),
 ```
 
--   After change the route, you will need to run below commands:
-    -   php artisan config:cache
-    -   or
-    -   php artisan optimize
+-   **After change the route, you will need to run below commands:**
+
+```php
+php artisan laravelcms --action=clear
+```
 
 ## Display an image with different size in the frontend Laravel .blade.php template file
 
@@ -199,26 +200,9 @@ composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
 composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrade
 ```
 
--   screenshot
+-   Upgrade screenshot
 
-```php
-****
-**** Upgrade Amila Laravel CMS ****
-****
-
- **** Upgrade the CMS database tables? **** (yes/no) [yes]:
- >
-
-Nothing to migrate.
-
- **** Copy the CMS backend & frontend view & asset files? **** (yes/no) [yes]:
- >
-
-- Backup folder: views/backend-bak-20190917024943
-- Backup folder: views/frontend-bak-20190917024943
-- Backup folder: plugins/page-tab-inquiry-form-bak-20190917024943
-- Backup folder: plugins/page-tab-preview-bak-20190917024943
-```
+![image](docs/images/min/laravel-cms-upgrade-min.png)
 
 ## License
 
