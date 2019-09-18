@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
-use AlexStack\LaravelCms\Repositories\LaravelCmsSettingRepository;
+use AlexStack\LaravelCms\Repositories\LaravelCmsSettingAdminRepository;
 
 class LaravelCmsSettingAdminController extends Controller
 {
@@ -14,7 +14,7 @@ class LaravelCmsSettingAdminController extends Controller
     private $helper;
     private $repo;
 
-    public function __construct(LaravelCmsSettingRepository $repo, LaravelCmsHelper $helper)
+    public function __construct(LaravelCmsSettingAdminRepository $repo, LaravelCmsHelper $helper)
     {
         $this->repo     = $repo;
         $this->helper   = $helper;

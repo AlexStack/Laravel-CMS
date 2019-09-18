@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
-use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
+use AlexStack\LaravelCms\Repositories\LaravelCmsPageAdminRepository;
 
 class LaravelCmsPageAdminController extends Controller
 {
@@ -14,7 +14,7 @@ class LaravelCmsPageAdminController extends Controller
     private $helper;
     private $repo;
 
-    public function __construct(LaravelCmsPageRepository $repo, LaravelCmsHelper $helper)
+    public function __construct(LaravelCmsPageAdminRepository $repo, LaravelCmsHelper $helper)
     {
         $this->repo     = $repo;
         $this->helper   = $helper;

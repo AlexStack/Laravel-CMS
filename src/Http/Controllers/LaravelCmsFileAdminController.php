@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
-use AlexStack\LaravelCms\Repositories\LaravelCmsFileRepository;
+use AlexStack\LaravelCms\Repositories\LaravelCmsFileAdminRepository;
 
 class LaravelCmsFileAdminController extends Controller
 {
@@ -14,7 +14,7 @@ class LaravelCmsFileAdminController extends Controller
     private $helper;
     private $repo;
 
-    public function __construct(LaravelCmsFileRepository $repo, LaravelCmsHelper $helper)
+    public function __construct(LaravelCmsFileAdminRepository $repo, LaravelCmsHelper $helper)
     {
         $this->repo     = $repo;
         $this->helper   = $helper;

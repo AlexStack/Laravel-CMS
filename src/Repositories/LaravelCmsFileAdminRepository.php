@@ -5,7 +5,7 @@ namespace AlexStack\LaravelCms\Repositories;
 use AlexStack\LaravelCms\Models\LaravelCmsFile;
 use AlexStack\LaravelCms\Repositories\BaseRepository;
 
-class LaravelCmsFileRepository extends BaseRepository
+class LaravelCmsFileAdminRepository extends BaseRepository
 {
 
     /**
