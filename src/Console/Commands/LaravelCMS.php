@@ -276,7 +276,7 @@ class LaravelCMS extends Command
         }
 
 
-        $this->call('config:clear');
+        $this->call('config:cache');
         $this->call('route:clear');
 
         $this->call('migrate', [
@@ -314,7 +314,7 @@ class LaravelCMS extends Command
 
     public function clearCache($options)
     {
-        $this->call('config:clear');
+        $this->call('config:cache');
         $this->call('route:clear');
         $helper  =  new LaravelCmsHelper;
         $rs = $helper->rewriteConfigFile();
