@@ -6,6 +6,8 @@ use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 
 use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
+use AlexStack\LaravelCms\Repositories\LaravelCmsPageAdminRepository;
+
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -17,37 +19,20 @@ class LaravelCmsPageRepositoryTest extends TestCase
      * @var LaravelCmsPageRepository
      */
     protected $laravelCmsPageRepo;
+    protected $laravelCmsPageAdminRepo;
 
     public function setUp(): void
     {
         parent::setUp();
         // $this->laravelCmsPageRepo = \App::make(LaravelCmsPageRepository::class);
         $this->laravelCmsPageRepo = \App::make(LaravelCmsPageRepository::class);
-
         $this->laravelCmsPageRepo->setHelper(new LaravelCmsHelper);
+
+        $this->laravelCmsPageAdminRepo = \App::make(LaravelCmsPageAdminRepository::class);
+        $this->laravelCmsPageAdminRepo->setHelper(new LaravelCmsHelper);
 
         $factory_path = dirname(__FILE__, 3) . '/database/factories';
         $this->app->make(\Illuminate\Database\Eloquent\Factory::class)->load($factory_path);
-    }
-
-    /**
-     * @test create
-     */
-    public function test_create_LaravelCmsPage()
-    {
-        $laravelCmsPage = factory(LaravelCmsPage::class)->raw();
-
-        //$laravelCmsPage = factory(LaravelCmsPage::class)->make()->toArray();
-
-        //var_dump($laravelCmsPage);
-
-        $createdLaravelCmsPage = $this->laravelCmsPageRepo->store($laravelCmsPage);
-
-        $createdLaravelCmsPage = $createdLaravelCmsPage->toArray();
-        $this->assertArrayHasKey('id', $createdLaravelCmsPage);
-        $this->assertNotNull($createdLaravelCmsPage['id'], 'Created LaravelCmsPage must have id specified');
-        $this->assertNotNull(LaravelCmsPage::find($createdLaravelCmsPage['id']), 'LaravelCmsPage with given id must be in DB');
-        //$this->assertModelData($laravelCmsPage, $createdLaravelCmsPage);
     }
 
     /**
@@ -55,48 +40,35 @@ class LaravelCmsPageRepositoryTest extends TestCase
      */
     public function test_read_LaravelCmsPage()
     {
-        $laravelCmsPage = factory(LaravelCmsPage::class)->create();
+        $laravelCmsPage = factory(LaravelCmsPage::class)->raw();
+
+        $createdLaravelCmsPage = $this->laravelCmsPageAdminRepo->store($laravelCmsPage);
+
+        //var_dump($createdLaravelCmsPage->toArray());
+        $showLaravelCmsPage = $this->laravelCmsPageRepo->show($createdLaravelCmsPage->slug);
 
 
-        $editLaravelCmsPage = $this->laravelCmsPageRepo->edit($laravelCmsPage->id);
+        //var_dump($showLaravelCmsPage);
+        $this->assertNotNull($showLaravelCmsPage['menus'], 'show() method of frontend LaravelCmsPage may have error(s)');
 
-        $indexLaravelCmsPage = $this->laravelCmsPageRepo->index();
-
-        //$dbLaravelCmsPage = $dbLaravelCmsPage->toArray();
-        //$this->assertModelData($laravelCmsPage->toArray(), $dbLaravelCmsPage);
-        $this->assertNotNull($indexLaravelCmsPage['all_pages'], 'index() method of LaravelCmsPage may have error(s)');
-
-        $this->assertNotNull($editLaravelCmsPage['page']->id, 'edit() method of LaravelCmsPage may have error(s)');
+        $this->assertNotNull($showLaravelCmsPage['plugins'], 'show() method of frontend LaravelCmsPage may have error(s)');
     }
 
-    /**
-     * @test update
-     */
-    public function test_update_LaravelCmsPage()
+    public function test_homepage_LaravelCmsPage()
     {
-        $laravelCmsPage = factory(LaravelCmsPage::class)->create();
-        $fakeLaravelCmsPage = factory(LaravelCmsPage::class)->raw();
+        $laravelCmsPage = factory(LaravelCmsPage::class)->raw(['slug' => 'homepage']);
 
-        $updatedLaravelCmsPage = $this->laravelCmsPageRepo->update($fakeLaravelCmsPage, $laravelCmsPage->id);
+        //var_dump($laravelCmsPage);
 
-        //$this->assertModelData($fakeLaravelCmsPage, $updatedLaravelCmsPage->toArray());
-        $dbLaravelCmsPage = $this->laravelCmsPageRepo->find($laravelCmsPage->id);
-        //$this->assertModelData($fakeLaravelCmsPage, $dbLaravelCmsPage->toArray());
+        $createdLaravelCmsPage = $this->laravelCmsPageAdminRepo->store($laravelCmsPage);
 
-        //var_dump($updatedLaravelCmsPage);
-        $this->assertNotNull($updatedLaravelCmsPage, 'Updated LaravelCmsPage must not be null');
-    }
+        //var_dump($createdLaravelCmsPage->toArray());
+        $showLaravelCmsPage = $this->laravelCmsPageRepo->show($createdLaravelCmsPage->slug);
 
-    /**
-     * @test delete
-     */
-    public function test_delete_LaravelCmsPage()
-    {
-        $laravelCmsPage = factory(LaravelCmsPage::class)->create();
 
-        $resp = $this->laravelCmsPageRepo->delete($laravelCmsPage->id);
+        //var_dump($showLaravelCmsPage);
+        $this->assertNotNull($showLaravelCmsPage['menus'], 'show() method of frontend LaravelCmsPage may have error(s)');
 
-        $this->assertTrue($resp);
-        $this->assertNull(LaravelCmsPage::find($laravelCmsPage->id), 'LaravelCmsPage should not exist in DB');
+        $this->assertNotNull($showLaravelCmsPage['plugins'], 'show() method of frontend LaravelCmsPage may have error(s)');
     }
 }

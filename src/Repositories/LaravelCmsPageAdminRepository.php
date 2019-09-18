@@ -245,7 +245,7 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         $default_slug = $slug_format == 'id' ? $form_data['id'] : ($form_data['menu_title'] ?? $form_data['title']);
         $new_slug = $this->generateSlug($form_data['slug'], $default_slug);
         $rs = LaravelCmsPage::where('slug', $new_slug)->first();
-        if (isset($rs->id) && $rs->id != $form_data['id']) {
+        if (isset($rs->id) && isset($form_data['id']) && $rs->id != $form_data['id']) {
             if ($slug_suffix != '') {
                 $new_slug = str_replace($slug_suffix, '', $new_slug) . '-' . uniqid() . $slug_suffix;
             } else {
