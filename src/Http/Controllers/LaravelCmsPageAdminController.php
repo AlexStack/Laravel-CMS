@@ -3,10 +3,10 @@
 namespace AlexStack\LaravelCms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
-use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
 use App\Http\Controllers\Controller;
 
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
+use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
 
 class LaravelCmsPageAdminController extends Controller
 {

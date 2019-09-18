@@ -11,8 +11,8 @@ use AlexStack\LaravelCms\Repositories\LaravelCmsSettingRepository;
 class LaravelCmsSettingAdminController extends Controller
 {
     private $user = null;
-
     private $helper;
+    private $repo;
 
     public function __construct(LaravelCmsSettingRepository $repo, LaravelCmsHelper $helper)
     {
