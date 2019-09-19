@@ -24,7 +24,7 @@ class CmsSettingsTableSeeder extends Seeder
 
         \DB::table($this->table_name)->insert([
             0 => [
-                'id'          => 2,
+                //'id'          => 2,
                 'param_name'  => 'page_footer',
                 'page_id'     => null,
                 'param_value' => '<div class="row justify-content-center">
@@ -145,9 +145,9 @@ class CmsSettingsTableSeeder extends Seeder
                 'category'   => 'global',
                 'enabled'    => 1,
                 'sort_value' => 45,
-                'created_at' => '2019-09-05 13:41:53',
-                'updated_at' => '2019-09-11 11:32:10',
-                'deleted_at' => null,
+                // 'created_at' => '2019-09-05 13:41:53',
+                // 'updated_at' => '2019-09-11 11:32:10',
+                // 'deleted_at' => null,
             ],
             8 => [
                 // 'id'              => 13,
@@ -162,9 +162,9 @@ class CmsSettingsTableSeeder extends Seeder
                 'category'   => 'global',
                 'enabled'    => 1,
                 'sort_value' => 42,
-                'created_at' => '2019-09-05 13:42:14',
-                'updated_at' => '2019-09-06 09:10:06',
-                'deleted_at' => null,
+                // 'created_at' => '2019-09-05 13:42:14',
+                // 'updated_at' => '2019-09-06 09:10:06',
+                // 'deleted_at' => null,
             ],
             9 => [
                 // 'id'              => 14,
@@ -179,9 +179,9 @@ class CmsSettingsTableSeeder extends Seeder
                 'category'   => 'global',
                 'enabled'    => 0,
                 'sort_value' => 40,
-                'created_at' => '2019-09-05 13:43:28',
-                'updated_at' => '2019-09-05 16:52:28',
-                'deleted_at' => null,
+                // 'created_at' => '2019-09-05 13:43:28',
+                // 'updated_at' => '2019-09-05 16:52:28',
+                // 'deleted_at' => null,
             ],
             10 => [
                 // 'id'              => 15,
@@ -197,9 +197,9 @@ class CmsSettingsTableSeeder extends Seeder
                 'category'   => 'file',
                 'enabled'    => 0,
                 'sort_value' => 50,
-                'created_at' => '2019-09-05 13:51:25',
-                'updated_at' => '2019-09-09 13:38:14',
-                'deleted_at' => null,
+                // 'created_at' => '2019-09-05 13:51:25',
+                // 'updated_at' => '2019-09-09 13:38:14',
+                // 'deleted_at' => null,
             ],
             11 => [
                 // 'id'              => 16,
@@ -214,9 +214,9 @@ class CmsSettingsTableSeeder extends Seeder
                 'category'   => 'file',
                 'enabled'    => 1,
                 'sort_value' => 10,
-                'created_at' => '2019-09-05 15:01:56',
-                'updated_at' => '2019-09-09 13:22:20',
-                'deleted_at' => null,
+                // 'created_at' => '2019-09-05 15:01:56',
+                // 'updated_at' => '2019-09-09 13:22:20',
+                // 'deleted_at' => null,
             ],
             12 => [
                 // 'id'              => 18,
@@ -247,7 +247,7 @@ class CmsSettingsTableSeeder extends Seeder
                 // 'deleted_at'      => null,
             ],
             14 => [
-                'id'          => 21,
+                // 'id'          => 21,
                 'param_name'  => 'page-tab-inquiry-form',
                 'page_id'     => null,
                 'param_value' => '{
@@ -263,12 +263,12 @@ class CmsSettingsTableSeeder extends Seeder
                 'category'   => 'plugin',
                 'enabled'    => 1,
                 'sort_value' => 110,
-                'created_at' => '2019-09-07 09:28:02',
-                'updated_at' => '2019-09-11 11:33:01',
-                'deleted_at' => null,
+                // 'created_at' => '2019-09-07 09:28:02',
+                // 'updated_at' => '2019-09-11 11:33:01',
+                // 'deleted_at' => null,
             ],
             15 => [
-                'id'          => 22,
+                // 'id'          => 22,
                 'param_name'  => 'page-tab-preview',
                 'page_id'     => null,
                 'param_value' => '{
@@ -284,12 +284,12 @@ class CmsSettingsTableSeeder extends Seeder
                 'category'   => 'plugin',
                 'enabled'    => 1,
                 'sort_value' => 100,
-                'created_at' => '2019-09-07 09:41:06',
-                'updated_at' => '2019-09-09 20:18:27',
-                'deleted_at' => null,
+                // 'created_at' => '2019-09-07 09:41:06',
+                // 'updated_at' => '2019-09-09 20:18:27',
+                // 'deleted_at' => null,
             ],
             16 => [
-                'id'          => 24,
+                // 'id'          => 24,
                 'param_name'  => 'admin_setting_tabs',
                 'page_id'     => null,
                 'param_value' => '{
@@ -379,7 +379,7 @@ class CmsSettingsTableSeeder extends Seeder
                 // 'deleted_at'      => null,
             ],
             22 => [
-                'id'          => 31,
+                // 'id'          => 31,
                 'param_name'  => 'admin_menu_links',
                 'page_id'     => null,
                 'param_value' => '{
