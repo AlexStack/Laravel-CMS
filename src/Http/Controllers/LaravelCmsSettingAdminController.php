@@ -34,7 +34,7 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data = $this->repo->index();
 
-        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.setting-list', $data);
+        return view($this->helper->bladePath('setting-list', 'b'), $data);
     }
 
     public function edit($id)
@@ -43,7 +43,7 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data = $this->repo->edit($id);
 
-        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.setting-edit', $data);
+        return view($this->helper->bladePath('setting-edit', 'b'), $data);
     }
 
     public function create()
@@ -52,7 +52,7 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data = $this->repo->create();
 
-        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.setting-create', $data);
+        return view($this->helper->bladePath('setting-create', 'b'), $data);
     }
 
     public function store(Request $request)

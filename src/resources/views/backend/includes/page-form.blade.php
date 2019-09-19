@@ -37,103 +37,103 @@
 <div class="tab-content">
     <div class="tab-pane active" id="main-content" role="tabpanel">
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'text', 'name'
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'text', 'name'
         => "title", 'label'=>isset($page)? $helper->t('title') . ' <a class="text-info ml-2 "
             href="' . $helper->url($page) . '" target="_blank" title="Preview"><i
                 class="fas fa-external-link-square-alt"></i></a>': $helper->t('title'),
         'input_attributes'=>['required'=>'required', 'minlength'=>3, 'pattern'=>".{3,}"]])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "menu_title"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'file', 'name'
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'file', 'name'
         => "main_banner", 'input_attributes'=>['class'=>'form-control input-main_banner mb-3','accept'=>'image/*'] ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "main_content"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'file', 'name'
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'file', 'name'
         => "main_image", 'input_attributes'=>['class'=>'form-control input-main_image mb-3','accept'=>'image/*'] ])
 
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "sub_content"])
 
     </div>
 
 
     <div class="tab-pane" id="extra-content" role="tabpanel">
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "abstract"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "extra_text_1"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "extra_content_1"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'file', 'name'
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'file', 'name'
         => "extra_image_1", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "extra_text_2"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "extra_content_2"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'file', 'name'
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'file', 'name'
         => "extra_image_2", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "extra_text_3"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "extra_content_3"])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'file', 'name'
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'file', 'name'
         => "extra_image_3", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+        @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "special_text"])
     </div>
     <div class="tab-pane" id="seo" role="tabpanel">
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' => "slug",
+        @include($helper->bladePath('includes.form-input','b'), ['name' => "slug",
         'input_attributes'=>(isset($page->slug) && $page->slug =='homepage')? ['readonly'=>'readonly'] : [] ] )
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' => "meta_title"
+        @include($helper->bladePath('includes.form-input','b'), ['name' => "meta_title"
         ])
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "meta_keywords"])
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "meta_description"])
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' => "tags" ])
+        @include($helper->bladePath('includes.form-input','b'), ['name' => "tags" ])
     </div>
 
     <div class="tab-pane" id="settings" role="tabpanel">
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' => "parent_id",
+        @include($helper->bladePath('includes.form-input','b'), ['name' => "parent_id",
         'type'=>'select', 'label'=>$helper->t('parent_page'), 'options'=>$parent_page_options])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "menu_enabled", 'type'=>'select', 'options'=>['1' => 'Display In Menu', '0' => 'Hide In Menu'] ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' => "status",
+        @include($helper->bladePath('includes.form-input','b'), ['name' => "status",
         'type'=>'select', 'options'=>['publish' => 'Publish', 'pending' => 'Pending'] ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "redirect_url" ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "template_file", 'type'=>'select', 'options'=>$template_file_options])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "sort_value",'type'=>'number' ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "view_counts",'type'=>'number' ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "created_at",'type'=>'text' ])
 
-        @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+        @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "user_id",'type'=>'number' ])
 
     </div>
@@ -141,7 +141,7 @@
 
     @foreach ( $page_tab_blades as $tab )
     <div class="tab-pane" id="{{$tab['blade_file']}}" role="tabpanel">
-        @include('laravel-cms::plugins/' . $tab['blade_dir'] . '.' . $tab['blade_file'], ['tab_data'=>
+        @include( $helper->bladePath($tab['blade_dir'] . '.' . $tab['blade_file'], 'plugins'), ['tab_data'=>
         ($plugins[$tab['blade_file']] ?? null) ] )
     </div>
     @endforeach

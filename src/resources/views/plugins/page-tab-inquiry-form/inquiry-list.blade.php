@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.layout')
+@extends($helper->bladePath('includes.layout','b'))
 
 @section('content')
 

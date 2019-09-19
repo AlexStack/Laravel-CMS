@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.header')
+    @include($helper->bladePath('includes.header','b'))
     @yield('content')
 
     <div class="container">

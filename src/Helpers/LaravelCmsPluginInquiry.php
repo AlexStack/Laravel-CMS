@@ -44,7 +44,7 @@ class LaravelCmsPluginInquiry
 
         //$this->helper->debug($data['inquiries']->toArray());
 
-        return view('laravel-cms::plugins.page-tab-inquiry-form.inquiry-list', $data);
+        return view($this->helper->bladePath('page-tab-inquiry-form.inquiry-list', 'plugins'), $data);
     }
 
     public function getFormSettings($page_id)
@@ -87,7 +87,7 @@ class LaravelCmsPluginInquiry
         $data['dynamic_inputs'] = $this->dynamicInputs($settings, $page);
         $data['gg_recaptcha']   = (isset($settings->google_recaptcha_enabled) && $settings->google_recaptcha_enabled) ? GoogleRecaptcha::show($this->helper->s('google_recaptcha_site_key'), 'message', 'no_debug', ($settings->google_recaptcha_css_class ?? 'invisible google-recaptcha'), ($settings->google_recaptcha_no_tick_msg ?? 'Please tick the I\'m not robot checkbox')) : '';
 
-        return view('laravel-cms::plugins.page-tab-inquiry-form.'.($settings->form_layout ?? 'frontend-form-001'), $data);
+        return view($this->helper->bladePath('page-tab-inquiry-form.'.($settings->form_layout ?? 'frontend-form-001'), 'plugins'), $data);
     }
 
     public function dynamicInputs($settings, $page)

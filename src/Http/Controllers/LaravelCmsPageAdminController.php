@@ -35,7 +35,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data = $this->repo->index();
 
-        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.page-list', $data);
+        return view($this->helper->bladePath('page-list', 'b'), $data);
     }
 
     public function create()
@@ -44,7 +44,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data = $this->repo->create();
 
-        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.page-create', $data);
+        return view($this->helper->bladePath('page-create', 'b'), $data);
     }
 
     public function store(Request $request)
@@ -69,7 +69,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data = $this->repo->edit($id);
 
-        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.page-edit', $data);
+        return view($this->helper->bladePath('page-edit', 'b'), $data);
     }
 
     public function update(Request $request, $page)

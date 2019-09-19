@@ -201,6 +201,21 @@ class LaravelCmsHelper
         return '/'.$url;
     }
 
+    public function bladePath($file, $dir = 'frontend')
+    {
+        if ('frontend' == $dir || 'f' == $dir) {
+            return 'laravel-cms::'.$this->s('template.frontend_dir').'.'.$file;
+        } elseif ('backend' == $dir || 'b' == $dir) {
+            return 'laravel-cms::'.$this->s('template.backend_dir').'.'.$file;
+        } elseif ('plugins' == $dir || 'p' == $dir || 'plugin' == $dir) {
+            return 'laravel-cms::plugins.'.$file;
+        } elseif ('other' == $dir) {
+            return 'laravel-cms::'.$file;
+        } else {
+            return 'laravel-cms::'.$dir.'.'.$file;
+        }
+    }
+
     public static function activeMenuClass($menu_item, $current_page, $class = 'active')
     {
         $p = array_column($current_page->parent_flat_ary, 'id');

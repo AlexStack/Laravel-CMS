@@ -35,6 +35,6 @@ class LaravelCmsPageController extends Controller
             return response()->json($data);
         }
 
-        return view('laravel-cms::'.$this->helper->s('template.frontend_dir').'.'.$data['page']->template_file, $data);
+        return view($this->helper->bladePath($data['page']->template_file, 'f'), $data);
     }
 }

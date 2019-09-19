@@ -28,11 +28,11 @@
 </head>
 
 <body class="{{$page->template_file}} page-{{$page->id}} slug-{{str_replace('.html', '', $page->slug) }}">
-    @include('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.header')
+    @include($helper->bladePath('includes.header'))
 
     @yield('content')
 
-    @include('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.footer')
+    @include($helper->bladePath('includes.footer'))
 
     <script src="{{ $helper->assetUrl('js/bottom.js') }}"></script>
 

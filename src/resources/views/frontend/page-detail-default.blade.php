@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.layout')
+@extends($helper->bladePath('includes.layout'))
 
 @section('content')
 
@@ -38,12 +38,12 @@
             }
             @endphp
 
-            @include('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.sub-page-cards', ['sub_pages' =>
+            @include($helper->bladePath('includes.sub-page-cards'), ['sub_pages' =>
             $page->children, 'card_class'=>'col-md-4 mb-4', 'img_width'=>$helper->s('file.small_image_width'),
             'img_height'=>$helper->s('file.big_image_height') ])
 
 
-            @include('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.breadcrumb')
+            @include($helper->bladePath('includes.breadcrumb'))
 
 
             {!! isset($plugins['page-tab-inquiry-form']) ? $plugins['page-tab-inquiry-form']->displayForm($page) : ''

@@ -20,36 +20,36 @@ $form_enabled_label .= "(ID:$tab_data->id)" . ' <a
 
 
 
-@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+@include($helper->bladePath('includes.form-input','b'), ['name' =>
 "form_enabled", 'label'=> $form_enabled_label, 'type'=>'select', 'options'=>['0' => $helper->t('disable'), '1' =>
 $helper->t('enable')] ])
 
 
-@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+@include($helper->bladePath('includes.form-input','b'), ['name' =>
 "default_setting_id"])
 
 
-@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+@include($helper->bladePath('includes.form-input','b'), ['name' =>
 "form_layout"])
 
-@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+@include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
 'name' => "display_form_fields"])
 
-@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+@include($helper->bladePath('includes.form-input','b'), ['name' =>
 "success_title"])
 
-@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+@include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
 'name' => "success_content"])
 
-@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+@include($helper->bladePath('includes.form-input','b'), ['name' =>
 "google_recaptcha_enabled", 'type'=>'select', 'options'=>['' => $helper->t('default'),'0' => $helper->t('disable'),
 '1'=> $helper->t('enable')] ])
 
 
-@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+@include($helper->bladePath('includes.form-input','b'), ['name' =>
 "google_recaptcha_css_class"])
 
-@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
+@include($helper->bladePath('includes.form-input','b'), ['name' =>
 "google_recaptcha_no_tick_msg"])
 
 
@@ -89,7 +89,7 @@ $helper->t('enable')] ])
     });
 });
 
-@if ( $helper->s('inquiry.default_enable') == '1' )
+@if ( $helper->s('inquiry.default_enable') == '1' && ! isset($page['title']))
     $('.input-form_enabled').val(1).change();
 @endif
 </script>
