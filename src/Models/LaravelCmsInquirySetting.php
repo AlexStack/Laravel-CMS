@@ -67,23 +67,23 @@ class LaravelCmsInquirySetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'form_layout' => 'string',
-        'page_id' => 'integer',
-        'default_setting_id' => 'integer',
-        'form_layout_filename' => 'string',
-        'display_form_fields' => 'string',
-        'mail_from' => 'string',
-        'mail_to' => 'string',
-        'mail_subject' => 'string',
-        'success_title' => 'string',
-        'success_content' => 'string',
-        'google_recaptcha_site_key' => 'string',
-        'google_recaptcha_secret_key' => 'string',
-        'google_recaptcha_css_class' => 'string',
+        'id'                           => 'integer',
+        'form_layout'                  => 'string',
+        'page_id'                      => 'integer',
+        'default_setting_id'           => 'integer',
+        'form_layout_filename'         => 'string',
+        'display_form_fields'          => 'string',
+        'mail_from'                    => 'string',
+        'mail_to'                      => 'string',
+        'mail_subject'                 => 'string',
+        'success_title'                => 'string',
+        'success_content'              => 'string',
+        'google_recaptcha_site_key'    => 'string',
+        'google_recaptcha_secret_key'  => 'string',
+        'google_recaptcha_css_class'   => 'string',
         'google_recaptcha_no_tick_msg' => 'string',
-        'google_recaptcha_enabled' => 'boolean',
-        'form_enabled' => 'boolean',
+        'google_recaptcha_enabled'     => 'boolean',
+        'form_enabled'                 => 'boolean',
     ];
 
     public function __construct()
@@ -97,8 +97,8 @@ class LaravelCmsInquirySetting extends Model
      * @var array
      */
     public static $rules = [
-        'id' => 'required',
+        'id'                       => 'required',
         'google_recaptcha_enabled' => 'required',
-        'form_enabled' => 'required',
+        'form_enabled'             => 'required',
     ];
 }

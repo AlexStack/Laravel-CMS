@@ -2,8 +2,8 @@
 
 namespace AlexStack\LaravelCms\Console\Commands;
 
-use Illuminate\Console\Command;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
+use Illuminate\Console\Command;
 
 class LaravelCMS extends Command
 {
@@ -43,13 +43,13 @@ class LaravelCMS extends Command
     {
         $options = $this->options();
         //var_dump($options);
-        if ($options['action'] == 'initialize' || $options['action'] == 'install') {
+        if ('initialize' == $options['action'] || 'install' == $options['action']) {
             $this->initializeCms($options);
-        } elseif ($options['action'] == 'uninstall' || $options['action'] == 'remove') {
+        } elseif ('uninstall' == $options['action'] || 'remove' == $options['action']) {
             $this->uninstall($options);
-        } elseif ($options['action'] == 'upgrade' || $options['action'] == 'update') {
+        } elseif ('upgrade' == $options['action'] || 'update' == $options['action']) {
             $this->upgrade($options);
-        } elseif ($options['action'] == 'clear' || $options['action'] == 'clean') {
+        } elseif ('clear' == $options['action'] || 'clean' == $options['action']) {
             $this->clearCache($options);
         } else {
             $this->error('Wrong action');
@@ -62,7 +62,7 @@ class LaravelCMS extends Command
         $this->line('<fg=red>**** Upgrade Amila Laravel CMS ****</>');
         $this->line('<fg=red>****</>');
 
-        if (trim($options['silent']) != 'no' || $this->confirm('<fg=cyan>**** Upgrade the CMS database tables? ****</>', true)) {
+        if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Upgrade the CMS database tables? ****</>', true)) {
             $this->call('migrate', [
                 '--path' => './vendor/alexstack/laravel-cms/src/database/migrations/',
             ]);
@@ -70,10 +70,10 @@ class LaravelCMS extends Command
         }
 
         // override view & asset files
-        if (trim($options['silent']) != 'no' || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend view & asset files? ****</>', true)) {
+        if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend view & asset files? ****</>', true)) {
             // rename the old folders
             $vendor_view_path = dirname(__FILE__, 3).'/resources/views';
-            $app_view_path = base_path('resources/views/vendor/laravel-cms');
+            $app_view_path    = base_path('resources/views/vendor/laravel-cms');
 
             // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
             // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
@@ -81,7 +81,7 @@ class LaravelCMS extends Command
             $vendor_view_folders = glob($vendor_view_path.'/*', GLOB_ONLYDIR);
             foreach ($vendor_view_folders as $folder) {
                 $folder_name = basename($folder);
-                if ($folder_name != 'plugins' && file_exists($app_view_path.'/'.$folder_name)) {
+                if ('plugins' != $folder_name && file_exists($app_view_path.'/'.$folder_name)) {
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
                     rename($app_view_path.'/'.$folder_name, $app_view_path.'/'.$new_name);
                     $this->line('<fg=green>- Backup folder:</> views/'.$new_name);
@@ -99,7 +99,7 @@ class LaravelCMS extends Command
 
             //var_dump($vendor_plugin_folders);
             $this->call('vendor:publish', [
-                '--tag' => 'laravel-cms-views',
+                '--tag'   => 'laravel-cms-views',
                 '--force' => 1,
             ]);
 
@@ -107,7 +107,7 @@ class LaravelCMS extends Command
 
             // rename the old folders
             $vendor_view_path = dirname(__FILE__, 3).'/assets';
-            $app_view_path = public_path('laravel-cms');
+            $app_view_path    = public_path('laravel-cms');
 
             // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
             // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
@@ -123,16 +123,16 @@ class LaravelCMS extends Command
             }
             //var_dump($vendor_view_folders);
             $this->call('vendor:publish', [
-                '--tag' => 'laravel-cms-assets',
+                '--tag'   => 'laravel-cms-assets',
                 '--force' => 1,
             ]);
         }
 
         // override lang files
-        if (trim($options['silent']) != 'no' || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend language files? ****</>', true)) {
+        if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend language files? ****</>', true)) {
             // rename the old folders
             $vendor_view_path = dirname(__FILE__, 3).'/resources/lang';
-            $app_view_path = base_path('resources/lang/vendor/laravel-cms');
+            $app_view_path    = base_path('resources/lang/vendor/laravel-cms');
 
             // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
             // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
@@ -148,7 +148,7 @@ class LaravelCMS extends Command
             }
             //var_dump($vendor_plugin_folders);
             $this->call('vendor:publish', [
-                '--tag' => 'laravel-cms-lang',
+                '--tag'   => 'laravel-cms-lang',
                 '--force' => 1,
             ]);
         }
@@ -174,7 +174,7 @@ class LaravelCMS extends Command
         $this->line('<fg=red>**** UNINSTALL Amila Laravel CMS ****</>');
         $this->line('<fg=red>****</>');
 
-        if (trim($options['silent']) == 'no' && !$this->confirm('<fg=cyan>**** Remove the CMS database tables? ****</>', true)) {
+        if ('no' == trim($options['silent']) && ! $this->confirm('<fg=cyan>**** Remove the CMS database tables? ****</>', true)) {
             $this->error('User aborted! please run the command again.');
             exit();
         }
@@ -183,7 +183,7 @@ class LaravelCMS extends Command
             '--path' => './vendor/alexstack/laravel-cms/src/database/migrations/',
         ]);
 
-        if (trim($options['silent']) == 'no' && !$this->confirm('<fg=cyan>**** Remove the CMS folders and files? ****</>', true)) {
+        if ('no' == trim($options['silent']) && ! $this->confirm('<fg=cyan>**** Remove the CMS folders and files? ****</>', true)) {
             $this->error('User aborted! please run the command again.');
             exit();
         }
@@ -228,13 +228,13 @@ class LaravelCMS extends Command
         $this->line('<fg=red>**** Initialize Amila Laravel CMS ****</>');
         $this->line('<fg=red>****</>');
 
-        if (trim($options['table_prefix']) == '') {
+        if ('' == trim($options['table_prefix'])) {
             $table_prefix = $this->ask('Set up a database table prefix instead of the default', 'cms_');
         } else {
             $table_prefix = trim($options['table_prefix']);
         }
 
-        if (trim($options['locale']) == '') {
+        if ('' == trim($options['locale'])) {
             $app_locale = $this->ask('Set up a locale language instead of the default', config('app.locale'));
         } else {
             $app_locale = trim($options['locale']);
@@ -243,8 +243,8 @@ class LaravelCMS extends Command
         $this->line('<fg=cyan>----> Database table prefix : </><fg=yellow>'.$table_prefix.'</>');
         $this->line('<fg=cyan>----> Locale language : </><fg=yellow>'.$app_locale.'</>');
 
-        if (trim($options['silent']) == 'no') {
-            if (!$this->confirm('<fg=magenta>Please confirm the above settings?</>', true)) {
+        if ('no' == trim($options['silent'])) {
+            if (! $this->confirm('<fg=magenta>Please confirm the above settings?</>', true)) {
                 $this->error('User aborted! please run the command again.');
                 exit();
             }
@@ -256,7 +256,7 @@ class LaravelCMS extends Command
             '--provider' => 'AlexStack\LaravelCms\LaravelCmsServiceProvider',
         ]);
 
-        if ($table_prefix != 'cms_' || $app_locale != 'en') {
+        if ('cms_' != $table_prefix || 'en' != $app_locale) {
             $config_str = str_replace(
                 ["=> 'cms_", "=> 'en"],
                 ["=> '".$table_prefix, "=> '".$app_locale],
@@ -304,7 +304,7 @@ class LaravelCMS extends Command
         $this->call('config:cache');
         $this->call('route:clear');
         $helper = new LaravelCmsHelper();
-        $rs = $helper->rewriteConfigFile();
+        $rs     = $helper->rewriteConfigFile();
         if ($rs) {
             $this->line('<fg=green>Re-create the setting file: storage\app\laravel-cms\settings.php</>');
         }

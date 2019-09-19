@@ -9,7 +9,7 @@ return [
     |
     */
     'site_name' => env('APP_NAME', 'My Site Name'),
-    'top_logo' => env('LARAVEL_CMS_TOP_LOGO', 'https://raw.githubusercontent.com/AlexStack/Laravel-CMS/master/src/assets/frontend/images/top-logo.png'),
+    'top_logo'  => env('LARAVEL_CMS_TOP_LOGO', 'https://raw.githubusercontent.com/AlexStack/Laravel-CMS/master/src/assets/frontend/images/top-logo.png'),
 
     'page_top' => '<div class="row justify-content-end">
         <div class="col-md text-right text-secondary page_top">
@@ -46,8 +46,8 @@ return [
     | 'slug_format' can be from_title, id, pinyin
     | 'slug_suffix' can be anything you want, empty means no suffix
     */
-    'slug_format' => 'from_title',
-    'slug_suffix' => '.html',
+    'slug_format'   => 'from_title',
+    'slug_suffix'   => '.html',
     'slug_separate' => '-',
 
     /*
@@ -89,10 +89,10 @@ return [
     */
 
     'table_name' => [
-        'pages' => 'cms_pages',
-        'files' => 'cms_files',
-        'settings' => 'cms_settings',
-        'inquiries' => 'cms_inquiries',
+        'pages'            => 'cms_pages',
+        'files'            => 'cms_files',
+        'settings'         => 'cms_settings',
+        'inquiries'        => 'cms_inquiries',
         'inquiry_settings' => 'cms_inquiry_settings',
     ],
 
@@ -105,11 +105,11 @@ return [
     |
     */
     'template' => [
-        'frontend_dir' => 'frontend',
-        'backend_dir' => 'backend',
-        'backend_language' => 'en',
+        'frontend_dir'      => 'frontend',
+        'backend_dir'       => 'backend',
+        'backend_language'  => 'en',
         'frontend_language' => 'en',
     ],
 
-    'cms_version' => '0.14.1',
+    'cms_version' => '0.16.1',
 ];

@@ -26,8 +26,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
             $this->helper = new LaravelCmsHelper(); // reload new settings
         }
 
-        $data['helper'] = $this->helper;
-
+        $data['helper']     = $this->helper;
         $data['categories'] = $this->getCategories($data['settings'], true);
 
         return $data;
@@ -35,8 +34,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
 
     public function create()
     {
-        $data['helper'] = $this->helper;
-
+        $data['helper']     = $this->helper;
         $data['categories'] = $this->getCategories(null, false);
 
         return $data;
@@ -44,13 +42,13 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
 
     public function store($form_data)
     {
-        $must_json = $form_data['category'] == 'plugins';
-        if (!$this->helper->correctJsonFormat($form_data['param_value'], $must_json)) {
+        $must_json = 'plugins' == $form_data['category'];
+        if (! $this->helper->correctJsonFormat($form_data['param_value'], $must_json)) {
             exit(sprintf($this->helper->t('wrong_json_format_str', ['name' => 'Param Value'])));
         }
 
-        $must_json = trim($form_data['input_attribute']) != '';
-        if (!$this->helper->correctJsonFormat($form_data['input_attribute'], $must_json)) {
+        $must_json = '' != trim($form_data['input_attribute']);
+        if (! $this->helper->correctJsonFormat($form_data['input_attribute'], $must_json)) {
             exit(sprintf($this->helper->t('wrong_json_format_str', ['name' => 'Input Attribute'])));
         }
 
@@ -70,21 +68,20 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
     public function update($form_data, $id)
     {
         $form_data['id'] = $id;
-        $setting = LaravelCmsSetting::find($form_data['id']);
+        $setting         = LaravelCmsSetting::find($form_data['id']);
 
-        unset($form_data['_method']);
-        unset($form_data['_token']);
+        unset($form_data['_method'], $form_data['_token']);
 
-        $must_json = $form_data['category'] == 'plugins';
-        if (!$this->helper->correctJsonFormat($form_data['param_value'], $must_json)) {
+        $must_json = 'plugins' == $form_data['category'];
+        if (! $this->helper->correctJsonFormat($form_data['param_value'], $must_json)) {
             exit(sprintf($this->helper->t('wrong_json_format_str', ['name' => 'Param Value'])));
         }
-        $must_json = trim($form_data['input_attribute']) != '';
-        if (!$this->helper->correctJsonFormat($form_data['input_attribute'], $must_json)) {
+        $must_json = '' != trim($form_data['input_attribute']);
+        if (! $this->helper->correctJsonFormat($form_data['input_attribute'], $must_json)) {
             exit(sprintf($this->helper->t('wrong_json_format_str', ['name' => 'Input Attribute'])));
         }
 
-        if ($form_data['param_name'] == 'backend_language' && $setting->param_value != $form_data['param_value']) {
+        if ('backend_language' == $form_data['param_name'] && $setting->param_value != $form_data['param_value']) {
             $need_update_config_file_twice = true;
         }
 
@@ -102,10 +99,8 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
 
     public function edit($id)
     {
-        $data['setting'] = LaravelCmsSetting::find($id);
-
-        $data['helper'] = $this->helper;
-
+        $data['setting']    = LaravelCmsSetting::find($id);
+        $data['helper']     = $this->helper;
         $data['categories'] = $this->getCategories(null, false);
 
         return $data;
@@ -123,13 +118,13 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
      */
     public function getCategories($settings = null, $allow_html = true)
     {
-        if (!$settings) {
+        if (! $settings) {
             $settings = LaravelCmsSetting::groupBy('category')->get(['category', 'category']);
             //$settings = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
         }
         //$this->helper->debug($settings);
         $custom_cats = $this->helper->s('category.admin_setting_tabs');
-        if (!$custom_cats) {
+        if (! $custom_cats) {
             $custom_cats = [];
         }
         $all_cats = $settings->pluck('category', 'category')->toArray();
@@ -140,7 +135,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
             } else {
                 $item = $this->helper->t($item);
             }
-            if (!$allow_html) {
+            if (! $allow_html) {
                 $item = strip_tags($item);
             }
         });

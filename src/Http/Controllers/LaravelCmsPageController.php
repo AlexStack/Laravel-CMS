@@ -2,9 +2,9 @@
 
 namespace AlexStack\LaravelCms\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
+use App\Http\Controllers\Controller;
 
 class LaravelCmsPageController extends Controller
 {
@@ -13,7 +13,7 @@ class LaravelCmsPageController extends Controller
 
     public function __construct(LaravelCmsPageRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->repo = $repo;
+        $this->repo   = $repo;
         $this->helper = $helper;
 
         $this->repo->setHelper($helper);

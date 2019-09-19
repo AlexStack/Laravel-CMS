@@ -50,15 +50,15 @@ class LaravelCmsSetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'param_name' => 'string',
-        'page_id' => 'integer',
-        'param_value' => 'string',
+        'id'              => 'integer',
+        'param_name'      => 'string',
+        'page_id'         => 'integer',
+        'param_value'     => 'string',
         'input_attribute' => 'string',
-        'abstract' => 'string',
-        'category' => 'string',
-        'enabled' => 'boolean',
-        'sort_value' => 'integer',
+        'abstract'        => 'string',
+        'category'        => 'string',
+        'enabled'         => 'boolean',
+        'sort_value'      => 'integer',
     ];
 
     /**
@@ -67,7 +67,7 @@ class LaravelCmsSetting extends Model
      * @var array
      */
     public static $rules = [
-        'id' => 'required',
+        'id'         => 'required',
         'param_name' => 'required',
     ];
 

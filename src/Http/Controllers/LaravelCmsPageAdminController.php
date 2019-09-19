@@ -2,10 +2,10 @@
 
 namespace AlexStack\LaravelCms\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Repositories\LaravelCmsPageAdminRepository;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class LaravelCmsPageAdminController extends Controller
 {
@@ -15,7 +15,7 @@ class LaravelCmsPageAdminController extends Controller
 
     public function __construct(LaravelCmsPageAdminRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->repo = $repo;
+        $this->repo   = $repo;
         $this->helper = $helper;
 
         $this->repo->setHelper($helper);
@@ -24,7 +24,7 @@ class LaravelCmsPageAdminController extends Controller
     public function checkUser()
     {
         // return true;
-        if (!$this->user) {
+        if (! $this->user) {
             $this->user = $this->helper->hasPermission();
         }
     }
@@ -51,7 +51,7 @@ class LaravelCmsPageAdminController extends Controller
     {
         $this->checkUser();
 
-        $form_data = $request->all();
+        $form_data            = $request->all();
         $form_data['user_id'] = $this->user->id ?? null;
 
         $rs = $this->repo->store($form_data);
@@ -76,7 +76,7 @@ class LaravelCmsPageAdminController extends Controller
     {
         $this->checkUser();
 
-        $form_data = $request->all();
+        $form_data            = $request->all();
         $form_data['user_id'] = $form_data['user_id'] ?? $this->user->id;
 
         $rs = $this->repo->update($form_data, $page);

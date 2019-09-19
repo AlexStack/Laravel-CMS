@@ -2,10 +2,10 @@
 
 namespace Tests\Repositories;
 
-use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
-use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
+use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Repositories\LaravelCmsPageAdminRepository;
+use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 

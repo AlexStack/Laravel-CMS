@@ -2,8 +2,8 @@
 
 namespace Tests\Repositories;
 
-use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
+use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Repositories\LaravelCmsPageAdminRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -74,7 +74,7 @@ class LaravelCmsPageAdminRepositoryTest extends TestCase
      */
     public function test_update_LaravelCmsPage()
     {
-        $laravelCmsPage = factory(LaravelCmsPage::class)->create();
+        $laravelCmsPage     = factory(LaravelCmsPage::class)->create();
         $fakeLaravelCmsPage = factory(LaravelCmsPage::class)->raw();
 
         $updatedLaravelCmsPage = $this->laravelCmsPageRepo->update($fakeLaravelCmsPage, $laravelCmsPage->id);

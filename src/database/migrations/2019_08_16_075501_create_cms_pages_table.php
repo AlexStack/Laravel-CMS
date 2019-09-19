@@ -10,7 +10,7 @@ class CreateCmsPagesTable extends Migration
 
     public function __construct()
     {
-        $this->config = include base_path('config/laravel-cms.php');
+        $this->config     = include base_path('config/laravel-cms.php');
         $this->table_name = $this->config['table_name']['pages'];
     }
 

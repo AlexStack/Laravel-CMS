@@ -62,19 +62,19 @@ class LaravelCmsFile extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'user_id' => 'integer',
-        'title' => 'string',
+        'id'          => 'integer',
+        'user_id'     => 'integer',
+        'title'       => 'string',
         'description' => 'string',
-        'suffix' => 'string',
-        'path' => 'string',
-        'filename' => 'string',
-        'mimetype' => 'string',
-        'is_image' => 'boolean',
-        'is_video' => 'boolean',
-        'filesize' => 'integer',
-        'filehash' => 'string',
-        'url' => 'string',
+        'suffix'      => 'string',
+        'path'        => 'string',
+        'filename'    => 'string',
+        'mimetype'    => 'string',
+        'is_image'    => 'boolean',
+        'is_video'    => 'boolean',
+        'filesize'    => 'integer',
+        'filehash'    => 'string',
+        'url'         => 'string',
     ];
 
     public function __construct()

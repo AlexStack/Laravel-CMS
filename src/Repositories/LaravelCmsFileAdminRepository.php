@@ -19,7 +19,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
      */
     public function index()
     {
-        $keyword = request()->keyword;
+        $keyword       = request()->keyword;
         $data['files'] = LaravelCmsFile::when($keyword, function ($query, $keyword) {
             return $query->where('title', 'like', '%'.trim($keyword).'%');
         })
@@ -35,7 +35,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
     {
         if (request()->generate_image && request()->width) {
             $file = LaravelCmsFile::find($id);
-            $url = $this->helper->imageUrl($file, request()->width, request()->height);
+            $url  = $this->helper->imageUrl($file, request()->width, request()->height);
             if (request()->return_url) {
                 return $url;
             }
@@ -56,7 +56,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
     public function store($form_data)
     {
         $all_file_data = [];
-        $rs = $this->handleUpload($form_data, $all_file_data);
+        $rs            = $this->handleUpload($form_data, $all_file_data);
 
         return $rs;
     }
@@ -68,8 +68,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
 
     public function edit($id)
     {
-        $data['file'] = LaravelCmsFile::find($id);
-
+        $data['file']   = LaravelCmsFile::find($id);
         $data['helper'] = $this->helper;
 
         return $data;
@@ -103,7 +102,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
     private function handleUpload(&$form_data, &$all_file_data = [])
     {
         $request = request();
-        $files = $request->file('files');
+        $files   = $request->file('files');
 
         if ($request->hasFile('files')) {
             foreach ($files as $file) {

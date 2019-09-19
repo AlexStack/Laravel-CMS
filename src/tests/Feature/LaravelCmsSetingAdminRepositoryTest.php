@@ -2,8 +2,8 @@
 
 namespace Tests\Repositories;
 
-use AlexStack\LaravelCms\Models\LaravelCmsSetting;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
+use AlexStack\LaravelCms\Models\LaravelCmsSetting;
 use AlexStack\LaravelCms\Repositories\LaravelCmsSettingAdminRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -41,7 +41,6 @@ class LaravelCmsSettingAdminRepositoryTest extends TestCase
         //var_dump($laravelCmsSetting);
 
         $createdLaravelCmsSetting = $this->laravelCmsSettingRepo->store($laravelCmsSetting);
-
         $createdLaravelCmsSetting = $createdLaravelCmsSetting->toArray();
         $this->assertArrayHasKey('id', $createdLaravelCmsSetting);
         $this->assertNotNull($createdLaravelCmsSetting['id'], 'Created LaravelCmsSetting must have id specified');
@@ -57,10 +56,8 @@ class LaravelCmsSettingAdminRepositoryTest extends TestCase
         $laravelCmsSetting = factory(LaravelCmsSetting::class)->raw();
 
         $createdLaravelCmsSetting = $this->laravelCmsSettingRepo->store($laravelCmsSetting);
-
-        $editLaravelCmsSetting = $this->laravelCmsSettingRepo->edit($createdLaravelCmsSetting->id);
-
-        $indexLaravelCmsSetting = $this->laravelCmsSettingRepo->index();
+        $editLaravelCmsSetting    = $this->laravelCmsSettingRepo->edit($createdLaravelCmsSetting->id);
+        $indexLaravelCmsSetting   = $this->laravelCmsSettingRepo->index();
 
         //$dbLaravelCmsSetting = $dbLaravelCmsSetting->toArray();
         //$this->assertModelData($laravelCmsSetting->toArray(), $dbLaravelCmsSetting);
@@ -74,7 +71,7 @@ class LaravelCmsSettingAdminRepositoryTest extends TestCase
      */
     public function test_update_LaravelCmsSetting()
     {
-        $laravelCmsSetting = factory(LaravelCmsSetting::class)->create();
+        $laravelCmsSetting     = factory(LaravelCmsSetting::class)->create();
         $fakeLaravelCmsSetting = factory(LaravelCmsSetting::class)->raw();
 
         $updatedLaravelCmsSetting = $this->laravelCmsSettingRepo->update($fakeLaravelCmsSetting, $laravelCmsSetting->id);
