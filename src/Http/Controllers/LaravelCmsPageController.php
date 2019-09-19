@@ -28,6 +28,13 @@ class LaravelCmsPageController extends Controller
     {
         $data = $this->repo->show($slug);
 
+        if ('1' == $this->helper->s('allow_json_response') && 'json' == request()->response_type) {
+            unset($data['helper']);
+            unset($data['plugins']);
+
+            return response()->json($data);
+        }
+
         return view('laravel-cms::'.$this->helper->s('template.frontend_dir').'.'.$data['page']->template_file, $data);
     }
 }

@@ -222,7 +222,7 @@ class LaravelCmsPluginInquiry
         $rs = LaravelCmsInquiry::where('id', $id)->delete();
 
         //LaravelCmsHelper::debug($rs);
-        if ('json' == request()->result_type) {
+        if ('json' == request()->response_type) {
             $result['success']         = $rs;
             $result['success_content'] = 'Inquire id '.$id.' deleted';
             $result['error_message']   = 'Delete inquire id '.$id.' failed!';

@@ -2,7 +2,7 @@
 {!! Form::model($_GET, ['route' => ['LaravelCmsPluginInquiry.submitForm'], 'method' => "POST", 'files'=>true,
 'id'=>'laravel-cms-inquiry-form']) !!}
 
-<input type="hidden" name="result_type" value="json" />
+<input type="hidden" name="response_type" value="json" />
 
 {!! $dynamic_inputs !!}
 

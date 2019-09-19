@@ -74,14 +74,27 @@
                         <h4>{{$helper->t('latest_name',['name'=>$helper->t('files')])}}</h4>
                     </a></li>
 
-                @foreach( $latest_files as $item)
+                @forelse( $latest_files as $item)
                 <li class="list-group-item list-group-item-action text-truncate"><a
                         href="{{ $helper->imageUrl($item) }}" target="_blank"
                         title="{{$helper->t('updated_at') . ':' . $item->updated_at . ', ' . $helper->t('created_at') . ':' . $item->created_at}}">
                         <span class="badge badge-secondary">{{$loop->index+1}}</span>
                         {{$item->title}}
                     </a></li>
-                @endforeach
+                @empty
+                <li class="list-group-item list-group-item-action text-truncate">
+                    <a href="{{ route('LaravelCmsAdminFiles.index') }}">
+                        <i class="fas fa-upload mr-1"></i>{{$helper->t('upload,file')}}
+                    </a>
+                </li>
+                @endforelse
+
+                @if ( $latest_files->count() < 10 ) <li class="list-group-item list-group-item-action text-truncate">
+                    <a href="{{ route('LaravelCmsAdminFiles.index') }}">
+                        <i class="fas fa-upload mr-1"></i>{{$helper->t('upload,file')}}
+                    </a>
+                    </li>
+                    @endif
             </ul>
         </div>
 

@@ -457,6 +457,45 @@ class LaravelCmsHelper
         // exit();
     }
 
+    public function parseCmsStr($str)
+    {
+        if (false !== strpos($str, '__(')) {
+            // replace __(str) to locale language string
+
+            $str = preg_replace_callback(
+                "/__\((.*)\)/U",
+                function ($matches) {
+                    $s = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
+
+                    return addslashes($this->t($s));
+                },
+                $str
+            );
+        }
+
+        if (false !== strpos($str, 'ROUTE(')) {
+            $str = preg_replace_callback(
+                "/ROUTE\((.*)\)/U",
+                function ($matches) {
+                    $route_name = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
+                    if (strpos($route_name, ',')) {
+                        $route_ary = explode(',', $route_name);
+                        $route_name = trim($route_ary[0]);
+                        $route_param = trim($route_ary[1]);
+                    }
+                    if (\Route::has($route_name)) {
+                        return route($route_name, $route_param ?? [], false);
+                    } else {
+                        return '#route_not_defined_'.$matches[1];
+                    }
+                },
+                $str
+            );
+        }
+
+        return $str;
+    }
+
     // store the settings as an array in a setting file to speed up
     public function rewriteConfigFile()
     {

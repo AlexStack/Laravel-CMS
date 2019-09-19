@@ -197,7 +197,7 @@
             type: 'DELETE',
             data : {
                 _token: "{{ csrf_token() }}",
-                result_type: "json"
+                response_type: "json"
             },
             // contentType: false,
             // cache: false,

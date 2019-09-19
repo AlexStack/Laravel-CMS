@@ -473,7 +473,7 @@ class CmsSettingsTableSeeder extends Seeder
                 'param_name'      => 'default_enable',
                 'page_id'         => null,
                 'param_value'     => '0',
-                'input_attribute' => '{"rows":1,"required":"required"}',
+                'input_attribute' => '{"select_options":{"1":"__(enable)", "0":"__(disable)"},"rows":1,"required":"required"}',
                 'abstract'        => null,
                 'category'        => 'inquiry',
                 'enabled'         => 1,
@@ -481,6 +481,16 @@ class CmsSettingsTableSeeder extends Seeder
                 'created_at'      => '2019-09-05 17:11:23',
                 'updated_at'      => '2019-09-05 17:11:23',
                 'deleted_at'      => null,
+            ],
+            29 => [
+                'param_name'      => 'allow_json_response',
+                'page_id'         => null,
+                'param_value'     => '1',
+                'input_attribute' => '{"select_options":{"1":"__(yes)", "0":"__(no)"},"rows":1,"required":"required"}',
+                'abstract'        => null,
+                'category'        => 'global',
+                'enabled'         => 0,
+                'sort_value'      => 30,
             ],
         ]);
     }
