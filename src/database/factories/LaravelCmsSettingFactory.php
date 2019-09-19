@@ -1,12 +1,10 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-
 use AlexStack\LaravelCms\Models\LaravelCmsSetting;
 use Faker\Generator as Faker;
 
 $factory->define(LaravelCmsSetting::class, function (Faker $faker) {
-
     return [
         'param_name' => $faker->word,
         'page_id' => null,

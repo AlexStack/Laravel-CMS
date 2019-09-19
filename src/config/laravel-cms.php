@@ -22,7 +22,7 @@ return [
 
     'page_footer' => '<div class="row justify-content-center">
         <div class="col-md pt-5 pb-5 text-center bg-light footer">
-            <span class="small  text-secondary">Made with <i class="fas fa-heart"></i> by <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class=" text-secondary">LaravelCms</a> @ ' . date('Y') . '</span>
+            <span class="small  text-secondary">Made with <i class="fas fa-heart"></i> by <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class=" text-secondary">LaravelCms</a> @ '.date('Y').'</span>
         </div>
     </div>',
 
@@ -33,12 +33,11 @@ return [
     | Custom page routes
     |--------------------------------------------------------------------------
     */
-    'homepage_route'    => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
+    'homepage_route' => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
 
     'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/cms-'),
 
-    'admin_route'       => env('LARAVEL_CMS_BACKEND_ROUTE', '/cmsadmin'),
-
+    'admin_route' => env('LARAVEL_CMS_BACKEND_ROUTE', '/cmsadmin'),
 
     /*
     |--------------------------------------------------------------------------
@@ -47,10 +46,9 @@ return [
     | 'slug_format' can be from_title, id, pinyin
     | 'slug_suffix' can be anything you want, empty means no suffix
     */
-    'slug_format'   => 'from_title',
-    'slug_suffix'   => '.html',
+    'slug_format' => 'from_title',
+    'slug_suffix' => '.html',
     'slug_separate' => '-',
-
 
     /*
     |--------------------------------------------------------------------------
@@ -58,7 +56,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'admin_id_ary' => [1, 1, 1],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +79,6 @@ return [
     |
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | Database Table Name
@@ -93,11 +89,11 @@ return [
     */
 
     'table_name' => [
-        'pages'             => 'cms_pages',
-        'files'             => 'cms_files',
-        'settings'          => 'cms_settings',
-        'inquiries'         => 'cms_inquiries',
-        'inquiry_settings'  => 'cms_inquiry_settings',
+        'pages' => 'cms_pages',
+        'files' => 'cms_files',
+        'settings' => 'cms_settings',
+        'inquiries' => 'cms_inquiries',
+        'inquiry_settings' => 'cms_inquiry_settings',
     ],
 
     /*
@@ -109,9 +105,9 @@ return [
     |
     */
     'template' => [
-        'frontend_dir'      => 'frontend',
-        'backend_dir'       => 'backend',
-        'backend_language'  => 'en',
+        'frontend_dir' => 'frontend',
+        'backend_dir' => 'backend',
+        'backend_language' => 'en',
         'frontend_language' => 'en',
     ],
 

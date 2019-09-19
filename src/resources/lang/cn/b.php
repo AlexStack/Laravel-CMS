@@ -84,7 +84,6 @@ return [
     'file_data' => '文件JSON数据',
     'special_text' => '特殊文字',
 
-
     // inquiry form
     'inquiry' => '咨询',
     'form_layout' => '表单式样模版',
@@ -94,7 +93,6 @@ return [
     'no_result' => '没有任何结果',
     'delete_message' => '请确定要删除此内容？',
     'total' => '总共',
-
 
     //'form_layout_filename' => 'string',
     'display_form_fields' => '表单显示字段',
@@ -137,6 +135,4 @@ return [
     'extra_data_3' => '附加数据3',
     'extra_data_4' => '附加数据4',
     'extra_data_5' => '附加数据5',
-
-
 ];
