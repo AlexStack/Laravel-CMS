@@ -1,23 +1,17 @@
-php:
-  preset: laravel
-  risky: true
-  enabled:
-    - long_array_syntax
-    - alpha_ordered_imports
-  disabled:
-    - length_ordered_imports
-    - align_double_arrow
-    - unused_use
-  finder:
-    exclude:
-      - modules
-      - node_modules
-      - storage
-      - vendor
-    name: "*.php"
-    not-name: "*.blade.php"
-js: true
-ts: true
-css: true
-py: true
-vue: true
+preset: laravel
+risky: false
+enabled:
+  - long_array_syntax
+  - alpha_ordered_imports
+disabled:
+  - length_ordered_imports
+  - align_double_arrow
+  - unused_use
+finder:
+  exclude:
+    - modules
+    - node_modules
+    - storage
+    - vendor
+  name: "*.php"
+  not-name: "*.blade.php"
