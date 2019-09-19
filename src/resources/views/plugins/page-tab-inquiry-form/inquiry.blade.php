@@ -20,36 +20,36 @@ $form_enabled_label .= "(ID:$tab_data->id)" . ' <a
 
 
 
-@include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
+@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
 "form_enabled", 'label'=> $form_enabled_label, 'type'=>'select', 'options'=>['0' => $helper->t('disable'), '1' =>
 $helper->t('enable')] ])
 
 
-@include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
+@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
 "default_setting_id"])
 
 
-@include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
+@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
 "form_layout"])
 
-@include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
 'name' => "display_form_fields"])
 
-@include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
+@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
 "success_title"])
 
-@include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
+@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['type'=>'textarea',
 'name' => "success_content"])
 
-@include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
+@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
 "google_recaptcha_enabled", 'type'=>'select', 'options'=>['' => $helper->t('default'),'0' => $helper->t('disable'),
 '1'=> $helper->t('enable')] ])
 
 
-@include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
+@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
 "google_recaptcha_css_class"])
 
-@include('laravel-cms::' . config('laravel-cms.template.backend_dir') . '.includes.form-input', ['name' =>
+@include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.form-input', ['name' =>
 "google_recaptcha_no_tick_msg"])
 
 
@@ -58,7 +58,7 @@ $helper->t('enable')] ])
     $("#show-inquiries").click(function(event){
     event.preventDefault();
     $.ajax({
-        url : '/cmsadmin/search-inquiries',
+        url : admin_route + '/search-inquiries',
         type: 'POST',
         data : {
             _token: "{{ csrf_token() }}",
@@ -88,4 +88,8 @@ $helper->t('enable')] ])
         console.log(data);
     });
 });
+
+@if ( $helper->s('inquiry.default_enable') == '1' )
+    $('.input-form_enabled').val(1).change();
+@endif
 </script>

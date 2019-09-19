@@ -107,6 +107,7 @@
 
 
 <script>
+    // todo: https://api.github.com/repos/alexstack/laravel-cms/releases/latest
     var cmsGitHubTags = $.getJSON( "https://api.github.com/repos/AlexStack/Laravel-CMS/tags", function(data) {
         console.log( "success" );
         console.log(data[0]['name']);
