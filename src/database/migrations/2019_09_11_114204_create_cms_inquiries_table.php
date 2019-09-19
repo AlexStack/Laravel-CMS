@@ -2,22 +2,20 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 
 class CreateCmsInquiriesTable extends Migration
 {
     private $config;
     private $table_name;
+
     public function __construct()
     {
-        $this->config = include(base_path('config/laravel-cms.php'));
+        $this->config = include base_path('config/laravel-cms.php');
         $this->table_name = $this->config['table_name']['inquiries'];
     }
 
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -59,11 +57,8 @@ class CreateCmsInquiriesTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

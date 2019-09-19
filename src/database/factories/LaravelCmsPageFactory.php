@@ -1,12 +1,10 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use Faker\Generator as Faker;
 
 $factory->define(LaravelCmsPage::class, function (Faker $faker) {
-
     return [
         //'user_id' => $faker->word,
         //'parent_id' => $faker->randomDigitNotNull,
