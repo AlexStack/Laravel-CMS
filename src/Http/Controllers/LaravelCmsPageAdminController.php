@@ -4,7 +4,6 @@ namespace AlexStack\LaravelCms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Repositories\LaravelCmsPageAdminRepository;
 
@@ -16,8 +15,8 @@ class LaravelCmsPageAdminController extends Controller
 
     public function __construct(LaravelCmsPageAdminRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->repo     = $repo;
-        $this->helper   = $helper;
+        $this->repo = $repo;
+        $this->helper = $helper;
 
         $this->repo->setHelper($helper);
     }
@@ -30,14 +29,13 @@ class LaravelCmsPageAdminController extends Controller
         }
     }
 
-
     public function index()
     {
         $this->checkUser();
 
         $data = $this->repo->index();
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-list', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.page-list', $data);
     }
 
     public function create()
@@ -46,9 +44,8 @@ class LaravelCmsPageAdminController extends Controller
 
         $data = $this->repo->create();
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-create', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.page-create', $data);
     }
-
 
     public function store(Request $request)
     {
@@ -72,7 +69,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data = $this->repo->edit($id);
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-edit', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.page-edit', $data);
     }
 
     public function update(Request $request, $page)
@@ -87,9 +84,9 @@ class LaravelCmsPageAdminController extends Controller
         if ($form_data['return_to_the_list']) {
             return redirect()->route('LaravelCmsAdminPages.index');
         }
+
         return back()->withInput();
     }
-
 
     public function destroy(Request $request, $id)
     {

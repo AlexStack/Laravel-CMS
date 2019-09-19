@@ -22,6 +22,7 @@ before_script:
   - cd cms
   - composer show laravel/framework
   - cp -f ../.travis.env .env
+  - composer clear
   - composer require alexstack/laravel-cms "dev-$TRAVIS_BRANCH|$TRAVIS_BRANCH"
   - php artisan laravelcms --help
   - php artisan laravelcms --action=initialize --locale=cn --table_prefix=travis_cms_  --silent=yes

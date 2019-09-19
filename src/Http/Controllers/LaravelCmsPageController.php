@@ -2,9 +2,7 @@
 
 namespace AlexStack\LaravelCms\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
 
@@ -15,12 +13,11 @@ class LaravelCmsPageController extends Controller
 
     public function __construct(LaravelCmsPageRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->repo     = $repo;
-        $this->helper   = $helper;
+        $this->repo = $repo;
+        $this->helper = $helper;
 
         $this->repo->setHelper($helper);
     }
-
 
     public function index()
     {
@@ -31,6 +28,6 @@ class LaravelCmsPageController extends Controller
     {
         $data = $this->repo->show($slug);
 
-        return view('laravel-cms::' . $this->helper->s('template.frontend_dir') .  '.' . $data['page']->template_file, $data);
+        return view('laravel-cms::'.$this->helper->s('template.frontend_dir').'.'.$data['page']->template_file, $data);
     }
 }

@@ -2,9 +2,7 @@
 
 namespace AlexStack\LaravelCms\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Repositories\LaravelCmsDashboardAdminRepository;
 
@@ -16,8 +14,8 @@ class LaravelCmsDashboardAdminController extends Controller
 
     public function __construct(LaravelCmsDashboardAdminRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->repo     = $repo;
-        $this->helper   = $helper;
+        $this->repo = $repo;
+        $this->helper = $helper;
 
         $this->repo->setHelper($helper);
     }
@@ -39,7 +37,7 @@ class LaravelCmsDashboardAdminController extends Controller
         if (empty($this->helper->settings)) {
             return redirect()->route('LaravelCmsAdminSettings.index');
         } else {
-            return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.dashboard', $data);
+            return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.dashboard', $data);
         }
     }
 
@@ -49,9 +47,9 @@ class LaravelCmsDashboardAdminController extends Controller
         if (empty($this->helper->settings)) {
             return redirect()->route('LaravelCmsAdminSettings.index');
         }
+
         return redirect()->route('LaravelCmsAdmin.index');
     }
-
 
     public function show($id)
     {

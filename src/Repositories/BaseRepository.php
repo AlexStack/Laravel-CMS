@@ -5,7 +5,6 @@ namespace AlexStack\LaravelCms\Repositories;
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Model;
 
-
 abstract class BaseRepository
 {
     /**
@@ -32,21 +31,21 @@ abstract class BaseRepository
     }
 
     /**
-     * Get searchable fields array
+     * Get searchable fields array.
      *
      * @return array
      */
     // abstract public function getFieldsSearchable();
 
     /**
-     * Configure the Model
+     * Configure the Model.
      *
      * @return string
      */
     abstract public function model();
 
     /**
-     * Make Model instance
+     * Make Model instance.
      *
      * @throws \Exception
      *
@@ -66,8 +65,9 @@ abstract class BaseRepository
     /**
      * Paginate records for scaffold.
      *
-     * @param int $perPage
+     * @param int   $perPage
      * @param array $columns
+     *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function paginate($perPage, $columns = ['*'])
@@ -80,9 +80,10 @@ abstract class BaseRepository
     /**
      * Build a query for retrieving all records.
      *
-     * @param array $search
+     * @param array    $search
      * @param int|null $skip
      * @param int|null $limit
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function allQuery($search = [], $skip = null, $limit = null)
@@ -109,12 +110,12 @@ abstract class BaseRepository
     }
 
     /**
-     * Retrieve all records with given filter criteria
+     * Retrieve all records with given filter criteria.
      *
-     * @param array $search
+     * @param array    $search
      * @param int|null $skip
      * @param int|null $limit
-     * @param array $columns
+     * @param array    $columns
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
@@ -126,7 +127,7 @@ abstract class BaseRepository
     }
 
     /**
-     * Store model record (new record)
+     * Store model record (new record).
      *
      * @param array $input
      *
@@ -142,9 +143,9 @@ abstract class BaseRepository
     }
 
     /**
-     * Find model record for given id
+     * Find model record for given id.
      *
-     * @param int $id
+     * @param int   $id
      * @param array $columns
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
@@ -157,10 +158,10 @@ abstract class BaseRepository
     }
 
     /**
-     * Update model record for given id
+     * Update model record for given id.
      *
      * @param array $input
-     * @param int $id
+     * @param int   $id
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
      */
@@ -192,7 +193,6 @@ abstract class BaseRepository
 
         return $model->delete();
     }
-
 
     public function setHelper($helper)
     {

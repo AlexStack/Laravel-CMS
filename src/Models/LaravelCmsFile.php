@@ -6,8 +6,8 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class LaravelCmsFile
- * @package App\Models
+ * Class LaravelCmsFile.
+ *
  * @version August 13, 2019, 10:57 am NZST
  *
  * @property \Illuminate\Database\Eloquent\Collection cmsPages
@@ -18,16 +18,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
- * @property integer user_id
+ * @property int user_id
  * @property string title
  * @property string description
  * @property string suffix
  * @property string path
  * @property string filename
  * @property string mimetype
- * @property boolean is_image
- * @property boolean is_video
- * @property integer filesize
+ * @property bool is_image
+ * @property bool is_video
+ * @property int filesize
  * @property string url
  */
 class LaravelCmsFile extends Model
@@ -39,9 +39,7 @@ class LaravelCmsFile extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'user_id',
@@ -55,7 +53,7 @@ class LaravelCmsFile extends Model
         'is_video',
         'filesize',
         'filehash',
-        'url'
+        'url',
     ];
 
     /**
@@ -76,7 +74,7 @@ class LaravelCmsFile extends Model
         'is_video' => 'boolean',
         'filesize' => 'integer',
         'filehash' => 'string',
-        'url' => 'string'
+        'url' => 'string',
     ];
 
     public function __construct()
@@ -85,12 +83,12 @@ class LaravelCmsFile extends Model
     }
 
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
     public static $rules = [
-        'id' => 'required'
+        'id' => 'required',
     ];
 
     /**
@@ -100,7 +98,6 @@ class LaravelCmsFile extends Model
     {
         return $this->hasMany(\AlexStack\LaravelCms\Models\LaravelCmsPage::class);
     }
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

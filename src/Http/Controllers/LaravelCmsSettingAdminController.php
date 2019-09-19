@@ -4,7 +4,6 @@ namespace AlexStack\LaravelCms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Repositories\LaravelCmsSettingAdminRepository;
 
@@ -16,8 +15,8 @@ class LaravelCmsSettingAdminController extends Controller
 
     public function __construct(LaravelCmsSettingAdminRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->repo     = $repo;
-        $this->helper   = $helper;
+        $this->repo = $repo;
+        $this->helper = $helper;
 
         $this->repo->setHelper($helper);
     }
@@ -35,19 +34,16 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data = $this->repo->index();
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.setting-list', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.setting-list', $data);
     }
-
-
 
     public function edit($id)
     {
         $this->checkUser();
 
-
         $data = $this->repo->edit($id);
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.setting-edit', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.setting-edit', $data);
     }
 
     public function create()
@@ -56,9 +52,8 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data = $this->repo->create();
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.setting-create', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.setting-create', $data);
     }
-
 
     public function store(Request $request)
     {
@@ -70,13 +65,11 @@ class LaravelCmsSettingAdminController extends Controller
         $rs = $this->repo->store($form_data);
 
         if ($form_data['return_to_the_list']) {
-
             return redirect()->route('LaravelCmsAdminSettings.index', ['category' => $rs->category]);
         }
+
         return redirect()->route('LaravelCmsAdminSettings.edit', ['setting' => $rs->id]);
     }
-
-
 
     public function update(Request $request, $setting)
     {
@@ -88,10 +81,9 @@ class LaravelCmsSettingAdminController extends Controller
         if ($form_data['return_to_the_list']) {
             return redirect()->route('LaravelCmsAdminSettings.index', ['category' => $form_data['category']]);
         }
+
         return back()->withInput();
     }
-
-
 
     public function destroy(Request $request, $id)
     {

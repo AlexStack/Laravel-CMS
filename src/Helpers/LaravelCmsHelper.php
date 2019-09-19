@@ -9,13 +9,14 @@ use App;
 class LaravelCmsHelper
 {
     public $settings = [];
+
     public function __construct()
     {
         $setting_file = storage_path('app/laravel-cms/settings.php');
         if (file_exists($setting_file)) {
-            $this->settings = include($setting_file);
+            $this->settings = include $setting_file;
         }
-        if (request()->is(substr(config('laravel-cms.admin_route'), 1) . '/*')) {
+        if (request()->is(substr(config('laravel-cms.admin_route'), 1).'/*')) {
             if (App::getLocale() != $this->s('template.backend_language')) {
                 App::setLocale($this->s('template.backend_language'));
             }
@@ -27,7 +28,7 @@ class LaravelCmsHelper
         //echo App::getLocale() . ' - ' . config('laravel-cms.admin_route') . request()->url();
     }
 
-    static public function hasPermission()
+    public static function hasPermission()
     {
         // return true;
         $user = \Auth::user();
@@ -36,13 +37,14 @@ class LaravelCmsHelper
         }
 
         if (!in_array($user->id, config('laravel-cms.admin_id_ary'))) {
-            exit('Access denied for user id ' . $user->id);
+            exit('Access denied for user id '.$user->id);
         }
 
         if (!isset($_COOKIE['user_id'])) {
             $expire_time = time() + 3600 * 24 * 180; // 180 days
             setcookie('user_id', $user->id, $expire_time, '/');
         }
+
         return $user;
     }
 
@@ -63,7 +65,7 @@ class LaravelCmsHelper
         }
 
         if ($val === false || isset($param_ary[2])) {
-            $val = config('laravel-cms.' . $param_name);
+            $val = config('laravel-cms.'.$param_name);
         }
 
         return $val;
@@ -85,7 +87,7 @@ class LaravelCmsHelper
 
         if ($img_obj->suffix == 'svg' || ($width == null && $height == null) || !isset($img_obj->is_image) || $img_obj->is_image == false) {
             // return original img url
-            return '/' . $this->s('file.upload_dir') . '/' . $img_obj->path;
+            return '/'.$this->s('file.upload_dir').'/'.$img_obj->path;
         }
 
         if ($this->s('file.image_encode') == 'jpg') {
@@ -94,19 +96,19 @@ class LaravelCmsHelper
             $suffix = $img_obj->suffix;
         }
 
-        $filename   = $img_obj->id . '_' . ($width ?? 'auto') . '_' . ($height ?? 'auto') . '_' . $resize_type . '.' . $suffix;
+        $filename = $img_obj->id.'_'.($width ?? 'auto').'_'.($height ?? 'auto').'_'.$resize_type.'.'.$suffix;
 
-        $related_dir = '' . $this->s('file.upload_dir') . '/optimized/' . substr($img_obj->id, -2);
+        $related_dir = ''.$this->s('file.upload_dir').'/optimized/'.substr($img_obj->id, -2);
 
         $abs_real_dir = public_path($related_dir);
-        $abs_real_path = $abs_real_dir . '/' . $filename;
-        $web_url = '/' . $related_dir . '/' . $filename;
+        $abs_real_path = $abs_real_dir.'/'.$filename;
+        $web_url = '/'.$related_dir.'/'.$filename;
 
         if (file_exists($abs_real_path)) {
             $image_reoptimize_time = $this->s('image_reoptimize_time');
             if ($image_reoptimize_time == 0) {
                 return $web_url;
-            } else if (filemtime($abs_real_path) > time() - $this->s('image_reoptimize_time')) {
+            } elseif (filemtime($abs_real_path) > time() - $this->s('image_reoptimize_time')) {
                 return $web_url;
             }
             //return $abs_real_path . ' - already exists - ' . $web_url;
@@ -116,7 +118,7 @@ class LaravelCmsHelper
             mkdir($abs_real_dir, 0755, true);
         }
 
-        $original_img = public_path('' . $this->s('file.upload_dir') . '/' . $img_obj->path);
+        $original_img = public_path(''.$this->s('file.upload_dir').'/'.$img_obj->path);
 
         if (!file_exists($original_img)) {
             return $web_url;
@@ -133,29 +135,26 @@ class LaravelCmsHelper
             }
             $new_img->save($abs_real_path, 75);
         } catch (\Exception $e) {
-            $web_url .= '?error=' . $e->getMessage();
+            $web_url .= '?error='.$e->getMessage();
         }
-
-
 
         return $web_url;
         // return $abs_real_path . ' optimized image created ' . $width;
     }
 
-
-    static public function debug($data, $exit = 'exit')
+    public static function debug($data, $exit = 'exit')
     {
         if (is_a($data, 'Illuminate\Database\Eloquent\Collection')) {
             $data = $data->toArray();
         }
-        echo '<pre>' . var_export($data, true) . '</pre>';
-        echo '<hr>Debug Time: ' . date('Y-m-d H:i:s') . '<hr>';
+        echo '<pre>'.var_export($data, true).'</pre>';
+        echo '<hr>Debug Time: '.date('Y-m-d H:i:s').'<hr>';
         if ($exit != 'no_exit') {
             exit();
         }
     }
 
-    static public function menus()
+    public static function menus()
     {
         $data['menus'] = LaravelCmsPage::with('menus:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled')
             ->whereNull('parent_id')
@@ -170,39 +169,39 @@ class LaravelCmsHelper
         return $data['menus'];
     }
 
-
     public function url($page, $is_abs_link = false)
     {
         $slug_suffix = $this->s('slug_suffix');
         if (!$page->slug) {
-            $page->slug = $page->id . $this->s('slug_suffix');
+            $page->slug = $page->id.$this->s('slug_suffix');
         }
         if (trim($page->redirect_url) != '') {
             return trim($page->redirect_url);
         }
-        if ($page->slug == 'homepage' || $page->slug == 'homepage' . $slug_suffix) {
+        if ($page->slug == 'homepage' || $page->slug == 'homepage'.$slug_suffix) {
             return route('LaravelCmsPages.index', [], $is_abs_link);
         }
+
         return route('LaravelCmsPages.show', $page->slug, $is_abs_link);
     }
 
-
     public function assetUrl($file, $with_modify_time = true, $is_backend = false)
     {
-        $url = 'laravel-cms/' . $this->s('' . ($is_backend ? 'template.backend_dir' : 'template.frontend_dir')) . '/' . $file;
+        $url = 'laravel-cms/'.$this->s(''.($is_backend ? 'template.backend_dir' : 'template.frontend_dir')).'/'.$file;
         if ($with_modify_time) {
             $abs_real_path = public_path($url);
 
             if (file_exists($abs_real_path)) {
-                $url .= '?last_modify_time=' . date('Ymd-His', filemtime($abs_real_path));
+                $url .= '?last_modify_time='.date('Ymd-His', filemtime($abs_real_path));
             } else {
                 $url .= '?file_not_exists_please_publish_it_first';
             }
         }
-        return '/' . $url;
+
+        return '/'.$url;
     }
 
-    static public function activeMenuClass($menu_item, $current_page, $class = 'active')
+    public static function activeMenuClass($menu_item, $current_page, $class = 'active')
     {
         $p = array_column($current_page->parent_flat_ary, 'id');
 
@@ -212,8 +211,10 @@ class LaravelCmsHelper
         if ($menu_item->id == $current_page->id || in_array($menu_item->id, $p)) {
             return $class;
         }
+
         return '';
     }
+
     public function getPlugins($prefix = 'page-tab-')
     {
         if (!isset($this->settings['plugin']) || !is_array($this->settings['plugin'])) {
@@ -222,16 +223,15 @@ class LaravelCmsHelper
             exit('no plugins in the settings');
         }
 
-        $plugin_dir = base_path('resources/views/vendor/laravel-cms') . '/plugins';
+        $plugin_dir = base_path('resources/views/vendor/laravel-cms').'/plugins';
 
         if (!file_exists($plugin_dir)) {
-            $plugin_dir = dirname(__FILE__, 2) . '/resources/views/plugins';
+            $plugin_dir = dirname(__FILE__, 2).'/resources/views/plugins';
         }
         $option_ary = [];
         foreach ($this->settings['plugin'] as $k => $config_ary) {
             if (strpos($k, $prefix) !== false) {
-
-                if (isset($config_ary['blade_file']) &&  file_exists($plugin_dir . '/' . $k . '/' . $config_ary['blade_file'] . '.blade.php')) {
+                if (isset($config_ary['blade_file']) && file_exists($plugin_dir.'/'.$k.'/'.$config_ary['blade_file'].'.blade.php')) {
                     $config_ary['blade_dir'] = $k;
                     $option_ary[] = $config_ary;
                 }
@@ -240,30 +240,30 @@ class LaravelCmsHelper
         //$this->debug($plugin_dir . '/' . $k . '/' . $config_ary['blade_file'] . '.blade.php');
         return $option_ary;
     }
-    static public function getPluginsFromFile($prefix = 'page-tab-')
+
+    public static function getPluginsFromFile($prefix = 'page-tab-')
     {
-        $app_view_dir = base_path('resources/views/vendor/laravel-cms') . '/plugins';
+        $app_view_dir = base_path('resources/views/vendor/laravel-cms').'/plugins';
 
         if (!file_exists($app_view_dir)) {
-            $app_view_dir = dirname(__FILE__, 2) . '/resources/views/plugins';
+            $app_view_dir = dirname(__FILE__, 2).'/resources/views/plugins';
         }
-        $dirs = glob($app_view_dir . "/" . $prefix . "*");
+        $dirs = glob($app_view_dir.'/'.$prefix.'*');
         $option_ary = [];
         foreach ($dirs as $d) {
-            if (file_exists($d . '/config.php')) {
-                $config_ary = include($d . '/config.php');
-                if (isset($config_ary['blade_file']) && file_exists($d . '/' . $config_ary['blade_file']  . '.blade.php') && $config_ary['enabled']) {
+            if (file_exists($d.'/config.php')) {
+                $config_ary = include $d.'/config.php';
+                if (isset($config_ary['blade_file']) && file_exists($d.'/'.$config_ary['blade_file'].'.blade.php') && $config_ary['enabled']) {
                     $config_ary['blade_dir'] = basename($d);
                     $option_ary[] = $config_ary;
                 }
             }
         }
+
         return $option_ary;
     }
 
-
-
-    static public function onetimeApiToken($temp_api_key = null)
+    public static function onetimeApiToken($temp_api_key = null)
     {
         if ($temp_api_key === null) {
             $temp_api_key = uniqid('laravel-cms-');
@@ -276,12 +276,12 @@ class LaravelCmsHelper
             //return 'wrong_parameters=' . $temp_api_key . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
         }
 
-        $token = hash('sha256', $temp_api_key . '-' . $_COOKIE['user_id'] . '-' . config('app.key'));
+        $token = hash('sha256', $temp_api_key.'-'.$_COOKIE['user_id'].'-'.config('app.key'));
 
         return $token;
     }
 
-    static public function verifyApiToken($onetime_token)
+    public static function verifyApiToken($onetime_token)
     {
         if (strlen($onetime_token) < 10 || !isset($_COOKIE['laravel_cms_temp_api_key']) || !isset($_COOKIE['laravel_session']) || !isset($_COOKIE['user_id'])) {
             return false;
@@ -298,11 +298,12 @@ class LaravelCmsHelper
 
         $expire_time = time() - 1; // expire now, one time use
         setcookie('laravel_cms_temp_api_key', '', $expire_time, '/');
+
         return true;
     }
 
     // check json format in case some input should be json but made a mistake
-    static public function correctJsonFormat($str, $must_json = false)
+    public static function correctJsonFormat($str, $must_json = false)
     {
         $str = trim($str);
         if ($must_json) {
@@ -310,6 +311,7 @@ class LaravelCmsHelper
             if ($json === null) {
                 return false;
             }
+
             return true;
         } elseif (substr($str, 0, 1) == '{' && substr($str, -1) == '}') {
             // the str should be json
@@ -317,8 +319,10 @@ class LaravelCmsHelper
             if ($json === null) {
                 return false;
             }
+
             return true;
         }
+
         return 'not_json_format';
     }
 
@@ -327,7 +331,6 @@ class LaravelCmsHelper
     {
         return $this->getCmsSetting($param_name);
     }
-
 
     // Combine trans() & trans_choice() & set default
     public function t($key, $param_1 = null, $param_2 = null)
@@ -345,25 +348,26 @@ class LaravelCmsHelper
             foreach (explode(',', $key) as $k) {
                 $s[] = $this->t(trim($k));
             }
+
             return implode($separator, $s);
         }
 
         $prefix = 'laravel-cms::';
         if (strpos($key, '.') === false) {
             $default_str = $key;
-            $key = 'b.' . $key;
+            $key = 'b.'.$key;
         }
         if (is_numeric($param_1)) {
-            $s = is_array($param_2) ? trans_choice($prefix . $key, $param_1, $param_2) : trans_choice($prefix . $key, $param_1);
-        } else if (is_array($param_1)) {
-            $s = __($prefix . $key, $param_1);
+            $s = is_array($param_2) ? trans_choice($prefix.$key, $param_1, $param_2) : trans_choice($prefix.$key, $param_1);
+        } elseif (is_array($param_1)) {
+            $s = __($prefix.$key, $param_1);
         } else {
-            $s = __($prefix . $key);
+            $s = __($prefix.$key);
         }
         if (strpos($s, $prefix) !== false) {
             if (!isset($default_str)) {
-                $key_ary        = explode('.', $key);
-                $default_str    = end($key_ary);
+                $key_ary = explode('.', $key);
+                $default_str = end($key_ary);
             }
 
             $s = ucwords(str_replace(['-', '_'], ' ', $default_str));
@@ -372,33 +376,30 @@ class LaravelCmsHelper
         return $s;
     }
 
-
-
-
-    static public function fileIconCode($mimeType, $return = 'code')
+    public static function fileIconCode($mimeType, $return = 'code')
     {
-        if (preg_match("/xls|xlsx|xlsb|csv/i", $mimeType)) {
+        if (preg_match('/xls|xlsx|xlsb|csv/i', $mimeType)) {
             $icon = 'excel';
             $code = '<i class="fas fa-file-excel"></i>';
-        } else if (preg_match("/doc|docx|docm|dotx|dotm|docb/i", $mimeType)) {
+        } elseif (preg_match('/doc|docx|docm|dotx|dotm|docb/i', $mimeType)) {
             $icon = 'word';
             $code = '<i class="fas fa-file-word"></i>';
-        } else if (preg_match("/ppt/i", $mimeType)) {
+        } elseif (preg_match('/ppt/i', $mimeType)) {
             $icon = 'powerpoint';
             $code = '<i class="fas fa-file-powerpoint"></i>';
-        } else if (preg_match("/txt|html|php|conf|java|asp/i", $mimeType)) {
+        } elseif (preg_match('/txt|html|php|conf|java|asp/i', $mimeType)) {
             $icon = 'txt';
             $code = '<i class="fas fa-file-alt"></i>';
-        } else if (preg_match("/pdf/i", $mimeType)) {
+        } elseif (preg_match('/pdf/i', $mimeType)) {
             $icon = 'pdf';
             $code = '<i class="fas fa-file-pdf"></i>';
-        } else if (preg_match("/mp4|wmv|avi/i", $mimeType)) {
+        } elseif (preg_match('/mp4|wmv|avi/i', $mimeType)) {
             $icon = 'video';
             $code = '<i class="fas fa-file-video"></i>';
-        } else if (preg_match("/png|jpg|jpeg|gif|bmp|svg/i", $mimeType)) {
+        } elseif (preg_match('/png|jpg|jpeg|gif|bmp|svg/i', $mimeType)) {
             $icon = 'image';
             $code = '<i class="fas fa-file-image"></i>';
-        } else if (preg_match("/zip|rar|gz|tar|7z/i", $mimeType)) {
+        } elseif (preg_match('/zip|rar|gz|tar|7z/i', $mimeType)) {
             $icon = 'zip';
             $code = '<i class="far fa-file-archive"></i>';
         } else {
@@ -406,31 +407,29 @@ class LaravelCmsHelper
             $code = '<i class="fas fa-file"></i>';
         }
         if ($return != 'code') {
-            return 'icon-' . $icon;
+            return 'icon-'.$icon;
         } else {
             return $code;
         }
     }
 
-
     public function uploadFile($f)
     {
-
         // $file_data['user_id'] = $user->id;
-        $file_data['mimetype']  = $f->getMimeType();
-        $file_data['suffix']    = $f->getClientOriginalExtension();
-        $file_data['filename']  = $f->getClientOriginalName();
-        $file_data['title']     = $file_data['filename'];
-        $file_data['filesize']  = $f->getSize();
+        $file_data['mimetype'] = $f->getMimeType();
+        $file_data['suffix'] = $f->getClientOriginalExtension();
+        $file_data['filename'] = $f->getClientOriginalName();
+        $file_data['title'] = $file_data['filename'];
+        $file_data['filesize'] = $f->getSize();
         if (strpos($file_data['mimetype'], 'image/') !== false && strpos($file_data['mimetype'], 'icon') === false) {
-            $file_data['is_image']  = 1;
+            $file_data['is_image'] = 1;
         }
         if (strpos($file_data['mimetype'], 'video/') !== false) {
-            $file_data['is_video']  = 1;
+            $file_data['is_video'] = 1;
         }
-        $file_data['filehash']  = sha1_file($f->path());
+        $file_data['filehash'] = sha1_file($f->path());
 
-        $file_data['path']  = substr($file_data['filehash'], -2) . '/' . $file_data['filehash'] . '.' . $file_data['suffix'];
+        $file_data['path'] = substr($file_data['filehash'], -2).'/'.$file_data['filehash'].'.'.$file_data['suffix'];
 
         // $abs_real_path = public_path('laravel-cms-uploads/' . $file_data['path']);
 
@@ -438,7 +437,7 @@ class LaravelCmsHelper
         //     mkdir(dirname($abs_real_path), 0755, true);
         // }
 
-        $file_data['description']  = date('Y-m-d H:i:s'); // make some different otherwise the updated_at will not update
+        $file_data['description'] = date('Y-m-d H:i:s'); // make some different otherwise the updated_at will not update
         $new_file = \AlexStack\LaravelCms\Models\LaravelCmsFile::updateOrCreate(
             ['filehash' => $file_data['filehash']],
             $file_data
@@ -446,7 +445,7 @@ class LaravelCmsHelper
 
         //$f->storeAs(dirname('public/' . $this->helper->s('file.upload_dir') . '/' . $file_data['path']), basename($file_data['path']));
 
-        $file_store_dir = public_path(dirname($this->s('file.upload_dir') . '/' . $file_data['path']));
+        $file_store_dir = public_path(dirname($this->s('file.upload_dir').'/'.$file_data['path']));
 
         //$this->helper->debug($file_store_dir);
 
@@ -457,7 +456,6 @@ class LaravelCmsHelper
         // echo '<pre>111:' . var_export($new_file, true) . '</pre>';
         // exit();
     }
-
 
     // store the settings as an array in a setting file to speed up
     public function rewriteConfigFile()
@@ -473,14 +471,14 @@ class LaravelCmsHelper
             if (trim($s['category']) != '' && trim($s['param_name']) != '') {
                 $param_value = trim($s['param_value']);
                 if (substr($param_value, 0, 1) == '{' && substr($param_value, -1) == '}') {
-                    $param_value = json_decode($param_value, TRUE);
+                    $param_value = json_decode($param_value, true);
                 }
                 $config_ary[trim($s['category'])][trim($s['param_name'])] = $param_value;
             }
         }
         //$this->helper->debug($config_ary);
 
-        $config_str = "<?php \n# This file automatically generated by Laravel CMS, do not edit it manually \n\n return " . var_export($config_ary, true) . "; \n";
+        $config_str = "<?php \n# This file automatically generated by Laravel CMS, do not edit it manually \n\n return ".var_export($config_ary, true)."; \n";
 
         //$helper = $this->helper;
 
@@ -490,6 +488,7 @@ class LaravelCmsHelper
                 "/__\((.*)\)/U",
                 function ($matches) {
                     $str = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
+
                     return addslashes($this->t($str));
                 },
                 $config_str
@@ -510,7 +509,7 @@ class LaravelCmsHelper
                     if (\Route::has($route_name)) {
                         return route($route_name, $route_param ?? [], false);
                     } else {
-                        return '#route_not_defined_' . $matches[1];
+                        return '#route_not_defined_'.$matches[1];
                     }
                 },
                 $config_str

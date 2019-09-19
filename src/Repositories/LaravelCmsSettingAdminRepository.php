@@ -3,13 +3,11 @@
 namespace AlexStack\LaravelCms\Repositories;
 
 use AlexStack\LaravelCms\Models\LaravelCmsSetting;
-use AlexStack\LaravelCms\Repositories\BaseRepository;
 
 class LaravelCmsSettingAdminRepository extends BaseRepository
 {
-
     /**
-     * Configure the Model
+     * Configure the Model.
      **/
     public function model()
     {
@@ -17,17 +15,15 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
     }
 
     /**
-     * Controller methods
+     * Controller methods.
      */
-
     public function index()
     {
-
         $data['settings'] = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
 
         if (empty($this->helper->settings)) {
             $this->helper->rewriteConfigFile(); // create settings file
-            $this->helper = new LaravelCmsHelper; // reload new settings
+            $this->helper = new LaravelCmsHelper(); // reload new settings
         }
 
         $data['helper'] = $this->helper;
@@ -46,10 +42,8 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         return $data;
     }
 
-
     public function store($form_data)
     {
-
         $must_json = $form_data['category'] == 'plugins';
         if (!$this->helper->correctJsonFormat($form_data['param_value'], $must_json)) {
             exit(sprintf($this->helper->t('wrong_json_format_str', ['name' => 'Param Value'])));
@@ -60,7 +54,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
             exit(sprintf($this->helper->t('wrong_json_format_str', ['name' => 'Input Attribute'])));
         }
 
-        $rs = new LaravelCmsSetting;
+        $rs = new LaravelCmsSetting();
         foreach ($rs->fillable as $field) {
             if (isset($form_data[$field])) {
                 $rs->$field = trim($form_data[$field]);
@@ -70,15 +64,11 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
 
         $this->helper->rewriteConfigFile();
 
-
         return $rs;
     }
 
-
-
     public function update($form_data, $id)
     {
-
         $form_data['id'] = $id;
         $setting = LaravelCmsSetting::find($form_data['id']);
 
@@ -103,13 +93,12 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         $this->helper->rewriteConfigFile();
 
         if (isset($need_update_config_file_twice)) {
-            $this->helper = new LaravelCmsHelper; // reload new settings
+            $this->helper = new LaravelCmsHelper(); // reload new settings
             $this->helper->rewriteConfigFile(); // replace language variables
         }
 
         return $setting;
     }
-
 
     public function edit($id)
     {
@@ -122,23 +111,16 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         return $data;
     }
 
-
     public function destroy($id)
     {
-
         $rs = LaravelCmsSetting::find($id)->delete();
 
         return $rs;
     }
 
-
-
-
     /**
-     * Other methods
+     * Other methods.
      */
-
-
     public function getCategories($settings = null, $allow_html = true)
     {
         if (!$settings) {
@@ -146,7 +128,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
             //$settings = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
         }
         //$this->helper->debug($settings);
-        $custom_cats =  $this->helper->s('category.admin_setting_tabs');
+        $custom_cats = $this->helper->s('category.admin_setting_tabs');
         if (!$custom_cats) {
             $custom_cats = [];
         }
@@ -154,7 +136,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         $new_cats = array_merge($custom_cats, $all_cats);
         array_walk($new_cats, function (&$item, $key) use ($custom_cats, $allow_html) {
             if (isset($custom_cats[$key])) {
-                $item =  $custom_cats[$key];
+                $item = $custom_cats[$key];
             } else {
                 $item = $this->helper->t($item);
             }
@@ -162,6 +144,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
                 $item = strip_tags($item);
             }
         });
+
         return $new_cats;
     }
 }

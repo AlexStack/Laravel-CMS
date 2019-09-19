@@ -3,13 +3,11 @@
 namespace AlexStack\LaravelCms\Repositories;
 
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
-use AlexStack\LaravelCms\Repositories\BaseRepository;
 
 class LaravelCmsPageRepository extends BaseRepository
 {
-
     /**
-     * Configure the Model
+     * Configure the Model.
      **/
     public function model()
     {
@@ -17,9 +15,8 @@ class LaravelCmsPageRepository extends BaseRepository
     }
 
     /**
-     * Controller methods
+     * Controller methods.
      */
-
     public function index()
     {
         return true;
@@ -42,7 +39,7 @@ class LaravelCmsPageRepository extends BaseRepository
             $search_field = 'slug';
             $slug = trim($slug);
         }
-        $data['page']  = LaravelCmsPage::with(['children' => function ($query) {
+        $data['page'] = LaravelCmsPage::with(['children' => function ($query) {
             return $query->take(120);
         }, 'parent:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled'])->where($search_field, $slug)->first();
         if (!$data['page']) {
@@ -58,26 +55,23 @@ class LaravelCmsPageRepository extends BaseRepository
             $data['page']->parent_flat_ary = [];
         }
 
-
         //$this->helper->debug($data['page']->parent->toArray(), 'no_exit');
-
 
         $data['file_data'] = json_decode($data['page']->file_data);
         if ($data['file_data'] == null) {
             $data['file_data'] = json_decode('{}');
         }
-        $data['file_data']->file_dir = asset('' . $this->helper->s('file.upload_dir'));
+        $data['file_data']->file_dir = asset(''.$this->helper->s('file.upload_dir'));
 
         //$data['page']->file_data = $data['file_data'];
         $data['helper'] = $this->helper;
-
 
         $data['plugins'] = collect([]);
         $plugin_ary = $this->helper->getPlugins('page-tab-');
         foreach ($plugin_ary as $plugin) {
             $plugin_class = trim($plugin['php_class'] ?? '');
             if ($plugin_class != '' && class_exists($plugin_class)) {
-                $data['plugins']->put($plugin['blade_dir'], new $plugin_class);
+                $data['plugins']->put($plugin['blade_dir'], new $plugin_class());
             }
         }
         //$this->helper->debug($data['plugins']);
@@ -90,40 +84,29 @@ class LaravelCmsPageRepository extends BaseRepository
         return true;
     }
 
-
     public function store($form_data)
     {
-
         return true;
     }
-
-
 
     public function update($form_data, $id)
     {
         return true;
     }
 
-
     public function edit($id)
     {
         return true;
     }
-
 
     public function destroy($id)
     {
         return true;
     }
 
-
-
-
     /**
-     * Other methods
+     * Other methods.
      */
-
-
     public function menus()
     {
         $data['menus'] = LaravelCmsPage::with('menus:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled')
@@ -142,7 +125,6 @@ class LaravelCmsPageRepository extends BaseRepository
     public function flattenParentArray($element, $name = 'parent', $depth = 0)
     {
         $result = array();
-
 
         $element['depth'] = $depth;
 
@@ -163,7 +145,7 @@ class LaravelCmsPageRepository extends BaseRepository
     }
 
     /**
-     * For webmaster.google.com sitemap
+     * For webmaster.google.com sitemap.
      */
     public function sitemap($type = 'txt')
     {
@@ -171,7 +153,7 @@ class LaravelCmsPageRepository extends BaseRepository
         if ($type == 'txt') {
             foreach ($new_pages as $page) {
                 if (trim($page->redirect_url) == '') {
-                    echo $this->helper->url($page, true) . "\n";
+                    echo $this->helper->url($page, true)."\n";
                 }
             }
             exit();
@@ -185,7 +167,7 @@ class LaravelCmsPageRepository extends BaseRepository
     {
         $s = request()->url;
 
-        header("X-Robots-Tag: noindex, nofollow", true);
+        header('X-Robots-Tag: noindex, nofollow', true);
 
         //$this->helper->debug($s);
         return redirect($s, 301);
