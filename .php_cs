@@ -1,4 +1,7 @@
 <?php
+/**
+ * This is the php-cs-fixer Laravel 6.x style .php_cs VsCode config file for Amila Laravel CMS
+ */
 $finder = PhpCsFixer\Finder::create()
     ->notPath('bootstrap/cache')
     ->notPath('storage')
