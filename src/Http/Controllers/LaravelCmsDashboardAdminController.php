@@ -3,27 +3,23 @@
 namespace AlexStack\LaravelCms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use AlexStack\LaravelCms\Models\LaravelCmsPage;
-use AlexStack\LaravelCms\Models\LaravelCmsSetting;
-use AlexStack\LaravelCms\Models\LaravelCmsFile;
-use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use App\Http\Controllers\Controller;
+
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
+use AlexStack\LaravelCms\Repositories\LaravelCmsDashboardAdminRepository;
 
 class LaravelCmsDashboardAdminController extends Controller
 {
     private $user = null;
-    public $helper;
+    private $helper;
+    private $repo;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(LaravelCmsDashboardAdminRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->middleware(['web', 'auth']); // TODO: must be admin
+        $this->repo     = $repo;
+        $this->helper   = $helper;
 
-        $this->helper = new LaravelCmsHelper;
+        $this->repo->setHelper($helper);
     }
 
     public function checkUser()
@@ -38,44 +34,16 @@ class LaravelCmsDashboardAdminController extends Controller
     {
         $this->checkUser();
 
-        $data['helper'] = $this->helper;
-
-        $data['cms_version'] = $this->helper->s('cms_version');
-        if (file_exists(base_path('composer.lock'))) {
-            $packages = json_decode(file_get_contents(base_path('composer.lock')), true);
-            if (isset($packages['packages'])) {
-                foreach ($packages['packages'] as $p) {
-                    if (strtolower($p['name']) == 'alexstack/laravel-cms') {
-                        $data['cms_version'] = $p['version'];
-                    }
-                }
-            }
-            //$this->helper->debug($data['cms_version']);
-            //$data['cms_version'] =
-        }
-
-        $data['latest_pages'] = LaravelCmsPage::orderBy('updated_at', 'desc')
-            ->limit(10)
-            ->get(['id', 'title', 'menu_title', 'created_at', 'updated_at']);
-
-        $data['latest_settings'] = LaravelCmsSetting::orderBy('updated_at', 'desc')
-            ->limit(10)
-            ->get(['id', 'category', 'param_name', 'created_at', 'updated_at']);
-
-        $data['latest_files'] = LaravelCmsFile::orderBy('updated_at', 'desc')
-            ->limit(10)
-            ->get();
-
+        $data = $this->repo->index();
 
         if (empty($this->helper->settings)) {
             return redirect()->route('LaravelCmsAdminSettings.index');
         } else {
-            //return redirect()->route('LaravelCmsAdminPages.index');
             return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.dashboard', $data);
         }
     }
 
-
+    // for admin homepage eg. /cmsadmin without /dashboard
     public function dashboard()
     {
         if (empty($this->helper->settings)) {
@@ -85,17 +53,10 @@ class LaravelCmsDashboardAdminController extends Controller
     }
 
 
-    public function show ($id) {
-        if ( $id == 'logout'){
-            return $this->logout();
-        }
-    }
+    public function show($id)
+    {
+        $data = $this->repo->show($id);
 
-
-    public function logout () {
-        //logout user
-        auth()->logout();
-        // redirect to homepage
-        return redirect('/');
+        return $data;
     }
 }

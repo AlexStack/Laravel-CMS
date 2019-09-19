@@ -3,15 +3,15 @@
 Route::group([
     'namespace'  => 'AlexStack\LaravelCms\Http\Controllers',
 ], function () {
-    Route::resource(config('laravel-cms.admin_route') . '/dashboard', 'LaravelCmsDashboardAdminController',  ['names' => 'LaravelCmsAdmin']);
+    Route::resource(config('laravel-cms.admin_route') . '/dashboard', 'LaravelCmsDashboardAdminController',  ['names' => 'LaravelCmsAdmin'])->middleware(['web', 'auth']);
 
-    Route::get(config('laravel-cms.admin_route'), 'LaravelCmsDashboardAdminController@dashboard');
+    Route::get(config('laravel-cms.admin_route'), 'LaravelCmsDashboardAdminController@dashboard')->middleware(['web', 'auth']);
 
-    Route::resource(config('laravel-cms.admin_route') . '/pages', 'LaravelCmsPageAdminController',  ['names' => 'LaravelCmsAdminPages']);
+    Route::resource(config('laravel-cms.admin_route') . '/pages', 'LaravelCmsPageAdminController',  ['names' => 'LaravelCmsAdminPages'])->middleware(['web', 'auth']);
 
-    Route::resource(config('laravel-cms.admin_route') . '/settings', 'LaravelCmsSettingAdminController',  ['names' => 'LaravelCmsAdminSettings']);
+    Route::resource(config('laravel-cms.admin_route') . '/settings', 'LaravelCmsSettingAdminController',  ['names' => 'LaravelCmsAdminSettings'])->middleware(['web', 'auth']);
 
-    Route::resource(config('laravel-cms.admin_route') . '/files', 'LaravelCmsFileAdminController',  ['names' => 'LaravelCmsAdminFiles']);
+    Route::resource(config('laravel-cms.admin_route') . '/files', 'LaravelCmsFileAdminController',  ['names' => 'LaravelCmsAdminFiles'])->middleware(['web', 'auth']);
 
     // frontend routes
     Route::get(config('laravel-cms.homepage_route'), 'LaravelCmsPageController@index')->name('LaravelCmsPages.index');

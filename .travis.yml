@@ -31,6 +31,7 @@ install:
 
 script:
   - php artisan laravelcms --action=upgrade --silent=yes
+  - vendor/bin/phpunit vendor/alexstack/laravel-cms/src/tests/
   - php artisan laravelcms --action=uninstall --silent=yes
 
 services:
