@@ -263,44 +263,44 @@ class LaravelCmsHelper
         return $option_ary;
     }
 
-    public static function onetimeApiToken($temp_api_key = null)
-    {
-        if (null === $temp_api_key) {
-            $temp_api_key = uniqid('laravel-cms-');
-            $expire_time  = time() + 600; // expire after 10 minutes, one time use
-            setcookie('laravel_cms_temp_api_key', $temp_api_key, $expire_time, '/');
-            //exit($temp_api_key);
-        }
-        if (strlen($temp_api_key) < 10 || ! isset($_COOKIE['laravel_session']) || ! isset($_COOKIE['user_id']) || ! config('app.key')) {
-            return false;
-            //return 'wrong_parameters=' . $temp_api_key . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
-        }
+    // public static function onetimeApiToken($temp_api_key = null)
+    // {
+    //     if (null === $temp_api_key) {
+    //         $temp_api_key = uniqid('laravel-cms-');
+    //         $expire_time  = time() + 600; // expire after 10 minutes, one time use
+    //         setcookie('laravel_cms_temp_api_key', $temp_api_key, $expire_time, '/');
+    //         //exit($temp_api_key);
+    //     }
+    //     if (strlen($temp_api_key) < 10 || ! isset($_COOKIE['laravel_session']) || ! isset($_COOKIE['user_id']) || ! config('app.key')) {
+    //         return false;
+    //         //return 'wrong_parameters=' . $temp_api_key . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
+    //     }
 
-        $token = hash('sha256', $temp_api_key.'-'.$_COOKIE['user_id'].'-'.config('app.key'));
+    //     $token = hash('sha256', $temp_api_key.'-'.$_COOKIE['user_id'].'-'.config('app.key'));
 
-        return $token;
-    }
+    //     return $token;
+    // }
 
-    public static function verifyApiToken($onetime_token)
-    {
-        if (strlen($onetime_token) < 10 || ! isset($_COOKIE['laravel_cms_temp_api_key']) || ! isset($_COOKIE['laravel_session']) || ! isset($_COOKIE['user_id'])) {
-            return false;
-            //return '-1=' . $_COOKIE['laravel_cms_temp_api_key'] . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
-        }
-        $real_token = self::onetimeApiToken($_COOKIE['laravel_cms_temp_api_key']);
-        if ($onetime_token != $real_token) {
-            return false;
-            //return '-2=' . $real_token . '----' . $_COOKIE['laravel_cms_temp_api_key'] . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
-        }
-        if (! in_array($_COOKIE['user_id'], config('laravel-cms.admin_id_ary'))) {
-            return false;
-        }
+    // public static function verifyApiToken($onetime_token)
+    // {
+    //     if (strlen($onetime_token) < 10 || ! isset($_COOKIE['laravel_cms_temp_api_key']) || ! isset($_COOKIE['laravel_session']) || ! isset($_COOKIE['user_id'])) {
+    //         return false;
+    //         //return '-1=' . $_COOKIE['laravel_cms_temp_api_key'] . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
+    //     }
+    //     $real_token = self::onetimeApiToken($_COOKIE['laravel_cms_temp_api_key']);
+    //     if ($onetime_token != $real_token) {
+    //         return false;
+    //         //return '-2=' . $real_token . '----' . $_COOKIE['laravel_cms_temp_api_key'] . '-' . $_COOKIE['user_id'] . '-' . $_COOKIE['laravel_session'] . '-' . config('app.key');
+    //     }
+    //     if (! in_array($_COOKIE['user_id'], config('laravel-cms.admin_id_ary'))) {
+    //         return false;
+    //     }
 
-        $expire_time = time() - 1; // expire now, one time use
-        setcookie('laravel_cms_temp_api_key', '', $expire_time, '/');
+    //     $expire_time = time() - 1; // expire now, one time use
+    //     setcookie('laravel_cms_temp_api_key', '', $expire_time, '/');
 
-        return true;
-    }
+    //     return true;
+    // }
 
     // check json format in case some input should be json but made a mistake
     public static function correctJsonFormat($str, $must_json = false)
@@ -457,11 +457,13 @@ class LaravelCmsHelper
         // exit();
     }
 
+    /**
+     * Replace __(str) to locale language string
+     * Replace ROUTE(str) to real route() url.
+     */
     public function parseCmsStr($str)
     {
         if (false !== strpos($str, '__(')) {
-            // replace __(str) to locale language string
-
             $str = preg_replace_callback(
                 "/__\((.*)\)/U",
                 function ($matches) {
@@ -479,8 +481,8 @@ class LaravelCmsHelper
                 function ($matches) {
                     $route_name = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
                     if (strpos($route_name, ',')) {
-                        $route_ary = explode(',', $route_name);
-                        $route_name = trim($route_ary[0]);
+                        $route_ary   = explode(',', $route_name);
+                        $route_name  = trim($route_ary[0]);
                         $route_param = trim($route_ary[1]);
                     }
                     if (\Route::has($route_name)) {
@@ -521,39 +523,41 @@ class LaravelCmsHelper
 
         //$helper = $this->helper;
 
-        if (false !== strpos($config_str, '__(')) {
-            // replace __(str) to locale language string
-            $config_str = preg_replace_callback(
-                "/__\((.*)\)/U",
-                function ($matches) {
-                    $str = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
+        // if (false !== strpos($config_str, '__(')) {
+        //     // replace __(str) to locale language string
+        //     $config_str = preg_replace_callback(
+        //         "/__\((.*)\)/U",
+        //         function ($matches) {
+        //             $str = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
 
-                    return addslashes($this->t($str));
-                },
-                $config_str
-            );
-        }
+        //             return addslashes($this->t($str));
+        //         },
+        //         $config_str
+        //     );
+        // }
 
-        if (false !== strpos($config_str, 'ROUTE(')) {
-            // replace __(str) to locale language string
-            $config_str = preg_replace_callback(
-                "/ROUTE\((.*)\)/U",
-                function ($matches) {
-                    $route_name = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
-                    if (strpos($route_name, ',')) {
-                        $route_ary = explode(',', $route_name);
-                        $route_name = trim($route_ary[0]);
-                        $route_param = trim($route_ary[1]);
-                    }
-                    if (\Route::has($route_name)) {
-                        return route($route_name, $route_param ?? [], false);
-                    } else {
-                        return '#route_not_defined_'.$matches[1];
-                    }
-                },
-                $config_str
-            );
-        }
+        // if (false !== strpos($config_str, 'ROUTE(')) {
+        //     // replace __(str) to locale language string
+        //     $config_str = preg_replace_callback(
+        //         "/ROUTE\((.*)\)/U",
+        //         function ($matches) {
+        //             $route_name = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
+        //             if (strpos($route_name, ',')) {
+        //                 $route_ary = explode(',', $route_name);
+        //                 $route_name = trim($route_ary[0]);
+        //                 $route_param = trim($route_ary[1]);
+        //             }
+        //             if (\Route::has($route_name)) {
+        //                 return route($route_name, $route_param ?? [], false);
+        //             } else {
+        //                 return '#route_not_defined_'.$matches[1];
+        //             }
+        //         },
+        //         $config_str
+        //     );
+        // }
+
+        $config_str = $this->parseCmsStr($config_str);
 
         $config_file = storage_path('app/laravel-cms/settings.php');
 

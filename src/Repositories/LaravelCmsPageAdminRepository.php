@@ -167,7 +167,7 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         $slug_suffix = $this->helper->s('slug_suffix');
         $separate    = $this->helper->s('slug_separate') ?? $separate;
 
-        if ('cn' == $this->helper->s('template.language')) {
+        if ('zh' == $this->helper->s('template.language')) {
             if ('from_title' == $slug_format) {
                 $slug_format    = 'pinyin';
             }
