@@ -6,8 +6,8 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class LaravelCmsPage
- * @package App\Models
+ * Class LaravelCmsPage.
+ *
  * @version August 13, 2019, 10:57 am NZST
  *
  * @property \AlexStack\LaravelCms\Models\LaravelCmsFile mainImage
@@ -19,9 +19,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
- * @property integer user_id
- * @property integer parent_id
- * @property boolean menu_enabled
+ * @property int user_id
+ * @property int parent_id
+ * @property bool menu_enabled
  * @property string status
  * @property string title
  * @property string menu_title
@@ -31,17 +31,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string meta_keywords
  * @property string meta_description
  * @property string abstract
- * @property integer main_banner
- * @property integer main_image
+ * @property int main_banner
+ * @property int main_image
  * @property string sub_content
  * @property string main_content
- * @property integer sort_value
- * @property integer view_counts
+ * @property int sort_value
+ * @property int view_counts
  * @property string tags
- * @property integer extra_image
+ * @property int extra_image
  * @property string extra_text
  * @property string extra_content
- * @property integer extra_image_2
+ * @property int extra_image_2
  * @property string extra_text_2
  * @property string extra_content_2
  */
@@ -54,9 +54,7 @@ class LaravelCmsPage extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'user_id',
@@ -98,38 +96,38 @@ class LaravelCmsPage extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'user_id' => 'integer',
-        'parent_id' => 'integer',
-        'menu_enabled' => 'boolean',
-        'status' => 'string',
-        'title' => 'string',
-        'menu_title' => 'string',
-        'slug' => 'string',
-        'template_file' => 'string',
-        'meta_title' => 'string',
-        'meta_keywords' => 'string',
+        'id'               => 'integer',
+        'user_id'          => 'integer',
+        'parent_id'        => 'integer',
+        'menu_enabled'     => 'boolean',
+        'status'           => 'string',
+        'title'            => 'string',
+        'menu_title'       => 'string',
+        'slug'             => 'string',
+        'template_file'    => 'string',
+        'meta_title'       => 'string',
+        'meta_keywords'    => 'string',
         'meta_description' => 'string',
-        'abstract' => 'string',
-        'main_banner' => 'integer',
-        'main_image' => 'integer',
-        'sub_content' => 'string',
-        'main_content' => 'string',
-        'sort_value' => 'integer',
-        'view_counts' => 'integer',
-        'tags' => 'string',
-        'extra_image_1' => 'integer',
-        'extra_text_1' => 'string',
-        'extra_content_1' => 'string',
-        'extra_image_2' => 'integer',
-        'extra_text_2' => 'string',
-        'extra_content_2' => 'string',
-        'extra_image_3' => 'integer',
-        'extra_text_3' => 'string',
-        'extra_content_3' => 'string',
-        'redirect_url' => 'string',
-        'file_data' => 'string',
-        'special_text' => 'string',
+        'abstract'         => 'string',
+        'main_banner'      => 'integer',
+        'main_image'       => 'integer',
+        'sub_content'      => 'string',
+        'main_content'     => 'string',
+        'sort_value'       => 'integer',
+        'view_counts'      => 'integer',
+        'tags'             => 'string',
+        'extra_image_1'    => 'integer',
+        'extra_text_1'     => 'string',
+        'extra_content_1'  => 'string',
+        'extra_image_2'    => 'integer',
+        'extra_text_2'     => 'string',
+        'extra_content_2'  => 'string',
+        'extra_image_3'    => 'integer',
+        'extra_text_3'     => 'string',
+        'extra_content_3'  => 'string',
+        'redirect_url'     => 'string',
+        'file_data'        => 'string',
+        'special_text'     => 'string',
     ];
 
     public function __construct()
@@ -138,12 +136,12 @@ class LaravelCmsPage extends Model
     }
 
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
     public static $rules = [
-        'id' => 'required'
+        'id' => 'required',
     ];
 
     /**

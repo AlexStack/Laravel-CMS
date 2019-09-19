@@ -6,8 +6,8 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class LaravelCmsSettings
- * @package App\Models
+ * Class LaravelCmsSettings.
+ *
  * @version September 5, 2019, 9:29 am NZST
  *
  * @property \Illuminate\Database\Eloquent\Collection
@@ -15,12 +15,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
  * @property string param_name
- * @property integer page_id
+ * @property int page_id
  * @property string param_value
  * @property string input_attribute
  * @property string abstract
  * @property string category
- * @property boolean enabled
+ * @property bool enabled
  */
 class LaravelCmsSetting extends Model
 {
@@ -31,9 +31,7 @@ class LaravelCmsSetting extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'param_name',
@@ -43,7 +41,7 @@ class LaravelCmsSetting extends Model
         'abstract',
         'category',
         'sort_value',
-        'enabled'
+        'enabled',
     ];
 
     /**
@@ -52,25 +50,25 @@ class LaravelCmsSetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'param_name' => 'string',
-        'page_id' => 'integer',
-        'param_value' => 'string',
+        'id'              => 'integer',
+        'param_name'      => 'string',
+        'page_id'         => 'integer',
+        'param_value'     => 'string',
         'input_attribute' => 'string',
-        'abstract' => 'string',
-        'category' => 'string',
-        'enabled' => 'boolean',
-        'sort_value' => 'integer',
+        'abstract'        => 'string',
+        'category'        => 'string',
+        'enabled'         => 'boolean',
+        'sort_value'      => 'integer',
     ];
 
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
     public static $rules = [
-        'id' => 'required',
-        'param_name' => 'required'
+        'id'         => 'required',
+        'param_name' => 'required',
     ];
 
     public function __construct()

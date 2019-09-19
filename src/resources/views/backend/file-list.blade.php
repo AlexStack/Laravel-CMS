@@ -162,7 +162,8 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="col-md-auto text-center">
-                        <div class="total">{{ $helper->t('total') }} <span id="total_number">{{ $files->total() }}</span> {{ $helper->t('files') }}</div>
+                    <div class="total">{{ $helper->t('total') }} <span id="total_number">{{ $files->total() }}</span>
+                        {{ $helper->t('files') }}</div>
                 </div>
             </div>
         </div>
@@ -170,8 +171,8 @@
 </div>
 
 {{-- <form action="{{ route('LaravelCmsAdminFiles.index') }}" method="POST" id="del_form">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+<input type="hidden" name="_method" value="DELETE">
+<input type="hidden" name="_token" value="{{ csrf_token() }}">
 </form> --}}
 <script>
     // function confirmDelete(id){

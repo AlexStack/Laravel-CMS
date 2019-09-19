@@ -2,16 +2,14 @@
 
 namespace AlexStack\LaravelCms\Repositories;
 
+use AlexStack\LaravelCms\Models\LaravelCmsFile;
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Models\LaravelCmsSetting;
-use AlexStack\LaravelCms\Models\LaravelCmsFile;
-use AlexStack\LaravelCms\Repositories\BaseRepository;
 
 class LaravelCmsDashboardAdminRepository extends BaseRepository
 {
-
     /**
-     * Configure the Model
+     * Configure the Model.
      **/
     public function model()
     {
@@ -19,20 +17,17 @@ class LaravelCmsDashboardAdminRepository extends BaseRepository
     }
 
     /**
-     * Controller methods
+     * Controller methods.
      */
-
     public function index()
     {
-
-        $data['helper'] = $this->helper;
-
+        $data['helper']      = $this->helper;
         $data['cms_version'] = $this->helper->s('cms_version');
         if (file_exists(base_path('composer.lock'))) {
             $packages = json_decode(file_get_contents(base_path('composer.lock')), true);
             if (isset($packages['packages'])) {
                 foreach ($packages['packages'] as $p) {
-                    if (strtolower($p['name']) == 'alexstack/laravel-cms') {
+                    if ('alexstack/laravel-cms' == strtolower($p['name'])) {
                         $data['cms_version'] = $p['version'];
                     }
                 }
@@ -58,9 +53,10 @@ class LaravelCmsDashboardAdminRepository extends BaseRepository
 
     public function show($id)
     {
-        if ($id == 'logout') {
+        if ('logout' == $id) {
             return $this->logout();
         }
+
         return true;
     }
 
@@ -69,39 +65,29 @@ class LaravelCmsDashboardAdminRepository extends BaseRepository
         return true;
     }
 
-
     public function store($form_data)
     {
-
         return true;
     }
-
-
 
     public function update($form_data, $id)
     {
         return true;
     }
 
-
     public function edit($id)
     {
         return true;
     }
-
 
     public function destroy($id)
     {
         return true;
     }
 
-
-
-
     /**
-     * Other methods
+     * Other methods.
      */
-
     public function logout()
     {
         //logout user

@@ -2,12 +2,10 @@
 
 namespace Tests\Repositories;
 
-use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
-
-use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
+use AlexStack\LaravelCms\Models\LaravelCmsPage;
 use AlexStack\LaravelCms\Repositories\LaravelCmsPageAdminRepository;
-
+use AlexStack\LaravelCms\Repositories\LaravelCmsPageRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
@@ -26,12 +24,12 @@ class LaravelCmsPageRepositoryTest extends TestCase
         parent::setUp();
         // $this->laravelCmsPageRepo = \App::make(LaravelCmsPageRepository::class);
         $this->laravelCmsPageRepo = \App::make(LaravelCmsPageRepository::class);
-        $this->laravelCmsPageRepo->setHelper(new LaravelCmsHelper);
+        $this->laravelCmsPageRepo->setHelper(new LaravelCmsHelper());
 
         $this->laravelCmsPageAdminRepo = \App::make(LaravelCmsPageAdminRepository::class);
-        $this->laravelCmsPageAdminRepo->setHelper(new LaravelCmsHelper);
+        $this->laravelCmsPageAdminRepo->setHelper(new LaravelCmsHelper());
 
-        $factory_path = dirname(__FILE__, 3) . '/database/factories';
+        $factory_path = dirname(__FILE__, 3).'/database/factories';
         $this->app->make(\Illuminate\Database\Eloquent\Factory::class)->load($factory_path);
     }
 
@@ -46,7 +44,6 @@ class LaravelCmsPageRepositoryTest extends TestCase
 
         //var_dump($createdLaravelCmsPage->toArray());
         $showLaravelCmsPage = $this->laravelCmsPageRepo->show($createdLaravelCmsPage->slug);
-
 
         //var_dump($showLaravelCmsPage);
         $this->assertNotNull($showLaravelCmsPage['menus'], 'show() method of frontend LaravelCmsPage may have error(s)');
@@ -64,7 +61,6 @@ class LaravelCmsPageRepositoryTest extends TestCase
 
         //var_dump($createdLaravelCmsPage->toArray());
         $showLaravelCmsPage = $this->laravelCmsPageRepo->show($createdLaravelCmsPage->slug);
-
 
         //var_dump($showLaravelCmsPage);
         $this->assertNotNull($showLaravelCmsPage['menus'], 'show() method of frontend LaravelCmsPage may have error(s)');

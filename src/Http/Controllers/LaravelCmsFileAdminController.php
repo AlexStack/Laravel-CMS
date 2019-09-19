@@ -2,11 +2,10 @@
 
 namespace AlexStack\LaravelCms\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Repositories\LaravelCmsFileAdminRepository;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class LaravelCmsFileAdminController extends Controller
 {
@@ -16,8 +15,8 @@ class LaravelCmsFileAdminController extends Controller
 
     public function __construct(LaravelCmsFileAdminRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->repo     = $repo;
-        $this->helper   = $helper;
+        $this->repo   = $repo;
+        $this->helper = $helper;
 
         $this->repo->setHelper($helper);
     }
@@ -25,7 +24,7 @@ class LaravelCmsFileAdminController extends Controller
     public function checkUser()
     {
         // return true;
-        if (!$this->user) {
+        if (! $this->user) {
             $this->user = $this->helper->hasPermission();
         }
     }
@@ -36,7 +35,7 @@ class LaravelCmsFileAdminController extends Controller
 
         $data = $this->repo->index();
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.file-list', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.file-list', $data);
     }
 
     public function show($id)
@@ -47,7 +46,6 @@ class LaravelCmsFileAdminController extends Controller
 
         return $rs;
     }
-
 
     public function edit($id)
     {
@@ -62,22 +60,19 @@ class LaravelCmsFileAdminController extends Controller
     {
         $this->checkUser();
 
-
         //$data = $this->repo->create();
 
         // return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.file-create', $data);
     }
 
-
     public function store(Request $request)
     {
         $this->checkUser();
 
-        $form_data = $request->all();
+        $form_data            = $request->all();
         $form_data['user_id'] = $this->user->id ?? null;
 
         $rs = $this->repo->store($form_data);
-
 
         return redirect()->route('LaravelCmsAdminFiles.index', ['editor_id' => $request->editor_id]);
     }
@@ -93,10 +88,10 @@ class LaravelCmsFileAdminController extends Controller
 
         $rs = $this->repo->destroy($id);
 
-        if (request()->result_type == 'json') {
-            $result['success'] = $rs;
-            $result['success_content'] = 'Id ' . $id . ' deleted';
-            $result['error_message'] = 'Delete id ' . $id . ' failed!';
+        if ('json' == request()->result_type) {
+            $result['success']         = $rs;
+            $result['success_content'] = 'Id '.$id.' deleted';
+            $result['error_message']   = 'Delete id '.$id.' failed!';
 
             return json_encode($result);
         }

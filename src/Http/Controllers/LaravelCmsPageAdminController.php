@@ -2,11 +2,10 @@
 
 namespace AlexStack\LaravelCms\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Repositories\LaravelCmsPageAdminRepository;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class LaravelCmsPageAdminController extends Controller
 {
@@ -16,8 +15,8 @@ class LaravelCmsPageAdminController extends Controller
 
     public function __construct(LaravelCmsPageAdminRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->repo     = $repo;
-        $this->helper   = $helper;
+        $this->repo   = $repo;
+        $this->helper = $helper;
 
         $this->repo->setHelper($helper);
     }
@@ -25,11 +24,10 @@ class LaravelCmsPageAdminController extends Controller
     public function checkUser()
     {
         // return true;
-        if (!$this->user) {
+        if (! $this->user) {
             $this->user = $this->helper->hasPermission();
         }
     }
-
 
     public function index()
     {
@@ -37,7 +35,7 @@ class LaravelCmsPageAdminController extends Controller
 
         $data = $this->repo->index();
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-list', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.page-list', $data);
     }
 
     public function create()
@@ -46,15 +44,14 @@ class LaravelCmsPageAdminController extends Controller
 
         $data = $this->repo->create();
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-create', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.page-create', $data);
     }
-
 
     public function store(Request $request)
     {
         $this->checkUser();
 
-        $form_data = $request->all();
+        $form_data            = $request->all();
         $form_data['user_id'] = $this->user->id ?? null;
 
         $rs = $this->repo->store($form_data);
@@ -72,14 +69,14 @@ class LaravelCmsPageAdminController extends Controller
 
         $data = $this->repo->edit($id);
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.page-edit', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.page-edit', $data);
     }
 
     public function update(Request $request, $page)
     {
         $this->checkUser();
 
-        $form_data = $request->all();
+        $form_data            = $request->all();
         $form_data['user_id'] = $form_data['user_id'] ?? $this->user->id;
 
         $rs = $this->repo->update($form_data, $page);
@@ -87,9 +84,9 @@ class LaravelCmsPageAdminController extends Controller
         if ($form_data['return_to_the_list']) {
             return redirect()->route('LaravelCmsAdminPages.index');
         }
+
         return back()->withInput();
     }
-
 
     public function destroy(Request $request, $id)
     {

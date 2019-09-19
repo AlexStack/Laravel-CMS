@@ -6,8 +6,8 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class LaravelCmsInquirySetting
- * @package App\Models
+ * Class LaravelCmsInquirySetting.
+ *
  * @version August 30, 2019, 10:35 am NZST
  *
  * @property \Illuminate\Database\Eloquent\Collection
@@ -15,8 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
  * @property string form_layout
- * @property integer page_id
- * @property integer default_setting_id
+ * @property int page_id
+ * @property int default_setting_id
  * @property string form_layout_filename
  * @property string display_form_fields
  * @property string mail_from
@@ -28,8 +28,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string google_recaptcha_secret_key
  * @property string google_recaptcha_css_class
  * @property string google_recaptcha_no_tick_msg
- * @property boolean google_recaptcha_enabled
- * @property boolean form_enabled
+ * @property bool google_recaptcha_enabled
+ * @property bool form_enabled
  */
 class LaravelCmsInquirySetting extends Model
 {
@@ -40,9 +40,7 @@ class LaravelCmsInquirySetting extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'form_layout',
@@ -60,7 +58,7 @@ class LaravelCmsInquirySetting extends Model
         'google_recaptcha_css_class',
         'google_recaptcha_no_tick_msg',
         'google_recaptcha_enabled',
-        'form_enabled'
+        'form_enabled',
     ];
 
     /**
@@ -69,23 +67,23 @@ class LaravelCmsInquirySetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'form_layout' => 'string',
-        'page_id' => 'integer',
-        'default_setting_id' => 'integer',
-        'form_layout_filename' => 'string',
-        'display_form_fields' => 'string',
-        'mail_from' => 'string',
-        'mail_to' => 'string',
-        'mail_subject' => 'string',
-        'success_title' => 'string',
-        'success_content' => 'string',
-        'google_recaptcha_site_key' => 'string',
-        'google_recaptcha_secret_key' => 'string',
-        'google_recaptcha_css_class' => 'string',
+        'id'                           => 'integer',
+        'form_layout'                  => 'string',
+        'page_id'                      => 'integer',
+        'default_setting_id'           => 'integer',
+        'form_layout_filename'         => 'string',
+        'display_form_fields'          => 'string',
+        'mail_from'                    => 'string',
+        'mail_to'                      => 'string',
+        'mail_subject'                 => 'string',
+        'success_title'                => 'string',
+        'success_content'              => 'string',
+        'google_recaptcha_site_key'    => 'string',
+        'google_recaptcha_secret_key'  => 'string',
+        'google_recaptcha_css_class'   => 'string',
         'google_recaptcha_no_tick_msg' => 'string',
-        'google_recaptcha_enabled' => 'boolean',
-        'form_enabled' => 'boolean'
+        'google_recaptcha_enabled'     => 'boolean',
+        'form_enabled'                 => 'boolean',
     ];
 
     public function __construct()
@@ -94,13 +92,13 @@ class LaravelCmsInquirySetting extends Model
     }
 
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
     public static $rules = [
-        'id' => 'required',
+        'id'                       => 'required',
         'google_recaptcha_enabled' => 'required',
-        'form_enabled' => 'required'
+        'form_enabled'             => 'required',
     ];
 }

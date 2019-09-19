@@ -22,16 +22,16 @@
                     $color_class = 'text-primary';
                     }
                     if ( $item->menu_enabled) {
-                        if ( $item->depth == 0 ){
-                            $icon = '<i class="fas fa-list-alt ml-1 ' . $color_class . ' "></i>';
-                        } elseif ( $item->depth == 1 ){
-                            $icon = '<i class="fas fa-list-ul ml-1 ' . $color_class . ' "></i>';
-                        } else {
-                            $icon = '<i class="fas fa-stream ml-1 ' . $color_class . ' "></i>';
-                        }
+                    if ( $item->depth == 0 ){
+                    $icon = '<i class="fas fa-list-alt ml-1 ' . $color_class . ' "></i>';
+                    } elseif ( $item->depth == 1 ){
+                    $icon = '<i class="fas fa-list-ul ml-1 ' . $color_class . ' "></i>';
+                    } else {
+                    $icon = '<i class="fas fa-stream ml-1 ' . $color_class . ' "></i>';
+                    }
 
                     } else {
-                        $icon = '<i class="far fa-file ml-1 ' . $color_class . ' "></i>';
+                    $icon = '<i class="far fa-file ml-1 ' . $color_class . ' "></i>';
                     }
                     if ( $item->slug == 'homepage'){
                     $icon = '<i class="fas fa-home ml-1 ' . $color_class . ' "></i>';
@@ -39,7 +39,8 @@
                     @endphp
 
                     {!! $icon !!}
-                <a href="./pages/{{$item->id}}/edit" title="{{$helper->t('sort_value')}} {{$item->sort_value ?? 0}}" class="{{ $item->menu_enabled ? 'menu_enabled': ''}}">
+                    <a href="./pages/{{$item->id}}/edit" title="{{$helper->t('sort_value')}} {{$item->sort_value ?? 0}}"
+                        class="{{ $item->menu_enabled ? 'menu_enabled': ''}}">
                         @if ( $item->menu_title)
                         [ {{$item->menu_title}} ] -
                         @endif

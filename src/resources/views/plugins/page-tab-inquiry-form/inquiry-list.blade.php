@@ -111,7 +111,8 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="col-md-auto  text-center">
-                        <div class="total">{{ $helper->t('total') }} <span id="total_number">{{ $inquiries->total() }}</span> {{ $helper->t('inquiries') }}</div>
+                    <div class="total">{{ $helper->t('total') }} <span
+                            id="total_number">{{ $inquiries->total() }}</span> {{ $helper->t('inquiries') }}</div>
                 </div>
             </div>
         </div>
@@ -119,8 +120,8 @@
 </div>
 
 {{-- <form action="{{ route('LaravelCmsPluginInquiry.index') }}" method="POST" id="del_form">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+<input type="hidden" name="_method" value="DELETE">
+<input type="hidden" name="_token" value="{{ csrf_token() }}">
 </form> --}}
 <script>
     function confirmDelete(id){

@@ -1,0 +1,18 @@
+preset: laravel
+risky: false
+enabled:
+  - alpha_ordered_imports
+  - align_double_arrow
+  - align_equals
+disabled:
+  - length_ordered_imports
+  - unused_use
+  - unalign_equals
+finder:
+  exclude:
+    - modules
+    - node_modules
+    - storage
+    - vendor
+  name: "*.php"
+  not-name: "*.blade.php"

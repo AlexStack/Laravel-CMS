@@ -9,7 +9,7 @@ return [
     |
     */
     'site_name' => env('APP_NAME', 'My Site Name'),
-    'top_logo' => env('LARAVEL_CMS_TOP_LOGO', 'https://raw.githubusercontent.com/AlexStack/Laravel-CMS/master/src/assets/frontend/images/top-logo.png'),
+    'top_logo'  => env('LARAVEL_CMS_TOP_LOGO', 'https://raw.githubusercontent.com/AlexStack/Laravel-CMS/master/src/assets/frontend/images/top-logo.png'),
 
     'page_top' => '<div class="row justify-content-end">
         <div class="col-md text-right text-secondary page_top">
@@ -22,7 +22,7 @@ return [
 
     'page_footer' => '<div class="row justify-content-center">
         <div class="col-md pt-5 pb-5 text-center bg-light footer">
-            <span class="small  text-secondary">Made with <i class="fas fa-heart"></i> by <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class=" text-secondary">LaravelCms</a> @ ' . date('Y') . '</span>
+            <span class="small  text-secondary">Made with <i class="fas fa-heart"></i> by <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class=" text-secondary">LaravelCms</a> @ '.date('Y').'</span>
         </div>
     </div>',
 
@@ -33,12 +33,11 @@ return [
     | Custom page routes
     |--------------------------------------------------------------------------
     */
-    'homepage_route'    => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
+    'homepage_route' => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
 
     'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/cms-'),
 
-    'admin_route'       => env('LARAVEL_CMS_BACKEND_ROUTE', '/cmsadmin'),
-
+    'admin_route' => env('LARAVEL_CMS_BACKEND_ROUTE', '/cmsadmin'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,14 +50,12 @@ return [
     'slug_suffix'   => '.html',
     'slug_separate' => '-',
 
-
     /*
     |--------------------------------------------------------------------------
     | User id in admin_id_ary can access the cms backend
     |--------------------------------------------------------------------------
     */
     'admin_id_ary' => [1, 1, 1],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +79,6 @@ return [
     |
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | Database Table Name
@@ -93,11 +89,11 @@ return [
     */
 
     'table_name' => [
-        'pages'             => 'cms_pages',
-        'files'             => 'cms_files',
-        'settings'          => 'cms_settings',
-        'inquiries'         => 'cms_inquiries',
-        'inquiry_settings'  => 'cms_inquiry_settings',
+        'pages'            => 'cms_pages',
+        'files'            => 'cms_files',
+        'settings'         => 'cms_settings',
+        'inquiries'        => 'cms_inquiries',
+        'inquiry_settings' => 'cms_inquiry_settings',
     ],
 
     /*
@@ -115,5 +111,5 @@ return [
         'frontend_language' => 'en',
     ],
 
-    'cms_version' => '0.14.1',
+    'cms_version' => '0.16.1',
 ];

@@ -2,22 +2,20 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 
 class CreateCmsInquiriesTable extends Migration
 {
     private $config;
     private $table_name;
+
     public function __construct()
     {
-        $this->config = include(base_path('config/laravel-cms.php'));
+        $this->config     = include base_path('config/laravel-cms.php');
         $this->table_name = $this->config['table_name']['inquiries'];
     }
 
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -48,7 +46,7 @@ class CreateCmsInquiriesTable extends Migration
             $table->text('message', 16777215)->nullable();
             $table->string('page_url', 190)->nullable();
             $table->text('admin_comment', 16777215)->nullable();
-            $table->enum('status', array('New', 'Opened', 'Answered', 'Spam', 'Archived', 'Display'))->nullable()->default('New');
+            $table->enum('status', ['New', 'Opened', 'Answered', 'Spam', 'Archived', 'Display'])->nullable()->default('New');
             $table->boolean('sort_value')->default(0)->index('Sort');
             $table->text('extra_data_1', 16777215)->nullable();
             $table->text('extra_data_2', 16777215)->nullable();
@@ -59,11 +57,8 @@ class CreateCmsInquiriesTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

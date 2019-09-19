@@ -2,11 +2,10 @@
 
 namespace AlexStack\LaravelCms\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
 use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Repositories\LaravelCmsSettingAdminRepository;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class LaravelCmsSettingAdminController extends Controller
 {
@@ -16,15 +15,15 @@ class LaravelCmsSettingAdminController extends Controller
 
     public function __construct(LaravelCmsSettingAdminRepository $repo, LaravelCmsHelper $helper)
     {
-        $this->repo     = $repo;
-        $this->helper   = $helper;
+        $this->repo   = $repo;
+        $this->helper = $helper;
 
         $this->repo->setHelper($helper);
     }
 
     public function checkUser()
     {
-        if (!$this->user) {
+        if (! $this->user) {
             $this->user = $this->helper->hasPermission();
         }
     }
@@ -35,19 +34,16 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data = $this->repo->index();
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.setting-list', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.setting-list', $data);
     }
-
-
 
     public function edit($id)
     {
         $this->checkUser();
 
-
         $data = $this->repo->edit($id);
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.setting-edit', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.setting-edit', $data);
     }
 
     public function create()
@@ -56,42 +52,38 @@ class LaravelCmsSettingAdminController extends Controller
 
         $data = $this->repo->create();
 
-        return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.setting-create', $data);
+        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.setting-create', $data);
     }
-
 
     public function store(Request $request)
     {
         $this->checkUser();
 
-        $form_data = $request->all();
+        $form_data            = $request->all();
         $form_data['user_id'] = $this->user->id ?? null;
 
         $rs = $this->repo->store($form_data);
 
         if ($form_data['return_to_the_list']) {
-
             return redirect()->route('LaravelCmsAdminSettings.index', ['category' => $rs->category]);
         }
+
         return redirect()->route('LaravelCmsAdminSettings.edit', ['setting' => $rs->id]);
     }
-
-
 
     public function update(Request $request, $setting)
     {
         $this->checkUser();
 
         $form_data = $request->all();
-        $rs = $this->repo->update($form_data, $setting);
+        $rs        = $this->repo->update($form_data, $setting);
 
         if ($form_data['return_to_the_list']) {
             return redirect()->route('LaravelCmsAdminSettings.index', ['category' => $form_data['category']]);
         }
+
         return back()->withInput();
     }
-
-
 
     public function destroy(Request $request, $id)
     {
