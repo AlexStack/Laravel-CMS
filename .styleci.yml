@@ -3,8 +3,11 @@ php:
   risky: true
   enabled:
     - long_array_syntax
+    - alpha_ordered_imports
   disabled:
+    - length_ordered_imports
     - align_double_arrow
+    - unused_use
   finder:
     exclude:
       - modules
@@ -13,57 +16,8 @@ php:
       - vendor
     name: "*.php"
     not-name: "*.blade.php"
-js:
-  tab-width: 4
-  use-tabs: false
-  print-width: 120
-  double-quotes: false
-  trailing-commas: es5
-  semicolons: true
-  arrow-parens: avoid
-  bracket-spacing: true
-  finder:
-    exclude:
-      - modules
-      - node_modules
-      - storage
-      - vendor
-    name:
-      - "*.js"
-      - "*.jsx"
-    not-name:
-      - "*.min.js"
-ts:
-  tab-width: 4
-  use-tabs: false
-  print-width: 120
-  double-quotes: false
-  trailing-commas: es5
-  semicolons: true
-  arrow-parens: avoid
-  bracket-spacing: true
-  finder:
-    exclude:
-      - modules
-      - node_modules
-      - storage
-      - vendor
-    name: "*.ts"
-css: false
+js: true
+ts: true
+css: true
 py: true
-vue:
-  tab-width: 4
-  use-tabs: false
-  print-width: 120
-  double-quotes: false
-  trailing-commas: es5
-  semicolons: true
-  arrow-parens: avoid
-  bracket-spacing: true
-  finder:
-    exclude:
-      - modules
-      - node_modules
-      - storage
-      - vendor
-    name: "*.vue"
+vue: true
