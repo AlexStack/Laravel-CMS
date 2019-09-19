@@ -1,7 +1,5 @@
 preset: laravel
 risky: false
-enabled:
-  - long_array_syntax
 finder:
   exclude:
     - modules
