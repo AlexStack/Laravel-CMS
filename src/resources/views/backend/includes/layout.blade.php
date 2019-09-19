@@ -71,6 +71,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
 
+    <script src="{{$helper->assetUrl('js/summernote-ext-highlighter.js', true, true) }}"></script>
+
     <script src="{{$helper->assetUrl('js/bottom.js', true, true) }}"></script>
 
     <script>

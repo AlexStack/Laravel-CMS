@@ -31,3 +31,22 @@ img.top-logo {
     pointer-events: none;
 }
 */
+
+/* code prettyprint */
+pre.prettyprint {
+  padding: 2px;
+  border: 1px solid #888;
+  background-color: rgb(251, 251, 251);
+}
+
+pre li.L0,
+pre li.L1,
+pre li.L2,
+pre li.L3,
+pre li.L5,
+pre li.L6,
+pre li.L7,
+pre li.L8 {
+  list-style-type: decimal !important;
+  color: #999;
+}

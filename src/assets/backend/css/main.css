@@ -95,10 +95,23 @@ a:hover,
   font-weight: bold;
 }
 
+/* editor */
+.note-editable a {
+  color: #007bff;
+}
+
+pre.prettyprint {
+  padding: 2px;
+  border: 1px solid #ddd;
+  background-color: rgb(251, 251, 251);
+}
+
+
+/* small screen */
 @media screen and (max-width: 700px) {
   .menu-links {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
