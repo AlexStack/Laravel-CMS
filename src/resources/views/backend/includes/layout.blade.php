@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.header')
+    @include($helper->bladePath('includes.header','b'))
     @yield('content')
 
     <div class="container">
@@ -70,6 +70,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.10.0-rc3/Sortable.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+
+    <script src="{{$helper->assetUrl('js/summernote-ext-highlighter.js', true, true) }}"></script>
 
     <script src="{{$helper->assetUrl('js/bottom.js', true, true) }}"></script>
 

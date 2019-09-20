@@ -90,7 +90,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         $this->helper->rewriteConfigFile();
 
         if (isset($need_update_config_file_twice)) {
-            $this->helper = new LaravelCmsHelper(); // reload new settings
+            $this->helper = new \AlexStack\LaravelCms\Helpers\LaravelCmsHelper(); // reload new settings
             $this->helper->rewriteConfigFile(); // replace language variables
         }
 

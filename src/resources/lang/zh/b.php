@@ -2,6 +2,7 @@
 
 return [
     // layout
+    'setting'                     => '设置',
     'settings'                    => '设置',
     'main_content'                => '主要内容',
     'extra_content'               => '附加内容',
@@ -33,8 +34,8 @@ return [
     // setting form
     'param_name'      => '参数名称',
     'page_id'         => '页面ID',
-    'param_value'     => '参数内容',
-    'input_attribute' => '参数内容输入属性',
+    'param_value'     => '参数数值',
+    'input_attribute' => '参数数值输入属性',
     'abstract'        => '简介',
     'category'        => '分类',
     'enabled'         => '激活',

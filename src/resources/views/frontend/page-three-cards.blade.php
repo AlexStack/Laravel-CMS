@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.layout')
+@extends($helper->bladePath('includes.layout'))
 
 @section('content')
 
@@ -23,16 +23,16 @@
 
             <div class="row mb-4 img-cards">
                 <div class="col-md-4 first-card">
-                    @include('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.image-card', ['extra_id'
+                    @include($helper->bladePath('includes.image-card'), ['extra_id'
                     => 1, 'width'=>'auto', 'height'=>$helper->s('file.middle_image_height') ])
                 </div>
                 <div class="col-md-4 second-card">
-                    @include('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.image-card', ['extra_id'
+                    @include($helper->bladePath('includes.image-card'), ['extra_id'
                     => 2, 'width'=>'auto', 'height'=>$helper->s('file.middle_image_height') ])
                 </div>
 
                 <div class="col-md-4 third-card">
-                    @include('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.image-card', ['extra_id'
+                    @include($helper->bladePath('includes.image-card'), ['extra_id'
                     => 3, 'width'=>'auto', 'height'=>$helper->s('file.middle_image_height') ])
                 </div>
 
@@ -42,7 +42,7 @@
                 {!! $page->sub_content !!}
             </div>
 
-            @include('laravel-cms::' . $helper->s('template.frontend_dir') . '.includes.sub-page-cards', ['sub_pages' =>
+            @include($helper->bladePath('includes.sub-page-cards'), ['sub_pages' =>
             $page->children, 'card_class'=>'col-md-6 mb-4', 'img_width'=>$helper->s('file.small_image_width'),
             'img_height'=>$helper->s('file.small_image_height') ])
 

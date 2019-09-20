@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.layout')
+@extends($helper->bladePath('includes.layout','b'))
 
 @section('content')
 <div class="container">
@@ -10,9 +10,9 @@
             {!! Form::model($_GET, ['route' => ['LaravelCmsAdminPages.store'], 'method' => "POST", 'files'=>true,
             'id'=>'page_content_form']) !!}
 
-            @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.page-form')
+            @include($helper->bladePath('includes.page-form','b'))
 
-            @include('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.submit-button')
+            @include($helper->bladePath('includes.submit-button','b'))
 
             {{ Form::close() }}
 

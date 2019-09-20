@@ -35,7 +35,7 @@ class LaravelCmsFileAdminController extends Controller
 
         $data = $this->repo->index();
 
-        return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.file-list', $data);
+        return view($this->helper->bladePath('file-list', 'b'), $data);
     }
 
     public function show($id)
@@ -50,19 +50,11 @@ class LaravelCmsFileAdminController extends Controller
     public function edit($id)
     {
         $this->checkUser();
-
-        //$data = $this->repo->edit($id);
-
-        // return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.file-edit', $data);
     }
 
     public function create()
     {
         $this->checkUser();
-
-        //$data = $this->repo->create();
-
-        // return view('laravel-cms::' . $this->helper->s('template.backend_dir') .  '.file-create', $data);
     }
 
     public function store(Request $request)
@@ -88,7 +80,7 @@ class LaravelCmsFileAdminController extends Controller
 
         $rs = $this->repo->destroy($id);
 
-        if ('json' == request()->result_type) {
+        if ('json' == request()->response_type) {
             $result['success']         = $rs;
             $result['success_content'] = 'Id '.$id.' deleted';
             $result['error_message']   = 'Delete id '.$id.' failed!';

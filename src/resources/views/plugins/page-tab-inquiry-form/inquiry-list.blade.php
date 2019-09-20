@@ -1,4 +1,4 @@
-@extends('laravel-cms::' . $helper->s('template.backend_dir') . '.includes.layout')
+@extends($helper->bladePath('includes.layout','b'))
 
 @section('content')
 
@@ -134,7 +134,7 @@
             type: 'DELETE',
             data : {
                 _token: "{{ csrf_token() }}",
-                result_type: "json"
+                response_type: "json"
             },
             // contentType: false,
             // cache: false,

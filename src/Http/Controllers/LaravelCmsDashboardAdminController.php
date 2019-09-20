@@ -37,7 +37,7 @@ class LaravelCmsDashboardAdminController extends Controller
         if (empty($this->helper->settings)) {
             return redirect()->route('LaravelCmsAdminSettings.index');
         } else {
-            return view('laravel-cms::'.$this->helper->s('template.backend_dir').'.dashboard', $data);
+            return view($this->helper->bladePath('dashboard', 'b'), $data);
         }
     }
 
