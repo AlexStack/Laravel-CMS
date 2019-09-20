@@ -56,7 +56,7 @@ class CmsSettingsTableSeeder extends Seeder
                 // 'deleted_at'      => null,
             ],
             2 => [
-                'id'          => 6,
+                // 'id'          => 6,
                 'param_name'  => 'page_top',
                 'page_id'     => null,
                 'param_value' => '<div class="row justify-content-end">

@@ -67,15 +67,12 @@ class LaravelCmsPluginInquiry
             }
         }
 
-        //$this->helper->debug([$settings->toArray(), $default_settings->toArray(), $new_settings->toArray()]);
-
         return $new_settings;
     }
 
     public function displayForm($page)
     {
         $settings = $this->getFormSettings($page->id);
-        // LaravelCmsHelper::debug($page);
 
         if (! $settings) {
             return '<!-- Inquiry form disabled for this page -->';
@@ -92,27 +89,11 @@ class LaravelCmsPluginInquiry
 
     public function dynamicInputs($settings, $page)
     {
-        // $display_form_fields = (isset($settings->display_form_fields) && strpos($settings->display_form_fields, '|')) ? $settings->display_form_fields : 'first_name:' . $this->helper->t('your_name') . ':required | email:' . $this->helper->t('email') . ' | message:' . $this->helper->t('message') . ':required pattern="{5,5000}"  | submit:' . $this->helper->t('submit') . '';
-
         $fields_obj = json_decode($settings->display_form_fields);
-        //$this->helper->debug($fields_obj);
 
-        // $fields_ary = explode('|', $display_form_fields);
         $input_str = '<input type="hidden" name="page_id" value="'.$page->id.'" />
             <input type="hidden" name="page_title" value="'.$page->title.'" />';
         foreach ($fields_obj as $f) {
-            // $f_ary = explode(':', trim($field));
-            // $f_ary[0] = trim($f_ary[0]);
-            // if (!isset($f_ary[1])) {
-            //     $f_ary[1] = trim(ucwords(str_replace(['_', '-'], ' ', $f_ary[0])));
-            // } else {
-            //     $f_ary[1] = trim($f_ary[1]);
-            // }
-            // if (isset($f_ary[2])) {
-            //     $attr = trim($f_ary[2]);
-            // } else {
-            //     $attr = '';
-            // }
             $input_type = ('email' == $f->field) ? 'email' : 'text';
 
             if ('message' == $f->field) {
@@ -173,19 +154,17 @@ class LaravelCmsPluginInquiry
         return json_encode($result);
     }
 
-    public function search(Request $request)
-    {
-        $user = $this->helper->hasPermission();
+    // public function search(Request $request)
+    // {
+    //     $user = $this->helper->hasPermission();
 
-        $form_data                 = $request->all();
-        $form_data['html_content'] = $request->ip();
-        $form_data['success']      = true;
-        $form_data['user']         = $user->id;
+    //     $form_data                 = $request->all();
+    //     $form_data['html_content'] = $request->ip();
+    //     $form_data['success']      = true;
+    //     $form_data['user']         = $user->id;
 
-        return json_encode($form_data);
-
-        //LaravelCmsHelper::debug($form_data);
-    }
+    //     return json_encode($form_data);
+    // }
 
     public function edit($page_id, $page = null)
     {
@@ -221,13 +200,12 @@ class LaravelCmsPluginInquiry
     {
         $rs = LaravelCmsInquiry::where('id', $id)->delete();
 
-        //LaravelCmsHelper::debug($rs);
         if ('json' == request()->response_type) {
             $result['success']         = $rs;
             $result['success_content'] = 'Inquire id '.$id.' deleted';
             $result['error_message']   = 'Delete inquire id '.$id.' failed!';
 
-            return json_encode($result);
+            return response()->json($result);
         }
 
         return $rs;
