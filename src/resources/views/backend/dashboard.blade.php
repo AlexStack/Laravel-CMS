@@ -84,14 +84,19 @@
                 @empty
                 <li class="list-group-item list-group-item-action text-truncate">
                     <a href="{{ route('LaravelCmsAdminFiles.index') }}">
-                        <i class="fas fa-upload mr-1"></i>{{$helper->t('upload,file')}}
+                        <i class="fas fa-upload badge-secondary mr-1"></i>{{$helper->t('upload,file')}}
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-action text-truncate">
+                    <a href="{{ route('LaravelCmsAdminFiles.index') }}">
+                        <i class="fas fa-upload badge-secondary mr-1"></i>{{$helper->t('upload,file')}}
                     </a>
                 </li>
                 @endforelse
 
                 @if ( $latest_files->count() < 10 ) <li class="list-group-item list-group-item-action text-truncate">
                     <a href="{{ route('LaravelCmsAdminFiles.index') }}">
-                        <i class="fas fa-upload mr-1"></i>{{$helper->t('upload,file')}}
+                        <i class="fas fa-upload badge-secondary mr-1"></i>{{$helper->t('upload,file')}}
                     </a>
                     </li>
                     @endif

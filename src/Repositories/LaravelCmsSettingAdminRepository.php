@@ -103,6 +103,12 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         $data['helper']     = $this->helper;
         $data['categories'] = $this->getCategories(null, false);
 
+        if ('template' == $data['setting']->category && 'frontend_dir' == $data['setting']->param_name) {
+            $data['setting']->input_attribute = $this->getCmsTemplates()['frontend_attributes'];
+        } elseif ('template' == $data['setting']->category && 'backend_dir' == $data['setting']->param_name) {
+            $data['setting']->input_attribute = $this->getCmsTemplates()['backend_attributes'];
+        }
+
         return $data;
     }
 
@@ -141,5 +147,57 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         });
 
         return $new_cats;
+    }
+
+    public function getCmsTemplates()
+    {
+        $app_view_dir = base_path('resources/views/vendor/laravel-cms');
+
+        if (! file_exists($app_view_dir)) {
+            $app_view_dir = dirname(__FILE__, 2).'/resources/views';
+        }
+        $files = glob($app_view_dir.'/*', GLOB_ONLYDIR);
+
+        //$this->helper->debug($files);
+
+        foreach ($files as $dir) {
+            if (strpos($dir, '-bak')) {
+                continue;
+            }
+
+            if (file_exists($dir.'/config.php')) {
+                $config_ary   = [];
+                $template_ary = [];
+                $config_ary   = include $dir.'/config.php';
+                $backend_lang = $this->helper->s('template.backend_language');
+
+                if (isset($config_ary[$backend_lang]['blade_files'])) {
+                    $template_ary = $config_ary[$backend_lang];
+                } elseif (isset($config_ary['en']['blade_files'])) {
+                    $template_ary = $config_ary['en'];
+                } elseif (isset($config_ary['blade_files'])) {
+                    $template_ary = $config_ary;
+                    // $option_ary = $config_ary['blade_files'] + $option_ary;
+                }
+                if (isset($template_ary['theme_name'])) {
+                    $dirname = basename($dir);
+                    if (false !== strpos($dir, 'backend')) {
+                        $data['backend_templates'][$dirname] = $template_ary;
+                        $data['backend_options'][$dirname]   = $template_ary['theme_name'];
+                    } else {
+                        $data['frontend_templates'][$dirname] = $template_ary;
+                        $data['frontend_options'][$dirname]   = $template_ary['theme_name'];
+                    }
+                }
+            }
+        }
+
+        $data['frontend_attributes']             = '{"select_options":'.json_encode($data['frontend_options'] ?? ['frontend'=>'Default frontend template from Laravel CMS']).',"rows":1,"required":"required"}';
+
+        $data['backend_attributes']             = '{"select_options":'.json_encode($data['backend_options'] ?? ['backend'=>'Default backend template from Laravel CMS']).',"rows":1,"required":"required"}';
+
+        // $this->helper->debug($data);
+
+        return $data;
     }
 }

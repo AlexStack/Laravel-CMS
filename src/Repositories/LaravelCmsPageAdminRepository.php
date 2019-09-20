@@ -327,14 +327,30 @@ class LaravelCmsPageAdminRepository extends BaseRepository
             $app_view_dir = dirname(__FILE__, 2).'/resources/views/'.$this->helper->s('template.frontend_dir');
         }
         $files = glob($app_view_dir.'/*.blade.php');
+
+        //$this->helper->debug($files);
         foreach ($files as $f) {
             $k              = str_replace('.blade.php', '', basename($f));
             $option_ary[$k] = ucwords(str_replace(['-', '_', '.'], ' ', $k));
         }
+
+        // override the real file names with config blade_files settings
         if (file_exists($app_view_dir.'/config.php')) {
-            $config_ary = include $app_view_dir.'/config.php';
-            if (isset($config_ary['blade_files'])) {
-                $option_ary = $config_ary['blade_files'] + $option_ary;
+            $config_ary   = [];
+            $template_ary = [];
+            $config_ary   = include $app_view_dir.'/config.php';
+            $backend_lang = $this->helper->s('template.backend_language');
+
+            if (isset($config_ary[$backend_lang]['blade_files'])) {
+                $template_ary = $config_ary[$backend_lang];
+            } elseif (isset($config_ary['en']['blade_files'])) {
+                $template_ary = $config_ary['en'];
+            } elseif (isset($config_ary['blade_files'])) {
+                $template_ary = $config_ary;
+            }
+
+            if (isset($template_ary['blade_files']) && is_array($template_ary['blade_files'])) {
+                $option_ary = $template_ary['blade_files'] + $option_ary;
             }
         }
 

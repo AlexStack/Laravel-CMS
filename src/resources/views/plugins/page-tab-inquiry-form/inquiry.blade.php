@@ -89,7 +89,7 @@ $helper->t('enable')] ])
     });
 });
 
-@if ( $helper->s('inquiry.default_enable') == '1' && ! isset($page['title']))
+@if ( $helper->s('inquiry.enable_form_by_default') == '1' && ! isset($page['title']))
     $('.input-form_enabled').val(1).change();
 @endif
 </script>

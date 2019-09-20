@@ -1,5 +1,10 @@
 # Amila Laravel CMS
 
+[![image](docs/images/min/travis.svg)](https://github.com/AlexStack/Laravel-CMS/releases)
+[![Laravel CMS](docs/images/min/mit.svg)](https://www.laravelcms.tech/ "Laravel CMS 2020")
+[![image](docs/images/min/styleci.svg)](https://github.com/AlexStack/Laravel-CMS/releases)
+[![Latest Stable Version](https://poser.pugx.org/alexstack/laravel-cms/v/stable)](https://github.com/AlexStack/Laravel-CMS/releases)
+
 -   Free, open source Simple Bootstrap Laravel CMS for any EXISTING Laravel 5.x or new Laravel 6 website.
 -   Only add a few database tables with prefix, not effect your existing database tables.
 -   You can easy custom the database table names, the page URL path(route) and the template(theme)
@@ -24,6 +29,10 @@ composer require alexstack/laravel-cms && php artisan laravelcms
 php artisan laravelcms --action=uninstall
 
 ```
+
+## Demo & Documents
+
+-   [Laravel CMS frontend demo & documents](https://www.laravelcms.tech "Laravel CMS") &#x1F4D9;
 
 ## Screenshot of the output of install command
 
