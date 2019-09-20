@@ -1,7 +1,7 @@
 # Amila Laravel CMS
 
 [![image](docs/images/min/travis.svg)](https://github.com/AlexStack/Laravel-CMS/releases)
-[![Laravel CMS](docs/images/min/mit.svg)](https://www.laravelcms.tech/)
+[![Laravel CMS](docs/images/min/mit.svg)](https://www.laravelcms.tech/ "Laravel CMS 2020")
 [![image](docs/images/min/styleci.svg)](https://github.com/AlexStack/Laravel-CMS/releases)
 [![Latest Stable Version](https://poser.pugx.org/alexstack/laravel-cms/v/stable)](https://github.com/AlexStack/Laravel-CMS/releases)
 
@@ -32,7 +32,7 @@ php artisan laravelcms --action=uninstall
 
 ## Demo & Documents
 
--   [Laravel CMS frontend demo & documents](https://www.laravelcms.tech "Laravel CMS")
+-   [Laravel CMS frontend demo & documents](https://www.laravelcms.tech "Laravel CMS") &#x1F4D9;
 
 ## Screenshot of the output of install command
 
