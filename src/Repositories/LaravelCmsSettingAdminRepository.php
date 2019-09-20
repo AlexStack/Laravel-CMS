@@ -192,9 +192,9 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
             }
         }
 
-        $data['frontend_attributes']             = '{"select_options":'.json_encode($data['frontend_options']).',"rows":1,"required":"required"}';
+        $data['frontend_attributes']             = '{"select_options":'.json_encode($data['frontend_options'] ?? ['frontend'=>'Default frontend template from Laravel CMS']).',"rows":1,"required":"required"}';
 
-        $data['backend_attributes']             = '{"select_options":'.json_encode($data['backend_options']).',"rows":1,"required":"required"}';
+        $data['backend_attributes']             = '{"select_options":'.json_encode($data['backend_options'] ?? ['backend'=>'Default backend template from Laravel CMS']).',"rows":1,"required":"required"}';
 
         // $this->helper->debug($data);
 
