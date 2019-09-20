@@ -470,7 +470,7 @@ class CmsSettingsTableSeeder extends Seeder
             ],
             28 => [
                 // 'id'              => 37,
-                'param_name'      => 'default_enable',
+                'param_name'      => 'enable_form_by_default',
                 'page_id'         => null,
                 'param_value'     => '0',
                 'input_attribute' => '{"select_options":{"1":"__(enable)", "0":"__(disable)"},"rows":1,"required":"required"}',

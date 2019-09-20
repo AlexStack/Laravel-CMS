@@ -1,4 +1,4 @@
-# Amila Laravel CMS
+# Amila Laravel CMS ![image](docs/images/min/travis.svg) ![image](docs/images/min/styleci.svg)
 
 -   Free, open source Simple Bootstrap Laravel CMS for any EXISTING Laravel 5.x or new Laravel 6 website.
 -   Only add a few database tables with prefix, not effect your existing database tables.
