@@ -50,3 +50,7 @@ pre li.L8 {
   list-style-type: decimal !important;
   color: #999;
 }
+
+pre .pun {
+  color: #da3275;
+}
