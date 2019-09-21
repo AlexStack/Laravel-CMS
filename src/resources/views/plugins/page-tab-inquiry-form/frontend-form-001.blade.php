@@ -1,16 +1,14 @@
 <a name="inquiry_form"></a>
-{!! Form::model($_GET, ['route' => ['LaravelCmsPluginInquiry.submitForm'], 'method' => "POST", 'files'=>true,
-'id'=>'laravel-cms-inquiry-form']) !!}
 
-<input type="hidden" name="response_type" value="json" />
+<form method="POST" action="{{route('LaravelCmsPluginInquiry.submitForm',null,false)}}" accept-charset="UTF-8"
+    id="laravel-cms-inquiry-form">
 
-{!! $dynamic_inputs !!}
+    <input type="hidden" name="response_type" value="json" />
 
-{{-- <div id="laravel-cms-inquiry-form-results">
-    <div class="error_message"></div>
-    <button type="submit" class="btn btn-primary btn-submit"><i class="fas fa-save mr-2"></i>Submit</button>
-</div> --}}
-{{ Form::close() }}
+    {!! $dynamic_inputs !!}
+
+</form>
+
 
 {!! $gg_recaptcha !!}
 
