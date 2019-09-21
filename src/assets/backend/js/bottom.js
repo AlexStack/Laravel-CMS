@@ -64,8 +64,12 @@ function insertHtmlToEditor(editor_id, html_str) {
 function insertToUploadField(upload_field_id, html_str, file_id) {
   $(upload_field_id).val(file_id);
 
-  var file_input_id = upload_field_id.replace("_id", "");
-  var preview_id = file_input_id.replace("input.input-", "preview-");
+  var file_input_id = upload_field_id
+    .replace("_id", "")
+    .replace("input.input-", ".input-group-");
+  var preview_id = upload_field_id
+    .replace("_id", "")
+    .replace("input.input-", "preview-");
 
   html_str +=
     '<a href="#" class="ml-3 text-secondary" onclick="jQuery(\'' +
@@ -88,8 +92,8 @@ function showIframeModal(url, modal_id) {
   }
   if (
     $(modal_id + " iframe")
-      .attr("src")
-      .indexOf(url) == -1
+    .attr("src")
+    .indexOf(url) == -1
   ) {
     $(modal_id + " iframe").attr("src", url);
     $(modal_id + " iframe").addClass("iframe-loaded");
@@ -111,7 +115,7 @@ function switchNavTab(nav_tab_id) {
     return false;
   }
   $('.nav-tabs a[href="#' + nav_tab_id + '"]').trigger("click");
-  $('#page_content_form button[type="submit"]').click(function(e) {
+  $('#page_content_form button[type="submit"]').click(function (e) {
     if ($("#page_content_form .input-title").val() == "") {
       $('.nav-tabs a[href="#main-content"]').trigger("click");
       return false;
@@ -125,7 +129,7 @@ function sortableList(list_id) {
     handle: ".handle", // handle's class
     animation: 150,
     // Element dragging ended
-    onEnd: function(/**Event*/ evt) {
+    onEnd: function ( /**Event*/ evt) {
       var itemEl = evt.item; // dragged HTMLElement
       evt.to; // target list
       evt.from; // previous list
@@ -167,7 +171,7 @@ function adjustSmallScreen() {
 function disableButtons(jquery_id) {
   $(jquery_id)
     .closest("form")
-    .submit(function(e) {
+    .submit(function (e) {
       $(jquery_id + ' button[type="submit"] i')
         .removeClass()
         .addClass("fas fa-spinner fa-spin mr-2");
@@ -178,20 +182,20 @@ function disableButtons(jquery_id) {
 
 // Implement functions when document is ready
 
-$(document).ready(function() {
+$(document).ready(function () {
   renderEditor("textarea.input-main_content", 200);
-  setTimeout(function() {
+  setTimeout(function () {
     renderEditor("textarea.input-sub_content");
   }, 1500);
 
-  setTimeout(function() {
+  setTimeout(function () {
     renderEditor("textarea.input-abstract");
     renderEditor("textarea.input-extra_content_1");
     renderEditor("textarea.input-extra_content_2");
     renderEditor("textarea.input-extra_content_3");
   }, 3000);
 
-  setTimeout(function() {
+  setTimeout(function () {
     renderEditor("textarea.input-success_content");
   }, 4000);
 
