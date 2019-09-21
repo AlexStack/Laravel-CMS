@@ -6,6 +6,6 @@
             class="fas fa-list-alt mr-2"></i>{{$helper->t('save_and_return_to_the_list')}}</button>
 
     <a href="#" class="ml-3 text-secondary"
-        onclick="jQuery('.fixed-bottom').removeClass().addClass('save-buttons');jQuery(this).hide();return false;">
+        onclick="jQuery('.fixed-bottom').fadeOut('slow');setTimeout(function(){jQuery('.fixed-bottom').removeClass().addClass('save-buttons').show();}, 1000);jQuery(this).hide();return false;">
         <i class="fas fa-times-circle" title="Hide the buttons"></i></a>
 </div>
