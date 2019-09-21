@@ -5,18 +5,22 @@ $page_url = '';
 $page_url = $helper->url($page);
 }
 
-$purge_url = '/purge_noargs' . $page_url;
+//$purge_url = '/purge_noargs' . $page_url;
 @endphp
 
 <div class="row  justify-content-center">
-    <div class="col-md-5 text-right">
+    <div class="col-md-4 text-right">
         <a class="btn btn-secondary mb-3 mt-3 random-param" href="{{$page_url}}" target="mobile_iframe">Mobile
             Preview</a>
         <br />
         <a class="btn btn-info mb-3 mt-3 random-param" href="{{$page_url}}" target="_blank">Desktop Preview</a>
         <br />
-        <a class="btn btn-warning mb-3 mt-3" href="{{$purge_url}}" target="mobile_iframe">Purge Page Cache</a>
+        {{-- purge nginx cache link --}}
+        @if ( $helper->s('purge_prefix') )
+        <a class="btn btn-warning mb-3 mt-3" href="{{$helper->s('purge_prefix') . $page_url}}"
+            target="mobile_iframe">Purge Page Cache</a>
         <br />
+        @endif
 
     </div>
     <div class="col-md-7 no_iframe" id="iframe_div"></div>
