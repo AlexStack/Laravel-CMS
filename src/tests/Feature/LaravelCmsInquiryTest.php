@@ -28,7 +28,7 @@ class LaravelCmsInquiryTest extends TestCase
         $inquiry->save();
 
         $response = $this->get(config('app.url').'/cms-2');
-        var_dump($response->getContent());
+        //var_dump($response->getContent());
 
         $response->assertStatus(200, 'displayForm() method of LaravelCmsPluginInquiry may have error(s)');
     }
