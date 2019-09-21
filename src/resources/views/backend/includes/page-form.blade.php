@@ -73,7 +73,7 @@
         'name' => "extra_content_1"])
 
         @include($helper->bladePath('includes.form-input','b'), ['type'=>'file', 'name'
-        => "extra_image_1", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        => "extra_image_1", 'input_attributes'=>['class'=>'form-control input-extra_image_1 mb-3'] ])
 
         @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "extra_text_2"])
@@ -82,7 +82,7 @@
         'name' => "extra_content_2"])
 
         @include($helper->bladePath('includes.form-input','b'), ['type'=>'file', 'name'
-        => "extra_image_2", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        => "extra_image_2", 'input_attributes'=>['class'=>'form-control input-extra_image_2 mb-3'] ])
 
         @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "extra_text_3"])
@@ -91,7 +91,7 @@
         'name' => "extra_content_3"])
 
         @include($helper->bladePath('includes.form-input','b'), ['type'=>'file', 'name'
-        => "extra_image_3", 'input_attributes'=>['class'=>'form-control input-main_image mb-3'] ])
+        => "extra_image_3", 'input_attributes'=>['class'=>'form-control input-extra_image_3 mb-3'] ])
 
         @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "special_text"])

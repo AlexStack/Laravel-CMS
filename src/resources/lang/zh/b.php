@@ -22,6 +22,7 @@ return [
     'homepage'                    => '首页',
     'all'                         => '全部',
     'form'                        => '表单',
+    'choose'                      => '选择',
 
     // dashboard
     'dashboard'          => '管理面板',

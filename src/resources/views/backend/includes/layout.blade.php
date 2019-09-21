@@ -55,7 +55,7 @@
                 <div class="modal-body p-0 m-0">
                     <div class="embed-responsive embed-responsive-16by9">
                         <iframe class="embed-responsive-item" src="data:text/html,Loading..."
-                            id="modal-iframe"></iframe>
+                            id="modal-iframe" data-loaded="iframe-modal-loaded"></iframe>
                     </div>
                 </div>
 

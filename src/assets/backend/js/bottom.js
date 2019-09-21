@@ -29,14 +29,19 @@ function renderEditor(id, minHeight = 120) {
   });
 
   var label_class = id.replace("textarea.input-", "label.label-");
+  addBrowserFileButton(label_class, id);
+}
+
+function addBrowserFileButton(label_class, editor_id) {
+  // admin_route is defined in the page source code
   var browser_img_url =
-    admin_route + "/files?insert_files_to_editor=1&editor_id=" + id;
+    admin_route + "/files?insert_files_to_editor=1&editor_id=" + editor_id;
   var browser_img_str =
     '<a href="' +
     browser_img_url +
     '" target="_blank" class="ml-2 text-info show-iframe-modal" onclick="return showIframeModal(\'' +
     browser_img_url +
-    '\');" title="Insert File"><i class="far fa-images"></i></a>';
+    "', '#iframe-modal', 'Browser Files');\" title=\"Insert File\"><i class=\"far fa-images\"></i></a>";
 
   $(label_class).html($(label_class).html() + browser_img_str);
 }
@@ -54,6 +59,27 @@ function insertImageToEditor(editor_id, img_url) {
 
 function insertHtmlToEditor(editor_id, html_str) {
   $(editor_id).summernote("pasteHTML", html_str);
+}
+
+function insertToUploadField(upload_field_id, html_str, file_id) {
+  $(upload_field_id).val(file_id);
+
+  var file_input_id = upload_field_id.replace("_id", "");
+  var preview_id = file_input_id.replace("input.input-", "preview-");
+
+  html_str +=
+    '<a href="#" class="ml-3 text-secondary" onclick="jQuery(\'' +
+    upload_field_id +
+    "').val('');jQuery('#" +
+    preview_id +
+    "').fadeOut('slow');$('" +
+    file_input_id +
+    '\').fadeIn(\'slow\');return false;"><i class="fas fa-times-circle" title="Remove the file"></i></a>';
+
+  $(file_input_id).hide();
+  $("#" + preview_id)
+    .html(html_str)
+    .fadeIn("slow");
 }
 
 function showIframeModal(url, modal_id) {
@@ -171,4 +197,28 @@ $(document).ready(function() {
 
   adjustSmallScreen();
   disableButtons("form .save-buttons");
+
+  if (document.getElementById("page_content_form")) {
+    addBrowserFileButton(
+      "#page_content_form .label-main_banner",
+      "input.input-main_banner_id"
+    );
+    addBrowserFileButton(
+      "#page_content_form .label-main_image",
+      "input.input-main_image_id"
+    );
+
+    addBrowserFileButton(
+      "#page_content_form .label-extra_image_1",
+      "input.input-extra_image_1_id"
+    );
+    addBrowserFileButton(
+      "#page_content_form .label-extra_image_2",
+      "input.input-extra_image_2_id"
+    );
+    addBrowserFileButton(
+      "#page_content_form .label-extra_image_3",
+      "input.input-extra_image_3_id"
+    );
+  }
 });

@@ -3,7 +3,7 @@
 @section('content')
 <script>
     document.write("<style> .file-icon {height: {{$helper->s('file.small_image_height')}}px; vertical-align: middle;}</style>");
-    if ( window.location.href.indexOf('editor_id=textarea') != -1 ) {
+    if ( window.location.href.indexOf('editor_id=textarea') != -1 ||  window.location.href.indexOf('editor_id=input.') != -1 ) {
         $('.top-header').hide();
     }
 </script>
@@ -99,6 +99,7 @@
                     <div class="file-icon">
                         <a href="{{ route('LaravelCmsAdminFiles.show',['file'=>$file->id, 'generate_image'=>'yes', 'width'=>$helper->s('file.big_image_width'), 'height'=>$helper->s('file.big_image_height')]) }}"
                             target="_blank"
+                            data-id="{{$file->id}}"
                             title="Size: {{($file->filesize/1024 > 1000) ? round($file->filesize/1024/1024,2) . ' MB' : round($file->filesize/1024) . ' KB' }}"
                             class="preview_link is_image">
                             <img class="img-fluid rounded"
@@ -122,7 +123,10 @@
                             M<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 
                         <a href="{{$helper->imageUrl($file, $helper->s('file.small_image_width'), $helper->s('file.small_image_height')) }}"
-                            class="preview_link is_image" target="_blank" title="{{ $helper->t('small_image') }}">
+                            class="preview_link is_image"
+                            id="small-img-{{$file->id}}"
+                            target="_blank"
+                            title="{{ $helper->t('small_image') }}">
                             S<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 
                         <a href="#del-{{$file->id}}" class="delete-link" data-id="{{$file->id}}">D<i
@@ -136,7 +140,7 @@
                                 {!! $helper->fileIconCode($file->suffix) !!}
                             </a></h1>
                     </div>
-                    <div class="text-info">
+                    <div class="text-info links">
                         <a href="{{$helper->imageUrl($file, 'original','original') }}" target="_blank"
                             title="{{$file->filename}}" class="preview_link not_image">{{strtoupper($file->suffix)}}
                             {{$helper->t('file')}}<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
@@ -252,9 +256,23 @@
         return true;
     }
 
+    function handleInsertToUploadField(html_str, file_id)   {
+        if ( window.parent ){
+            var editor_page = window.parent;
+        } else if ( window.opener ){
+            var editor_page = window.opener;
+        }else {
+            console.log('handleInsertToUploadField: editor_page callback failed');
+            return false;
+        }
+
+        editor_page.insertToUploadField("{{ $_GET['editor_id'] ?? 'input.input-main_image_id'}}", html_str, file_id);
+        editor_page.hideIframeModal('#iframe-modal');
+        return true;
+    }
 
     $(function(){
-
+        // for textarea editor
         if ( window.location.href.indexOf('editor_id=textarea') != -1 ) {
             $('a.delete-link').hide();
             $('.header-forms').addClass('sticky-top').addClass('bg-white').addClass('pt-2');
@@ -287,6 +305,29 @@
                     html_str = '&nbsp;<a href="' + link + '" class="content-file" target="_blank">' + link_txt + '</a>&nbsp;';
                 }
                 handleInsertToEditor(html_str);
+            });
+        }
+
+        // for upload input field with a hidden input_id
+        if ( window.location.href.indexOf('editor_id=input.') != -1 ) {
+            $('.files .file .links').hide();
+            $('.header-forms').addClass('sticky-top').addClass('bg-white').addClass('pt-2');
+
+            $('.files a.preview_link').click(function(e)
+            {
+                e.preventDefault();
+
+                var file_id = $(this).data('id');
+                var link = $('#small-img-'+file_id).attr('href');
+
+                var html_str = '<img src="' + link + '" class="img-fluid img-thumbnail" />';
+
+                if ( $(this).hasClass('not_image')){
+                    alert('It is not an image!');
+                    return false;
+                }
+
+                handleInsertToUploadField(html_str,file_id);
             });
         }
 
