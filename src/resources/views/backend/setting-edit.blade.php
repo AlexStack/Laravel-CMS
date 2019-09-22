@@ -6,7 +6,7 @@
         <div class="col-md">
 
             {!! Form::model($setting, ['route' => ['LaravelCmsAdminSettings.update', $setting->id], 'method' => "PUT",
-            'files'=>true]) !!}
+            'id'=>'cms_setting_form']) !!}
 
             @include($helper->bladePath('includes.setting-form','b'))
 

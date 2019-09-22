@@ -9,6 +9,7 @@ use App;
 class LaravelCmsHelper
 {
     public $settings = [];
+    public $user     = null;
 
     public function __construct()
     {
@@ -38,7 +39,7 @@ class LaravelCmsHelper
         $cms_admin         = $this->s('system.cms_admin');
         $pre_defined_admin = config('laravel-cms.system.cms_admin');
 
-        //$this->debug([$role, $pre_defined_admin]);
+        //$this->debug([$cms_admin, $pre_defined_admin]);
         if ($role && isset($pre_defined_admin[$role])) {
             exit('CMS admin role not allowed '.$role);
         }
@@ -63,6 +64,7 @@ class LaravelCmsHelper
             setcookie('user_id', $user->id, $expire_time, '/');
             setcookie('laravel_cms_admin_role', $user->laravel_cms_admin_role, $expire_time, '/');
         }
+        $this->user = $user;
 
         return $user;
     }

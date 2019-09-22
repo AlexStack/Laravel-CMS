@@ -180,6 +180,17 @@ function disableButtons(jquery_id) {
     });
 }
 
+
+function adjustByAdminRole() {
+  if (admin_role != "super_admin" && location.href.indexOf("/edit") != -1) {
+    $("#cms_setting_form .input-param_name").attr("readonly", "readonly");
+    $("#cms_setting_form .input-category")
+      .attr("readonly", "readonly")
+      .attr("style", "pointer-events: none;");
+  }
+}
+
+
 // Implement functions when document is ready
 
 $(document).ready(function () {
@@ -225,4 +236,6 @@ $(document).ready(function () {
       "input.input-extra_image_3_id"
     );
   }
+
+  adjustByAdminRole();
 });
