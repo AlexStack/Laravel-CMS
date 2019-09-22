@@ -2,6 +2,7 @@
 
 namespace AlexStack\LaravelCms\Repositories;
 
+use AlexStack\LaravelCms\Models\LaravelCmsFile;
 use AlexStack\LaravelCms\Models\LaravelCmsPage;
 
 class LaravelCmsPageAdminRepository extends BaseRepository
@@ -146,9 +147,14 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         $request  = request();
         $file_ary = ['main_image', 'main_banner', 'extra_image_1', 'extra_image_2', 'extra_image_3'];
         foreach ($file_ary as $field_name) {
-            $field_name_delete = $field_name.'_delete';
-
-            if ($request->hasFile($field_name)) {
+            $field_name_delete    = $field_name.'_delete';
+            $field_name_hidden_id = $field_name.'_id';
+            if ($request->$field_name_hidden_id) {
+                // file already exists
+                $all_file_data[$field_name] = LaravelCmsFile::find($request->$field_name_hidden_id)->toArray();
+                $form_data[$field_name]     = $request->$field_name_hidden_id;
+            } elseif ($request->hasFile($field_name)) {
+                // upload file
                 $all_file_data[$field_name] = $this->helper->uploadFile($request->file($field_name))->toArray();
                 $form_data[$field_name]     = $all_file_data[$field_name]['id'];
             } elseif ($request->$field_name_delete) {

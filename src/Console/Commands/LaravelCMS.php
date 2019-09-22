@@ -228,6 +228,18 @@ class LaravelCMS extends Command
         $this->line('<fg=red>**** Initialize Amila Laravel CMS ****</>');
         $this->line('<fg=red>****</>');
 
+        if (file_exists(storage_path('app/laravel-cms'))) {
+            $this->line('<fg=cyan>****</>');
+            $this->line('<fg=cyan>**** Seems the Laravel CMS already initialized ****</>');
+            $this->line('<fg=cyan>****</>');
+
+            $this->line('<fg=green>**** To Upgrade It   : </><fg=yellow>php artisan laravelcms --action=upgrade</>');
+            $this->line('<fg=green>**** To Clear Cache  : </><fg=yellow>php artisan laravelcms --action=clear</>');
+            $this->line('<fg=green>**** To Uninstall It : </><fg=yellow>php artisan laravelcms --action=uninstall</>');
+
+            return false;
+        }
+
         if ('' == trim($options['table_prefix'])) {
             $table_prefix = $this->ask('Set up a database table prefix instead of the default', 'cms_');
         } else {

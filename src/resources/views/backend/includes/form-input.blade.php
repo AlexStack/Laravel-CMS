@@ -29,35 +29,35 @@ $input_attributes['class'] = 'form-control input-'.$name;
 
     @elseif ( $type == 'file')
 
-    {!! Form::file($name, $input_attributes); !!}
+    {{-- {!! Form::file($name, $input_attributes); !!} --}}
+
+    <div class="input-group mb-3 input-group-{{$name}}">
+        <div class="input-group-prepend">
+            <span class="input-group-text text-secondary" ><i class="fas fa-upload"></i></span>
+        </div>
+        <div class="custom-file">
+            <input type="file"
+            name="{{$name}}"
+            class="custom-file-input {{$input_attributes['class'] ?? ''}}"
+            accept="{{$input_attributes['accept'] ?? '*'}}"
+            id="input-{{$name}}"
+            onchange="$(this).next().after().text($(this).val().split('\\').slice(-1)[0])">
+            <label class="custom-file-label" for="input-{{$name}}">{{$helper->t('upload,file') }}</label>
+        </div>
+    </div>
+
+    <input name='{{$name}}_id' type="hidden" class='input-{{$name}}_id'>
+
+    <div class="form-group upload-img" id="preview-{{$name}}">
     @if ( isset($file_data) && property_exists($file_data, $name) && isset($file_data->$name) )
-    <div class="form-group upload-img">
         <a href="{{$helper->imageUrl($file_data->$name, 'original','original') }}" target="_blank">
             <img class="img-fluid img-thumbnail p-1"
                 src="{{$helper->imageUrl($file_data->$name, $helper->s('file.small_image_width'), $helper->s('file.small_image_height')) }}"
                 style="max-height:{{$helper->s('file.small_image_height')}}px;" /></a>
 
-        {{$helper->t('delete') }}: {!! Form::checkbox($name . '_delete', 1, $checked ?? false); !!}
-
-        {{-- @if ( $name == 'main_image')
-        Insert Image:
-        <a href="#"
-            onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, 'w','h') }}');return
-        false;">Original
-        Image</a>
-        -
-        <a href="#"
-            onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, $helper->s('file.big_image_width'), 'h') }}');return false;">Big
-            Image</a>
-        -
-        <a href="#"
-            onclick="insertImageToEditor('.input-main_content', '{{$helper->imageUrl($file_data->$name, $helper->s('file.small_image_width'), $helper->s('file.small_image_height')) }}');return false;">Small
-            Image</a>
-
-        @endif --}}
-
-    </div>
+        {{$helper->t('delete,image') }}: {!! Form::checkbox($name . '_delete', 1, $checked ?? false); !!}
     @endif
+    </div>
 
     @elseif ( $type == 'checkbox')
 

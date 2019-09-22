@@ -493,6 +493,16 @@ class CmsSettingsTableSeeder extends Seeder
                 'enabled'         => 0,
                 'sort_value'      => 30,
             ],
+            30 => [
+                'param_name'      => 'full_screen',
+                'page_id'         => null,
+                'param_value'     => '0',
+                'input_attribute' => '{"select_options":{"1":"__(yes)", "0":"__(no)"},"rows":1,"required":"required"}',
+                'abstract'        => null,
+                'category'        => 'template',
+                'enabled'         => 0,
+                'sort_value'      => 77,
+            ],
         ]);
     }
 }

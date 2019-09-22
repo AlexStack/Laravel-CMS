@@ -25,9 +25,19 @@
 
     <link rel="stylesheet" href="{{ $helper->assetUrl('css/main.css') }}">
 
+    @if ( $helper->s('template.full_screen') == '1')
+    <style>
+        .container {
+            max-width: 100%;
+        }
+    </style>
+    @endif
+
 </head>
 
-<body class="{{$page->template_file}} page-{{$page->id}} slug-{{str_replace('.html', '', $page->slug) }}">
+<body class="cms-page {{$page->template_file}} slug-{{str_replace('.html', '', $page->slug) }}"
+    id="cms-page-{{$page->id}}">
+
     @include($helper->bladePath('includes.header'))
 
     @yield('content')

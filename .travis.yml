@@ -23,6 +23,7 @@ before_script:
   - composer show laravel/framework
   - cp -f ../.travis.env .env
   - composer clear
+  - php artisan serve &
   - composer require alexstack/laravel-cms "dev-$TRAVIS_BRANCH|$TRAVIS_BRANCH"
   - php artisan laravelcms --help
   - php artisan laravelcms --action=initialize --locale=zh --table_prefix=travis_cms_  --silent=yes
@@ -31,6 +32,7 @@ install:
   - composer install --prefer-dist --quiet
 
 script:
+  - php artisan laravelcms
   - php artisan laravelcms --action=upgrade --silent=yes
   - vendor/bin/phpunit vendor/alexstack/laravel-cms/src/tests/
   - php artisan laravelcms --action=uninstall --silent=yes

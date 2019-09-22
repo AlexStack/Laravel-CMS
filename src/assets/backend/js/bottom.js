@@ -29,14 +29,19 @@ function renderEditor(id, minHeight = 120) {
   });
 
   var label_class = id.replace("textarea.input-", "label.label-");
+  addBrowserFileButton(label_class, id);
+}
+
+function addBrowserFileButton(label_class, editor_id) {
+  // admin_route is defined in the page source code
   var browser_img_url =
-    admin_route + "/files?insert_files_to_editor=1&editor_id=" + id;
+    admin_route + "/files?insert_files_to_editor=1&editor_id=" + editor_id;
   var browser_img_str =
     '<a href="' +
     browser_img_url +
     '" target="_blank" class="ml-2 text-info show-iframe-modal" onclick="return showIframeModal(\'' +
     browser_img_url +
-    '\');" title="Insert File"><i class="far fa-images"></i></a>';
+    "', '#iframe-modal', 'Browser Files');\" title=\"Insert File\"><i class=\"far fa-images\"></i></a>";
 
   $(label_class).html($(label_class).html() + browser_img_str);
 }
@@ -56,14 +61,39 @@ function insertHtmlToEditor(editor_id, html_str) {
   $(editor_id).summernote("pasteHTML", html_str);
 }
 
+function insertToUploadField(upload_field_id, html_str, file_id) {
+  $(upload_field_id).val(file_id);
+
+  var file_input_id = upload_field_id
+    .replace("_id", "")
+    .replace("input.input-", ".input-group-");
+  var preview_id = upload_field_id
+    .replace("_id", "")
+    .replace("input.input-", "preview-");
+
+  html_str +=
+    '<a href="#" class="ml-3 text-secondary" onclick="jQuery(\'' +
+    upload_field_id +
+    "').val('');jQuery('#" +
+    preview_id +
+    "').fadeOut('slow');$('" +
+    file_input_id +
+    '\').fadeIn(\'slow\');return false;"><i class="fas fa-times-circle" title="Remove the file"></i></a>';
+
+  $(file_input_id).hide();
+  $("#" + preview_id)
+    .html(html_str)
+    .fadeIn("slow");
+}
+
 function showIframeModal(url, modal_id) {
   if (typeof modal_id == "undefined") {
     modal_id = "#iframe-modal";
   }
   if (
     $(modal_id + " iframe")
-      .attr("src")
-      .indexOf(url) == -1
+    .attr("src")
+    .indexOf(url) == -1
   ) {
     $(modal_id + " iframe").attr("src", url);
     $(modal_id + " iframe").addClass("iframe-loaded");
@@ -85,7 +115,7 @@ function switchNavTab(nav_tab_id) {
     return false;
   }
   $('.nav-tabs a[href="#' + nav_tab_id + '"]').trigger("click");
-  $('#page_content_form button[type="submit"]').click(function(e) {
+  $('#page_content_form button[type="submit"]').click(function (e) {
     if ($("#page_content_form .input-title").val() == "") {
       $('.nav-tabs a[href="#main-content"]').trigger("click");
       return false;
@@ -99,7 +129,7 @@ function sortableList(list_id) {
     handle: ".handle", // handle's class
     animation: 150,
     // Element dragging ended
-    onEnd: function(/**Event*/ evt) {
+    onEnd: function ( /**Event*/ evt) {
       var itemEl = evt.item; // dragged HTMLElement
       evt.to; // target list
       evt.from; // previous list
@@ -141,7 +171,7 @@ function adjustSmallScreen() {
 function disableButtons(jquery_id) {
   $(jquery_id)
     .closest("form")
-    .submit(function(e) {
+    .submit(function (e) {
       $(jquery_id + ' button[type="submit"] i')
         .removeClass()
         .addClass("fas fa-spinner fa-spin mr-2");
@@ -152,23 +182,47 @@ function disableButtons(jquery_id) {
 
 // Implement functions when document is ready
 
-$(document).ready(function() {
+$(document).ready(function () {
   renderEditor("textarea.input-main_content", 200);
-  setTimeout(function() {
+  setTimeout(function () {
     renderEditor("textarea.input-sub_content");
   }, 1500);
 
-  setTimeout(function() {
+  setTimeout(function () {
     renderEditor("textarea.input-abstract");
     renderEditor("textarea.input-extra_content_1");
     renderEditor("textarea.input-extra_content_2");
     renderEditor("textarea.input-extra_content_3");
   }, 3000);
 
-  setTimeout(function() {
+  setTimeout(function () {
     renderEditor("textarea.input-success_content");
   }, 4000);
 
   adjustSmallScreen();
   disableButtons("form .save-buttons");
+
+  if (document.getElementById("page_content_form")) {
+    addBrowserFileButton(
+      "#page_content_form .label-main_banner",
+      "input.input-main_banner_id"
+    );
+    addBrowserFileButton(
+      "#page_content_form .label-main_image",
+      "input.input-main_image_id"
+    );
+
+    addBrowserFileButton(
+      "#page_content_form .label-extra_image_1",
+      "input.input-extra_image_1_id"
+    );
+    addBrowserFileButton(
+      "#page_content_form .label-extra_image_2",
+      "input.input-extra_image_2_id"
+    );
+    addBrowserFileButton(
+      "#page_content_form .label-extra_image_3",
+      "input.input-extra_image_3_id"
+    );
+  }
 });
