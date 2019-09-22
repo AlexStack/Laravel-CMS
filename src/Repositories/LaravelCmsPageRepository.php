@@ -28,6 +28,13 @@ class LaravelCmsPageRepository extends BaseRepository
         if ('sitemap.txt' == $slug) {
             return $this->sitemap('txt');
         }
+        // $search_slug = ($this->helper->s('category.reserved_slugs.search') ?? 'Search-CMS');
+        // exit($search_slug);
+
+        if (($this->helper->s('category.reserved_slugs.search') ?? 'Search-CMS') == $slug) {
+            return $this->search($slug);
+        }
+
         if ('redirect-link' == $slug) {
             return $this->goExternalLink();
         }
@@ -171,5 +178,23 @@ class LaravelCmsPageRepository extends BaseRepository
 
         //$this->helper->debug($s);
         return redirect($s, 301);
+    }
+
+    public function search($slug)
+    {
+        $keyword       = request()->keyword;
+        $data['pages'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
+            return $query->where('title', 'like', '%'.trim($keyword).'%');
+        })
+            ->orderBy('id', 'desc')
+            ->paginate($this->helper->s('file.number_per_page') ?? 12);
+
+        $data['helper'] = $this->helper;
+
+        //return $data;
+        echo 'sss='.$this->helper->s('category.reserved_slugs.search');
+        $this->helper->debug($data['pages']->toArray());
+
+        return $slug;
     }
 }
