@@ -45,17 +45,21 @@ return [
     |--------------------------------------------------------------------------
     | 'slug_format' can be from_title, id, pinyin
     | 'slug_suffix' can be anything you want, empty means no suffix
+    | 'cms_admin' admin roles must keep the high to low privilege order
+    |             and the value of the role is user_id array
     */
-    'slug_format'   => 'from_title',
-    'slug_suffix'   => '.html',
-    'slug_separate' => '-',
-
-    /*
-    |--------------------------------------------------------------------------
-    | User id in admin_id_ary can access the cms backend
-    |--------------------------------------------------------------------------
-    */
-    'admin_id_ary' => [1, 1, 1],
+    'system' => [
+        'slug_format'         => 'from_title',
+        'slug_suffix'         => '.html',
+        'slug_separate'       => '-',
+        'allow_json_response' => 0,
+        'cms_version'         => '0.16.1',
+        'cms_admin'           => [
+            'super_admin'      => [1],
+            'web_admin'        => [1],
+            'content_admin'    => [1],
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -110,6 +114,4 @@ return [
         'backend_language'  => 'en',
         'frontend_language' => 'en',
     ],
-
-    'cms_version' => '0.16.1',
 ];

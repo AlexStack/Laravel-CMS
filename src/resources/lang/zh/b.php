@@ -55,7 +55,7 @@ return [
     'template'        => '模版',
     'view'            => '查看',
     'preview'         => '预览',
-
+    'system'          => '系统',
     // page form
     'title'            => '标题',
     'main_banner'      => '横幅图片',

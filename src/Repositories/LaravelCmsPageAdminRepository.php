@@ -169,9 +169,9 @@ class LaravelCmsPageAdminRepository extends BaseRepository
 
     public function generateSlug($slug, $def = null, $separate = '-')
     {
-        $slug_format = $this->helper->s('slug_format');
-        $slug_suffix = $this->helper->s('slug_suffix');
-        $separate    = $this->helper->s('slug_separate') ?? $separate;
+        $slug_format = $this->helper->s('system.slug_format');
+        $slug_suffix = $this->helper->s('system.slug_suffix');
+        $separate    = $this->helper->s('system.slug_separate') ?? $separate;
 
         if ('zh' == $this->helper->s('template.language')) {
             if ('from_title' == $slug_format) {
@@ -226,8 +226,8 @@ class LaravelCmsPageAdminRepository extends BaseRepository
 
     public function getSlug($form_data)
     {
-        $slug_format = $this->helper->s('slug_format');
-        $slug_suffix = $this->helper->s('slug_suffix');
+        $slug_format = $this->helper->s('system.slug_format');
+        $slug_suffix = $this->helper->s('system.slug_suffix');
 
         $default_slug = 'id' == $slug_format ? $form_data['id'] : ($form_data['menu_title'] ?? $form_data['title']);
         $new_slug     = $this->generateSlug($form_data['slug'], $default_slug);

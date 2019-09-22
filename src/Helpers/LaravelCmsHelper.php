@@ -28,21 +28,40 @@ class LaravelCmsHelper
         //echo App::getLocale() . ' - ' . config('laravel-cms.admin_route') . request()->url();
     }
 
-    public static function hasPermission()
+    public function hasPermission($role = null)
     {
         // return true;
         $user = \Auth::user();
         if (! $user) {
             exit('Can not get user info. Please logout and re-login again ');
         }
+        $cms_admin         = $this->s('system.cms_admin');
+        $pre_defined_admin = config('laravel-cms.system.cms_admin');
 
-        if (! in_array($user->id, config('laravel-cms.admin_id_ary'))) {
+        //$this->debug([$role, $pre_defined_admin]);
+        if ($role && isset($pre_defined_admin[$role])) {
+            exit('CMS admin role not allowed '.$role);
+        }
+
+        $user->laravel_cms_admin_role = null;
+        foreach ($pre_defined_admin as $pre_defined_role => $admin_id_ary) {
+            if (isset($cms_admin[$pre_defined_role]) && is_array($cms_admin[$pre_defined_role])) {
+                if (in_array($user->id, $cms_admin[$pre_defined_role])) {
+                    $user->laravel_cms_admin_role = $pre_defined_role;
+                    break;
+                } elseif ($role == $pre_defined_role) {
+                    exit('Access denied for user id '.$user->id.' for admin role '.$role);
+                }
+            }
+        }
+        if (! $user->laravel_cms_admin_role) {
             exit('Access denied for user id '.$user->id);
         }
 
         if (! isset($_COOKIE['user_id'])) {
             $expire_time = time() + 3600 * 24 * 180; // 180 days
             setcookie('user_id', $user->id, $expire_time, '/');
+            setcookie('laravel_cms_admin_role', $user->laravel_cms_admin_role, $expire_time, '/');
         }
 
         return $user;
@@ -61,10 +80,14 @@ class LaravelCmsHelper
             $param_ary = [$param_name];
         }
         if (isset($this->settings[$key_1]) && isset($this->settings[$key_1][$key_2])) {
-            $val = $this->settings[$key_1][$key_2];
+            if (isset($param_ary[2])) {
+                $val =  $this->settings[$key_1][$key_2][$param_ary[2]] ?? false;
+            } else {
+                $val = $this->settings[$key_1][$key_2];
+            }
         }
 
-        if (false === $val || isset($param_ary[2])) {
+        if (false === $val) {
             $val = config('laravel-cms.'.$param_name);
         }
 
@@ -171,9 +194,9 @@ class LaravelCmsHelper
 
     public function url($page, $is_abs_link = false)
     {
-        $slug_suffix = $this->s('slug_suffix');
+        $slug_suffix = $this->s('system.slug_suffix');
         if (! $page->slug) {
-            $page->slug = $page->id.$this->s('slug_suffix');
+            $page->slug = $page->id.$this->s('system.slug_suffix');
         }
         if ('' != trim($page->redirect_url)) {
             return trim($page->redirect_url);

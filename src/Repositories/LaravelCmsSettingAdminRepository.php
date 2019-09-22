@@ -129,7 +129,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
             //$settings = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
         }
         //$this->helper->debug($settings);
-        $custom_cats = $this->helper->s('category.admin_setting_tabs');
+        $custom_cats = $this->helper->s('system.admin_setting_tabs');
         if (! $custom_cats) {
             $custom_cats = [];
         }

@@ -17,7 +17,7 @@
 
             <div class="text-center mb-4 main-image">
                 @if ( isset($file_data->main_image) )
-                <img src="{{$helper->imageUrl($file_data->main_image, $helper->s('file.big_image_width')) }}"
+                <img src="{{$helper->imageUrl($file_data->main_image, $helper->s('file.large_image_width')) }}"
                     class="img-fluid" />
                 @endif
             </div>
