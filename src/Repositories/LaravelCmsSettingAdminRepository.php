@@ -213,7 +213,12 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
 
     public function filterDataByRole($data)
     {
-        $admin_role = $this->helper->user->laravel_cms_admin_role;
+        if ('cli' === php_sapi_name()) {
+            $admin_role = 'super_admin';
+        } else {
+            $admin_role = $this->helper->user->laravel_cms_admin_role;
+        }
+
         if ('content_admin' == $admin_role) {
             if (isset($data['settings'])) {
                 $data['settings']   = $data['settings']->filter(function ($value, $key) {
