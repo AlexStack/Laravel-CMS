@@ -503,6 +503,20 @@ class CmsSettingsTableSeeder extends Seeder
                 'enabled'         => 0,
                 'sort_value'      => 77,
             ],
+            31 => [
+                'param_name'      => 'cms_admin',
+                'page_id'         => null,
+                'param_value'     => '{
+    "super_admin" : [1],
+    "web_admin" : [1,2],
+    "content_admin": [3,1]
+}',
+                'input_attribute' => '{"rows":6,"required":"required"}',
+                'abstract'        => null,
+                'category'        => 'system',
+                'enabled'         => 0,
+                'sort_value'      => 20,
+            ],
         ]);
     }
 }
