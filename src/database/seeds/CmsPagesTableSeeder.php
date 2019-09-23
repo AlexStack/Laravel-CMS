@@ -70,7 +70,7 @@ class CmsPagesTableSeeder extends Seeder
                 'main_banner'      => null,
                 'main_image'       => null,
                 'sub_content'      => null,
-                'main_content'     => '<p>Contact us example page</p><p><br></p><p><br></p><p><br></p>',
+                'main_content'     => '<p>Contact us example page</p><p><br></p><p>Contact us example page<br></p><p><br></p>',
                 'sort_value'       => 7000,
                 'view_counts'      => null,
                 'tags'             => null,
