@@ -23,6 +23,16 @@ img.top-logo {
   max-height: 100px;
 }
 
+body.cms-page .main-title h1 {
+  padding-bottom: 1.1rem;
+}
+
+.search-results mark {
+  padding: 0;
+  background-color: rgb(247, 247, 247);
+  color: rgb(185, 2, 2);
+}
+
 /*
 .top-nav .dropdown:hover .dropdown-menu {
     display: block !important;

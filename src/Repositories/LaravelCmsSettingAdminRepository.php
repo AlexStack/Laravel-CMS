@@ -19,15 +19,18 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
      */
     public function index()
     {
-        $data['settings'] = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
+        $settings = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
 
         if (empty($this->helper->settings)) {
             $this->helper->rewriteConfigFile(); // create settings file
             $this->helper = new LaravelCmsHelper(); // reload new settings
         }
-
+        $data['settings']   = $settings;
         $data['helper']     = $this->helper;
         $data['categories'] = $this->getCategories($data['settings'], true);
+
+        $data = $this->filterDataByRole($data);
+        //$this->helper->debug($data['settings']->toArray());
 
         return $data;
     }
@@ -36,6 +39,8 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
     {
         $data['helper']     = $this->helper;
         $data['categories'] = $this->getCategories(null, false);
+
+        $data = $this->filterDataByRole($data);
 
         return $data;
     }
@@ -103,6 +108,11 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         $data['helper']     = $this->helper;
         $data['categories'] = $this->getCategories(null, false);
 
+        $data = $this->filterDataByRole($data);
+        if (! isset($data['categories'][$data['setting']->category])) {
+            exit('<script>alert("Sorry you do not have the permission to edit this item.");history.back();</script>');
+        }
+
         if ('template' == $data['setting']->category && 'frontend_dir' == $data['setting']->param_name) {
             $data['setting']->input_attribute = $this->getCmsTemplates()['frontend_attributes'];
         } elseif ('template' == $data['setting']->category && 'backend_dir' == $data['setting']->param_name) {
@@ -129,7 +139,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
             //$settings = LaravelCmsSetting::orderBy('sort_value', 'desc')->orderBy('id', 'desc')->get();
         }
         //$this->helper->debug($settings);
-        $custom_cats = $this->helper->s('category.admin_setting_tabs');
+        $custom_cats = $this->helper->s('system.admin_setting_tabs');
         if (! $custom_cats) {
             $custom_cats = [];
         }
@@ -197,6 +207,39 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         $data['backend_attributes']             = '{"select_options":'.json_encode($data['backend_options'] ?? ['backend'=>'Default backend template from Laravel CMS']).',"rows":1,"required":"required"}';
 
         // $this->helper->debug($data);
+
+        return $data;
+    }
+
+    public function filterDataByRole($data)
+    {
+        if ('cli' === php_sapi_name()) {
+            $admin_role = 'super_admin';
+        } else {
+            $admin_role = $this->helper->user->laravel_cms_admin_role;
+        }
+
+        if ('content_admin' == $admin_role) {
+            if (isset($data['settings'])) {
+                $data['settings']   = $data['settings']->filter(function ($value, $key) {
+                    return ! in_array($value->category, ['system', 'plugin', 'file', 'template', 'inquiry']);
+                });
+            }
+
+            unset($data['categories']['system']);
+            unset($data['categories']['plugin']);
+            unset($data['categories']['file']);
+            unset($data['categories']['template']);
+            unset($data['categories']['inquiry']);
+        } elseif ('web_admin' == $admin_role) {
+            if (isset($data['settings'])) {
+                $data['settings']   = $data['settings']->filter(function ($value, $key) {
+                    return ! in_array($value->category, ['system', 'plugin']);
+                });
+            }
+            unset($data['categories']['system']);
+            unset($data['categories']['plugin']);
+        }
 
         return $data;
     }

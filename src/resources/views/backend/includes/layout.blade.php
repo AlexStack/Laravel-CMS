@@ -23,23 +23,13 @@
     <link href="{{$helper->assetUrl('css/main.css', true, true) }}" rel="stylesheet">
     <script>
         var admin_route = "{{config('laravel-cms.admin_route')}}";
+        var admin_role  = "{{$helper->user->laravel_cms_admin_role}}";
     </script>
 </head>
 
 <body>
     @include($helper->bladePath('includes.header','b'))
     @yield('content')
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md text-center mt-5 mb-5 footer">
-                <span class="small"><a href="https://github.com/AlexStack/Laravel-CMS" target="_blank"
-                        class="text-dark">Laravel CMS</a> @
-                    {{date('Y')}}-{{date('Y')+1}}</span>
-            </div>
-        </div>
-    </div>
-
 
     <!-- iframe-modal -->
     <div id="iframe-modal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
@@ -54,8 +44,8 @@
                 </div>
                 <div class="modal-body p-0 m-0">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="data:text/html,Loading..."
-                            id="modal-iframe" data-loaded="iframe-modal-loaded"></iframe>
+                        <iframe class="embed-responsive-item" src="data:text/html,Loading..." id="modal-iframe"
+                            data-loaded="iframe-modal-loaded"></iframe>
                     </div>
                 </div>
 
@@ -63,24 +53,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.15.0/dist/umd/popper.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.10.0-rc3/Sortable.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-
-    <script src="{{$helper->assetUrl('js/summernote-ext-highlighter.js', true, true) }}"></script>
-
-    <script src="{{$helper->assetUrl('js/bottom.js', true, true) }}"></script>
-
-    <script>
-        $(function() {
-            switchNavTab("{{ $_GET['switch_nav_tab'] ?? '' }}");
-            sortableList('#sortableList');
-        });
-    </script>
+    @include($helper->bladePath('includes.footer','b'))
 
 </body>
 

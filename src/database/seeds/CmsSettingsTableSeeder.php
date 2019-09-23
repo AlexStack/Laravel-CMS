@@ -45,7 +45,7 @@ class CmsSettingsTableSeeder extends Seeder
                 // 'id'              => 3,
                 'param_name'      => 'favicon_url',
                 'page_id'         => null,
-                'param_value'     => '/favicon.ico',
+                'param_value'     => '/laravel-cms/frontend/images/favicon-32x32.png',
                 'input_attribute' => '{"rows":1,"required":"required"}',
                 'abstract'        => '',
                 'category'        => 'global',
@@ -61,9 +61,10 @@ class CmsSettingsTableSeeder extends Seeder
                 'page_id'     => null,
                 'param_value' => '<div class="row justify-content-end">
 <div class="col-md text-right text-secondary page_top">
-<i class="fab fa-facebook-square mr-3"></i>
-<i class="fab fa-twitter-square mr-3"></i>
-<i class="fas fa-envelope mr-4"></i>
+<i class="fab fa-facebook-square mr-3" style="color:#395599;"></i>
+<i class="fab fa-twitter-square mr-3" style="color:#2caae1;"></i>
+<a href="ROUTE(LaravelCmsPages.show,\'Contact-Us.html\')" class="text-success"><i class="fas fa-envelope mr-3"></i></a>
+<a href="ROUTE(LaravelCmsPages.show,SETTING(system.reserved_slugs.search))" class="text-primary"><i class="fas fa-search mr-4"></i></a>
 </div>
 </div>',
                 'input_attribute' => '{"rows":11,"required":"required"}',
@@ -142,7 +143,7 @@ class CmsSettingsTableSeeder extends Seeder
 "pinyin":"Generate slug from page title and translate to Chinese PinYin"},
 "required":"required"}',
                 'abstract'   => null,
-                'category'   => 'global',
+                'category'   => 'system',
                 'enabled'    => 1,
                 'sort_value' => 45,
                 // 'created_at' => '2019-09-05 13:41:53',
@@ -159,7 +160,7 @@ class CmsSettingsTableSeeder extends Seeder
 ".asp":"Set default page URL with .asp suffix", ".htm":"Set default page URL with .htm suffix"},
 "required":"required"}',
                 'abstract'   => null,
-                'category'   => 'global',
+                'category'   => 'system',
                 'enabled'    => 1,
                 'sort_value' => 42,
                 // 'created_at' => '2019-09-05 13:42:14',
@@ -176,7 +177,7 @@ class CmsSettingsTableSeeder extends Seeder
 "":"Separate words without any symbol for page URL"},
 "required":"required"}',
                 'abstract'   => null,
-                'category'   => 'global',
+                'category'   => 'system',
                 'enabled'    => 0,
                 'sort_value' => 40,
                 // 'created_at' => '2019-09-05 13:43:28',
@@ -295,14 +296,14 @@ class CmsSettingsTableSeeder extends Seeder
                 'param_value' => '{
 "global" : "<i class=\'fas fa-cog mr-1\'></i>__(global,settings)",
 "template" : "<i class=\'fas fa-globe mr-1\'></i>__(template)",
-"plugin" : "<i class=\'fas fa-cogs mr-1\'></i>__(plugin)",
 "file" : "<i class=\'fas fa-image mr-1\'></i>__(file)",
 "inquiry" : "<i class=\'fas fa-user-edit mr-1\'></i>__(inquiry)",
-"category" : "<i class=\'fas fa-cubes mr-1\'></i>__(category)"
+"plugin" : "<i class=\'fas fa-cogs mr-1\'></i>__(plugin)",
+"system" : "<i class=\'fas fa-cubes mr-1\'></i>__(system)"
 }',
                 'input_attribute' => '{"rows":11,"required":"required"}',
                 'abstract'        => null,
-                'category'        => 'category',
+                'category'        => 'system',
                 'enabled'         => 1,
                 'sort_value'      => 98,
                 // 'created_at'      => '2019-09-07 14:53:34',
@@ -311,7 +312,7 @@ class CmsSettingsTableSeeder extends Seeder
             ],
             17 => [
                 // 'id'              => 26,
-                'param_name'      => 'big_image_width',
+                'param_name'      => 'large_image_width',
                 'page_id'         => null,
                 'param_value'     => '1000',
                 'input_attribute' => '{"rows":1,"required":"required"}',
@@ -392,7 +393,7 @@ class CmsSettingsTableSeeder extends Seeder
 }',
                 'input_attribute' => '{"rows":11,"required":"required"}',
                 'abstract'        => null,
-                'category'        => 'category',
+                'category'        => 'system',
                 'enabled'         => 1,
                 'sort_value'      => 200,
                 // 'created_at'      => '2019-09-09 09:41:35',
@@ -489,7 +490,7 @@ class CmsSettingsTableSeeder extends Seeder
                 'param_value'     => '1',
                 'input_attribute' => '{"select_options":{"1":"__(yes)", "0":"__(no)"},"rows":1,"required":"required"}',
                 'abstract'        => null,
-                'category'        => 'global',
+                'category'        => 'system',
                 'enabled'         => 0,
                 'sort_value'      => 30,
             ],
@@ -502,6 +503,35 @@ class CmsSettingsTableSeeder extends Seeder
                 'category'        => 'template',
                 'enabled'         => 0,
                 'sort_value'      => 77,
+            ],
+            31 => [
+                'param_name'      => 'cms_admin',
+                'page_id'         => null,
+                'param_value'     => '{
+    "super_admin" : [1],
+    "web_admin" : [1,2],
+    "content_admin": [3,1]
+}',
+                'input_attribute' => '{"rows":6,"required":"required"}',
+                'abstract'        => null,
+                'category'        => 'system',
+                'enabled'         => 0,
+                'sort_value'      => 20,
+            ],
+            32 => [
+                'param_name'      => 'reserved_slugs',
+                'page_id'         => null,
+                'param_value'     => '{
+"search" : "Search-CMS.html",
+"sitemap" : "sitemap.txt",
+"redirect" : "redirect-link",
+"tag" : "List-Tag.html"
+}',
+                'input_attribute' => '{"rows":6,"required":"required"}',
+                'abstract'        => null,
+                'category'        => 'system',
+                'enabled'         => 0,
+                'sort_value'      => 20,
             ],
         ]);
     }

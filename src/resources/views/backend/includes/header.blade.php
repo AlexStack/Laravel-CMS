@@ -9,7 +9,7 @@
         </div>
         <div class="col text-right pt-3 menu-links">
             @php
-            $menu_links = $helper->s('category.admin_menu_links');
+            $menu_links = $helper->s('system.admin_menu_links');
             if ( is_array($menu_links)){
             foreach($menu_links as $link){
             if ( is_array($link)) {

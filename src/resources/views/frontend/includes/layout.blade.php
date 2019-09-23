@@ -8,10 +8,10 @@
     <title>
         {{$page->meta_title ?? $page->title}}{{strlen($page->meta_title ?? $page->title) < 60 ? ' - ' . $helper->s('site_name') : ''}}
     </title>
-    @if ( $page->meta_keywords )
+    @if ( isset($page->meta_keywords) )
     <meta name="keywords" content="{{$page->meta_keywords}}" />
     @endif
-    @if ( $page->meta_description )
+    @if ( isset($page->meta_description) )
     <meta name="description" content="{{$page->meta_description}}" />
     @endif
 

@@ -26,7 +26,6 @@ class CmsInquirySettingsTableSeeder extends Seeder
 
         \DB::table($this->table_name)->insert([
             0 => [
-                'id'                   => 1,
                 'form_layout'          => null,
                 'page_id'              => 1,
                 'default_setting_id'   => null,
@@ -48,9 +47,24 @@ class CmsInquirySettingsTableSeeder extends Seeder
                 'google_recaptcha_no_tick_msg' => 'v3',
                 'google_recaptcha_enabled'     => 0,
                 'form_enabled'                 => 0,
-                'created_at'                   => '2019-09-14 12:01:26',
-                'updated_at'                   => '2019-09-16 10:11:46',
-                'deleted_at'                   => null,
+            ],
+            1 => [
+                'form_layout'                  => null,
+                'page_id'                      => 2,
+                'default_setting_id'           => null,
+                'form_layout_filename'         => null,
+                'display_form_fields'          => null,
+                'mail_from'                    => null,
+                'mail_to'                      => null,
+                'mail_subject'                 => null,
+                'success_title'                => '',
+                'success_content'              => '',
+                'google_recaptcha_site_key'    => null,
+                'google_recaptcha_secret_key'  => null,
+                'google_recaptcha_css_class'   => null,
+                'google_recaptcha_no_tick_msg' => null,
+                'google_recaptcha_enabled'     => null,
+                'form_enabled'                 => 1,
             ],
         ]);
     }

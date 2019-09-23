@@ -97,7 +97,7 @@
 
                     @if ( $file->is_image)
                     <div class="file-icon">
-                        <a href="{{ route('LaravelCmsAdminFiles.show',['file'=>$file->id, 'generate_image'=>'yes', 'width'=>$helper->s('file.big_image_width'), 'height'=>$helper->s('file.big_image_height')]) }}"
+                        <a href="{{ route('LaravelCmsAdminFiles.show',['file'=>$file->id, 'generate_image'=>'yes', 'width'=>$helper->s('file.large_image_width'), 'height'=>$helper->s('file.large_image_height')]) }}"
                             target="_blank" data-id="{{$file->id}}"
                             title="Size: {{($file->filesize/1024 > 1000) ? round($file->filesize/1024/1024,2) . ' MB' : round($file->filesize/1024) . ' KB' }}"
                             class="preview_link is_image">
@@ -113,7 +113,7 @@
                             O<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 
 
-                        <a href="{{ route('LaravelCmsAdminFiles.show',['file'=>$file->id, 'generate_image'=>'yes', 'width'=>$helper->s('file.big_image_width'), 'height'=>$helper->s('file.big_image_height')]) }}"
+                        <a href="{{ route('LaravelCmsAdminFiles.show',['file'=>$file->id, 'generate_image'=>'yes', 'width'=>$helper->s('file.large_image_width'), 'height'=>$helper->s('file.large_image_height')]) }}"
                             class="preview_link is_image" target="_blank" title="{{ $helper->t('large_image') }}">
                             L<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
 

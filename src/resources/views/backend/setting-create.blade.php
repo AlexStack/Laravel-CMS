@@ -5,7 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md">
 
-            {!! Form::model($_GET, ['route' => ['LaravelCmsAdminSettings.store'], 'method' => "POST", 'files'=>true])
+            {!! Form::model($_GET, ['route' => ['LaravelCmsAdminSettings.store'], 'method' => "POST",
+            'id'=>'cms_setting_form'])
             !!}
             @include($helper->bladePath('includes.setting-form','b'))
 

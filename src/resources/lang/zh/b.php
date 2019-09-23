@@ -2,35 +2,38 @@
 
 return [
     // layout
-    'setting'                     => '设置',
-    'settings'                    => '设置',
-    'main_content'                => '主要内容',
-    'extra_content'               => '附加内容',
-    'all_page'                    => '全部页面',
-    'create_new_page'             => '添加新页面',
+    'setting'         => '设置',
+    'settings'        => '设置',
+    'main_content'    => '主要内容',
+    'extra_content'   => '附加内容',
+    'all_page'        => '全部页面',
+    'create_new_page' => '添加新页面',
+    'delete'          => '删除',
+    'upload'          => '上传',
+    'search'          => '搜索',
+    'insert'          => '插入',
+    'submit'          => '提交',
+    'default'         => '默认',
+    'page'            => '页面',
+    'pages'           => '页面',
+    'files'           => '文件',
+    'homepage'        => '首页',
+    'all'             => '全部',
+    'form'            => '表单',
+    'choose'          => '选择',
+    'yes'             => '是的',
+    'no'              => '不是',
+
     'save_and_continue_edit'      => '保存并继续修改',
     'save_and_return_to_the_list' => '保存并返回列表页',
-    'delete'                      => '删除',
-    'upload'                      => '上传',
-    'search'                      => '搜索',
-    'insert'                      => '插入',
-    'submit'                      => '提交',
-    'default'                     => '默认',
-    'page'                        => '页面',
-    'pages'                       => '页面',
-    'files'                       => '文件',
-    'homepage'                    => '首页',
-    'all'                         => '全部',
-    'form'                        => '表单',
-    'choose'                      => '选择',
 
     // dashboard
     'dashboard'          => '管理面板',
-    'cms_version_notice' => '感谢您选择 Amila Laravel CMS, 目前已安装的CMS版本是 :current，已发布的最新的版本是 :latest ',
     'latest_name'        => '最新修改的:name',
     'logout'             => '安全退出',
     'version'            => '版本',
     'server_os'          => '服务器系统',
+    'cms_version_notice' => '感谢您选择 Amila Laravel CMS, 目前已安装的CMS版本是 :current，已发布的最新的版本是 :latest ',
 
     // setting form
     'param_name'      => '参数名称',
@@ -52,7 +55,7 @@ return [
     'template'        => '模版',
     'view'            => '查看',
     'preview'         => '预览',
-
+    'system'          => '系统',
     // page form
     'title'            => '标题',
     'main_banner'      => '横幅图片',
@@ -136,4 +139,9 @@ return [
     'extra_data_3'                 => '附加数据3',
     'extra_data_4'                 => '附加数据4',
     'extra_data_5'                 => '附加数据5',
+
+    'wrong_json_format_str'        => ':Name is NOT a Correct Json Format string!! <hr> Please input a correct json format string. eg. use \\\\ instead of \, use " instead of \' , no comma for the last property<hr>Please make  { not at the begging or make  } not at the end if the input is not a json string',
+
+    // frontend
+    'page_number'  => '第:number页',
 ];

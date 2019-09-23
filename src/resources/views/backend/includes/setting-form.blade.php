@@ -5,7 +5,7 @@
 "param_name","input_attributes"=>['required'=>'required','pattern'=>'[a-zA-Z0-9\-_]{2,60}']])
 
 @php
-$attr = isset($setting) ? json_decode($helper->parseCmsStr($setting->input_attribute), TRUE) : [];
+$attr = isset($setting) ? json_decode($helper->parseCmsStr($setting->input_attribute), TRUE) : ['required'=>'required'];
 //$helper->debug($attr);
 $input_type = ( isset($attr['rows']) && $attr['rows'] > 1 ) ?'textarea' : 'text';
 if ( isset($attr['select_options']) && is_array($attr['select_options']) ) {

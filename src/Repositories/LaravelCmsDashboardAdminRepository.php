@@ -22,7 +22,7 @@ class LaravelCmsDashboardAdminRepository extends BaseRepository
     public function index()
     {
         $data['helper']      = $this->helper;
-        $data['cms_version'] = $this->helper->s('cms_version');
+        $data['cms_version'] = $this->helper->s('system.cms_version');
         if (file_exists(base_path('composer.lock'))) {
             $packages = json_decode(file_get_contents(base_path('composer.lock')), true);
             if (isset($packages['packages'])) {
