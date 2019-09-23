@@ -59,6 +59,12 @@ return [
             'web_admin'        => [1],
             'content_admin'    => [1],
         ],
+        'reserved_slugs' => [
+            'search'   => 'Search-CMS.html',
+            'sitemap'  => 'sitemap.txt',
+            'redirect' => 'redirect-link',
+            'tag'      => 'List-Tag.html',
+        ],
     ],
 
     /*

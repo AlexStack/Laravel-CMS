@@ -4,8 +4,9 @@
 
     <div class="{{$card_class ?? 'col-md-4 mb-4' }}">
         <div class="card">
-            <h4 class="card-header"><a
-                    href="{{ route('LaravelCmsPages.show', ($sub_page->slug ?? $sub_page->id . '.html'), false ) }}">{{$sub_page->menu_title ?? $sub_page->title}}</a>
+            <h4 class="text-truncate card-header"><a
+                    href="{{ route('LaravelCmsPages.show', ($sub_page->slug ?? $sub_page->id . '.html'), false ) }}"
+                    title="{{$sub_page->title}}">{{$sub_page->menu_title ?? $sub_page->title}}</a>
             </h4>
             <div class="card-body">
                 @php

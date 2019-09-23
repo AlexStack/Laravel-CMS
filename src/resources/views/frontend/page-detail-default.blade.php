@@ -40,7 +40,7 @@
 
             @include($helper->bladePath('includes.sub-page-cards'), ['sub_pages' =>
             $page->children, 'card_class'=>'col-md-4 mb-4', 'img_width'=>$helper->s('file.small_image_width'),
-            'img_height'=>$helper->s('file.big_image_height') ])
+            'img_height'=>$helper->s('file.small_image_height') ])
 
 
             @include($helper->bladePath('includes.breadcrumb'))

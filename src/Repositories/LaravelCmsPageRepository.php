@@ -24,20 +24,17 @@ class LaravelCmsPageRepository extends BaseRepository
 
     public function show($id)
     {
-        $slug = $id;
-        if ('sitemap.txt' == $slug) {
-            return $this->sitemap('txt');
-        }
-        // $search_slug = ($this->helper->s('category.reserved_slugs.search') ?? 'Search-CMS');
-        // exit($search_slug);
+        $slug           = $id;
+        $reserved_slugs = $this->helper->s('system.reserved_slugs');
 
-        if (($this->helper->s('category.reserved_slugs.search') ?? 'Search-CMS') == $slug) {
+        if (($reserved_slugs['search'] ?? 'Search-CMS') == $slug) {
             return $this->search($slug);
-        }
-
-        if ('redirect-link' == $slug) {
+        } elseif (($reserved_slugs['sitemap'] ?? 'sitemap.txt') == $slug) {
+            return $this->sitemap('txt');
+        } elseif (($reserved_slugs['redirect'] ?? 'redirect-link') == $slug) {
             return $this->goExternalLink();
         }
+
         $data['menus'] = $this->menus();
         if (is_numeric(str_replace('.html', '', $slug))) {
             $search_field = 'id';
@@ -182,18 +179,34 @@ class LaravelCmsPageRepository extends BaseRepository
 
     public function search($slug)
     {
-        $keyword       = request()->keyword;
-        $data['pages'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
-            return $query->where('title', 'like', '%'.trim($keyword).'%');
-        })
+        $keyword                = request()->keyword;
+        if ($keyword) {
+            $data['search_results'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
+                return $query->where('title', 'like', '%'.trim($keyword).'%')
+                ->orWhere('main_content', 'like', '%'.trim($keyword).'%')
+                ->orWhere('sub_content', 'like', '%'.trim($keyword).'%');
+            })
             ->orderBy('id', 'desc')
-            ->paginate($this->helper->s('file.number_per_page') ?? 12);
+            ->paginate($this->helper->s('template.number_per_search') ?? 6);
+        } else {
+            $data['search_results'] = [];
+        }
 
         $data['helper'] = $this->helper;
+        $data['menus']  = $this->menus();
 
-        //return $data;
+        // simulate a page collection
+        $data['page']                       = collect();
+        $data['page']->template_file        = 'page-search-result';
+        $data['page']->title                = $this->helper->t('search').' '.$keyword;
+        $data['page']->meta_title           = $data['page']->title.' ('.$this->helper->t('page_number', ['number'=>$_GET['page'] ?? 1]).')';
+        $data['page']->slug                 = $slug;
+        $data['page']->id                   = $slug;
+        $data['page']->parent_flat_ary      = [];
+
+        return $data;
         echo 'sss='.$this->helper->s('category.reserved_slugs.search');
-        $this->helper->debug($data['pages']->toArray());
+        $this->helper->debug($data['page']->toArray());
 
         return $slug;
     }

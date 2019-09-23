@@ -61,9 +61,10 @@ class CmsSettingsTableSeeder extends Seeder
                 'page_id'     => null,
                 'param_value' => '<div class="row justify-content-end">
 <div class="col-md text-right text-secondary page_top">
-<i class="fab fa-facebook-square mr-3"></i>
-<i class="fab fa-twitter-square mr-3"></i>
-<i class="fas fa-envelope mr-4"></i>
+<i class="fab fa-facebook-square mr-3" style="color:#395599;"></i>
+<i class="fab fa-twitter-square mr-3" style="color:#2caae1;"></i>
+<a href="ROUTE(LaravelCmsPages.show,\'Contact-Us.html\')" class="text-success"><i class="fas fa-envelope mr-3"></i></a>
+<a href="ROUTE(LaravelCmsPages.show,SETTING(system.reserved_slugs.search))" class="text-primary"><i class="fas fa-search mr-4"></i></a>
 </div>
 </div>',
                 'input_attribute' => '{"rows":11,"required":"required"}',
@@ -510,6 +511,21 @@ class CmsSettingsTableSeeder extends Seeder
     "super_admin" : [1],
     "web_admin" : [1,2],
     "content_admin": [3,1]
+}',
+                'input_attribute' => '{"rows":6,"required":"required"}',
+                'abstract'        => null,
+                'category'        => 'system',
+                'enabled'         => 0,
+                'sort_value'      => 20,
+            ],
+            32 => [
+                'param_name'      => 'reserved_slugs',
+                'page_id'         => null,
+                'param_value'     => '{
+"search" : "Search-CMS.html",
+"sitemap" : "sitemap.txt",
+"redirect" : "redirect-link",
+"tag" : "List-Tag.html"
 }',
                 'input_attribute' => '{"rows":6,"required":"required"}',
                 'abstract'        => null,

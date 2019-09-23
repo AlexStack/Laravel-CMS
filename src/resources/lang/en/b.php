@@ -141,4 +141,7 @@ return [
  'extra_data_5'                 => 'Extra Data 5',
 
 'wrong_json_format_str'         => ':Name is NOT a Correct Json Format string!! <hr> Please input a correct json format string. eg. use \\\\ instead of \, use " instead of \' , no comma for the last property<hr>Please make  { not at the begging or make  } not at the end if the input is not a json string',
+
+// frontend
+'page_number'  => 'Page :number',
 ];

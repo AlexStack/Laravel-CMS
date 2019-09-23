@@ -515,6 +515,18 @@ class LaravelCmsHelper
             );
         }
 
+        if (false !== strpos($str, 'SETTING(')) {
+            $str = preg_replace_callback(
+                "/SETTING\((.*)\)/U",
+                function ($matches) {
+                    $param_name = trim(str_replace(['\\', '\'', '"'], '', $matches[1]));
+
+                    return $this->s($param_name) ?? 'no_setting_'.$matches[1];
+                },
+                $str
+            );
+        }
+
         if (false !== strpos($str, 'ROUTE(')) {
             $str = preg_replace_callback(
                 "/ROUTE\((.*)\)/U",
