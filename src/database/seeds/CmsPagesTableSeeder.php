@@ -2,6 +2,7 @@
 
 namespace AlexStack\LaravelCms;
 
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use Illuminate\Database\Seeder;
 
 class CmsPagesTableSeeder extends Seeder
@@ -13,6 +14,7 @@ class CmsPagesTableSeeder extends Seeder
     {
         $this->config     = include base_path('config/laravel-cms.php');
         $this->table_name = $this->config['table_name']['pages'];
+        $this->helper     = new LaravelCmsHelper();
     }
 
     /**
@@ -30,7 +32,7 @@ class CmsPagesTableSeeder extends Seeder
                 'menu_enabled'     => 1,
                 'status'           => 'publish',
                 'title'            => 'About Our Team',
-                'menu_title'       => 'About Us',
+                'menu_title'       => $this->helper->t('about,us'),
                 'slug'             => 'AboutUs.html',
                 'template_file'    => null,
                 'meta_title'       => null,
@@ -59,8 +61,8 @@ class CmsPagesTableSeeder extends Seeder
                 'parent_id'        => null,
                 'menu_enabled'     => 1,
                 'status'           => 'publish',
-                'title'            => 'Contact Us',
-                'menu_title'       => 'Contact',
+                'title'            => $this->helper->t('contact,us'),
+                'menu_title'       => $this->helper->t('contact,us'),
                 'slug'             => 'Contact-Us.html',
                 'template_file'    => null,
                 'meta_title'       => null,
@@ -89,8 +91,8 @@ class CmsPagesTableSeeder extends Seeder
                 'parent_id'        => null,
                 'menu_enabled'     => 1,
                 'status'           => 'publish',
-                'title'            => 'Our Services',
-                'menu_title'       => 'Services',
+                'title'            => $this->helper->t('our,services'),
+                'menu_title'       => $this->helper->t('services'),
                 'slug'             => 'Our-Services.html',
                 'template_file'    => null,
                 'meta_title'       => null,
@@ -119,8 +121,8 @@ class CmsPagesTableSeeder extends Seeder
                 'parent_id'        => null,
                 'menu_enabled'     => 1,
                 'status'           => 'publish',
-                'title'            => 'Our Products',
-                'menu_title'       => 'Products',
+                'title'            => $this->helper->t('our,products'),
+                'menu_title'       => $this->helper->t('products'),
                 'slug'             => '4.html',
                 'template_file'    => null,
                 'meta_title'       => null,
@@ -149,8 +151,8 @@ class CmsPagesTableSeeder extends Seeder
                 'parent_id'        => null,
                 'menu_enabled'     => 1,
                 'status'           => 'publish',
-                'title'            => 'Homepage',
-                'menu_title'       => 'Home',
+                'title'            => $this->helper->t('homepage'),
+                'menu_title'       => $this->helper->t('home'),
                 'slug'             => 'homepage',
                 'template_file'    => null,
                 'meta_title'       => null,
@@ -179,8 +181,8 @@ class CmsPagesTableSeeder extends Seeder
                 'parent_id'        => 4,
                 'menu_enabled'     => 1,
                 'status'           => 'publish',
-                'title'            => 'Sub Product 1',
-                'menu_title'       => 'Product 1',
+                'title'            => $this->helper->t('sub,product').' 1',
+                'menu_title'       => null,
                 'slug'             => '6.html',
                 'template_file'    => null,
                 'meta_title'       => null,
@@ -209,8 +211,8 @@ class CmsPagesTableSeeder extends Seeder
                 'parent_id'        => 4,
                 'menu_enabled'     => 1,
                 'status'           => 'publish',
-                'title'            => 'Sub Product 2',
-                'menu_title'       => 'Product 2',
+                'title'            => $this->helper->t('sub,product').' 2',
+                'menu_title'       => null,
                 'slug'             => '7.html',
                 'template_file'    => null,
                 'meta_title'       => null,
@@ -239,8 +241,8 @@ class CmsPagesTableSeeder extends Seeder
                 'parent_id'        => 4,
                 'menu_enabled'     => 1,
                 'status'           => 'publish',
-                'title'            => 'Sub Product 3',
-                'menu_title'       => 'Product 3',
+                'title'            => $this->helper->t('sub,product').' 3',
+                'menu_title'       => null,
                 'slug'             => '8.html',
                 'template_file'    => null,
                 'meta_title'       => null,

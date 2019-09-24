@@ -43,7 +43,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
             return redirect()->to($url);
         }
 
-        return true;
+        return 'generate_image error';
     }
 
     public function create()

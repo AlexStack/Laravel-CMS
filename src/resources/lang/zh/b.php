@@ -18,6 +18,7 @@ return [
     'pages'           => '页面',
     'files'           => '文件',
     'homepage'        => '首页',
+    'home'            => '首页',
     'all'             => '全部',
     'form'            => '表单',
     'choose'          => '选择',
@@ -143,5 +144,14 @@ return [
     'wrong_json_format_str'        => ':Name is NOT a Correct Json Format string!! <hr> Please input a correct json format string. eg. use \\\\ instead of \, use " instead of \' , no comma for the last property<hr>Please make  { not at the begging or make  } not at the end if the input is not a json string',
 
     // frontend
-    'page_number'  => '第:number页',
+    'page_number'        => '第:number页',
+    'our'                => '我们的',
+    'us'                 => '我们',
+    'about'              => '关于',
+    'contact'            => '联系',
+    'product'            => '产品',
+    'products'           => '产品',
+    'service'            => '服务',
+    'services'           => '服务',
+    'sub'                => '子',
 ];
