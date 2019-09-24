@@ -53,7 +53,7 @@ class CmsPagesTableSeeder extends Seeder
                 'redirect_url'     => null,
                 'deleted_at'       => null,
                 'created_at'       => '2019-08-15 23:23:53',
-                'updated_at'       => '2019-08-15 23:56:37',
+                'updated_at'       => '2019-08-24 23:56:37',
             ],
             1 => [
                 'id'               => 2,
@@ -83,7 +83,7 @@ class CmsPagesTableSeeder extends Seeder
                 'redirect_url'     => null,
                 'deleted_at'       => null,
                 'created_at'       => '2019-08-15 23:24:33',
-                'updated_at'       => '2019-08-15 23:56:52',
+                'updated_at'       => '2019-08-25 23:56:52',
             ],
             2 => [
                 'id'               => 3,
@@ -113,7 +113,7 @@ class CmsPagesTableSeeder extends Seeder
                 'redirect_url'     => null,
                 'deleted_at'       => null,
                 'created_at'       => '2019-08-15 23:24:50',
-                'updated_at'       => '2019-08-15 23:56:45',
+                'updated_at'       => '2019-08-23 23:56:45',
             ],
             3 => [
                 'id'               => 4,
@@ -143,7 +143,7 @@ class CmsPagesTableSeeder extends Seeder
                 'redirect_url'     => null,
                 'deleted_at'       => null,
                 'created_at'       => '2019-08-15 23:25:33',
-                'updated_at'       => '2019-08-15 23:50:52',
+                'updated_at'       => '2019-08-22 23:50:52',
             ],
             4 => [
                 'id'               => 1,
@@ -173,7 +173,7 @@ class CmsPagesTableSeeder extends Seeder
                 'redirect_url'     => null,
                 'deleted_at'       => null,
                 'created_at'       => '2019-08-15 23:25:50',
-                'updated_at'       => '2019-08-15 23:47:10',
+                'updated_at'       => '2019-09-15 23:47:10',
             ],
             5 => [
                 'id'               => 6,

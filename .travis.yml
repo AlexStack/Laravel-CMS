@@ -1,6 +1,7 @@
 language: php
 
 php:
+  - 7.1
   - 7.2
   - 7.3
   #- 7.4snapshot
@@ -20,7 +21,12 @@ before_install:
 
 before_script:
   - composer self-update
-  - composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+  - |-
+    if [[ "$TRAVIS_PHP_VERSION" == "7.1" ]]; then
+      composer create-project --prefer-dist laravel/laravel cms "5.7.*"
+    else
+      composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+    fi
   - cd cms
   - composer show laravel/framework
   - cp -f ../.travis.env .env
