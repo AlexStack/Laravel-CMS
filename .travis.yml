@@ -1,7 +1,9 @@
 language: php
 
 php:
+  - 7.1
   - 7.2
+  - 7.4snapshot
 
 sudo: false
 env:
