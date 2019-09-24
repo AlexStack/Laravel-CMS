@@ -12,9 +12,17 @@
 
 {!! $gg_recaptcha !!}
 
+<!-- Start of the laravel-cms-inquiry-form script -->
 <script>
     $("#laravel-cms-inquiry-form").submit(function(event){
     event.preventDefault();
+    if( typeof(grecaptcha) != 'undefined'){
+        var response = grecaptcha.getResponse();
+        if(response.length == 0) {
+            //alert('Google recaptcha not ticked, no ajax');
+            return false;
+        }
+    }
     $.ajax({
         url : $(this).attr("action"),
         type: $(this).attr("method"),
@@ -46,3 +54,4 @@
     });
 });
 </script>
+<!-- End of the laravel-cms-inquiry-form script -->
