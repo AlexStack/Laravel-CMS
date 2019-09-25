@@ -28,11 +28,22 @@ class LaravelCmsPageController extends Controller
     {
         $data = $this->repo->show($slug);
 
-        if ('1' == $this->helper->s('allow_json_response') && 'json' == request()->response_type) {
+        if ('1' == $this->helper->s('system.allow_json_response') && 'json' == request()->response_type) {
             unset($data['helper']);
             unset($data['plugins']);
 
-            return response()->json($data);
+            $rs = response()->json($data);
+
+            if ($this->helper->s('system.allow_access_origin')) {
+                $rs->header('Access-Control-Allow-Origin', $this->helper->s('system.allow_access_origin'));
+                if ($this->helper->s('system.allow_access_methods')) {
+                    $rs->header('Access-Control-Allow-Methods', $this->helper->s('system.allow_access_methods'));
+                } else {
+                    $rs->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+                }
+            }
+
+            return $rs;
         }
 
         return view($this->helper->bladePath($data['page']->template_file, 'f'), $data);
