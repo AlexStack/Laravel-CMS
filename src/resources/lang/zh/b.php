@@ -98,12 +98,14 @@ return [
     'no_result'          => '没有任何结果',
     'delete_message'     => '请确定要删除此内容？',
     'total'              => '总共',
+    'advanced'           => '高级',
 
     //'form_layout_filename' => 'string',
+    'got_inquiry_from'             => '收到来自:Name的咨询',
     'display_form_fields'          => '表单显示字段',
-    'mail_from'                    => '提醒邮件发送者Email地址',
-    'mail_to'                      => '提醒邮件接受者Email地址',
-    'mail_subject'                 => '提醒邮件标题',
+    'mail_from'                    => '收到咨询后发提醒邮件通知的Email地址',
+    'mail_to'                      => '咨询客户回复邮件到哪个Email地址',
+    'mail_subject'                 => '客户提交咨询后收到的邮件标题',
     'success_title'                => '表单提交成功后显示的标题',
     'success_content'              => '表单提交成功后显示的内容',
     'google_recaptcha_site_key'    => '谷歌验证码Site Key',
@@ -142,6 +144,8 @@ return [
     'extra_data_5'                 => '附加数据5',
 
     'wrong_json_format_str'        => ':Name is NOT a Correct Json Format string!! <hr> Please input a correct json format string. eg. use \\\\ instead of \, use " instead of \' , no comma for the last property<hr>Please make  { not at the begging or make  } not at the end if the input is not a json string',
+
+    'submit_success_content'        => '<b>感谢您的提交，我们会尽快和您联系！</b>',
 
     // frontend
     'page_number'        => '第:number页',

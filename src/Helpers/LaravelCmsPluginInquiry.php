@@ -6,6 +6,7 @@ use AlexStack\LaravelCms\Models\LaravelCmsInquiry;
 use AlexStack\LaravelCms\Models\LaravelCmsInquirySetting;
 use GoogleRecaptchaToAnyForm\GoogleRecaptcha;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class LaravelCmsPluginInquiry
 {
@@ -145,10 +146,42 @@ class LaravelCmsPluginInquiry
             $result['success_content'] = $settings->success_content;
             $result['form_data']       = $form_data;
             if ('' == trim(strip_tags($result['success_content']))) {
-                $result['success_content'] = '<b>Thank you for submit the inquiry, we will get back to you ASAP.</b>';
+                $result['success_content'] = $this->helper->t('submit_success_content') ?? '<b>Thank you for submit the inquiry, we will get back to you ASAP.</b>';
             }
         } else {
             $result['success'] = false;
+        }
+
+        // send email
+        if (strpos($form_data['email'], '@') && strpos($settings->mail_to, '@') && '' != trim($settings->mail_subject) && $from_email = config('mail.from.address')) {
+            // send email to the inquiry submitter
+            $submitter_name = $inquiry->first_name.' '.$inquiry->last_name;
+            $this->sendNow([
+                'to'        => trim($form_data['email']),
+                'to_name'   => $submitter_name,
+                'reply_to'  => $settings->mail_to,
+                'from'      => $from_email,
+                'from_name' => $settings->mail_to,
+                'subject'   => $inquiry->first_name.','.$settings->mail_subject,
+                'body'      => $result['success_content'].'
+                <hr/>
+                '.nl2br($form_data['message']),
+                //'language'  => 'en',
+            ]);
+            // send notification email to the admin
+
+            $this->sendNow([
+                'to'        => $settings->mail_to,
+                'to_name'   => $settings->mail_to,
+                'reply_to'  => trim($form_data['email']),
+                'from'      => $from_email,
+                'from_name' => $submitter_name,
+                'subject'   => $this->helper->t('got_inquiry_from', ['name'=>$submitter_name]).'('.$this->helper->s('site_name').')',
+                'body'      => $this->helper->t('got_inquiry_from', ['name'=>$submitter_name]).'
+                <hr/>
+                '.nl2br($form_data['message']),
+                //'language'  => 'en',
+            ]);
         }
 
         return json_encode($result);
@@ -209,5 +242,42 @@ class LaravelCmsPluginInquiry
         }
 
         return $rs;
+    }
+
+    public function sendNow($data)
+    {
+        //$this->helper->debug($data);
+        //return false; // uncomment for fast debug without send email
+        try {
+            $mail_html_tpl  = $this->helper->bladePath('page-tab-inquiry-form.email_notification', 'plugins');
+            $mail_plain_tpl = $this->helper->bladePath('page-tab-inquiry-form.email_notification_plaintext', 'plugins');
+
+            //$this->helper->debug([$mail_html_tpl, $this->helper]);
+
+            Mail::send(
+                [$mail_html_tpl, $mail_plain_tpl],
+                $data,
+                function ($m) use ($data) {
+                    if (isset($data['reply_to'])) {
+                        $m->to($data['to'])
+                            ->from($data['from'], $data['from_name'])
+                            ->replyTo($data['reply_to'])
+                            ->subject($data['subject']);
+                    } else {
+                        $m->to($data['to'])
+                            ->subject($data['subject']);
+                    }
+                    //$m->later(now()->addSeconds(5));
+                }
+            );
+
+            return true;
+        } catch (\Exception $e) {
+            echo $e->getMessage().' sent-to:'.$data['to'];
+
+            return false;
+        }
+
+        return false;
     }
 }

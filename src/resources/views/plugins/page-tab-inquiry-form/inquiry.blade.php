@@ -16,6 +16,12 @@ $form_enabled_label .= "(ID:$tab_data->id)" . ' <a
     $helper->t('view, inquiries') .
     '</a>';
 }
+
+$form_enabled_label .= ' <a href="#" class="btn btn-outline-secondary btn-sm ml-3 advanced-settings"><i
+        class="fas fa-cogs mr-1"></i>'
+    .
+    $helper->t('advanced, settings') .
+    '</a>';
 @endphp
 
 
@@ -25,69 +31,54 @@ $form_enabled_label .= "(ID:$tab_data->id)" . ' <a
 $helper->t('enable')] ])
 
 
-@include($helper->bladePath('includes.form-input','b'), ['name' =>
-"default_setting_id"])
+<div id="inquiry-form-advanced-settings">
+    @include($helper->bladePath('includes.form-input','b'), ['name' =>
+    "default_setting_id"])
 
 
-@include($helper->bladePath('includes.form-input','b'), ['name' =>
-"form_layout"])
+    @include($helper->bladePath('includes.form-input','b'), ['name' =>
+    "form_layout"])
 
-@include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
-'name' => "display_form_fields"])
+    @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
+    'name' => "display_form_fields"])
 
-@include($helper->bladePath('includes.form-input','b'), ['name' =>
-"success_title"])
+    @include($helper->bladePath('includes.form-input','b'), ['name' =>
+    "success_title"])
 
-@include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
-'name' => "success_content"])
+    @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
+    'name' => "success_content"])
 
-@include($helper->bladePath('includes.form-input','b'), ['name' =>
-"google_recaptcha_enabled", 'type'=>'select', 'options'=>['' => $helper->t('default'),'0' => $helper->t('disable'),
-'1'=> $helper->t('enable')] ])
+    @include($helper->bladePath('includes.form-input','b'), ['name' =>
+    "mail_subject"])
+    @include($helper->bladePath('includes.form-input','b'), ['name' =>
+    "mail_to"])
 
-
-@include($helper->bladePath('includes.form-input','b'), ['name' =>
-"google_recaptcha_css_class"])
-
-@include($helper->bladePath('includes.form-input','b'), ['name' =>
-"google_recaptcha_no_tick_msg"])
+    @include($helper->bladePath('includes.form-input','b'), ['name' =>
+    "google_recaptcha_enabled", 'type'=>'select', 'options'=>['' => $helper->t('default'),'0' => $helper->t('disable'),
+    '1'=> $helper->t('enable')] ])
 
 
+    @include($helper->bladePath('includes.form-input','b'), ['name' =>
+    "google_recaptcha_css_class"])
+
+    @include($helper->bladePath('includes.form-input','b'), ['name' =>
+    "google_recaptcha_no_tick_msg"])
+
+
+
+</div>
 
 <script>
-    $("#show-inquiries").click(function(event){
-    event.preventDefault();
-    $.ajax({
-        url : admin_route + '/search-inquiries',
-        type: 'POST',
-        data : {
-            _token: "{{ csrf_token() }}",
-            page_id: "{{ isset($page) ? $page->id : ''}}"
-        },
-		// contentType: false,
-		// cache: false,
-        // processData:false,
-        dataType: 'json',
-        success: function (data) {
-            console.log('Submission was successful.');
-            //console.log(data);
-            if ( data.success ){
-                $("#search-results").html(data.html_content);
-            } else {
-                $('#laravel-cms-inquiry-form .error_message').html('Error: ' + data.error_message);
-            }
-
-        },
-        error: function (data) {
-            //$('#laravel-cms-inquiry-form .error_message').html('Error: ' + data.responseJSON.message);
-            console.log('laravel-cms-inquiry-form : An error occurred.');
-            console.log(data);
-        },
-    }).done(function(data){ //
-        console.log('laravel-cms-inquiry-form submitted');
-        console.log(data);
+    $(".advanced-settings").click(function(event){
+        event.preventDefault();
+        $( "#inquiry-form-advanced-settings" ).toggle( "slow", function() {
+        // Animation complete.
+        });
     });
-});
+
+@if ( !isset($tab_data->id) || $helper->s('inquiry.default_setting_id') != $tab_data->id)
+    $( "#inquiry-form-advanced-settings" ).hide();
+@endif
 
 @if ( $helper->s('inquiry.enable_form_by_default') == '1' && ! isset($page['title']))
     $('.input-form_enabled').val(1).change();
