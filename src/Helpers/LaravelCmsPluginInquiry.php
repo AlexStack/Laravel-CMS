@@ -281,11 +281,16 @@ class LaravelCmsPluginInquiry
         return false;
     }
 
-    public function show($id){
-        if ( request()->go_setting_section == 'yes'){
+    public function show($id)
+    {
+        if ('yes' == request()->go_setting_section) {
             $setting = LaravelCmsInquirySetting::find($id);
-            return redirect()->route('LaravelCmsAdminPages.edit', ['page' => $setting->page_id, 'switch_nav_tab'=>'inquiry','show_advanced_settings'=>'yes']);
 
+            return redirect()->route('LaravelCmsAdminPages.edit', [
+                'page'                  => $setting->page_id,
+                'switch_nav_tab'        => 'inquiry',
+                'show_advanced_settings'=> 'yes',
+                ]);
         }
     }
 }
