@@ -77,10 +77,20 @@ $helper->t('enable')] ])
     });
 
 @if ( !isset($tab_data->id) || $helper->s('inquiry.default_setting_id') != $tab_data->id)
-    $( "#inquiry-form-advanced-settings" ).hide();
+    if ( location.href.indexOf('show_advanced_settings=yes') == -1){
+        $( "#inquiry-form-advanced-settings" ).hide();
+    }
 @endif
 
 @if ( $helper->s('inquiry.enable_form_by_default') == '1' && ! isset($page['title']))
     $('.input-form_enabled').val(1).change();
 @endif
+
+
+@if ( isset($tab_data->default_setting_id) && $tab_data->default_setting_id>0)
+    var default_setting_link = '{{route("LaravelCmsPluginInquiry.show",["inquiry"=>$tab_data->default_setting_id, "go_setting_section"=>"yes"])}}';
+@else
+    var default_setting_link = '{{route("LaravelCmsPluginInquiry.show",["inquiry"=>$helper->s('inquiry.default_setting_id'), "go_setting_section"=>"yes"])}}';
+@endif
+$('.label-default_setting_id').append(' <a href="' + default_setting_link + '" target="_blank" class="text-info small"><i class="fas fa-external-link-square-alt"></i></a>');
 </script>

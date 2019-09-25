@@ -14,6 +14,7 @@
     @if ( isset($page->meta_description) )
     <meta name="description" content="{{$page->meta_description}}" />
     @endif
+    <meta name="generator" content="Amila Laravel CMS" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 
