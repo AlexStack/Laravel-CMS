@@ -125,22 +125,49 @@
 
 
 <script>
-    // todo: https://api.github.com/repos/alexstack/laravel-cms/releases/latest
-    var cmsGitHubTags = $.getJSON( "https://api.github.com/repos/AlexStack/Laravel-CMS/tags", function(data) {
-        console.log( "success" );
-        console.log(data[0]['name']);
+    var cmsGitHubTags = $.getJSON( "https://api.github.com/repos/alexstack/laravel-cms/releases/latest", function(data) {
+        // console.log( "success" );
+        // console.log(data['tag_name']);
     })
     .done(function(data) {
-        console.log( "second success");
-        console.log(data[0]['name']);
-        $('span.latest_version').html('' + data[0]['name']);
+        // console.log( "second success");
+        // console.log(data['tag_name']);
+        $('span.latest_version').html('' + data['tag_name']);
     })
     .fail(function() {
-        console.log( "error" );
+        console.log( "cmsGitHubTags error" );
     })
     .always(function() {
-        console.log( "complete" );
+        console.log( "cmsGitHubTags complete" );
     });
+</script>
+
+<script>
+    // major information from the official website
+    // only display for super_admin, NOT for web_admin & content_admin
+    if ( admin_role == 'super_admin'){
+        var majorInfo = $.getJSON( "https://www.laravelcms.tech/Laravel-Major-information-for-the-dashboard.html?response_type=json", function(data) {
+            console.log( "get majorInfo success" );
+            //console.log(data);
+        })
+        .done(function(data) {
+            console.log( "get majorInfo second success");
+            var info = JSON.parse(data['page']['special_text']);
+            //console.log(info);
+            if('{{$helper->s("template.backend_language")}}' in info){
+                $('span.latest_version').after('<div class="text-secondary major-info">'+info['{{$helper->s("template.backend_language")}}'] + '</div>');
+            } else {
+                $('span.latest_version').after('<div class="text-secondary major-info">'+ info['en'] + '</div>');
+            }
+            $('.major-info').fadeIn('slow');
+        })
+        .fail(function() {
+            console.log( "get majorInfo error" );
+        })
+        .always(function() {
+            //console.log( "get majorInfo complete" );
+        });
+    }
 </script>
 
 @endsection
