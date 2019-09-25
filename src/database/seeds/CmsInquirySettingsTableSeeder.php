@@ -26,10 +26,10 @@ class CmsInquirySettingsTableSeeder extends Seeder
 
         \DB::table($this->table_name)->insert([
             0 => [
-                'form_layout'          => null,
+                'form_layout'          => 'frontend-form-001',
                 'page_id'              => 1,
                 'default_setting_id'   => null,
-                'form_layout_filename' => 'frontend-form-001',
+                'form_layout_filename' => null,
                 'display_form_fields'  => '[
 { "field" : "first_name",  "text" : "'.$this->helper->t('your,name').'", "attr" :"required"},
 { "field" : "email",  "text" : "'.$this->helper->t('email').'", "attr" :""},

@@ -41,7 +41,7 @@
         => "title", 'label'=>isset($page)? $helper->t('title') . ' <a class="text-info ml-2 "
             href="' . $helper->url($page) . '" target="_blank" title="Preview"><i
                 class="fas fa-external-link-square-alt"></i></a>': $helper->t('title'),
-        'input_attributes'=>['required'=>'required', 'minlength'=>3, 'pattern'=>".{3,}"]])
+        'input_attributes'=>['required'=>'required', 'minlength'=>2, 'pattern'=>".{2,}"]])
 
         @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "menu_title"])
