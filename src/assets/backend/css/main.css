@@ -107,6 +107,11 @@ pre.prettyprint {
 }
 
 
+.show-help {
+  cursor: help;
+}
+
+
 /* small screen */
 @media screen and (max-width: 700px) {
   .menu-links {

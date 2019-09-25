@@ -145,6 +145,8 @@ return [
 
 'submit_success_content'        => '<b>Thank you for the submit, we will get back to you ASAP.</b>',
 
+'how_to_use_in_blade'           => 'How to use it in the blade template: {{ $helper->s(":name") }}',
+
 // frontend
 'page_number'  => 'Page :number',
 ];

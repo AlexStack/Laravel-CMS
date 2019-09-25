@@ -35,7 +35,7 @@
 
 <!-- Tab panes -->
 <div class="tab-content">
-    <div class="tab-pane active" id="main-content" role="tabpanel">
+    <div class="tab-pane main-tab active" id="main-content" role="tabpanel">
 
         @include($helper->bladePath('includes.form-input','b'), ['type'=>'text', 'name'
         => "title", 'label'=>isset($page)? $helper->t('title') . ' <a class="text-info ml-2 "
@@ -62,7 +62,7 @@
     </div>
 
 
-    <div class="tab-pane" id="extra-content" role="tabpanel">
+    <div class="tab-pane main-tab" id="extra-content" role="tabpanel">
         @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "abstract"])
 
@@ -96,7 +96,7 @@
         @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea',
         'name' => "special_text"])
     </div>
-    <div class="tab-pane" id="seo" role="tabpanel">
+    <div class="tab-pane main-tab" id="seo" role="tabpanel">
         @include($helper->bladePath('includes.form-input','b'), ['name' => "slug",
         'input_attributes'=>(isset($page->slug) && $page->slug =='homepage')? ['readonly'=>'readonly'] : [] ] )
         @include($helper->bladePath('includes.form-input','b'), ['name' => "meta_title"
@@ -108,7 +108,7 @@
         @include($helper->bladePath('includes.form-input','b'), ['name' => "tags" ])
     </div>
 
-    <div class="tab-pane" id="settings" role="tabpanel">
+    <div class="tab-pane main-tab" id="settings" role="tabpanel">
         @include($helper->bladePath('includes.form-input','b'), ['name' => "parent_id",
         'type'=>'select', 'label'=>$helper->t('parent_page'), 'options'=>$parent_page_options])
 
@@ -137,10 +137,10 @@
         "user_id",'type'=>'number' ])
 
     </div>
-    <div class="tab-pane" id="files" role="tabpanel">Files</div>
+    <div class="tab-pane main-tab" id="files" role="tabpanel">Files</div>
 
     @foreach ( $page_tab_blades as $tab )
-    <div class="tab-pane" id="{{$tab['blade_file']}}" role="tabpanel">
+    <div class="tab-pane plugin" id="{{$tab['blade_file']}}" role="tabpanel">
         @include( $helper->bladePath($tab['blade_dir'] . '.' . $tab['blade_file'], 'plugins'), ['tab_data'=>
         ($plugins[$tab['blade_file']] ?? null) ] )
     </div>

@@ -3,9 +3,17 @@
 
 @include($helper->bladePath('includes.form-input','b'), ['type'=>'text', 'name' =>
 "param_name","input_attributes"=>['required'=>'required','pattern'=>'[a-zA-Z0-9\-_]{2,60}']])
+@if ( isset($setting->param_name) )
+<div class="text-secondary small mb-2 text-help">
+    <span
+        class="small">{{ $helper->t('how_to_use_in_blade', ['name'=>$setting->category . '.' . $setting->param_name]) }}</span>
+</div>
+@endif
+
 
 @php
-$attr = isset($setting) ? json_decode($helper->parseCmsStr($setting->input_attribute), TRUE) : ['required'=>'required'];
+$attr = isset($setting) ? json_decode($helper->parseCmsStr($setting->input_attribute), TRUE) :
+['required'=>'required'];
 //$helper->debug($attr);
 $input_type = ( isset($attr['rows']) && $attr['rows'] > 1 ) ?'textarea' : 'text';
 if ( isset($attr['select_options']) && is_array($attr['select_options']) ) {
