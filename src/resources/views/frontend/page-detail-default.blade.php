@@ -15,13 +15,6 @@
                 {!! $page->main_content !!}
             </div>
 
-            <div class="text-center mb-4 main-image">
-                @if ( isset($file_data->main_image) )
-                <img src="{{$helper->imageUrl($file_data->main_image, $helper->s('file.large_image_width')) }}"
-                    class="img-fluid" />
-                @endif
-            </div>
-
 
             <div class="text-center mb-4 sub-content">
                 {!! $page->sub_content !!}
@@ -42,6 +35,15 @@
             $page->children, 'card_class'=>'col-md-4 mb-4', 'img_width'=>$helper->s('file.small_image_width'),
             'img_height'=>$helper->s('file.small_image_height') ])
 
+            @if ( $page->extra_content_1 && trim(strip_tags($page->extra_content_1,'<img>'))!='')
+            <div class="text-center mb-4 extra_content extra_content_1">{!! $page->extra_content_1 !!}</div>
+            @endif
+            @if ( $page->extra_content_2 && trim(strip_tags($page->extra_content_2,'<img>'))!='')
+            <div class="text-center mb-4 extra_content extra_content_2">{!! $page->extra_content_2 !!}</div>
+            @endif
+            @if ( $page->extra_content_3 && trim(strip_tags($page->extra_content_3,'<img>'))!='')
+            <div class="text-center mb-4 extra_content extra_content_3">{!! $page->extra_content_3 !!}</div>
+            @endif
 
             @include($helper->bladePath('includes.breadcrumb'))
 
