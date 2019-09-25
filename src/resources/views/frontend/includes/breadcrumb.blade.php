@@ -7,7 +7,8 @@
         foreach( $page->parent_flat_ary as $parent ){
         $item = (object) $parent;
         echo '<li class="breadcrumb-item">
-            <a href="'  . $helper->url($item) . '">' . ($item->menu_title ?? $item->title) . '</a>
+            <a href="'  . $helper->url($item) . '" title="' . $item->title .'">' . ($item->menu_title ?? $item->title) .
+                '</a>
         </li>';
         }
         @endphp

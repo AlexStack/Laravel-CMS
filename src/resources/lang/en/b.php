@@ -99,10 +99,11 @@ return [
  'total'              => 'Total',
 
  //'form_layout_filename' => 'string',
+ 'got_inquiry_from'             => 'You have got an inquiry from :Name',
  'display_form_fields'          => 'Form display fields',
- 'mail_from'                    => 'Reminder email sender\'s email address',
- 'mail_to'                      => 'Remind mail recipient\'s email address',
- 'mail_subject'                 => 'Reminder email subject',
+ 'mail_from'                    => 'Send a inquiry received mail to this email address',
+ 'mail_to'                      => 'Inquiry submitter reply email to this email address',
+ 'mail_subject'                 => 'Inquiry received email subject send to the submitter',
  'success_title'                => 'The title displayed after the form was submitted successfully',
  'success_content'              => 'What will be displayed after the form is submitted successfully',
  'google_recaptcha_site_key'    => 'Google ReCaptcha Site Key',
@@ -141,6 +142,8 @@ return [
  'extra_data_5'                 => 'Extra Data 5',
 
 'wrong_json_format_str'         => ':Name is NOT a Correct Json Format string!! <hr> Please input a correct json format string. eg. use \\\\ instead of \, use " instead of \' , no comma for the last property<hr>Please make  { not at the begging or make  } not at the end if the input is not a json string',
+
+'submit_success_content'        => '<b>Thank you for the submit, we will get back to you ASAP.</b>',
 
 // frontend
 'page_number'  => 'Page :number',

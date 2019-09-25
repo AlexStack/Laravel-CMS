@@ -27,7 +27,7 @@ class LaravelCmsPageRepository extends BaseRepository
         $slug           = $id;
         $reserved_slugs = $this->helper->s('system.reserved_slugs');
 
-        if (($reserved_slugs['search'] ?? 'Search-CMS') == $slug) {
+        if (($reserved_slugs['search'] ?? 'Search-CMS.html') == $slug) {
             return $this->search($slug);
         } elseif (($reserved_slugs['sitemap'] ?? 'sitemap.txt') == $slug) {
             return $this->sitemap('txt');

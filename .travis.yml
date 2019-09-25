@@ -1,7 +1,10 @@
 language: php
 
 php:
+  - 7.1
   - 7.2
+  - 7.3
+  - 7.4snapshot
 
 sudo: false
 env:
@@ -12,13 +15,20 @@ env:
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - php: 7.4snapshot
 
 before_install:
   - mysql -e 'CREATE DATABASE laravelcms_test;'
 
 before_script:
   - composer self-update
-  - composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+  - |-
+    if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "6.*" ]]; then
+      composer create-project --prefer-dist laravel/laravel cms "5.7.*"
+    else
+      composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+    fi
   - cd cms
   - composer show laravel/framework
   - cp -f ../.travis.env .env
@@ -27,7 +37,10 @@ before_script:
   - composer require alexstack/laravel-cms "dev-$TRAVIS_BRANCH|$TRAVIS_BRANCH"
   - php artisan laravelcms --help
   - php artisan laravelcms --action=initialize --locale=zh --table_prefix=travis_cms_  --silent=yes
-
+  - |-
+    if [[ "$TRAVIS_PHP_VERSION" == "7.4snapshot" ]]; then
+      composer require fzaninotto/faker dev-master
+    fi
 install:
   - composer install --prefer-dist --quiet
 

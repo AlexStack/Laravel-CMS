@@ -26,7 +26,7 @@ class CmsInquirySettingsTableSeeder extends Seeder
 
         \DB::table($this->table_name)->insert([
             0 => [
-                'form_layout'          => null,
+                'form_layout'          => 'frontend-form-001',
                 'page_id'              => 1,
                 'default_setting_id'   => null,
                 'form_layout_filename' => null,
@@ -37,7 +37,7 @@ class CmsInquirySettingsTableSeeder extends Seeder
 {"field" : "submit",  "text" : "'.$this->helper->t('submit').'", "attr" :""}
 ]',
                 'mail_from'                    => null,
-                'mail_to'                      => null,
+                'mail_to'                      => config('mail.from.address'),
                 'mail_subject'                 => null,
                 'success_title'                => '',
                 'success_content'              => '',
