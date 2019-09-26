@@ -174,6 +174,7 @@ class LaravelCmsPageRepository extends BaseRepository
         header('X-Robots-Tag: noindex, nofollow', true);
 
         //$this->helper->debug($s);
+
         return redirect($s, 301);
     }
 

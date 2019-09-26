@@ -107,6 +107,15 @@ pre.prettyprint {
 }
 
 
+.show-help {
+  cursor: help;
+}
+
+.cms-version-notice .major-info {
+  display: none;
+  padding-top: .5rem;
+}
+
 /* small screen */
 @media screen and (max-width: 700px) {
   .menu-links {

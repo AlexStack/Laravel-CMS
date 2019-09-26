@@ -191,6 +191,41 @@ function adjustByAdminRole() {
 }
 
 
+function addTemplateHelpText() {
+  $("#page_content_form .main-tab label").each(function () {
+    var field_name = $(this).attr("for");
+    if (field_name) {
+      if (
+        $.inArray(field_name, [
+          "main_banner",
+          "main_image",
+          "extra_image_1",
+          "extra_image_2",
+          "extra_image_3"
+        ]) != -1
+      ) {
+        $(this)
+          .attr(
+            "title",
+            "Use it in the template: {{ $helper->imageUrl($file_data->" +
+            field_name +
+            ", width, height) }}"
+          )
+          .addClass("show-help");
+      } else {
+        $(this)
+          .attr(
+            "title",
+            "How to use it in the template: {{ $page->" +
+            field_name +
+            " }}"
+          )
+          .addClass("show-help");
+      }
+    }
+  });
+}
+
 // Implement functions when document is ready
 
 $(document).ready(function () {
@@ -238,4 +273,6 @@ $(document).ready(function () {
   }
 
   adjustByAdminRole();
+
+  addTemplateHelpText();
 });

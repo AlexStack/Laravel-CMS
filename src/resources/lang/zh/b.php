@@ -145,8 +145,8 @@ return [
 
     'wrong_json_format_str'        => ':Name is NOT a Correct Json Format string!! <hr> Please input a correct json format string. eg. use \\\\ instead of \, use " instead of \' , no comma for the last property<hr>Please make  { not at the begging or make  } not at the end if the input is not a json string',
 
-    'submit_success_content'        => '<b>感谢您的提交，我们会尽快和您联系！</b>',
-
+    'submit_success_content'            => '<b>感谢您的提交，我们会尽快和您联系！</b>',
+    'how_to_use_in_blade'               => '如何在模版中使用此变量： {{ $helper->s(":name") }}',
     // frontend
     'page_number'        => '第:number页',
     'our'                => '我们的',
