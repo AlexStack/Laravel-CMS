@@ -30,7 +30,7 @@
                             <button class="btn btn-secondary search-btn" type="submit">{{$helper->t('search')}}</button>
                         </div>
                     </div>
-                    <input name="editor_id" type="hidden" value="{{ $_REQUEST['editor_id'] ?? ''}}" />
+
                     {{ Form::close() }}
                 </div>
 
@@ -46,7 +46,7 @@
 
             <div class="row justify-content-center search-pagination">
                 <div class="col-md-auto  justify-content-center pagination">
-                    {{ $search_results->appends(['editor_id' =>$_REQUEST['editor_id']??null, 'keyword' =>$_REQUEST['keyword']??null])->links() }}
+                    {{ $search_results->appends(['keyword' =>$_REQUEST['keyword']??null])->links() }}
                 </div>
                 <div class="w-100"></div>
                 <div class="col-md-auto text-center">
