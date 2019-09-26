@@ -4,8 +4,7 @@
 
     <div class="{{$card_class ?? 'col-md-4 mb-4' }}">
         <div class="card">
-            <h4 class="text-truncate card-header"><a
-                    href="{{ route('LaravelCmsPages.show', ($sub_page->slug ?? $sub_page->id . '.html'), false ) }}"
+            <h4 class="text-truncate card-header"><a href="{{ $helper->url($sub_page)}}"
                     title="{{$sub_page->title}}">{{$sub_page->menu_title ?? $sub_page->title}}</a>
             </h4>
             <div class="card-body">
@@ -13,8 +12,7 @@
                 $file_data = json_decode($sub_page->file_data);
                 @endphp
                 @if ( isset($img_width) && isset($file_data->main_image))
-                <a href="{{ route('LaravelCmsPages.show', ($sub_page->slug ?? $sub_page->id . '.html'), false ) }}"
-                    title="{{$sub_page->title}}">
+                <a href="{{ $helper->url($sub_page) }}" title="{{$sub_page->title}}">
                     <img class="float-left mr-2 img-fluid img-thumbnail p-0 sub-page-img"
                         src="{{$helper->imageUrl($file_data->main_image, $img_width ,( $img_height ?? 'auto') ) }}"
                         alt="{{$sub_page->title}}" />

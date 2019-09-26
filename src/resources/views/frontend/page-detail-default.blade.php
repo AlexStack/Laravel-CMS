@@ -25,7 +25,7 @@
             if ( strpos($page->extra_text_1, 'http') !== false && strpos($page->extra_text_1, '|') !== false ){
             $external_link_ary = explode('|', $page->extra_text_1);
             echo '<div class="text-center mb-4 external-link">
-                <a href="' . route('LaravelCmsPages.show','redirect-link',false) . '?url=' . urlencode(trim($external_link_ary[0])) . '"
+                <a href="' . route('LaravelCmsPages.show',$helper->s('system.reserved_slugs.redirect'),false) . '?url=' . urlencode(trim($external_link_ary[0])) . '"
                     class="btn btn-primary" target="_blank" rel="nofollow">' . trim($external_link_ary[1]) . '</a>
             </div>';
             }

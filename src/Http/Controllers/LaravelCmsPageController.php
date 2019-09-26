@@ -45,7 +45,10 @@ class LaravelCmsPageController extends Controller
 
             return $rs;
         }
+        if (is_array($data) && isset($data['page']['template_file'])) {
+            return view($this->helper->bladePath($data['page']->template_file, 'f'), $data);
+        }
 
-        return view($this->helper->bladePath($data['page']->template_file, 'f'), $data);
+        return $data;
     }
 }
