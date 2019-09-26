@@ -28,6 +28,8 @@ class LaravelCmsPageController extends Controller
     {
         $data = $this->repo->show($slug);
 
+        //$this->helper->debug($data['page']->template_file);
+
         if ('1' == $this->helper->s('system.allow_json_response') && 'json' == request()->response_type) {
             unset($data['helper']);
             unset($data['plugins']);
@@ -45,8 +47,12 @@ class LaravelCmsPageController extends Controller
 
             return $rs;
         }
-        if (is_array($data) && isset($data['page']['template_file'])) {
-            return view($this->helper->bladePath($data['page']->template_file, 'f'), $data);
+        if (is_array($data)) {
+            if (isset($data['page']->template_file)) {
+                return view($this->helper->bladePath($data['page']->template_file, 'f'), $data);
+            } else {
+                return 'Retrieve page data error';
+            }
         }
 
         return $data;

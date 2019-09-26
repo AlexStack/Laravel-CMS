@@ -197,7 +197,7 @@ class LaravelCmsPageRepository extends BaseRepository
         $data['menus']  = $this->menus();
 
         // simulate a page collection
-        $data['page']                       = collect();
+        $data['page']                       = collect([]);
         $data['page']->template_file        = 'page-search-result';
         $data['page']->title                = $this->helper->t('search').' '.$keyword;
         $data['page']->meta_title           = $data['page']->title.' ('.$this->helper->t('page_number', ['number'=>$_GET['page'] ?? 1]).')';
@@ -206,9 +206,5 @@ class LaravelCmsPageRepository extends BaseRepository
         $data['page']->parent_flat_ary      = [];
 
         return $data;
-        echo 'sss='.$this->helper->s('category.reserved_slugs.search');
-        $this->helper->debug($data['page']->toArray());
-
-        return $slug;
     }
 }
