@@ -171,11 +171,11 @@ class LaravelCmsPageRepository extends BaseRepository
     {
         $s = request()->url;
 
-        header('X-Robots-Tag: noindex, nofollow', true);
+        //header('X-Robots-Tag: noindex, nofollow', true);
 
         //$this->helper->debug($s);
 
-        return redirect($s, 301);
+        return redirect($s, 301, ['X-Robots-Tag' => 'noindex, nofollow']);
     }
 
     public function search($slug)
