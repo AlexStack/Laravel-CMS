@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>
         {{$page->meta_title ?? $page->title}}{{strlen($page->meta_title ?? $page->title) < 60 ? ' - ' . $helper->s('site_name') : ''}}
     </title>
@@ -33,7 +32,10 @@
         }
     </style>
     @endif
-
+    {{-- for any code that must be put in the <head> --}}
+    @if ( $helper->s('page_head') )
+    {!! $helper->s('page_head') !!}
+    @endif
 </head>
 
 <body class="cms-page {{$page->template_file}} slug-{{str_replace('.html', '', $page->slug) }}"
@@ -52,6 +54,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
 
+    {{-- for any code may effect the page load speed, eg. analytics,ads --}}
+    @if ( $helper->s('page_bottom') )
+    <div class="container">
+        {!! $helper->s('page_bottom') !!}
+    </div>
+    @endif
 
 </body>
 

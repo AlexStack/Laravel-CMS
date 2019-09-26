@@ -533,6 +533,26 @@ class CmsSettingsTableSeeder extends Seeder
                 'enabled'         => 0,
                 'sort_value'      => 20,
             ],
+            33 => [
+                'param_name'      => 'page_bottom',
+                'page_id'         => null,
+                'param_value'     => '<!-- Any code that may affect the speed of load page, it will display at the bottom and just before the </body>, it\'s good for analytics code, ads code etc. -->',
+                'input_attribute' => '{"rows":6,"required":"required"}',
+                'abstract'        => null,
+                'category'        => 'global',
+                'enabled'         => 0,
+                'sort_value'      => 5,
+            ],
+            34 => [
+                'param_name'      => 'page_head',
+                'page_id'         => null,
+                'param_value'     => '<!-- Any extra code that has to be put in the <head></head> eg. css,script,meta,link -->',
+                'input_attribute' => '{"rows":6,"required":"required"}',
+                'abstract'        => null,
+                'category'        => 'global',
+                'enabled'         => 0,
+                'sort_value'      => 3,
+            ],
         ]);
     }
 }
