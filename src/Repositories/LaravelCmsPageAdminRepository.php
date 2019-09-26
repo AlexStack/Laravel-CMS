@@ -84,6 +84,10 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         //     $form_data['user_id'] = $this->user->id;
         // }
 
+        if ('' != trim($form_data['special_text']) && ! $this->helper->correctJsonFormat($form_data['special_text'])) {
+            exit(sprintf($this->helper->t('wrong_json_format_str', ['name' => 'Param Value'])));
+        }
+
         $form_data['slug'] = $this->getSlug($form_data);
 
         $all_file_data = json_decode($page->file_data, true); // json2array
