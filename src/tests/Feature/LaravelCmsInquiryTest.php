@@ -63,4 +63,12 @@ class LaravelCmsInquiryTest extends TestCase
 
         $response->assertStatus(200, 'Search-CMS may have error(s)');
     }
+
+    public function test_redirectLink()
+    {
+        $response = $this->get(config('app.url').'/cms-redirect-link?url=https%3A%2F%2Fwww.laravelcms.tech%2F');
+        //var_dump($response->getContent());
+
+        $response->assertStatus(301, 'redirectLink may have error(s)');
+    }
 }
