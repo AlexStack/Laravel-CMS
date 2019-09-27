@@ -55,4 +55,20 @@ class LaravelCmsInquiryTest extends TestCase
 
         $this->assertNotNull($rs->success_content, 'submitForm() method of LaravelCmsPluginInquiry may have error(s)');
     }
+
+    public function test_searchResult()
+    {
+        $response = $this->get(config('app.url').'/cms-Search-CMS.html?keyword=a');
+        //var_dump($response->getContent());
+
+        $response->assertStatus(200, 'Search-CMS may have error(s)');
+    }
+
+    public function test_redirectLink()
+    {
+        $response = $this->get(config('app.url').'/cms-redirect-link?url=https://www.laravelcms.tech/');
+        //var_dump($response->getContent());
+
+        $response->assertStatus(301, 'redirectLink may have error(s)');
+    }
 }

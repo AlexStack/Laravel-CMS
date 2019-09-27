@@ -2,6 +2,7 @@
 
 namespace AlexStack\LaravelCms\Repositories;
 
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Models\LaravelCmsSetting;
 
 class LaravelCmsSettingAdminRepository extends BaseRepository
