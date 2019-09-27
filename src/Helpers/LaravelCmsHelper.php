@@ -204,10 +204,16 @@ class LaravelCmsHelper
             return trim($page->redirect_url);
         }
         if ('homepage' == $page->slug || $page->slug == 'homepage'.$slug_suffix) {
-            return route('LaravelCmsPages.index', [], $is_abs_link);
+            $url =  route('LaravelCmsPages.index', [], $is_abs_link);
         }
 
-        return route('LaravelCmsPages.show', $page->slug, $is_abs_link);
+        $url = route('LaravelCmsPages.show', $page->slug, $is_abs_link);
+
+        if ($is_abs_link && 0 === strpos(config('app.url'), 'https://')) {
+            $url = str_replace('http://', 'https://', $url);
+        }
+
+        return $url;
     }
 
     public function assetUrl($file, $with_modify_time = true, $is_backend = false)
