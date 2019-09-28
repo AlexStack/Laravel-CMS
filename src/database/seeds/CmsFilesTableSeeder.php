@@ -2,6 +2,8 @@
 
 namespace AlexStack\LaravelCms;
 
+use Illuminate\Database\Seeder;
+
 class CmsFilesTableSeeder extends Seeder
 {
     private $config;
