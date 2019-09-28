@@ -11,6 +11,7 @@ a {
 }
 
 a:hover,
+.all-pages a.delete-link:hover,
 .nav-tabs a:hover {
   color: #ef237b;
 }
@@ -18,6 +19,10 @@ a:hover,
 .all-pages a.text-secondary:hover,
 .all-settings a.text-secondary:hover {
   color: #007bff !important;
+}
+
+.all-pages a.delete-link {
+  color: #cccccc;
 }
 
 
