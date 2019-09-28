@@ -194,7 +194,7 @@
         }
 
         $.ajax({
-            url : "{{route('LaravelCmsAdminFiles.index')}}/" + id,
+            url : "{{route('LaravelCmsAdminFiles.index', null, false)}}/" + id,
             type: 'DELETE',
             data : {
                 _token: "{{ csrf_token() }}",

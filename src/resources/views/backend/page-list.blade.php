@@ -7,7 +7,7 @@
         <div class="col-md">
             <ul id="sortableList" class="list-group all-pages">
                 @forelse ($all_pages as $item)
-                <li class="list-group-item list-group-item-action">
+                <li class="list-group-item list-group-item-action" id="page-{{$item->id}}">
                     <i class="fas fa-arrows-alt text-light handle"></i>
                     @php
                     if ( $item->depth ){
@@ -64,6 +64,10 @@
                             role='button'>
                             <i class='fas fa-plus-circle mr-1'></i>{{$helper->t('create_new_page')}}</a>
                     </span>
+                    @else
+                    <a href="#del-{{$item->id}}" class="float-right delete-link" data-id="{{$item->id}}"
+                        title="{{$helper->t('delete')}}" data-title="{{$item->title}}"><i
+                            class="far fa-trash-alt"></i></a>
                     @endif
                 </li>
                 @empty
@@ -75,5 +79,52 @@
         </div>
     </div>
 </div>
+<script>
+    function confirmDelete(id, title){
+        if ( !confirm("{{$helper->t('delete_message')}} " + title) ) {
+            return false;
+        }
 
+        $.ajax({
+            url : "{{route('LaravelCmsAdminPages.index',[],false)}}/" + id,
+            type: 'DELETE',
+            data : {
+                _token: "{{ csrf_token() }}",
+                response_type: "json"
+            },
+            // contentType: false,
+            // cache: false,
+            // processData:false,
+            dataType: 'json',
+            success: function (data) {
+                console.log('Submission was successful.');
+                //console.log(data);
+                if ( data.success ){
+                    $('#page-'+ id).fadeOut('slow');
+                } else {
+                    alert('Error: ' + data.error_message);
+                }
+            },
+            error: function (data) {
+                console.log('laravel-cms-page-delete : An error occurred.');
+                console.log(data);
+            },
+        }).done(function(data){
+            // console.log('laravel-cms-page-delete submitted');
+            // console.log(data);
+        });
+
+        return false;
+    }
+
+
+    $(function(){
+        $('.all-pages a.delete-link').click(function(e){
+            e.preventDefault();
+            var id = $(this).data('id');
+            confirmDelete(id, $(this).data('title'));
+        })
+    });
+
+</script>
 @endsection

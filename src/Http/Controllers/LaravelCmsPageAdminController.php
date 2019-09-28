@@ -93,6 +93,14 @@ class LaravelCmsPageAdminController extends Controller
         $this->checkUser();
         $rs = $this->repo->destroy($id);
 
+        if ('json' == request()->response_type) {
+            $result['success']         = $rs;
+            $result['success_content'] = 'Page id '.$id.' deleted';
+            $result['error_message']   = 'Delete page id '.$id.' failed!';
+
+            return response()->json($result);
+        }
+
         return redirect()->route('LaravelCmsAdminPages.index');
     }
 }
