@@ -289,6 +289,10 @@ class LaravelCMS extends Command
         ]);
 
         $this->call('db:seed', [
+            '--class' => 'AlexStack\LaravelCms\CmsFilesTableSeeder',
+        ]);
+
+        $this->call('db:seed', [
             '--class' => 'AlexStack\LaravelCms\CmsPagesTableSeeder',
         ]);
 
