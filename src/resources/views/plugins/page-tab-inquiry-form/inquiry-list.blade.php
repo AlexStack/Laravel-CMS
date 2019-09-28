@@ -130,7 +130,7 @@
         }
 
         $.ajax({
-            url : "{{route('LaravelCmsPluginInquiry.index')}}/" + id,
+            url : "{{route('LaravelCmsPluginInquiry.index',[],false)}}/" + id,
             type: 'DELETE',
             data : {
                 _token: "{{ csrf_token() }}",
