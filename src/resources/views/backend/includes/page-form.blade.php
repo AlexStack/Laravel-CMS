@@ -20,16 +20,13 @@
         <a class="nav-link" data-toggle="tab" href="#files" role="tab">Files</a>
     </li>
 
-    {{-- @if ( isset($page) )
-    <li class="nav-item">
-        <a class="nav-link" href="{{$helper->url($page)}}" target="_blank"><i class="fas fa-eye mr-1"></i>Preview</a>
-    </li>
-    @endif --}}
 
     @foreach ( $page_tab_blades as $tab )
+    @if ( trim($tab['tab_name']) != '')
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#{{$tab['blade_file']}}" role="tab">{!! $tab['tab_name'] !!}</a>
     </li>
+    @endif
     @endforeach
 </ul>
 

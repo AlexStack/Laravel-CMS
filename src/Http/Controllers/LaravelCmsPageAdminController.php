@@ -85,7 +85,7 @@ class LaravelCmsPageAdminController extends Controller
             return redirect()->route('LaravelCmsAdminPages.index');
         }
 
-        return back()->withInput();
+        return redirect()->route('LaravelCmsAdminPages.edit', ['page' => $page]);
     }
 
     public function destroy(Request $request, $id)

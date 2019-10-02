@@ -101,6 +101,12 @@ class LaravelCmsHelper
         if (! isset($img_obj->id)) {
             return self::assetUrl('images/no-image.png', false);
         }
+
+        if (in_array($width, ['large', 'middle', 'small'])) {
+            $height = $this->s('file.'.$width.'_image_height');
+            $width  = $this->s('file.'.$width.'_image_width');
+        }
+
         if (! is_numeric($width)) {
             $width = null;
         }
@@ -108,7 +114,7 @@ class LaravelCmsHelper
             $height = null;
         }
 
-        //$this->debug($img_obj);
+        // $this->debug([$height , $width]);
 
         if ('svg' == $img_obj->suffix || (null == $width && null == $height) || ! isset($img_obj->is_image) || false == $img_obj->is_image) {
             // return original img url
@@ -459,8 +465,19 @@ class LaravelCmsHelper
         }
     }
 
-    public function uploadFile($f)
+    public function uploadFile($f, $options = null)
     {
+        if (is_string($f) && 0 === strpos(trim($f), 'http')) {
+            $f         = trim($f);
+            $file_path = public_path($this->s('file.upload_dir').'/temp_'.md5($f).'');
+            $file_str  = @file_get_contents($f, false, $options);
+            if (false === $file_str) {
+                return false;
+            }
+            file_put_contents($file_path, $file_str);
+            $file_data['url'] = $f;
+            $f                = new \Illuminate\Http\UploadedFile($file_path, basename($f));
+        }
         // $file_data['user_id'] = $user->id;
         $file_data['mimetype'] = $f->getMimeType();
         $file_data['suffix']   = $f->getClientOriginalExtension();
@@ -473,15 +490,13 @@ class LaravelCmsHelper
         if (false !== strpos($file_data['mimetype'], 'video/')) {
             $file_data['is_video'] = 1;
         }
-        $file_data['filehash'] = sha1_file($f->path());
+        $file_data['temp_path'] = method_exists($f, 'getRealPath') ? $f->getRealPath() : $f->path();
+
+        $file_data['filehash'] = sha1_file($file_data['temp_path']);
 
         $file_data['path'] = substr($file_data['filehash'], -2).'/'.$file_data['filehash'].'.'.$file_data['suffix'];
 
-        // $abs_real_path = public_path('laravel-cms-uploads/' . $file_data['path']);
-
-        // if (!file_exists(dirname($abs_real_path))) {
-        //     mkdir(dirname($abs_real_path), 0755, true);
-        // }
+        //$this->debug($file_data);
 
         $file_data['description'] = date('Y-m-d H:i:s'); // make some different otherwise the updated_at will not update
         $new_file                 = \AlexStack\LaravelCms\Models\LaravelCmsFile::updateOrCreate(
@@ -493,9 +508,14 @@ class LaravelCmsHelper
 
         $file_store_dir = public_path(dirname($this->s('file.upload_dir').'/'.$file_data['path']));
 
-        //$this->helper->debug($file_store_dir);
+        // $this->debug($file_store_dir . '/'. basename($file_data['path']));
 
-        $f->move($file_store_dir, basename($file_data['path']));
+        // $f->move($file_store_dir, basename($file_data['path']));
+        if (! file_exists($file_store_dir)) {
+            mkdir($file_store_dir, 0755, true);
+        }
+
+        rename($file_data['temp_path'], $file_store_dir.'/'.basename($file_data['path']));
 
         return $new_file;
 
