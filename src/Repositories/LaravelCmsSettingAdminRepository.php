@@ -118,6 +118,13 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
             $data['setting']->input_attribute = $this->getCmsTemplates()['frontend_attributes'];
         } elseif ('template' == $data['setting']->category && 'backend_dir' == $data['setting']->param_name) {
             $data['setting']->input_attribute = $this->getCmsTemplates()['backend_attributes'];
+        } elseif ('plugin' == $data['setting']->category && strpos($data['setting']->param_value, 'php_class')) {
+            $param_value_ary        = $this->helper->s('plugin.'.$data['setting']->param_name);
+            if (! view()->exists($this->helper->bladePath($data['setting']->param_name.'.'.$param_value_ary['blade_file'], 'plugins'))) {
+                $data['setting']->alert = 'The blade file not exists: plugins/'.$data['setting']->param_name.'/'.$param_value_ary['blade_file'].'.blade.php';
+            } elseif ('' !== trim($param_value_ary['php_class']) && ! class_exists($param_value_ary['php_class'])) {
+                $data['setting']->alert = 'The PHP class not exists: '.$param_value_ary['php_class'];
+            }
         }
 
         return $data;

@@ -10,6 +10,17 @@
 </div>
 @endif
 
+@if ( isset($setting->alert) )
+<div class="alert alert-danger small" role="alert">
+    <span>{{ $setting->alert }}</span>
+</div>
+@endif
+
+@if ( trim(strip_tags($setting->abstract)) != '' )
+<div class="alert alert-info small abstract-text" role="alert">
+    {!! $setting->abstract !!}
+</div>
+@endif
 
 @php
 $attr = isset($setting) ? json_decode($helper->parseCmsStr($setting->input_attribute), TRUE) :
