@@ -61,7 +61,7 @@ $select_options = [];
 @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea', 'name' =>
 "abstract", "input_attributes"=>['rows'=>3]])
 
-@include($helper->bladePath('includes.form-input','b'), ['type'=>'text', 'name' =>
-"page_id"])
+{{-- @include($helper->bladePath('includes.form-input','b'), ['type'=>'text', 'name' =>
+"page_id"]) --}}
 
 <input type="hidden" name="return_to_the_list" value="">

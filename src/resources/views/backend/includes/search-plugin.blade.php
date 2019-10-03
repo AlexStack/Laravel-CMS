@@ -34,8 +34,17 @@
 
 
 <script>
+    @php
+        $github_repositories = [];
+        foreach( $helper->s('top.plugin') as $plugin){
+            if ( isset($plugin['github_full_name']) && strpos($plugin['github_full_name'], '/') ){
+                $github_repositories[strtolower(trim($plugin['github_full_name']))] = $plugin['version'] ?? 'master';
+            }
+        }
+        echo 'var githubRepositories =' . json_encode($github_repositories) . ";\n\n";
+    @endphp
     function installPlugin(link)    {
-        if ( !confirm('Start download & install this plugin , It will take 1-5 minutes, please stay at this page!') ){
+        if ( !confirm('Start download & install this plugin , It may take a few minutes, please stay at this page!') ){
             return false;
         }
         link.removeClass('install').addClass("disabled").find('span').html('Retrieve latest release information');
@@ -50,9 +59,11 @@
 
     function downloadExtractInstall(link)  {
 
-        var download_url = '';
+        var downloadUrl   = '';
+        var latestVersion = 'master';
 
-        var ajax_data = $.ajax({
+        // Retrieve latest release information
+        var ajaxData = $.ajax({
             type: "GET",
             url: link.attr('href'),
             success: function(response) {
@@ -62,20 +73,28 @@
             async: false
         });
 
-        //console.log(ajax_data.status);
-        if ( ajax_data.status != '200'){
-            download_url = link.attr('href').replace('api.github.com/repos','github.com').replace('releases/latest','archive/master') + '.tar.gz';
+        //console.log(ajaxData.status);
+        githubFullName = link.attr('href').replace('https://api.github.com/repos/','').replace('/releases/latest','');
+        if ( ajaxData.status != '200'){
+            downloadUrl = link.attr('href').replace('api.github.com/repos','github.com').replace('releases/latest','archive/master') + '.tar.gz';
         } else {
-            download_url = ajax_data.responseJSON.html_url.replace('releases/tag','archive') + '.tar.gz';
+            downloadUrl = ajaxData.responseJSON.html_url.replace('releases/tag','archive') + '.tar.gz';
+            latestVersion = ajaxData.responseJSON.tag_name;
+        }
+        console.log(' installedVersion:' +githubRepositories[githubFullName] + ' latestVersion:' + latestVersion);
+
+        if(githubFullName in githubRepositories && githubRepositories[githubFullName] == latestVersion ){
+            ajaxData.status = 203;
+            if ( hasError(link, ajaxData, 'installing(version ' + latestVersion + ' already installed)') ){
+                return false;
+            }
         }
 
 
-
-
-        link.find('span').html('Downloading the plugin package file');
-        ajax_data = $.ajax({
+        link.find('span').html('Downloading the plugin package\(' + latestVersion + '\)');
+        ajaxData = $.ajax({
             type: "GET",
-            url: "./files?download_file=" + download_url,
+            url: "./files?download_file=" + downloadUrl,
             success: function(response) {
                 //console.log(response);
             },
@@ -83,14 +102,14 @@
             async: false
         });
 
-        if ( hasError(link, ajax_data, 'downloading') ){
+        if ( hasError(link, ajaxData, 'downloading') ){
             return false;
         }
 
         link.find('span').html('Extracting the plugin package file');
-        ajax_data = $.ajax({
+        ajaxData = $.ajax({
             type: "GET",
-            url: "./files?extract_file=" + ajax_data.responseText,
+            url: "./files?extract_file=" + ajaxData.responseText,
             success: function(response) {
                 //console.log(response);
             },
@@ -98,14 +117,14 @@
             async: false
         });
 
-        if ( hasError(link, ajax_data, 'extracting') ){
+        if ( hasError(link, ajaxData, 'extracting') ){
             return false;
         }
 
         link.find('span').html('Installing the plugin package file');
-        ajax_data = $.ajax({
+        ajaxData = $.ajax({
             type: "GET",
-            url: "./files?install_package=" + ajax_data.responseText,
+            url: "./files?install_package=" + ajaxData.responseText,
             success: function(response) {
                 //console.log(response);
             },
@@ -113,13 +132,13 @@
             async: false
         });
 
-        if ( hasError(link, ajax_data, 'installing') ){
+        if ( hasError(link, ajaxData, 'installing') ){
             return false;
         }
 
-        console.log(ajax_data);
+        console.log(ajaxData);
 
-        var response_json = ajax_data.responseJSON;
+        var response_json = ajaxData.responseJSON;
         if ( ! response_json.success ){
             response_json.status = 203;
             hasError(link, response_json, 'installing (' + response_json.error_message + ')');
@@ -134,12 +153,12 @@
         //alert('Installing , It will take 1-5 minutes, please keep this page open!');
     }
 
-    function hasError(link, ajax_data, message){
-        if ( ajax_data.status != '200'){
-            alert('Something wrong with response code ' + ajax_data.status + ' while '+ message +', install cancelled.');
+    function hasError(link, ajaxData, message){
+        if ( ajaxData.status != '200'){
+            alert('Something wrong with response code ' + ajaxData.status + ' while '+ message +', install cancelled.');
             $('#search-result a.install').fadeIn('slow');
             link.hide();
-            console.log(ajax_data);
+            console.log(ajaxData);
             return true;
         }
         return false;
@@ -150,20 +169,27 @@
 
         $('#plugin-search-form').submit(function(e){
             e.preventDefault();
-            var api_url = "https://packagist.org/search.json?type=amila-laravel-cms-plugin&per_page=40&q=" + $('#keyword').val();
-            var cmsPlugins = $.getJSON(api_url, function(data) {
+            //var apiUrl = "https://packagist.org/search.json?type=amila-laravel-cms-plugin&per_page=40&q=" + $('#keyword').val();
+            var apiUrl = "https://packagist.org/search.json?type=laravel&per_page=40&q=" + $('#keyword').val();
+            var cmsPlugins = $.getJSON(apiUrl, function(data) {
                 // console.log( "success" );
                 // console.log(data['tag_name']);
                 })
                 .done(function(data) {
                     // console.log( "second success");
                     console.log(data['results']);
-                    var all_results = '';
+                    var allResults = '';
                     data['results'].forEach((item) => {
-                        all_results += '<div class="col-md-12 bg-light text-secondary p-2 title"><a href="' + item.repository + '" class="text-info" target="_blank"><i class="fas fa-cogs mr-2"></i>' + item.name + '</a>  <i class="fas fa-download mr-1 ml-3"></i>' + item.downloads + ' <a href="https://api.github.com/repos/' + item.name + '/releases/latest" class="ml-3 btn btn-outline-info btn-sm install" target="_blank"><i class="fas fa-download mr-1"></i><span>Install<span></a> </div>'
+                        var btnText  = 'Install';
+                        var btnClass = 'btn-outline-info install';
+                        if( item.name in githubRepositories) {
+                            btnText  = 'Update';
+                            btnClass = 'btn-outline-success install';
+                        }
+                        allResults += '<div class="col-md-12 bg-light text-secondary p-2 title"><a href="' + item.repository + '" class="text-info" target="_blank"><i class="fas fa-cogs mr-2"></i>' + item.name + '</a>  <span class="download-count d-none"><i class="fas fa-download mr-1 ml-3"></i>' + item.downloads + '</span> <a href="https://api.github.com/repos/' + item.name + '/releases/latest" class="ml-3 btn btn-sm '+ btnClass + '" target="_blank"><i class="fas fa-download mr-1"></i><span>' + btnText + '<span></a> </div>'
                         + '<div class="col-md-12 mb-2 p-2 abstract">' + item.description + '</div>';
                     });
-                    $('#search-result').html('' + all_results);
+                    $('#search-result').html('' + allResults);
 
                     $('#search-result a.install').click(function(e){
                         e.preventDefault();

@@ -55,7 +55,12 @@
                         <a href="./settings/{{$item->id}}/edit"
                             class="{{$item->enabled ? 'font-weight-bold' : 'text-secondary'}}"
                             title="Sort Value: {{$item->sort_value??0}}">
+                            @if ( $item->category == 'plugin' && trim($helper->s('plugin.' . $item->param_name .
+                            '.plugin_name'))!= '')
+                            {{$helper->s('plugin.' . $item->param_name . '.plugin_name')}}
+                            @else
                             {{$item->category}}.{{$item->param_name}}
+                            @endif
                             @if ( $item->page_id)
                             - PageID:{{$item->page_id}}
                             @endif

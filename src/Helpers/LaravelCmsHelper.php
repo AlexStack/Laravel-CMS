@@ -76,6 +76,9 @@ class LaravelCmsHelper
             $param_ary = explode('.', $param_name);
             $key_1     = $param_ary[0];
             $key_2     = $param_ary[1];
+            if ('top' == $key_1) {
+                return $this->settings[$key_2] ?? null;
+            }
         } else {
             $key_1     = 'global';
             $key_2     = $param_name;
