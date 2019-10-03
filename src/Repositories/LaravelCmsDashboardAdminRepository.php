@@ -48,6 +48,14 @@ class LaravelCmsDashboardAdminRepository extends BaseRepository
             ->limit(10)
             ->get();
 
+        if (! isset($_COOKIE['laravel_cms_access_time'])) {
+            $expire_time = time() + 3600 * 24 * 180; // 180 days
+            $access_num  = $_COOKIE['laravel_cms_access_num'] ?? 0;
+            setcookie('laravel_cms_access_num', $access_num + 1, $expire_time, '/');
+        }
+        // the cookie will expire at the end of the session (when the browser closes).
+        setcookie('laravel_cms_access_time', time());
+
         return $data;
     }
 
