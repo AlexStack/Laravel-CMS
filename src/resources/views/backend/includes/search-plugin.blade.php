@@ -50,7 +50,7 @@
     var confirmCount    = 0;
 
     function installPlugin(link)    {
-        if ( confirmCount < 1 && !confirm('Start download & install this plugin , It may take a few minutes, please stay at this page!' + confirmCount) ){
+        if ( confirmCount < 1 && !confirm('Start download & install this plugin , It may take a few minutes, please stay at this page!') ){
             return false;
         }
         confirmCount++;
@@ -193,8 +193,8 @@
 
     function searchPlugin(){
 
-        //var apiUrl = "https://packagist.org/search.json?type=amila-laravel-cms-plugin&per_page=40&q=" + $('#keyword').val();
-        var apiUrl = "https://packagist.org/search.json?type=laravel&per_page=40&q=" + $('#keyword').val(); // for testing
+        var apiUrl = "https://packagist.org/search.json?type=amila-laravel-cms-plugin&per_page=40&q=" + $('#keyword').val();
+        // var apiUrl = "https://packagist.org/search.json?type=laravel&per_page=40&q=" + $('#keyword').val(); // for testing
         var cmsPlugins = $.getJSON(apiUrl, function(data) {
             // console.log( "success" );
             // console.log(data['tag_name']);
@@ -239,6 +239,14 @@
             e.preventDefault();
 
             searchPlugin();
+        });
+
+        $('#plugin').mouseover(function(){
+            var oneTimeClass = 'mouseover-done';
+            if (!$(this).hasClass(oneTimeClass)){
+                $(this).addClass(oneTimeClass)
+                searchPlugin();
+            }
         });
     });
 
