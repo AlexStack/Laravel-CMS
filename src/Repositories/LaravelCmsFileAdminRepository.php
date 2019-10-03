@@ -164,7 +164,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
                     $zip->extractTo(dirname($file_abs_path));
                     $zip->close();
                 } else {
-                    //return 'failed '.$file_abs_path.'- '.$res;
+                    abort(response()->json('ZipArchive ErrorCode:'.$res, 503));
                 }
             }
         }

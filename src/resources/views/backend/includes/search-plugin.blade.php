@@ -3,6 +3,10 @@
     <form id="plugin-search-form">
         <div class="row justify-content-center mt-4">
             <div class="col-sm-auto">
+                <button class="btn btn-info" type="submit" title="Show all available plugins"
+                    onclick="form.keyword.value='';">{{$helper->t('all,available,plugins')}}</button>
+            </div>
+            <div class="col-sm-auto">
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -19,10 +23,7 @@
                 </div>
 
             </div>
-            <div class="col-sm-auto">
-                <button class="btn btn-info" type="submit" title="Show all available plugins"
-                    onclick="form.keyword.value='';">{{$helper->t('all,available,plugins')}}</button>
-            </div>
+
 
         </div>
     </form>
