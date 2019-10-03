@@ -16,7 +16,7 @@
 </div>
 @endif
 
-@if ( trim(strip_tags($setting->abstract)) != '' )
+@if ( isset($setting->abstract) && trim(strip_tags($setting->abstract)) != '' )
 <div class="alert alert-info small abstract-text" role="alert">
     {!! $setting->abstract !!}
 </div>
