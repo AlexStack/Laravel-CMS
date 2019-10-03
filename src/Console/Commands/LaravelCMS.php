@@ -64,7 +64,8 @@ class LaravelCMS extends Command
 
         if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Upgrade the CMS database tables? ****</>', true)) {
             $this->call('migrate', [
-                '--path' => './vendor/alexstack/laravel-cms/src/database/migrations/',
+                '--path'  => './vendor/alexstack/laravel-cms/src/database/migrations/',
+                '--force' => true,
             ]);
             // other database changes
         }
@@ -180,7 +181,8 @@ class LaravelCMS extends Command
         }
 
         $this->call('migrate:reset', [
-            '--path' => './vendor/alexstack/laravel-cms/src/database/migrations/',
+            '--path'  => './vendor/alexstack/laravel-cms/src/database/migrations/',
+            '--force' => true,
         ]);
 
         if ('no' == trim($options['silent']) && ! $this->confirm('<fg=cyan>**** Remove the CMS folders and files? ****</>', true)) {
@@ -281,7 +283,8 @@ class LaravelCMS extends Command
         $this->call('route:clear');
 
         $this->call('migrate', [
-            '--path' => './vendor/alexstack/laravel-cms/src/database/migrations/',
+            '--path'  => './vendor/alexstack/laravel-cms/src/database/migrations/',
+            '--force' => true,
         ]);
 
         $this->call('db:seed', [
