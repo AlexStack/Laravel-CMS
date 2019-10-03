@@ -85,6 +85,9 @@
         <li class="list-group-item list-group-item-action">No Setting yet, <a href="{{ route('LaravelCmsAdminSettings.create', ['category' => 'global', 'page_id'=>null, 'input_attribute'=>'{"rows":1,"required":"required"}', 'sort_value'=>1000]) }}">Create
                     a new Setting</a> </a> --}}
                     @endforeach
+                    @if ( $category == 'plugin')
+                    @include($helper->bladePath('includes.search-plugin','b'))
+                    @endif
                 </div>
                 @endforeach
             </div>

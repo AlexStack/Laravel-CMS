@@ -32,6 +32,11 @@ class LaravelCmsDashboardAdminController extends Controller
     {
         $this->checkUser();
 
+        if ('yes' == request()->show_phpinfo) {
+            phpinfo();
+            exit();
+        }
+
         $data = $this->repo->index();
 
         if (empty($this->helper->settings)) {

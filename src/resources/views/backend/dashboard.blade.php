@@ -108,7 +108,9 @@
         <div class="m-3 text-secondary text-truncate software-version">
             <i class="fab fa-laravel text-warning font-weight-bold"></i> Laravel {{$helper->t('version')}}
             {{app()->version()}}
-            <i class="fab fa-php text-primary ml-4"></i> PHP {{$helper->t('version')}} {{ phpversion() }}
+            <i class="fab fa-php text-primary ml-4"></i> <a href="?show_phpinfo=yes" target="_blank"
+                title="phpinfo()">PHP
+                {{$helper->t('version')}} {{ phpversion() }}</a>
 
             @if ( strpos(PHP_OS, 'WIN') !== false )
             <i class="fab fa-windows text-info ml-4"></i>
