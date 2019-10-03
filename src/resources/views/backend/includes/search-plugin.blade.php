@@ -43,6 +43,7 @@
         }
         echo 'var githubRepositories =' . json_encode($github_repositories) . ";\n\n";
     @endphp
+
     function installPlugin(link)    {
         if ( !confirm('Start download & install this plugin , It may take a few minutes, please stay at this page!') ){
             return false;
@@ -52,7 +53,10 @@
         link.find('i').removeClass().addClass("fas fa-spinner fa-spin mr-1");
         //link.fadeIn('slow').addClass("disabled").find('span').html('Retrieve latest release information');
 
-        setTimeout(downloadExtractInstall(link),500);
+        // setTimeout(downloadExtractInstall(link),1500);
+        setTimeout(function() {
+            downloadExtractInstall(link)
+        }, 2000);
 
     }
 
