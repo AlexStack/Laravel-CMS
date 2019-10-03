@@ -273,7 +273,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
                 }
             }
             // php artisan migrate, abs path seems not work on windows
-            $exitCode = \Artisan::call('migrate', ['--path'=> './public/'.dirname($package_file).'/'.basename($extract_dir).'/src/database/migrations/']);
+            $exitCode = \Artisan::call('migrate', ['--path'=> './public/'.dirname($package_file).'/'.basename($extract_dir).'/src/database/migrations/', '--force']);
 
             $replace_results .= ' | Artisan migrate:'.$exitCode;
         }
