@@ -278,8 +278,8 @@ class LaravelCmsFileAdminRepository extends BaseRepository
             // delete files
             \File::deleteDirectory($package_abs_dir);
 
-            // php artisan laravelcms --action=clear
-            $exitCode = \Artisan::call('laravelcms', ['--action'=> 'clear']);
+            // rewriteConfigFile
+            $this->helper->rewriteConfigFile();
         }
 
         $result['success']       = true;

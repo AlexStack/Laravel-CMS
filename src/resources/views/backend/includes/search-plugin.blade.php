@@ -63,13 +63,9 @@
 
         //console.log(ajax_data.status);
         if ( ajax_data.status != '200'){
-            // alert('Something wrong with status code' + ajax_data.status + ', can not install.');
-            // $('#search-result a.install').fadeIn('slow');
-            // link.hide();
-            // return false;
             download_url = link.attr('href').replace('api.github.com/repos','github.com').replace('releases/latest','archive/master') + '.tar.gz';
         } else {
-            download_url = ajax_data.responseJSON.html_url.replace('releases/tag','archive') + '.zip';
+            download_url = ajax_data.responseJSON.html_url.replace('releases/tag','archive') + '.tar.gz';
         }
 
 
