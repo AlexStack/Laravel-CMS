@@ -189,16 +189,17 @@ class LaravelCmsFileAdminRepository extends BaseRepository
 
         $package_dirs = glob($package_abs_dir.'/*', GLOB_ONLYDIR);
 
-        usort($package_dirs, function ($a, $b) { return filemtime($b) - filemtime($a); });
-
         if (! isset($package_dirs[0])) {
             $result['success']         = false;
             $result['error_message']   = 'Can not find the package extraction folder!';
 
             return response()->json($result);
         }
+        usort($package_dirs, function ($a, $b) {
+            return filemtime($b) - filemtime($a);
+        });
         // check plugin file structure
-        $extract_dir  = $package_dirs[0];
+        $extract_dir  = $package_dirs[0]; // the latest edit folder
         $core_files   = ['composer.json', 'src/resources/views/plugins', 'src/database'];
         foreach ($core_files as $file) {
             if (! file_exists($extract_dir.'/'.$file)) {
