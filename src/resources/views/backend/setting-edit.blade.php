@@ -42,6 +42,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/javascript/javascript.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautify.min.js"></script>
+
 <style>
     .CodeMirror {
         border: 1px solid #eee;
@@ -51,7 +53,12 @@
 
 <script>
     if ( $(".input-param_value").is('textarea')){
-    var editor = CodeMirror.fromTextArea(document.getElementsByClassName("input-param_value")[0], {
+
+        if ( $(".input-param_value").val().indexOf("}") != -1 && $(".input-param_value").val().indexOf(":") !== -1 ){
+            $(".input-param_value").val(js_beautify($(".input-param_value").val(), { indent_size: 4 }));
+        }
+
+        var editor = CodeMirror.fromTextArea(document.getElementsByClassName("input-param_value")[0], {
             lineNumbers: true,
             //readOnly：false,
             styleActiveLine: true,
@@ -59,11 +66,13 @@
             matchBrackets: true,
             lineWrapping: true,
             htmlMode: true,
-    });
+        });
 }
 
-if ( $(".input-input_attribute").val().indexOf("}") !== -1 ){
-    var editor = CodeMirror.fromTextArea(document.getElementsByClassName("input-input_attribute")[0], {
+if ( $(".input-input_attribute").val().indexOf("}") !== -1 && $(".input-input_attribute").val().indexOf(":") !== -1 ){
+    $(".input-input_attribute").val(js_beautify($(".input-input_attribute").val(), { indent_size: 4 }));
+
+    editor = CodeMirror.fromTextArea(document.getElementsByClassName("input-input_attribute")[0], {
             lineNumbers: true,
             //readOnly：false,
             styleActiveLine: true,
