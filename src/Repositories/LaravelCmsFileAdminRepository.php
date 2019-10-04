@@ -3,6 +3,7 @@
 namespace AlexStack\LaravelCms\Repositories;
 
 use AlexStack\LaravelCms\Models\LaravelCmsFile;
+use AlexStack\LaravelCms\Models\LaravelCmsSetting;
 
 class LaravelCmsFileAdminRepository extends BaseRepository
 {
@@ -184,8 +185,11 @@ class LaravelCmsFileAdminRepository extends BaseRepository
     public function installPlugin($package_file)
     {
         $package_abs_dir = public_path(dirname($package_file));
+        $package_version = str_replace(['.tar.gz', '.zip'], '', basename($package_file));
 
         $package_dirs = glob($package_abs_dir.'/*', GLOB_ONLYDIR);
+
+        usort($package_dirs, function ($a, $b) { return filemtime($b) - filemtime($a); });
 
         if (! isset($package_dirs[0])) {
             $result['success']         = false;
@@ -218,6 +222,14 @@ class LaravelCmsFileAdminRepository extends BaseRepository
 
             return response()->json($result);
         }
+
+        if (! isset($composer_json['extra']['laravel-cms']['plugin-param-name'])) {
+            $result['success']         = false;
+            $result['error_message']   = 'extra->laravel-cms->plugin-param-name not found in the composer.json!';
+
+            return response()->json($result);
+        }
+
         foreach ($composer_json['autoload']['psr-4'] as $namespace => $package_dir) {
             if ('src/' == $package_dir) {
                 $original_namespace = $namespace;
@@ -280,22 +292,32 @@ class LaravelCmsFileAdminRepository extends BaseRepository
 
         // move view files
         $plugin_view_path = base_path('resources/views/vendor/laravel-cms/plugins');
-        if (! file_exists($plugin_view_path)) {
-            mkdir($plugin_view_path, 0755, true);
+        if (! file_exists($plugin_view_path.'/backups')) {
+            mkdir($plugin_view_path.'/backups', 0755, true);
         }
         $plugin_dirs = glob($extract_dir.'/src/resources/views/plugins/*', GLOB_ONLYDIR);
         foreach ($plugin_dirs as $dir) {
             $folder_name = basename($dir);
             if (file_exists($plugin_view_path.'/'.$folder_name)) {
                 $new_name = $folder_name.'-bak-'.date('YmdHis');
-                rename($plugin_view_path.'/'.$folder_name, $plugin_view_path.'/'.$new_name);
+                rename($plugin_view_path.'/'.$folder_name, $plugin_view_path.'/backups/'.$new_name);
             }
             rename($dir, $plugin_view_path.'/'.$folder_name);
         }
 
-        // move php class files
-        $plugin_class_path = base_path('app/LaravelCms/Plugins/'.$plugin_folder_name);
+        // move php class files to app/LaravelCms
+        $plugin_class_path        = base_path('app/LaravelCms/Plugins/'.$plugin_folder_name);
+        $plugin_backup_dir        = base_path('app/LaravelCms/Plugins/backups');
         if (! file_exists($plugin_class_path)) {
+            mkdir($plugin_class_path, 0755, true);
+        } else {
+            if (! file_exists($plugin_backup_dir)) {
+                mkdir($plugin_backup_dir, 0755, true);
+            }
+
+            $new_name = $plugin_folder_name.'-bak-'.date('YmdHis');
+            rename($plugin_class_path, $plugin_backup_dir.'/'.$new_name);
+
             mkdir($plugin_class_path, 0755, true);
         }
         $plugin_dirs = glob($extract_dir.'/src/*', GLOB_ONLYDIR);
@@ -304,17 +326,30 @@ class LaravelCmsFileAdminRepository extends BaseRepository
             if (in_array($folder_name, ['resources', 'database', 'assets'])) {
                 continue;
             }
-            if (file_exists($plugin_class_path.'/'.$folder_name)) {
-                $new_name = $folder_name.'-bak-'.date('YmdHis');
-                rename($plugin_class_path.'/'.$folder_name, $plugin_class_path.'/'.$new_name);
-            }
+            // if (file_exists($plugin_class_path.'/'.$folder_name)) {
+            //     $new_name = $folder_name.'-bak-'.date('YmdHis');
+            //     rename($plugin_class_path.'/'.$folder_name, $plugin_class_path.'/'.$new_name);
+            // }
             rename($dir, $plugin_class_path.'/'.$folder_name);
         }
 
         // delete files
         \File::deleteDirectory($package_abs_dir);
 
-        // rewriteConfigFile
+        // update plugin setting version
+        $plugin_param_name  = $composer_json['extra']['laravel-cms']['plugin-param-name'];
+        $plugin_param_value = $this->helper->s('plugin.'.$plugin_param_name);
+        if ($plugin_param_value) {
+            $plugin_param_value['version']          = $package_version;
+            $plugin_param_value['github_full_name'] = $composer_json['name'];
+
+            $plugin_setting = LaravelCmsSetting::where('category', 'plugin')->where('param_name', $plugin_param_name)->first();
+
+            $plugin_setting->update([
+                'param_value' => json_encode($plugin_param_value),
+            ]);
+        }
+        // generate new settings file
         $this->helper->rewriteConfigFile();
 
         $result['success']       = true;
