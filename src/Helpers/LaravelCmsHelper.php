@@ -275,7 +275,7 @@ class LaravelCmsHelper
         if (! isset($this->settings['plugin']) || ! is_array($this->settings['plugin'])) {
             //return $this->getPluginsFromFile($prefix);
             return [];
-            exit('no plugins in the settings');
+            //exit('no plugins in the settings');
         }
 
         $plugin_dir = base_path('resources/views/vendor/laravel-cms').'/plugins';
@@ -292,7 +292,8 @@ class LaravelCmsHelper
                 }
             }
         }
-        //$this->debug($plugin_dir . '/' . $k . '/' . $config_ary['blade_file'] . '.blade.php');
+        //$this->debug($option_ary);
+
         return $option_ary;
     }
 
