@@ -293,31 +293,33 @@ class LaravelCmsFileAdminRepository extends BaseRepository
 
         // move view files
         $plugin_view_path = base_path('resources/views/vendor/laravel-cms/plugins');
-        if (! file_exists($plugin_view_path.'/backups')) {
-            mkdir($plugin_view_path.'/backups', 0755, true);
+        $view_backup_dir  = storage_path('app/laravel-cms/backups/views/plugins');
+        if (! file_exists($view_backup_dir)) {
+            mkdir($view_backup_dir, 0755, true);
         }
         $plugin_dirs = glob($extract_dir.'/src/resources/views/plugins/*', GLOB_ONLYDIR);
         foreach ($plugin_dirs as $dir) {
             $folder_name = basename($dir);
             if (file_exists($plugin_view_path.'/'.$folder_name)) {
                 $new_name = $folder_name.'-bak-'.date('YmdHis');
-                rename($plugin_view_path.'/'.$folder_name, $plugin_view_path.'/backups/'.$new_name);
+                rename($plugin_view_path.'/'.$folder_name, $view_backup_dir.'/'.$new_name);
             }
             rename($dir, $plugin_view_path.'/'.$folder_name);
         }
 
         // move php class files to app/LaravelCms
-        $plugin_class_path        = base_path('app/LaravelCms/Plugins/'.$plugin_folder_name);
-        $plugin_backup_dir        = base_path('app/LaravelCms/Plugins/backups');
+        $plugin_class_path = base_path('app/LaravelCms/Plugins/'.$plugin_folder_name);
+        $class_backup_dir  = storage_path('app/laravel-cms/backups/php-files/plugins');
+
         if (! file_exists($plugin_class_path)) {
             mkdir($plugin_class_path, 0755, true);
         } else {
-            if (! file_exists($plugin_backup_dir)) {
-                mkdir($plugin_backup_dir, 0755, true);
+            if (! file_exists($class_backup_dir)) {
+                mkdir($class_backup_dir, 0755, true);
             }
 
             $new_name = $plugin_folder_name.'-bak-'.date('YmdHis');
-            rename($plugin_class_path, $plugin_backup_dir.'/'.$new_name);
+            rename($plugin_class_path, $class_backup_dir.'/'.$new_name);
 
             mkdir($plugin_class_path, 0755, true);
         }
@@ -358,7 +360,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         $result['success']       = true;
         $result['error_message'] = '';
         $result['param_name']    = $plugin_param_name;
-        $result['plugin_id']     = $plugin_setting->id ?? 0 ;
+        $result['plugin_id']     = $plugin_setting->id ?? 0;
 
         // $result['original_namespace']         = $original_namespace ?? '';
         // $result['new_namespace']              = $new_namespace ?? '';

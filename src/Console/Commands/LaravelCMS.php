@@ -73,67 +73,82 @@ class LaravelCMS extends Command
         // override view & asset files
         if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend view & asset files? ****</>', true)) {
             // rename the old folders
-            $vendor_view_path = dirname(__FILE__, 3).'/resources/views';
-            $app_view_path    = base_path('resources/views/vendor/laravel-cms');
+            $vendor_view_path   = dirname(__FILE__, 3).'/resources/views';
+            $app_view_path      = base_path('resources/views/vendor/laravel-cms');
+            $view_backup_path   = storage_path('app/laravel-cms/backups/views/templates');
 
-            // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
-            // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
+            $this->line('<fg=green>- The exists templates will backup to:</> '.$view_backup_path);
+            $this->line('<fg=green>- </> ');
 
             $vendor_view_folders = glob($vendor_view_path.'/*', GLOB_ONLYDIR);
             foreach ($vendor_view_folders as $folder) {
                 $folder_name = basename($folder);
                 if (! in_array($folder_name, ['plugins', 'uploads', 'backups']) && file_exists($app_view_path.'/'.$folder_name)) {
-                    if (! file_exists($app_view_path.'/backups')) {
-                        mkdir($app_view_path.'/backups', 0755, true);
+                    if (! file_exists($view_backup_path)) {
+                        mkdir($view_backup_path, 0755, true);
                     }
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_view_path.'/'.$folder_name, $app_view_path.'/backups/'.$new_name);
-                    $this->line('<fg=green>- Backup folder:</> views/backups/'.$new_name);
+                    rename($app_view_path.'/'.$folder_name, $view_backup_path.'/'.$new_name);
+                    $this->line('<fg=green>- Backed up template:</> '.$new_name);
                 }
             }
+
+            $plugin_backup_path    = storage_path('app/laravel-cms/backups/views/plugins');
             $vendor_plugin_folders = glob($vendor_view_path.'/plugins/*', GLOB_ONLYDIR);
+
+            $this->line('<fg=green>- </> ');
+            $this->line('<fg=green>- The exists plugin views will backup to:</> '.$plugin_backup_path);
+            $this->line('<fg=green>- </> ');
+
             foreach ($vendor_plugin_folders as $folder) {
                 $folder_name = basename($folder);
                 if (! in_array($folder_name, ['backups']) && file_exists($app_view_path.'/plugins/'.$folder_name)) {
-                    if (! file_exists($app_view_path.'/plugins/backups')) {
-                        mkdir($app_view_path.'/plugins/backups', 0755, true);
+                    if (! file_exists($plugin_backup_path)) {
+                        mkdir($plugin_backup_path, 0755, true);
                     }
 
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_view_path.'/plugins/'.$folder_name, $app_view_path.'/plugins/backups/'.$new_name);
-                    $this->line('<fg=green>- Backup folder:</> plugins/backups/'.$new_name);
+                    rename($app_view_path.'/plugins/'.$folder_name, $plugin_backup_path.'/'.$new_name);
+                    $this->line('<fg=green>- Backed up plugin view:</> '.$new_name);
                 }
             }
 
-            //var_dump($vendor_plugin_folders);
+            $this->line('<fg=green>- </> ');
+            $this->line('<fg=green>- Publish new template & plugin views:</> ');
+            $this->line('<fg=green>- </> ');
+
             $this->call('vendor:publish', [
                 '--tag'   => 'laravel-cms-views',
                 '--force' => 1,
             ]);
 
             // override asset files
-
-            // rename the old folders
             $vendor_asset_path = dirname(__FILE__, 3).'/assets';
             $app_asset_path    = public_path('laravel-cms');
+            $asset_backup_path = storage_path('app/laravel-cms/backups/assets');
 
-            // $this->line('<fg=green>- Backup folder:</>' . $vendor_asset_path);
-            // $this->line('<fg=green>- Copied folder:</>' . $app_asset_path);
+            $this->line('<fg=green>- </> ');
+            $this->line('<fg=green>- The exists assets will backup to:</> '.$asset_backup_path);
+            $this->line('<fg=green>- </> ');
 
             $vendor_asset_folders = glob($vendor_asset_path.'/*', GLOB_ONLYDIR);
             foreach ($vendor_asset_folders as $folder) {
                 $folder_name = basename($folder);
-                if (file_exists($app_asset_path.'/'.$folder_name)) {
-                    if (! file_exists($app_asset_path.'/backups')) {
-                        mkdir($app_asset_path.'/backups', 0755, true);
+                if (! in_array($folder_name, ['plugins', 'uploads', 'backups']) && file_exists($app_asset_path.'/'.$folder_name)) {
+                    if (! file_exists($asset_backup_path)) {
+                        mkdir($asset_backup_path, 0755, true);
                     }
 
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_asset_path.'/'.$folder_name, $app_asset_path.'/backups/'.$new_name);
-                    $this->line('<fg=green>- Backup folder:</> public/laravel-cms/backups/'.$new_name);
+                    rename($app_asset_path.'/'.$folder_name, $asset_backup_path.'/'.$new_name);
+                    $this->line('<fg=green>- Backed up asset:</> '.$new_name);
                 }
             }
-            //var_dump($vendor_asset_folders);
+
+            $this->line('<fg=green>- </> ');
+            $this->line('<fg=green>- Publish new assets:</> ');
+            $this->line('<fg=green>- </> ');
+
             $this->call('vendor:publish', [
                 '--tag'   => 'laravel-cms-assets',
                 '--force' => 1,
@@ -143,26 +158,32 @@ class LaravelCMS extends Command
         // override lang files
         if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend language files? ****</>', true)) {
             // rename the old folders
-            $vendor_lang_path = dirname(__FILE__, 3).'/resources/lang';
-            $app_lang_path    = base_path('resources/lang/vendor/laravel-cms');
-
-            // $this->line('<fg=green>- Backup folder:</>' . $vendor_lang_path);
-            // $this->line('<fg=green>- Copied folder:</>' . $app_lang_path);
-
+            $vendor_lang_path    = dirname(__FILE__, 3).'/resources/lang';
+            $app_lang_path       = base_path('resources/lang/vendor/laravel-cms');
+            $lang_backup_path    = storage_path('app/laravel-cms/backups/lang');
             $vendor_lang_folders = glob($vendor_lang_path.'/*', GLOB_ONLYDIR);
+
+            $this->line('<fg=green>- </> ');
+            $this->line('<fg=green>- The exists language files will backup to:</> '.$lang_backup_path);
+            $this->line('<fg=green>- </> ');
+
             foreach ($vendor_lang_folders as $folder) {
                 $folder_name = basename($folder);
                 if (file_exists($app_lang_path.'/'.$folder_name)) {
-                    if (! file_exists($app_lang_path.'/backups')) {
-                        mkdir($app_lang_path.'/backups', 0755, true);
+                    if (! file_exists($lang_backup_path)) {
+                        mkdir($lang_backup_path, 0755, true);
                     }
 
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_lang_path.'/'.$folder_name, $app_lang_path.'/backups/'.$new_name);
-                    $this->line('<fg=green>- Backup folder:</> lang/backups/'.$new_name);
+                    rename($app_lang_path.'/'.$folder_name, $lang_backup_path.'/'.$new_name);
+                    $this->line('<fg=green>- Backed up lang:</> '.$new_name);
                 }
             }
-            //var_dump($vendor_lang_folders);
+
+            $this->line('<fg=green>- </> ');
+            $this->line('<fg=green>- Publish new language files:</> ');
+            $this->line('<fg=green>- </> ');
+
             $this->call('vendor:publish', [
                 '--tag'   => 'laravel-cms-lang',
                 '--force' => 1,
@@ -335,6 +356,10 @@ class LaravelCMS extends Command
 
     public function clearCache($options)
     {
+        $this->line('<fg=cyan>- </> ');
+        $this->line('<fg=cyan>- Clear & cache the config/route/cms setting files</>');
+        $this->line('<fg=cyan>- </> ');
+
         $this->call('config:cache');
         $this->call('route:clear');
         $helper = new LaravelCmsHelper();
