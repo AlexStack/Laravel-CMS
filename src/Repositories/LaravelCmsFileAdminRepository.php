@@ -349,6 +349,8 @@ class LaravelCmsFileAdminRepository extends BaseRepository
             $plugin_setting->update([
                 'param_value' => json_encode($plugin_param_value),
             ]);
+        } else {
+            $plugin_setting = LaravelCmsSetting::where('category', 'plugin')->where('param_name', $plugin_param_name)->first();
         }
         // generate new settings file
         $this->helper->rewriteConfigFile();
@@ -356,7 +358,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         $result['success']       = true;
         $result['error_message'] = '';
         $result['param_name']    = $plugin_param_name;
-        $result['plugin_id']     = $plugin_setting->id;
+        $result['plugin_id']     = $plugin_setting->id ?? 0 ;
 
         // $result['original_namespace']         = $original_namespace ?? '';
         // $result['new_namespace']              = $new_namespace ?? '';
