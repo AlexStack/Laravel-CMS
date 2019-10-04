@@ -70,44 +70,44 @@ class LaravelCMS extends Command
             // other database changes
         }
 
-        // override view & asset files
-        if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend view & asset files? ****</>', true)) {
+        // override lang & asset files
+        if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend lang & asset files? ****</>', true)) {
             // rename the old folders
-            $vendor_view_path = dirname(__FILE__, 3).'/resources/views';
-            $app_view_path    = base_path('resources/views/vendor/laravel-cms');
+            $vendor_lang_path = dirname(__FILE__, 3).'/resources/langs';
+            $app_lang_path    = base_path('resources/langs/vendor/laravel-cms');
 
-            // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
-            // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
+            // $this->line('<fg=green>- Backup folder:</>' . $vendor_lang_path);
+            // $this->line('<fg=green>- Copied folder:</>' . $app_lang_path);
 
-            $vendor_view_folders = glob($vendor_view_path.'/*', GLOB_ONLYDIR);
-            foreach ($vendor_view_folders as $folder) {
+            $vendor_lang_folders = glob($vendor_lang_path.'/*', GLOB_ONLYDIR);
+            foreach ($vendor_lang_folders as $folder) {
                 $folder_name = basename($folder);
-                if (! in_array($folder_name, ['plugins', 'uploads', 'backups']) && file_exists($app_view_path.'/'.$folder_name)) {
-                    if (! file_exists($app_view_path.'/backups')) {
-                        mkdir($app_view_path.'/backups', 0755, true);
+                if (! in_array($folder_name, ['plugins', 'uploads', 'backups']) && file_exists($app_lang_path.'/'.$folder_name)) {
+                    if (! file_exists($app_lang_path.'/backups')) {
+                        mkdir($app_lang_path.'/backups', 0755, true);
                     }
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_view_path.'/'.$folder_name, $app_view_path.'/backups/'.$new_name);
-                    $this->line('<fg=green>- Backup folder:</> views/backups/'.$new_name);
+                    rename($app_lang_path.'/'.$folder_name, $app_lang_path.'/backups/'.$new_name);
+                    $this->line('<fg=green>- Backup folder:</> langs/backups/'.$new_name);
                 }
             }
-            $vendor_plugin_folders = glob($vendor_view_path.'/plugins/*', GLOB_ONLYDIR);
+            $vendor_plugin_folders = glob($vendor_lang_path.'/plugins/*', GLOB_ONLYDIR);
             foreach ($vendor_plugin_folders as $folder) {
                 $folder_name = basename($folder);
-                if (! in_array($folder_name, ['backups']) && file_exists($app_view_path.'/plugins/'.$folder_name)) {
-                    if (! file_exists($app_view_path.'/plugins/backups')) {
-                        mkdir($app_view_path.'/plugins/backups', 0755, true);
+                if (! in_array($folder_name, ['backups']) && file_exists($app_lang_path.'/plugins/'.$folder_name)) {
+                    if (! file_exists($app_lang_path.'/plugins/backups')) {
+                        mkdir($app_lang_path.'/plugins/backups', 0755, true);
                     }
 
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_view_path.'/plugins/'.$folder_name, $app_view_path.'/plugins/backups/'.$new_name);
+                    rename($app_lang_path.'/plugins/'.$folder_name, $app_lang_path.'/plugins/backups/'.$new_name);
                     $this->line('<fg=green>- Backup folder:</> plugins/backups/'.$new_name);
                 }
             }
 
             //var_dump($vendor_plugin_folders);
             $this->call('vendor:publish', [
-                '--tag'   => 'laravel-cms-views',
+                '--tag'   => 'laravel-cms-langs',
                 '--force' => 1,
             ]);
 
@@ -143,22 +143,26 @@ class LaravelCMS extends Command
         // override lang files
         if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend language files? ****</>', true)) {
             // rename the old folders
-            $vendor_view_path = dirname(__FILE__, 3).'/resources/lang';
-            $app_view_path    = base_path('resources/lang/vendor/laravel-cms');
+            $vendor_lang_path = dirname(__FILE__, 3).'/resources/lang';
+            $app_lang_path    = base_path('resources/lang/vendor/laravel-cms');
 
-            // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
-            // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
+            // $this->line('<fg=green>- Backup folder:</>' . $vendor_lang_path);
+            // $this->line('<fg=green>- Copied folder:</>' . $app_lang_path);
 
-            $vendor_view_folders = glob($vendor_view_path.'/*', GLOB_ONLYDIR);
-            foreach ($vendor_view_folders as $folder) {
+            $vendor_lang_folders = glob($vendor_lang_path.'/*', GLOB_ONLYDIR);
+            foreach ($vendor_lang_folders as $folder) {
                 $folder_name = basename($folder);
-                if (file_exists($app_view_path.'/'.$folder_name)) {
+                if (file_exists($app_lang_path.'/'.$folder_name)) {
+                    if (! file_exists($app_lang_path.'/backups')) {
+                        mkdir($app_lang_path.'/backups', 0755, true);
+                    }
+
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_view_path.'/'.$folder_name, $app_view_path.'/'.$new_name);
-                    $this->line('<fg=green>- Backup folder:</> lang/'.$new_name);
+                    rename($app_lang_path.'/'.$folder_name, $app_lang_path.'/backups/'.$new_name);
+                    $this->line('<fg=green>- Backup folder:</> lang/backups/'.$new_name);
                 }
             }
-            //var_dump($vendor_plugin_folders);
+            //var_dump($vendor_lang_folders);
             $this->call('vendor:publish', [
                 '--tag'   => 'laravel-cms-lang',
                 '--force' => 1,
@@ -201,7 +205,7 @@ class LaravelCMS extends Command
             exit();
         }
         $paths = [
-            base_path('resources/views/vendor/laravel-cms'),
+            base_path('resources/langs/vendor/laravel-cms'),
             base_path('resources/lang/vendor/laravel-cms'),
             public_path('laravel-cms'),
             base_path('config/laravel-cms.php'),
