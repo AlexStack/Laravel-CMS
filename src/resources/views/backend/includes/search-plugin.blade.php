@@ -1,3 +1,4 @@
+<a name="search_plugin"></a>
 <div class="container dashboard">
     {{-- search form --}}
     <form id="plugin-search-form">
@@ -101,9 +102,9 @@
     }
 
     function downloadThePackage(link){
-
-        if(githubFullName in githubRepositories && githubRepositories[githubFullName] == latestVersion ){
-            if ( hasError(link, 203, 'installing(version ' + latestVersion + ' already installed)') ){
+        // master version should always be able to update
+        if(latestVersion != 'master' && githubFullName in githubRepositories && githubRepositories[githubFullName] == latestVersion ){
+            if ( hasError(link, 203, 'installing(Version ' + latestVersion + ' already installed)') ){
                 return false;
             }
         }
@@ -235,6 +236,7 @@
 
 
     $(function(){
+        var oneTimeClass = 'mouseover-done';
 
         $('#plugin-search-form').submit(function(e){
 
@@ -244,12 +246,18 @@
         });
 
         $('#plugin').mouseover(function(){
-            var oneTimeClass = 'mouseover-done';
+            //var oneTimeClass = 'mouseover-done';
             if (!$(this).hasClass(oneTimeClass)){
-                $(this).addClass(oneTimeClass)
+                $(this).addClass(oneTimeClass);
                 searchPlugin();
             }
         });
+
+        if ( location.href.indexOf('#search_plugin') != -1 ){
+            $('#plugin').addClass(oneTimeClass);
+            searchPlugin();
+
+        }
     });
 
 </script>
