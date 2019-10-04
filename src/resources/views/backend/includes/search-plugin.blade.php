@@ -166,7 +166,9 @@
                 }
                 setTimeout(function(){
                     $('#search-result a.install').fadeIn('slow');
-                    link.addClass('text-danger','disabled').html('<i class="fas fa-download mr-1"></i><span>Successfully installed</span>');
+                    link.addClass('btn-outline-danger','disabled').html('<i class="fas fa-download mr-1"></i><span>Successfully installed</span>');
+
+                    link.after('<a href="./settings/'+ response.plugin_id +'/edit" class="btn btn-sm btn-outline-success ml-3 btn-after-install"><i class="fas fa-cog mr-1"></i><span>Settings</span></a>');
                 },1500);
             },
             error: function(response) {

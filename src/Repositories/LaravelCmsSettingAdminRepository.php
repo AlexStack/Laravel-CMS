@@ -179,7 +179,7 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
         //$this->helper->debug($files);
 
         foreach ($files as $dir) {
-            if (strpos($dir, '-bak')) {
+            if (strpos($dir, '-bak') || strpos($dir, 'backup')) {
                 continue;
             }
 
