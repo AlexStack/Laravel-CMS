@@ -82,19 +82,26 @@ class LaravelCMS extends Command
             $vendor_view_folders = glob($vendor_view_path.'/*', GLOB_ONLYDIR);
             foreach ($vendor_view_folders as $folder) {
                 $folder_name = basename($folder);
-                if ('plugins' != $folder_name && file_exists($app_view_path.'/'.$folder_name)) {
+                if (! in_array($folder_name, ['plugins', 'uploads', 'backups']) && file_exists($app_view_path.'/'.$folder_name)) {
+                    if (! file_exists($app_view_path.'/backups')) {
+                        mkdir($app_view_path.'/backups', 0755, true);
+                    }
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_view_path.'/'.$folder_name, $app_view_path.'/'.$new_name);
-                    $this->line('<fg=green>- Backup folder:</> views/'.$new_name);
+                    rename($app_view_path.'/'.$folder_name, $app_view_path.'/backups/'.$new_name);
+                    $this->line('<fg=green>- Backup folder:</> views/backups/'.$new_name);
                 }
             }
             $vendor_plugin_folders = glob($vendor_view_path.'/plugins/*', GLOB_ONLYDIR);
             foreach ($vendor_plugin_folders as $folder) {
                 $folder_name = basename($folder);
-                if (file_exists($app_view_path.'/plugins/'.$folder_name)) {
+                if (! in_array($folder_name, ['backups']) && file_exists($app_view_path.'/plugins/'.$folder_name)) {
+                    if (! file_exists($app_view_path.'/plugins/backups')) {
+                        mkdir($app_view_path.'/plugins/backups', 0755, true);
+                    }
+
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_view_path.'/plugins/'.$folder_name, $app_view_path.'/plugins/'.$new_name);
-                    $this->line('<fg=green>- Backup folder:</> plugins/'.$new_name);
+                    rename($app_view_path.'/plugins/'.$folder_name, $app_view_path.'/plugins/backups/'.$new_name);
+                    $this->line('<fg=green>- Backup folder:</> plugins/backups/'.$new_name);
                 }
             }
 
@@ -107,22 +114,26 @@ class LaravelCMS extends Command
             // override asset files
 
             // rename the old folders
-            $vendor_view_path = dirname(__FILE__, 3).'/assets';
-            $app_view_path    = public_path('laravel-cms');
+            $vendor_asset_path = dirname(__FILE__, 3).'/assets';
+            $app_asset_path    = public_path('laravel-cms');
 
-            // $this->line('<fg=green>- Backup folder:</>' . $vendor_view_path);
-            // $this->line('<fg=green>- Copied folder:</>' . $app_view_path);
+            // $this->line('<fg=green>- Backup folder:</>' . $vendor_asset_path);
+            // $this->line('<fg=green>- Copied folder:</>' . $app_asset_path);
 
-            $vendor_view_folders = glob($vendor_view_path.'/*', GLOB_ONLYDIR);
-            foreach ($vendor_view_folders as $folder) {
+            $vendor_asset_folders = glob($vendor_asset_path.'/*', GLOB_ONLYDIR);
+            foreach ($vendor_asset_folders as $folder) {
                 $folder_name = basename($folder);
-                if (file_exists($app_view_path.'/'.$folder_name)) {
+                if (file_exists($app_asset_path.'/'.$folder_name)) {
+                    if (! file_exists($app_asset_path.'/backups')) {
+                        mkdir($app_asset_path.'/backups', 0755, true);
+                    }
+
                     $new_name = $folder_name.'-bak-'.date('YmdHis');
-                    rename($app_view_path.'/'.$folder_name, $app_view_path.'/'.$new_name);
-                    $this->line('<fg=green>- Backup folder:</> public/laravel-cms/'.$new_name);
+                    rename($app_asset_path.'/'.$folder_name, $app_asset_path.'/backups/'.$new_name);
+                    $this->line('<fg=green>- Backup folder:</> public/laravel-cms/backups/'.$new_name);
                 }
             }
-            //var_dump($vendor_view_folders);
+            //var_dump($vendor_asset_folders);
             $this->call('vendor:publish', [
                 '--tag'   => 'laravel-cms-assets',
                 '--force' => 1,
