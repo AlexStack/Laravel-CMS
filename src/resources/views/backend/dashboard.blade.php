@@ -23,9 +23,15 @@
 
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action bg-light header">
-                    <a href="{{ route('LaravelCmsAdminSettings.index') }}">
-                        <h4>{{$helper->t('latest_name',['name'=>$helper->t('settings')])}}</h4>
-                    </a> @foreach( $latest_settings as $item)
+                    <h4>
+                        <a href="{{ route('LaravelCmsAdminSettings.index') }}">
+                            {{$helper->t('latest_name',['name'=>$helper->t('settings')])}}</a>
+
+                        <a href='{{route('LaravelCmsAdminSettings.index','category=plugin&search_plugin=yes')}}'
+                            title="{{$helper->t('install,plugins')}}">
+                            <i class='fas fa-cogs ml-3 small'></i></a>
+                    </h4>
+                    @foreach( $latest_settings as $item)
                 <li class="list-group-item list-group-item-action text-truncate"><a
                         href="{{ route('LaravelCmsAdminSettings.edit', ['setting' => $item->id]) }}"
                         title="{{$helper->t('updated_at') . ':' . $item->updated_at . ', ' . $helper->t('created_at') . ':' . $item->created_at}}">
@@ -45,8 +51,7 @@
                         <a href="{{ route('LaravelCmsAdminPages.index') }}">
                             {{$helper->t('latest_name',['name'=>$helper->t('pages')])}}</a>
                         <a href="{{ route('LaravelCmsAdminPages.create', ['menu_enabled'=>0,'switch_nav_tab'=>'settings']) }}"
-                            title="{{$helper->t('create_new_page')}}"><i
-                                class="far fa-plus-square ml-3 shadow-sm"></i></a>
+                            title="{{$helper->t('create_new_page')}}"><i class="far fa-plus-square ml-3 small"></i></a>
                     </h4>
                 </li>
 
@@ -70,9 +75,16 @@
 
             <ul class="list-group">
                 <li class="list-group-item list-group-item-action bg-light header">
-                    <a href="{{ route('LaravelCmsAdminFiles.index') }}">
-                        <h4>{{$helper->t('latest_name',['name'=>$helper->t('files')])}}</h4>
-                    </a></li>
+                    <h4>
+                        <a href="{{ route('LaravelCmsAdminFiles.index') }}">
+                            {{$helper->t('latest_name',['name'=>$helper->t('files')])}}</a>
+
+                        <a href='{{route('LaravelCmsAdminSettings.index','category=template&search_template=yes')}}'
+                            title="{{$helper->t('template')}}">
+                            <i class="fas fa-globe ml-3 small"></i></a>
+
+                    </h4>
+                </li>
 
                 @forelse( $latest_files as $item)
                 <li class="list-group-item list-group-item-action text-truncate"><a

@@ -1,5 +1,5 @@
-<a name="search_plugin"></a>
-<div class="container dashboard">
+<div class="container search-plugin-container">
+    <a name="search_plugin"></a>
     {{-- search form --}}
     <form id="plugin-search-form">
         <div class="row justify-content-center mt-4">
@@ -213,8 +213,8 @@
                         btnText  = 'Update';
                         btnClass = 'btn-outline-success install';
                     }
-                    allResults += '<div class="col-md-12 bg-light text-secondary p-2 title"><a href="' + item.repository + '" class="text-info" target="_blank"><i class="fas fa-cogs mr-2"></i>' + item.name + '</a>  <span class="download-count d-none"><i class="fas fa-download mr-1 ml-3"></i>' + item.downloads + '</span> <a href="https://api.github.com/repos/' + item.name + '/releases/latest" class="ml-3 btn btn-sm '+ btnClass + '" target="_blank"><i class="fas fa-download mr-1"></i><span>' + btnText + '<span></a> </div>'
-                    + '<div class="col-md-12 mb-2 p-2 abstract">' + item.description + '</div>';
+                    allResults += '<div class="col-md-12 bg-light text-secondary p-3 title"><a href="' + item.repository + '" class="text-info" target="_blank"><i class="fas fa-cogs mr-2"></i>' + item.name + '</a>  <span class="download-count d-none"><i class="fas fa-download mr-1 ml-3"></i>' + item.downloads + '</span> <a href="https://api.github.com/repos/' + item.name + '/releases/latest" class="ml-3 btn btn-sm '+ btnClass + '" target="_blank"><i class="fas fa-download mr-1"></i><span>' + btnText + '<span></a> </div>'
+                    + '<div class="col-md-12 mb-2 p-3 abstract">' + item.description + '</div>';
                 });
                 $('#search-result').html('' + allResults);
 
@@ -245,18 +245,21 @@
             searchPlugin();
         });
 
-        $('#plugin').mouseover(function(){
-            //var oneTimeClass = 'mouseover-done';
-            if (!$(this).hasClass(oneTimeClass)){
-                $(this).addClass(oneTimeClass);
-                searchPlugin();
-            }
-        });
 
-        if ( location.href.indexOf('#search_plugin') != -1 ){
+        if ( location.href.indexOf('search_plugin=yes') != -1 ){
             $('#plugin').addClass(oneTimeClass);
+            $('#plugin ul:first').prepend('<li class="list-group-item pb-5 search-plugin-li">'+ $('.search-plugin-container').html()+'</li>');
+            $('.search-plugin-container').html('');
             searchPlugin();
+        } else {
 
+            $('#plugin ul.plugin').mouseover(function(){
+                //var oneTimeClass = 'mouseover-done';
+                if (!$(this).hasClass(oneTimeClass)){
+                    $(this).addClass(oneTimeClass);
+                    searchPlugin();
+                }
+            });
         }
     });
 

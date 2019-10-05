@@ -127,7 +127,7 @@ class LaravelCmsPageAdminRepository extends BaseRepository
 
         $data['plugins'] = $this->extraPageTabs('edit', $id, $data['page']);
 
-        //$this->helper->debug($data['plugins'], 'no_exit22');
+        //$this->helper->debug($data['plugins']->toArray(), 'no_exit22');
 
         return $data;
     }
@@ -313,15 +313,19 @@ class LaravelCmsPageAdminRepository extends BaseRepository
                 $plugin_class = trim($plugin['php_class'] ?? '');
                 if ('' != $plugin_class && class_exists($plugin_class) && is_callable($plugin_class.'::'.$action)) {
                     //echo $plugin_class . '::' . $action . '  --- ';
-                    //$s = call_user_func($plugin_class . '::' . $action, $form_data, $page);
+
                     $s = call_user_func([new $plugin_class(), $action], $form_data, $page, $plugin);
                     $callback_ary->put($plugin['blade_file'], $s);
-                //$this->helper->debug($s->toArray());
+
+                // if ('sub-page' == $plugin['blade_file']) {
+                    //     $this->helper->debug($s->toArray());
+                    // }
                 } else {
                     $callback_ary->put($plugin['blade_file'], null);
                 }
             }
-            //$this->helper->debug($callback_ary);
+            //dd($callback_ary);
+
             return $callback_ary;
         }
 
