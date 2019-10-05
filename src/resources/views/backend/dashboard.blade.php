@@ -159,6 +159,7 @@
 <script>
     // major information from the official website
     // only display for super_admin, NOT for web_admin & content_admin
+    var cms_access_num = {{$_COOKIE['laravel_cms_access_num'] ?? 0}};
     if ( admin_role == 'super_admin'){
         var majorInfo = $.getJSON( "https://www.laravelcms.tech/Laravel-Major-information-for-the-dashboard.html?response_type=json", function(data) {
             console.log( "get majorInfo success" );
@@ -166,13 +167,23 @@
         })
         .done(function(data) {
             console.log( "get majorInfo second success");
-            var info = JSON.parse(data['page']['special_text']);
-            //console.log(info);
-            if('{{$helper->s("template.backend_language")}}' in info){
-                $('span.latest_version').after('<div class="text-secondary major-info">'+info['{{$helper->s("template.backend_language")}}'] + '</div>');
-            } else {
-                $('span.latest_version').after('<div class="text-secondary major-info">'+ info['en'] + '</div>');
+            var infoJson   = JSON.parse(data['page']['special_text']);
+            var infoHtml   = '';
+            var localeData = infoJson['en'];
+            //console.log(infoJson);
+            if('{{$helper->s("template.backend_language")}}' in infoJson){
+                localeData = infoJson['{{$helper->s("template.backend_language")}}'];
             }
+            if ( typeof(localeData) == 'object' && 0 in localeData){
+                for (var num in localeData) {
+                   if ( num <= cms_access_num ){
+                        infoHtml = localeData[num];
+                   }
+                }
+            } else {
+                infoHtml = localeData;
+            }
+            $('span.latest_version').after('<div class="text-secondary major-info">'+ infoHtml + '</div>');
             $('.major-info').fadeIn('slow');
         })
         .fail(function() {
