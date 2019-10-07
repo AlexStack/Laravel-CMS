@@ -306,6 +306,21 @@ class LaravelCmsFileAdminRepository extends BaseRepository
             }
             rename($dir, $plugin_view_path.'/'.$folder_name);
         }
+        // move assets files
+        $plugin_asset_path = public_path('laravel-cms/plugins');
+        $asset_backup_dir  = storage_path('app/laravel-cms/backups/assets/plugins');
+        if (! file_exists($asset_backup_dir)) {
+            mkdir($asset_backup_dir, 0755, true);
+        }
+        $plugin_dirs = glob($extract_dir.'/src/resources/views/plugins/*', GLOB_ONLYDIR);
+        foreach ($plugin_dirs as $dir) {
+            $folder_name = basename($dir);
+            if (file_exists($plugin_asset_path.'/'.$folder_name)) {
+                $new_name = $folder_name.'-bak-'.date('YmdHis');
+                rename($plugin_asset_path.'/'.$folder_name, $asset_backup_dir.'/'.$new_name);
+            }
+            rename($dir, $plugin_asset_path.'/'.$folder_name);
+        }
 
         // move php class files to app/LaravelCms
         $plugin_class_path = base_path('app/LaravelCms/Plugins/'.$plugin_folder_name);

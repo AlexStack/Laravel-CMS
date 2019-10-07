@@ -102,7 +102,7 @@ class LaravelCmsHelper
     public function imageUrl($img_obj, $width = null, $height = null, $resize_type = 'ratio')
     {
         if (! isset($img_obj->id)) {
-            return self::assetUrl('images/no-image.png', false);
+            return $this->assetUrl('images/no-image.png', false);
         }
 
         if (in_array($width, ['large', 'middle', 'small'])) {
