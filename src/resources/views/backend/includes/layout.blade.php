@@ -27,7 +27,9 @@
     </script>
 </head>
 
-<body>
+<body
+    class="{{str_replace(['.','LaravelCmsAdmin'],[' ','LaravelCmsAdmin '],request()->route()->getName())}} {{request()->route()->parameters['plugin'] ?? ''}}">
+
     @include($helper->bladePath('includes.header','b'))
     @yield('content')
 
