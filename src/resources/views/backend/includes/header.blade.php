@@ -8,32 +8,10 @@
             </h2>
         </div>
         <div class="col text-right pt-3 menu-links">
-            @php
-            $menu_links = $helper->s('system.admin_menu_links');
-            if ( is_array($menu_links)){
-            foreach($menu_links as $link){
-            if ( is_array($link)) {
-            if ( $link['style'] == 'dropdown'){
-            echo '<div class="btn-group">
-                ' . $link['button'] . '
-                <div class="dropdown-menu">';
-                    foreach( $link['items'] as $item ){
-                    echo $item;
-                    }
-                    echo '</div>
-            </div>';
-            }
-            }
-            else {
-            echo $link;
-            }
-            }
-            }
-            @endphp
 
+            {!! $helper->getAdminMenu() !!}
 
-
-            @if ( !is_array($menu_links) )
+            @if ( !is_array($helper->s('system.admin_menu_links')) )
             <a class="btn btn-success mr-3" href="{{ route('LaravelCmsAdminPages.index') }}" role="button"><i
                     class="fas fa-home mr-1"></i>{{ $helper->t('all_page') }}</a>
 
