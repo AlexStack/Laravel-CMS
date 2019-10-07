@@ -38,6 +38,8 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         $data['helper']                = $this->helper;
         $data['page_tab_blades']       = $this->extraPageTabs();
 
+        $this->extraPageTabs('create');
+
         return $data;
     }
 
@@ -134,11 +136,11 @@ class LaravelCmsPageAdminRepository extends BaseRepository
 
     public function destroy($id)
     {
-        $rs = LaravelCmsPage::find($id)->delete();
+        $page = LaravelCmsPage::find($id);
 
-        //$this->helper->debug($rs);
+        $this->extraPageTabs('destroy', $id, $page);
 
-        $this->extraPageTabs('destroy', $id);
+        $rs = $page->delete();
 
         return $rs;
     }

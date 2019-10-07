@@ -13,6 +13,10 @@ Route::group([
 
     Route::resource(config('laravel-cms.admin_route').'/files', 'LaravelCmsFileAdminController', ['names' => 'LaravelCmsAdminFiles'])->middleware(['web', 'auth']);
 
+    Route::resource(config('laravel-cms.admin_route').'/plugins', 'LaravelCmsPluginAdminController', ['names' => 'LaravelCmsAdminPlugins'])->middleware(['web', 'auth']);
+
+    //Route::resource(config('laravel-cms.admin_route').'/templates', 'LaravelCmsTemplateAdminController', ['names' => 'LaravelCmsAdminTemplates'])->middleware(['web', 'auth']);
+
     // frontend routes
     Route::get(config('laravel-cms.homepage_route'), 'LaravelCmsPageController@index')->name('LaravelCmsPages.index');
     Route::get(config('laravel-cms.page_route_prefix').'{slug}', 'LaravelCmsPageController@show')->name('LaravelCmsPages.show');

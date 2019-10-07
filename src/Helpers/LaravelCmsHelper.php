@@ -270,7 +270,7 @@ class LaravelCmsHelper
         return '';
     }
 
-    public function getPlugins($prefix = 'page-tab-')
+    public function getPlugins($prefix = null)
     {
         if (! isset($this->settings['plugin']) || ! is_array($this->settings['plugin'])) {
             //return $this->getPluginsFromFile($prefix);
@@ -285,7 +285,7 @@ class LaravelCmsHelper
         }
         $option_ary = [];
         foreach ($this->settings['plugin'] as $k => $config_ary) {
-            if (false !== strpos($k, $prefix)) {
+            if (null == $prefix || false !== strpos($k, $prefix)) {
                 if (isset($config_ary['blade_file']) && file_exists($plugin_dir.'/'.$k.'/'.$config_ary['blade_file'].'.blade.php')) {
                     $config_ary['blade_dir'] = $k;
                     $option_ary[]            = $config_ary;
