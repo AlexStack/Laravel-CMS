@@ -10,7 +10,7 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs mb-0" role="tablist">
-                {{-- @foreach ($settings->pluck('param_name', 'category') as $category => $param_name) --}}
+
                 @foreach ($categories as $category => $param_name)
                 <li class="nav-item">
                     <a class="nav-link {{ isset($_GET['category']) ? ($_GET['category']== $category ? 'active' : '' ) : ($loop->first ? 'active' : '') }}"
@@ -35,7 +35,6 @@
             </style>
             <div class="tab-content all-settings">
 
-                {{-- @foreach ($settings->pluck('param_name', 'category') as $category => $param_name) --}}
                 @foreach ($categories as $category => $param_name)
                 <div class="tab-pane mb-3 {{isset($_GET['category']) ? ($_GET['category']== $category ? 'active' : '' ) : ($loop->first ? 'active' : '') }}"
                     id="{{$category}}" role="tabpanel">
@@ -62,14 +61,20 @@
                                 @else
                                 {{$item->category}}.{{$item->param_name}}
                                 @endif
-                                @if ( $item->page_id)
-                                - PageID:{{$item->page_id}}
-                                @endif
+
                             </a>
+                            @if ( $item->category == 'plugin' && $helper->s('plugin.' . $item->param_name .
+                            '.plugin_type') == 'standalone' && trim(strip_tags($helper->s('plugin.' . $item->param_name
+                            .
+                            '.tab_name'))) != '' )
+                            <a href="./plugins/{{$item->param_name}}" class="text-primary ml-1 mr-1">{!!
+                                strip_tags($helper->s('plugin.' .
+                                $item->param_name . '.tab_name'), '<i>') !!}</a>
+                            @endif
 
                             <a href="./settings/{{$item->id}}/edit"
                                 class="{{$item->enabled ? 'text-secondary' : 'text-secondary'}}"><i
-                                    class="far fa-edit ml-1 mr-1" title="Sort Value: {{$item->sort_value??0}}"></i></a>
+                                    class="far fa-edit ml-1 mr-1" title="Edit {{$item->param_name}}"></i></a>
 
                             <span class="abstract">
                                 @if ( trim(strip_tags($item->abstract)) != '' )
@@ -87,9 +92,7 @@
                                         {{ $str->limit($item->param_value, 100, '...')}}
                                     </div>
                         </li>
-                        {{-- @empty
-        <li class="list-group-item list-group-item-action">No Setting yet, <a href="{{ route('LaravelCmsAdminSettings.create', ['category' => 'global', 'page_id'=>null, 'input_attribute'=>'{"rows":1,"required":"required"}', 'sort_value'=>1000]) }}">Create
-                        a new Setting</a> </a> --}}
+
                         @endforeach
                     </ul>
                     @if ( $category == 'plugin')
