@@ -170,6 +170,11 @@
                     link.addClass('btn-outline-danger','disabled').html('<i class="fas fa-download mr-1"></i><span>Successfully installed</span>');
 
                     link.after('<a href="./settings/'+ response.plugin_id +'/edit" class="btn btn-sm btn-outline-success ml-3 btn-after-install"><i class="fas fa-cog mr-1"></i><span>Settings</span></a>');
+
+                    if ( response.plugin_type == 'standalone'){
+                        link.after('<a href="./plugins/'+ response.param_name +'" class="btn btn-sm btn-outline-primary ml-3 btn-standalone"><i class="fas fa-cogs mr-1"></i><span>Launch</span></a>');
+                    }
+
                 },1500);
             },
             error: function(response) {

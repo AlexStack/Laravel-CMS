@@ -357,10 +357,13 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         // generate new settings file
         $this->helper->rewriteConfigFile();
 
+        $plugin_param_value = $this->helper->s('plugin.'.$plugin_param_name);
+
         $result['success']       = true;
         $result['error_message'] = '';
         $result['param_name']    = $plugin_param_name;
         $result['plugin_id']     = $plugin_setting->id ?? 0;
+        $result['plugin_type']   = $plugin_param_value['plugin_type'] ?? 'page-tab';
 
         // $result['original_namespace']         = $original_namespace ?? '';
         // $result['new_namespace']              = $new_namespace ?? '';

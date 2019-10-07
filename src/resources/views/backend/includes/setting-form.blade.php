@@ -18,6 +18,10 @@
 
 @if ( isset($setting->abstract) && trim(strip_tags($setting->abstract)) != '' )
 <div class="alert alert-info small abstract-text" role="alert">
+    @if ( $setting->category == 'plugin' && 'standalone' == $helper->s('plugin.'.$setting->param_name.'.plugin_type') )
+    <a href="../../plugins/{{$setting->param_name}}" class="text-primary mr-2">{!!
+        $helper->s('plugin.'.$setting->param_name.'.tab_name') !!}</a>
+    @endif
     {!! $setting->abstract !!}
 </div>
 @endif
