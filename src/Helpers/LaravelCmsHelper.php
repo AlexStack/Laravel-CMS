@@ -375,7 +375,7 @@ class LaravelCmsHelper
         $prefix = 'laravel-cms::';
         if (false === strpos($key, '.')) {
             $default_str = $key;
-            $key         = 'b.'.$key;
+            $key         = 'cms.'.$key;
         }
         if (is_numeric($param_1)) {
             $s = is_array($param_2) ? trans_choice($prefix.$key, $param_1, $param_2) : trans_choice($prefix.$key, $param_1);
