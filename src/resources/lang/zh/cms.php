@@ -51,6 +51,7 @@ return [
     'plugin'           => '插件',
     'plugins'          => '插件',
     'available'        => '可用的',
+    'install'          => '安装',
     'image'            => '图片',
     'global'           => '全局',
     'file'             => '文件',
