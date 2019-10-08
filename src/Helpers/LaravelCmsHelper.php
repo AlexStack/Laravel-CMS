@@ -228,13 +228,16 @@ class LaravelCmsHelper
     public function assetUrl($file, $with_modify_time = true, $is_backend = false)
     {
         $url = 'laravel-cms/'.$this->s(''.($is_backend ? 'template.backend_dir' : 'template.frontend_dir')).'/'.$file;
+        if (0 === strpos($file, '../')) {
+            $url = 'laravel-cms/'.str_replace('../', '', $file);
+        }
         if ($with_modify_time) {
             $abs_real_path = public_path($url);
 
             if (file_exists($abs_real_path)) {
                 $url .= '?last_modify_time='.date('Ymd-His', filemtime($abs_real_path));
             } else {
-                $url .= '?file_not_exists_please_publish_it_first';
+                $url .= '?file_not_exists=please_publish_it_first';
             }
         }
 
@@ -611,5 +614,20 @@ class LaravelCmsHelper
         }
 
         return $menu_str;
+    }
+
+    public function loadPluginJs($type)
+    {
+        $all_plugins = $this->s('top.plugin');
+        $js_str      = '';
+        if ('js_for_all_admin_pages' == $type) {
+            foreach ($all_plugins as $param_name => $p) {
+                if (isset($p['plugin_type']) && 'standalone' == $p['plugin_type'] && isset($p[$type])) {
+                    $js_str .= '<script src="'.$this->assetUrl('../plugins/'.$param_name.'/'.$p[$type]).'"></script>'."\n";
+                }
+            }
+        }
+
+        return $js_str;
     }
 }

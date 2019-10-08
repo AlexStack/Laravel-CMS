@@ -37,3 +37,5 @@
             sortableList('#sortableList');
         });
 </script>
+
+{!! $helper->loadPluginJs('js_for_all_admin_pages') !!}

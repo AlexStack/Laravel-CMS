@@ -312,7 +312,11 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         if (! file_exists($asset_backup_dir)) {
             mkdir($asset_backup_dir, 0755, true);
         }
-        $plugin_dirs = glob($extract_dir.'/src/resources/views/plugins/*', GLOB_ONLYDIR);
+        if (! file_exists($plugin_asset_path)) {
+            mkdir($plugin_asset_path, 0755, true);
+        }
+
+        $plugin_dirs = glob($extract_dir.'/src/assets/plugins/*', GLOB_ONLYDIR);
         foreach ($plugin_dirs as $dir) {
             $folder_name = basename($dir);
             if (file_exists($plugin_asset_path.'/'.$folder_name)) {
