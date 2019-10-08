@@ -30,6 +30,10 @@ a.delete-link {
   color: #379dd8;
 }
 
+.nav-tabs .nav-link.disabled {
+  color: #c0c0c0;
+}
+
 /* dashboard */
 
 .latest span.badge {

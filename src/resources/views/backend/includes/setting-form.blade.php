@@ -10,6 +10,21 @@
 </div>
 @endif
 
+@if ( isset($setting->alert) )
+<div class="alert alert-danger small" role="alert">
+    <span>{{ $setting->alert }}</span>
+</div>
+@endif
+
+@if ( isset($setting->abstract) && trim(strip_tags($setting->abstract)) != '' )
+<div class="alert alert-info small abstract-text" role="alert">
+    @if ( $setting->category == 'plugin' && 'standalone' == $helper->s('plugin.'.$setting->param_name.'.plugin_type') )
+    <a href="../../plugins/{{$setting->param_name}}" class="text-primary mr-2">{!!
+        $helper->s('plugin.'.$setting->param_name.'.tab_name') !!}</a>
+    @endif
+    {!! $setting->abstract !!}
+</div>
+@endif
 
 @php
 $attr = isset($setting) ? json_decode($helper->parseCmsStr($setting->input_attribute), TRUE) :
@@ -50,7 +65,7 @@ $select_options = [];
 @include($helper->bladePath('includes.form-input','b'), ['type'=>'textarea', 'name' =>
 "abstract", "input_attributes"=>['rows'=>3]])
 
-@include($helper->bladePath('includes.form-input','b'), ['type'=>'text', 'name' =>
-"page_id"])
+{{-- @include($helper->bladePath('includes.form-input','b'), ['type'=>'text', 'name' =>
+"page_id"]) --}}
 
 <input type="hidden" name="return_to_the_list" value="">

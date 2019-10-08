@@ -48,6 +48,8 @@ return [
  'disable'         => 'Disable',
  'sort_value'      => 'Sort Value',
  'plugin'          => 'Plugin',
+ 'plugins'         => 'Plugins',
+ 'install'         => 'Install',
  'image'           => 'Image',
  'global'          => 'Global',
  'file'            => 'File',

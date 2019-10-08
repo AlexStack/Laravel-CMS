@@ -3,7 +3,9 @@
         <div class="col-md text-center mt-5 mb-5 footer">
 
             <span class="small">
-                <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class="text-dark">Laravel CMS</a> @
+                <a href="https://github.com/AlexStack/Laravel-CMS" target="_blank" class="text-dark">Laravel CMS</a> -
+                <a href="https://github.com/AlexStack/Laravel-CMS/issues" target="_blank" class="text-dark">Bug
+                    Report</a> -
                 {{date('Y')}}-{{date('Y')+1}}
             </span>
 
@@ -35,3 +37,5 @@
             sortableList('#sortableList');
         });
 </script>
+
+{!! $helper->loadPluginJs('js_for_all_admin_pages') !!}

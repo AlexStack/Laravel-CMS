@@ -33,6 +33,14 @@ class LaravelCmsFileAdminController extends Controller
     {
         $this->checkUser();
 
+        if (0 === strpos(request()->download_file, 'http')) {
+            return $this->repo->downloadFile(request()->download_file);
+        } elseif (false !== strpos(request()->extract_file, '/temp/')) {
+            return $this->repo->extractFile(request()->extract_file);
+        } elseif (false !== strpos(request()->install_package, '/temp/')) {
+            return $this->repo->installPackage(request()->install_package);
+        }
+
         $data = $this->repo->index();
 
         return view($this->helper->bladePath('file-list', 'b'), $data);
