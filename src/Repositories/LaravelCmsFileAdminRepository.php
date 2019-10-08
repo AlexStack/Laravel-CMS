@@ -407,12 +407,12 @@ class LaravelCmsFileAdminRepository extends BaseRepository
             $plugin_setting = LaravelCmsSetting::where('category', 'plugin')->where('param_name', $plugin_param_name)->first();
         }
 
-        if (!isset($plugin_setting->param_name)) {
+        if (! isset($plugin_setting->param_name)) {
             $result['success']         = false;
-            $result['error_message']   = 'Can not find plugin.' . $plugin_param_name . ' in the setting table. Make sure the migrate record not exists & re-install it!';
+            $result['error_message']   = 'Can not find plugin.'.$plugin_param_name.' in the setting table. Make sure the migrate record not exists & re-install it!';
+
             return response()->json($result);
         }
-
 
         $plugin_param_value = $this->helper->s('plugin.'.$plugin_param_name);
 
