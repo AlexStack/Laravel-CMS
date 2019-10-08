@@ -81,7 +81,7 @@ class LaravelCMS extends Command
             $this->line('<fg=green>- The exists templates will backup to:</> '.$backup_dir);
             $this->line('<fg=green>- </> ');
 
-            $this->moveCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
+            $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
 
             // $vendor_view_folders = glob($vendor_view_path.'/*', GLOB_ONLYDIR);
             // foreach ($vendor_view_folders as $folder) {
@@ -106,7 +106,7 @@ class LaravelCMS extends Command
             $this->line('<fg=green>- The exists plugin views will backup to:</> '.$backup_dir);
             $this->line('<fg=green>- </> ');
 
-            $this->moveCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
+            $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
 
             // foreach ($vendor_plugin_folders as $folder) {
             //     $folder_name = basename($folder);
@@ -140,7 +140,7 @@ class LaravelCMS extends Command
             $this->line('<fg=green>- The exists assets will backup to:</> '.$backup_dir);
             $this->line('<fg=green>- </> ');
 
-            $this->moveCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
+            $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
 
             // $vendor_asset_folders = glob($vendor_asset_path.'/*', GLOB_ONLYDIR);
             // foreach ($vendor_asset_folders as $folder) {
@@ -201,7 +201,7 @@ class LaravelCMS extends Command
                 $lang_dir     = basename($dir);
                 $source_files = glob($dir.'/*.php');
 
-                $this->moveCmsFiles(
+                $this->copyCmsFiles(
                     $source_files,
                     $target_dir.'/'.$lang_dir,
                     $backup_dir.'/'.$lang_dir
@@ -397,7 +397,7 @@ class LaravelCMS extends Command
         }
     }
 
-    public function moveCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files=[])
+    public function copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files=[])
     {
         if (! file_exists($backup_dir)) {
             mkdir($backup_dir, 0755, true);
@@ -413,14 +413,13 @@ class LaravelCMS extends Command
             if (file_exists($target_dir.'/'.$folder_name)) {
                 $new_name = $folder_name.'-bak-'.date('Y-m-d-His');
                 rename($target_dir.'/'.$folder_name, $backup_dir.'/'.$new_name);
+                $this->line('<fg=green>- Backed up file:</> '.$new_name);
             }
             if (is_dir($dir)) {
                 \File::copyDirectory($dir, $target_dir.'/'.$folder_name);
             } else {
                 copy($dir, $target_dir.'/'.$folder_name);
             }
-
-            $this->line('<fg=green>- Backed up file:</> '.$new_name);
         }
 
         return true;
