@@ -292,68 +292,96 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         }
 
         // move view files
-        $plugin_view_path = base_path('resources/views/vendor/laravel-cms/plugins');
-        $view_backup_dir  = storage_path('app/laravel-cms/backups/views/plugins');
-        if (! file_exists($view_backup_dir)) {
-            mkdir($view_backup_dir, 0755, true);
-        }
-        $plugin_dirs = glob($extract_dir.'/src/resources/views/plugins/*', GLOB_ONLYDIR);
-        foreach ($plugin_dirs as $dir) {
-            $folder_name = basename($dir);
-            if (file_exists($plugin_view_path.'/'.$folder_name)) {
-                $new_name = $folder_name.'-bak-'.date('YmdHis');
-                rename($plugin_view_path.'/'.$folder_name, $view_backup_dir.'/'.$new_name);
-            }
-            rename($dir, $plugin_view_path.'/'.$folder_name);
-        }
-        // move assets files
-        $plugin_asset_path = public_path('laravel-cms/plugins');
-        $asset_backup_dir  = storage_path('app/laravel-cms/backups/assets/plugins');
-        if (! file_exists($asset_backup_dir)) {
-            mkdir($asset_backup_dir, 0755, true);
-        }
-        if (! file_exists($plugin_asset_path)) {
-            mkdir($plugin_asset_path, 0755, true);
+        $target_dir   = base_path('resources/views/vendor/laravel-cms/plugins');
+        $backup_dir   = storage_path('app/laravel-cms/backups/views/plugins');
+        $source_files = glob($extract_dir.'/src/resources/views/plugins/*', GLOB_ONLYDIR);
+
+        $this->moveCmsFiles($source_files, $target_dir, $backup_dir);
+
+        // if (! file_exists($view_backup_dir)) {
+        //     mkdir($view_backup_dir, 0755, true);
+        // }
+        // $plugin_dirs = glob($extract_dir.'/src/resources/views/plugins/*', GLOB_ONLYDIR);
+        // foreach ($plugin_dirs as $dir) {
+        //     $folder_name = basename($dir);
+        //     if (file_exists($plugin_view_path.'/'.$folder_name)) {
+        //         $new_name = $folder_name.'-bak-'.date('YmdHis');
+        //         rename($plugin_view_path.'/'.$folder_name, $view_backup_dir.'/'.$new_name);
+        //     }
+        //     rename($dir, $plugin_view_path.'/'.$folder_name);
+        // }
+
+        // move lang files, lang/en lang/zh etc.
+        $target_dir   = base_path('resources/lang/vendor/laravel-cms');
+        $backup_dir   = storage_path('app/laravel-cms/backups/lang');
+        $source_dirs  = glob($extract_dir.'/src/resources/lang/*', GLOB_ONLYDIR);
+
+        foreach ($source_dirs as $dir) {
+            $lang_dir     = basename($dir);
+            $source_files = glob($dir.'/plugin-*.php');
+
+            $this->moveCmsFiles(
+                $source_files,
+                $target_dir.'/'.$lang_dir,
+                $backup_dir.'/'.$lang_dir
+            );
         }
 
-        $plugin_dirs = glob($extract_dir.'/src/assets/plugins/*', GLOB_ONLYDIR);
-        foreach ($plugin_dirs as $dir) {
-            $folder_name = basename($dir);
-            if (file_exists($plugin_asset_path.'/'.$folder_name)) {
-                $new_name = $folder_name.'-bak-'.date('YmdHis');
-                rename($plugin_asset_path.'/'.$folder_name, $asset_backup_dir.'/'.$new_name);
-            }
-            rename($dir, $plugin_asset_path.'/'.$folder_name);
-        }
+        // move assets files
+        $target_dir   = public_path('laravel-cms/plugins');
+        $backup_dir   = storage_path('app/laravel-cms/backups/assets/plugins');
+        $source_files = glob($extract_dir.'/src/assets/plugins/*', GLOB_ONLYDIR);
+
+        $this->moveCmsFiles($source_files, $target_dir, $backup_dir);
+        // if (! file_exists($asset_backup_dir)) {
+        //     mkdir($asset_backup_dir, 0755, true);
+        // }
+        // if (! file_exists($plugin_asset_path)) {
+        //     mkdir($plugin_asset_path, 0755, true);
+        // }
+
+        // $plugin_dirs = glob($extract_dir.'/src/assets/plugins/*', GLOB_ONLYDIR);
+        // foreach ($plugin_dirs as $dir) {
+        //     $folder_name = basename($dir);
+        //     if (file_exists($plugin_asset_path.'/'.$folder_name)) {
+        //         $new_name = $folder_name.'-bak-'.date('YmdHis');
+        //         rename($plugin_asset_path.'/'.$folder_name, $asset_backup_dir.'/'.$new_name);
+        //     }
+        //     rename($dir, $plugin_asset_path.'/'.$folder_name);
+        // }
 
         // move php class files to app/LaravelCms
-        $plugin_class_path = base_path('app/LaravelCms/Plugins/'.$plugin_folder_name);
-        $class_backup_dir  = storage_path('app/laravel-cms/backups/php-files/plugins');
+        $target_dir   = base_path('app/LaravelCms/Plugins/'.$plugin_folder_name);
+        $backup_dir   = storage_path('app/laravel-cms/backups/php-files/plugins');
+        $source_files = glob($extract_dir.'/src/*', GLOB_ONLYDIR);
+        $ignore_files = ['resources', 'database', 'assets'];
 
-        if (! file_exists($plugin_class_path)) {
-            mkdir($plugin_class_path, 0755, true);
-        } else {
-            if (! file_exists($class_backup_dir)) {
-                mkdir($class_backup_dir, 0755, true);
-            }
+        $this->moveCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
 
-            $new_name = $plugin_folder_name.'-bak-'.date('YmdHis');
-            rename($plugin_class_path, $class_backup_dir.'/'.$new_name);
+        // if (! file_exists($plugin_class_path)) {
+        //     mkdir($plugin_class_path, 0755, true);
+        // } else {
+        //     if (! file_exists($class_backup_dir)) {
+        //         mkdir($class_backup_dir, 0755, true);
+        //     }
 
-            mkdir($plugin_class_path, 0755, true);
-        }
-        $plugin_dirs = glob($extract_dir.'/src/*', GLOB_ONLYDIR);
-        foreach ($plugin_dirs as $dir) {
-            $folder_name = basename($dir);
-            if (in_array($folder_name, ['resources', 'database', 'assets'])) {
-                continue;
-            }
-            // if (file_exists($plugin_class_path.'/'.$folder_name)) {
-            //     $new_name = $folder_name.'-bak-'.date('YmdHis');
-            //     rename($plugin_class_path.'/'.$folder_name, $plugin_class_path.'/'.$new_name);
-            // }
-            rename($dir, $plugin_class_path.'/'.$folder_name);
-        }
+        //     $new_name = $plugin_folder_name.'-bak-'.date('YmdHis');
+        //     rename($plugin_class_path, $class_backup_dir.'/'.$new_name);
+
+        //     mkdir($plugin_class_path, 0755, true);
+        // }
+        // $plugin_dirs = glob($extract_dir.'/src/*', GLOB_ONLYDIR);
+        // foreach ($plugin_dirs as $dir) {
+        //     $folder_name = basename($dir);
+        //     if (in_array($folder_name, ['resources', 'database', 'assets'])) {
+        //         continue;
+        //     }
+        //     // if (file_exists($plugin_class_path.'/'.$folder_name)) {
+        //     //     $new_name = $folder_name.'-bak-'.date('YmdHis');
+        //     //     rename($plugin_class_path.'/'.$folder_name, $plugin_class_path.'/'.$new_name);
+        //     // }
+        //     rename($dir, $plugin_class_path.'/'.$folder_name);
+        // }
 
         // delete files
         \File::deleteDirectory($package_abs_dir);
@@ -392,5 +420,28 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         // $result['package_abs_dir']            = $package_abs_dir ?? '';
 
         return response()->json($result);
+    }
+
+    public function moveCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files=[])
+    {
+        if (! file_exists($backup_dir)) {
+            mkdir($backup_dir, 0755, true);
+        }
+        if (! file_exists($target_dir)) {
+            mkdir($target_dir, 0755, true);
+        }
+        foreach ($source_files as $dir) {
+            $folder_name = basename($dir);
+            if (in_array($folder_name, $ignore_files)) {
+                continue;
+            }
+            if (file_exists($target_dir.'/'.$folder_name)) {
+                $new_name = $folder_name.'-bak-'.date('YmdHis');
+                rename($target_dir.'/'.$folder_name, $backup_dir.'/'.$new_name);
+            }
+            rename($dir, $target_dir.'/'.$folder_name);
+        }
+
+        return true;
     }
 }
