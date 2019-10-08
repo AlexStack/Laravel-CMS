@@ -2,6 +2,7 @@
 
 namespace AlexStack\LaravelCms\Repositories;
 
+use AlexStack\LaravelCms\Helpers\LaravelCmsHelper;
 use AlexStack\LaravelCms\Models\LaravelCmsFile;
 use AlexStack\LaravelCms\Models\LaravelCmsSetting;
 
@@ -386,6 +387,10 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         // delete files
         \File::deleteDirectory($package_abs_dir);
 
+        // generate new settings file
+        $this->helper->rewriteConfigFile();
+        $this->helper = new LaravelCmsHelper(); // load new cms settings
+
         // update plugin setting version
         $plugin_param_name  = $composer_json['extra']['laravel-cms']['plugin-param-name'];
         $plugin_param_value = $this->helper->s('plugin.'.$plugin_param_name);
@@ -401,8 +406,13 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         } else {
             $plugin_setting = LaravelCmsSetting::where('category', 'plugin')->where('param_name', $plugin_param_name)->first();
         }
-        // generate new settings file
-        $this->helper->rewriteConfigFile();
+
+        if (!isset($plugin_setting->param_name)) {
+            $result['success']         = false;
+            $result['error_message']   = 'Can not find plugin.' . $plugin_param_name . ' in the setting table. Make sure the migrate record not exists & re-install it!';
+            return response()->json($result);
+        }
+
 
         $plugin_param_value = $this->helper->s('plugin.'.$plugin_param_name);
 
