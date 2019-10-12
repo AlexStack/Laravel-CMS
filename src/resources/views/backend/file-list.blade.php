@@ -2,7 +2,7 @@
 
 @section('content')
 <script>
-    document.write("<style> .file-icon {height: {{$helper->s('file.small_image_height')}}px; vertical-align: middle;}</style>");
+    document.write("<style> .file-icon {height: {{$helper->s('file.small_image_height')}}px; vertical-align: middle;} .file-icon img{max-height: {{$helper->s('file.small_image_height')}}px;}</style>");
     if ( window.location.href.indexOf('editor_id=textarea') != -1 ||  window.location.href.indexOf('editor_id=input.') != -1 ) {
         $('.top-header').hide();
     }
@@ -43,7 +43,7 @@
                 </div>
 
                 {{-- insert remote url to editor --}}
-                @if ( isset($_REQUEST['editor_id']) && strlen($_REQUEST['editor_id'])>3)
+                @if ( isset($_REQUEST['editor_id']) && strpos($_REQUEST['editor_id'],'textarea.'))
                 <div class="col-md-5">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
