@@ -43,7 +43,7 @@
                 </div>
 
                 {{-- insert remote url to editor --}}
-                @if ( isset($_REQUEST['editor_id']) && strpos($_REQUEST['editor_id'],'textarea.'))
+                @if ( isset($_REQUEST['editor_id']) && strpos($_REQUEST['editor_id'],'textarea.') !== false)
                 <div class="col-md-5">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -229,7 +229,7 @@
     function insertRemoteUrl(url_id)  {
         var link = $.trim($(url_id).val());
         var external_class = ( link.match(/http:|https:/) == null || link.indexOf(location.hostname) != -1 ) ? '' : 'external-link';
-        if ( link.match(/\.*(jpeg|jpg|gif|png|svg|bmp|webp|image|img|pic|photo|picture)/) != null || link.slice(-5).indexOf('.') == -1 ){
+        if ( link.toLowerCase().match(/\.*(jpeg|jpg|gif|png|svg|bmp|webp|image|img|pic|photo|picture)/) != null || link.slice(-5).indexOf('.') == -1 ){
             var html_str = '<img src="' + link + '" class="img-fluid content-img '+ external_class + '" />';
         } else {
             var html_str = '&nbsp;<a href="' + link + '" class="content-file '+ external_class + '" target="_blank"><i class="fas fa-link mr-1"></i>' + link + '</a>&nbsp;';
