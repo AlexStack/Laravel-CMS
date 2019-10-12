@@ -229,10 +229,10 @@
     function insertRemoteUrl(url_id)  {
         var link = $.trim($(url_id).val());
         var external_class = ( link.match(/http:|https:/) == null || link.indexOf(location.hostname) != -1 ) ? '' : 'external-link';
-        if ( link.match(/\.(jpeg|jpg|gif|png|svg|bmp|webp)$/) != null ){
+        if ( link.match(/\.*(jpeg|jpg|gif|png|svg|bmp|webp|image|img|pic|photo|picture)/) != null || link.slice(-5).indexOf('.') == -1 ){
             var html_str = '<img src="' + link + '" class="img-fluid content-img '+ external_class + '" />';
         } else {
-            var html_str = ' <a href="' + link + '" class="content-file '+ external_class + '" target="_blank"><i class="fas fa-link mr-1"></i>' + link + '</a> ';
+            var html_str = '&nbsp;<a href="' + link + '" class="content-file '+ external_class + '" target="_blank"><i class="fas fa-link mr-1"></i>' + link + '</a>&nbsp;';
         }
 
         return handleInsertToEditor(html_str);
