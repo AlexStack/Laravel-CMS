@@ -384,9 +384,6 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         //     rename($dir, $plugin_class_path.'/'.$folder_name);
         // }
 
-        // delete files
-        \File::deleteDirectory($package_abs_dir);
-
         // generate new settings file
         $this->helper->rewriteConfigFile();
         $this->helper = new LaravelCmsHelper(); // load new cms settings
@@ -410,11 +407,17 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         if (! isset($plugin_setting->param_name)) {
             $result['success']         = false;
             $result['error_message']   = 'Can not find plugin.'.$plugin_param_name.' in the setting table. Make sure the migrate record not exists & re-install it!';
+            // php artisan migrate, abs path seems not work on windows
+            $result['migrate_reset']         = \Artisan::call('migrate:reset', ['--path'=> './public/'.dirname($package_file).'/'.basename($extract_dir).'/src/database/migrations/', '--force'=>true]);
 
             return response()->json($result);
         }
 
-        $plugin_param_value = $this->helper->s('plugin.'.$plugin_param_name);
+        // delete files
+        \File::deleteDirectory($package_abs_dir);
+
+        // generate new settings file
+        $this->helper->rewriteConfigFile();
 
         $result['success']       = true;
         $result['error_message'] = '';

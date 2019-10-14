@@ -134,6 +134,8 @@ class LaravelCmsSettingAdminRepository extends BaseRepository
     {
         $rs = LaravelCmsSetting::find($id)->delete();
 
+        $this->helper->rewriteConfigFile();
+
         return $rs;
     }
 

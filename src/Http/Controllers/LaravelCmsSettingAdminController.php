@@ -90,6 +90,6 @@ class LaravelCmsSettingAdminController extends Controller
         $this->checkUser();
         $rs = $this->repo->destroy($id);
 
-        return redirect()->route('LaravelCmsAdminSettings.index');
+        return redirect()->route('LaravelCmsAdminSettings.index', ['category' => $request->category]);
     }
 }
