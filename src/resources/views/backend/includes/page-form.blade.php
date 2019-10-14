@@ -37,7 +37,10 @@
         @include($helper->bladePath('includes.form-input','b'), ['type'=>'text', 'name'
         => "title", 'label'=>isset($page)? $helper->t('title') . ' <a class="text-info ml-2 "
             href="' . $helper->url($page) . '" target="_blank" title="Preview"><i
-                class="fas fa-external-link-square-alt"></i></a>': $helper->t('title'),
+                class="fas fa-external-link-square-alt"></i></a> <a class="ml-2 "
+            href="' . route('LaravelCmsAdminPages.create', ['parent_id' => $page->parent_id, 'menu_enabled'=>0]) .'"
+            title="Add another new page at the same level"><i class="fas fa-plus-square"></i></a>':
+        $helper->t('title'),
         'input_attributes'=>['required'=>'required', 'minlength'=>2, 'pattern'=>".{2,}"]])
 
         @include($helper->bladePath('includes.form-input','b'), ['name' =>
