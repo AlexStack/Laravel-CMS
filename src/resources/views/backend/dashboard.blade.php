@@ -146,7 +146,11 @@
     .done(function(data) {
         // console.log( "second success");
         // console.log(data['tag_name']);
-        $('span.latest_version').html('' + data['tag_name']);
+        var latest_version = data['tag_name'];
+        if ( '{{$cms_version}}' !== data['tag_name'] ){
+            latest_version = '<a href="./files?new_version=' + data['tag_name'] + '&old_version={{$cms_version}}" target="_blank" class="text-danger">' + data['tag_name'] + '</a>';
+        }
+        $('span.latest_version').html(latest_version);
     })
     .fail(function() {
         console.log( "cmsGitHubTags error" );

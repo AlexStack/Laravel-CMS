@@ -39,6 +39,8 @@ class LaravelCmsFileAdminController extends Controller
             return $this->repo->extractFile(request()->extract_file);
         } elseif (false !== strpos(request()->install_package, '/temp/')) {
             return $this->repo->installPackage(request()->install_package);
+        } elseif (request()->new_version && request()->old_version) {
+            return $this->repo->upgradeCmsViaBrowser(request()->new_version, request()->old_version);
         }
 
         $data = $this->repo->index();
