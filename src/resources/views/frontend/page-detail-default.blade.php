@@ -45,6 +45,8 @@
             <div class="text-center mb-4 extra_content extra_content_3">{!! $page->extra_content_3 !!}</div>
             @endif
 
+            @include($helper->bladePath('includes.tags'))
+
             @include($helper->bladePath('includes.breadcrumb'))
 
 
