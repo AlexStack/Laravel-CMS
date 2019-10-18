@@ -435,6 +435,65 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         return response()->json($result);
     }
 
+    public function upgradeCmsViaBrowser($cms_version, $old_version)
+    {
+        $need_composer  = true;
+        $cms_source_dir = storage_path('app/laravel-cms/backups/cms-source-code/git-clone-cms-'.$cms_version.'-'.date('Y-m-d-His'));
+        $cms_backup_dir = storage_path('app/laravel-cms/backups/cms-source-code/vendor-laravel-cms-'.$old_version.'-'.date('Y-m-d-His'));
+        $cms_vendor_dir = base_path('vendor/alexstack/laravel-cms');
+
+        if (false !== strpos(ini_get('disable_functions'), 'exec')) {
+            $result['success']       = false;
+            $result['error_message'] = 'Your server do not support upgrade the CMS online via browser, please upgrade the CMS via composer command';
+
+            return response()->json($result);
+        }
+
+        exec('git clone --branch '.$cms_version.' --depth 1 https://github.com/AlexStack/Laravel-CMS.git '.$cms_source_dir);
+
+        if (file_exists($cms_source_dir.'/composer.json')) {
+            $old_composer = json_decode(file_get_contents($cms_vendor_dir.'/composer.json'), true);
+            $new_composer = json_decode(file_get_contents($cms_source_dir.'/composer.json'), true);
+            if (isset($new_composer['require']) && $new_composer['require'] == $old_composer['require']) {
+                $need_composer = false;
+            }
+        }
+
+        if ($need_composer) {
+            $result['success']       = false;
+            $result['error_message'] = 'This new version can NOT upgrade via browser, needs to upgrade via composer command!';
+
+            return response()->json($result);
+        }
+
+        $rs = @rename($cms_vendor_dir, $cms_backup_dir);
+        if ($rs) {
+            $rs = @rename($cms_source_dir, $cms_vendor_dir);
+            if ($rs) {
+                exec('git --git-dir='.$cms_vendor_dir.'/.git --work-tree='.$cms_vendor_dir.' remote add composer https://github.com/AlexStack/Laravel-CMS.git');
+
+                $rs = LaravelCmsSetting::updateOrCreate(
+                    ['param_name' => 'cms_version', 'category' => 'system'],
+                    ['param_name' => 'cms_version', 'category' => 'system', 'param_value'=>$cms_version, 'enabled'=>1]
+                );
+
+                exec('php '.base_path('artisan').' laravelcms --action=upgrade --silent=yes');
+
+                $result['success']         = true;
+                $result['error_message']   = 'Upgrade CMS successful!';
+
+                return response()->json($result);
+            }
+        }
+
+        @rename($cms_source_dir, $cms_source_dir.'-pending-del');
+
+        $result['success']         = false;
+        $result['error_message']   = 'Upgrade CMS failed!';
+
+        return response()->json($result);
+    }
+
     public function moveCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files=[])
     {
         if (! file_exists($backup_dir)) {

@@ -28,7 +28,9 @@ class LaravelCmsDashboardAdminRepository extends BaseRepository
             if (isset($packages['packages'])) {
                 foreach ($packages['packages'] as $p) {
                     if ('alexstack/laravel-cms' == strtolower($p['name'])) {
-                        $data['cms_version'] = $p['version'];
+                        if (version_compare($p['version'], $data['cms_version']) > 0) {
+                            $data['cms_version'] = $p['version'];
+                        }
                     }
                 }
             }

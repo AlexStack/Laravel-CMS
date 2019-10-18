@@ -29,6 +29,8 @@ class LaravelCmsPageRepository extends BaseRepository
 
         if (($reserved_slugs['search'] ?? 'Search-CMS.html') == $slug) {
             return $this->search($slug);
+        } elseif (($reserved_slugs['tag'] ?? 'List-Tag.html') == $slug) {
+            return $this->search($slug, 'tag');
         } elseif (($reserved_slugs['sitemap'] ?? 'sitemap.txt') == $slug) {
             return $this->sitemap('txt');
         } elseif (($reserved_slugs['redirect'] ?? 'redirect-link') == $slug) {
@@ -59,7 +61,11 @@ class LaravelCmsPageRepository extends BaseRepository
             $data['page']->parent_flat_ary = [];
         }
 
-        //$this->helper->debug($data['page']->parent->toArray(), 'no_exit');
+        if ('' != trim($data['page']->tags)) {
+            $data['page']->tags_ary = json_decode($data['page']->tags, true);
+        } else {
+            $data['page']->tags_ary = [];
+        }
 
         $data['file_data'] = json_decode($data['page']->file_data);
         if (null == $data['file_data']) {
@@ -178,17 +184,25 @@ class LaravelCmsPageRepository extends BaseRepository
         return redirect($s, 301, ['X-Robots-Tag' => 'noindex, nofollow']);
     }
 
-    public function search($slug)
+    public function search($slug, $search_type = 'content')
     {
         $keyword                = request()->keyword;
         if ($keyword) {
-            $data['search_results'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
-                return $query->where('title', 'like', '%'.trim($keyword).'%')
+            if ('content' == $search_type) {
+                $data['search_results'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
+                    return $query->where('title', 'like', '%'.trim($keyword).'%')
                 ->orWhere('main_content', 'like', '%'.trim($keyword).'%')
                 ->orWhere('sub_content', 'like', '%'.trim($keyword).'%');
-            })
-            ->orderBy('id', 'desc')
-            ->paginate($this->helper->s('template.number_per_search') ?? 6);
+                })
+                ->orderBy('id', 'desc')
+                ->paginate($this->helper->s('template.number_per_search') ?? 6);
+            } elseif ('tag' == $search_type) {
+                $data['search_results'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
+                    return $query->where('tags', 'like', '%"'.trim($keyword).'"%');
+                })
+                ->orderBy('id', 'desc')
+                ->paginate($this->helper->s('template.number_per_search') ?? 6);
+            }
         } else {
             $data['search_results'] = [];
         }
@@ -199,7 +213,7 @@ class LaravelCmsPageRepository extends BaseRepository
         // simulate a page collection
         $data['page']                       = collect([]);
         $data['page']->template_file        = 'page-search-result';
-        $data['page']->title                = $this->helper->t('search').' '.$keyword;
+        $data['page']->title                = ('tag' == $search_type) ? $this->helper->t('tag').' '.$keyword : $this->helper->t('search').' '.$keyword;
         $data['page']->meta_title           = $data['page']->title.' ('.$this->helper->t('page_number', ['number'=>$_GET['page'] ?? 1]).')';
         $data['page']->slug                 = $slug;
         $data['page']->id                   = $slug;

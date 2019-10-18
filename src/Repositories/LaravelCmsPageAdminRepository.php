@@ -50,6 +50,10 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         //$this->helper->debug($form_data, 'no_exit');
 
         $form_data['slug'] = $this->getSlug($form_data);
+
+        // tags string to json
+        $form_data['tags'] = $this->commaStrToJson($form_data['tags']);
+
         // DB::enableQueryLog();
 
         // $rs = LaravelCmsPage::create($form_data);  // create() not working ???
@@ -97,6 +101,9 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         //$this->debug($all_file_data, 'exit');
         $this->handleUpload($form_data, $all_file_data);
 
+        // tags string to json
+        $form_data['tags'] = $this->commaStrToJson($form_data['tags']);
+
         unset($form_data['_method'], $form_data['_token']);
 
         $page->update($form_data);
@@ -128,6 +135,11 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         $data['helper'] = $this->helper;
 
         $data['plugins'] = $this->extraPageTabs('edit', $id, $data['page']);
+
+        // tags
+        if ($tags_array = json_decode($data['page']->tags, true)) {
+            $data['page']->tags = implode(' , ', $tags_array);
+        }
 
         //$this->helper->debug($data['plugins']->toArray(), 'no_exit22');
 
@@ -371,5 +383,19 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         }
 
         return $option_ary;
+    }
+
+    public function commaStrToJson($str)
+    {
+        if ('' != trim($str)) {
+            $str        = str_replace(['，', ';', '|'], ',', $str);
+            // trim every elements
+            $tags_array = array_map('trim', explode(',', $str));
+            // remove empty, duplicate and keys
+            $tags_array = array_values(array_unique(array_filter($tags_array)));
+            $str        = json_encode($tags_array, JSON_UNESCAPED_UNICODE);
+        }
+
+        return $str;
     }
 }
