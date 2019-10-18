@@ -470,6 +470,13 @@ class LaravelCmsFileAdminRepository extends BaseRepository
         if ($rs) {
             $rs = @rename($cms_source_dir, $cms_vendor_dir);
             if ($rs) {
+                exec('git --git-dir='.$cms_vendor_dir.'/.git --work-tree='.$cms_vendor_dir.' remote add composer https://github.com/AlexStack/Laravel-CMS.git');
+
+                $rs = LaravelCmsSetting::updateOrCreate(
+                    ['param_name' => 'cms_version', 'category' => 'system'],
+                    ['param_name' => 'cms_version', 'category' => 'system', 'param_value'=>$cms_version]
+                );
+
                 exec('php '.base_path('artisan').' laravelcms --action=upgrade --silent=yes');
 
                 $result['success']         = true;

@@ -148,7 +148,7 @@
         // console.log(data['tag_name']);
         var latest_version = data['tag_name'];
         if ( '{{$cms_version}}' !== data['tag_name'] ){
-            latest_version = '<a href="./files?new_version=' + data['tag_name'] + '&old_version={{$cms_version}}" target="_blank" class="text-danger">' + data['tag_name'] + '</a>';
+            latest_version = '<a href="./files?new_version=' + data['tag_name'] + '&old_version={{$cms_version}}" target="_blank" class="text-danger update-cms" onclick="return updateCms();">' + data['tag_name'] + '</a>';
         }
         $('span.latest_version').html(latest_version);
     })
@@ -196,6 +196,10 @@
         .always(function() {
             //console.log( "get majorInfo complete" );
         });
+    }
+
+    function updateCms()    {
+        return confirm("Are you sure to update the CMS online via browser? It may take few minutes, please keep the browser open until it complete.");
     }
 </script>
 
