@@ -53,7 +53,6 @@ return [
         'slug_suffix'         => '.html',
         'slug_separate'       => '-',
         'allow_json_response' => 0,
-        'cms_version'         => '1.0.1',
         'cms_admin'           => [
             'super_admin'      => [1],
             'web_admin'        => [1],

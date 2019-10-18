@@ -474,7 +474,7 @@ class LaravelCmsFileAdminRepository extends BaseRepository
 
                 $rs = LaravelCmsSetting::updateOrCreate(
                     ['param_name' => 'cms_version', 'category' => 'system'],
-                    ['param_name' => 'cms_version', 'category' => 'system', 'param_value'=>$cms_version]
+                    ['param_name' => 'cms_version', 'category' => 'system', 'param_value'=>$cms_version, 'enabled'=>1]
                 );
 
                 exec('php '.base_path('artisan').' laravelcms --action=upgrade --silent=yes');
