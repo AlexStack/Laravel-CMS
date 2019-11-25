@@ -1,3 +1,4 @@
+@if ( isset($page->tags_ary) && !empty($page->tags_ary) )
 <div class="row mb-4 nav-tags">
     <div class="col-md text-right">
         <span class="text-secondary text-tags">{{$helper->t('tags')}} :</span>
@@ -7,3 +8,4 @@
         @endforeach
     </div>
 </div>
+@endif

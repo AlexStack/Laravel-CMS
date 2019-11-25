@@ -84,7 +84,18 @@ class LaravelCmsPageRepository extends BaseRepository
                 $data['plugins']->put($plugin['blade_dir'], new $plugin_class());
             }
         }
-        //$this->helper->debug($data['plugins']);
+
+        // override the $data by call_user_func
+        if (strpos($data['page']->special_text, 'php_class') && $special_json = json_decode($data['page']->special_text)) {
+            $user_class   = $special_json->php_class;
+            $class_method = $special_json->class_method ?? 'index';
+            $parameters   = $special_json->parameters ?? null;
+            if ('' != $user_class && class_exists($user_class) && is_callable($user_class.'::'.$class_method)) {
+                $data = call_user_func([new $user_class(), $class_method], $data, $parameters);
+            } else {
+                $data['call_user_func_error'] = $user_class.' class not exists or class_method not callable ';
+            }
+        }
 
         return $data;
     }
