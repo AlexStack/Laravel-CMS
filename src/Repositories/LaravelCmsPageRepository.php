@@ -198,21 +198,30 @@ class LaravelCmsPageRepository extends BaseRepository
     public function search($slug, $search_type = 'content')
     {
         $keyword                = request()->keyword;
-        if ($keyword) {
+        if ($keyword || request()->tag) {
             if ('content' == $search_type) {
                 $data['search_results'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
-                    return $query->where('title', 'like', '%'.trim($keyword).'%')
-                ->orWhere('main_content', 'like', '%'.trim($keyword).'%')
-                ->orWhere('sub_content', 'like', '%'.trim($keyword).'%');
+                    return $query->where(function ($query) use ($keyword) {
+                        return $query->where('title', 'like', '%'.trim($keyword).'%')
+                                ->orWhere('main_content', 'like', '%'.trim($keyword).'%')
+                                ->orWhere('sub_content', 'like', '%'.trim($keyword).'%');
+                    });
+                })
+                ->when(request()->tag, function ($query, $keyword) {
+                    $query->where('tags', 'like', '%"'.trim(request()->tag).'"%');
+
+                    // dd($query->toSql());
+
+                    return $query;
                 })
                 ->orderBy('id', 'desc')
-                ->paginate($this->helper->s('template.number_per_search') ?? 6);
+                ->paginate($this->helper->s('template.number_per_search') ?? 24);
             } elseif ('tag' == $search_type) {
                 $data['search_results'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
                     return $query->where('tags', 'like', '%"'.trim($keyword).'"%');
                 })
                 ->orderBy('id', 'desc')
-                ->paginate($this->helper->s('template.number_per_search') ?? 6);
+                ->paginate($this->helper->s('template.number_per_search') ?? 20);
             }
         } else {
             $data['search_results'] = [];

@@ -79,6 +79,7 @@ return [
     'meta_description' => 'META描述',
     'view_counts'      => '浏览次数',
     'tags'             => '标签',
+    'tag'              => '标签',
     'extra_image_1'    => '附加图片1',
     'extra_text_1'     => '附加文字1',
     'extra_content_1'  => '附加内容1',

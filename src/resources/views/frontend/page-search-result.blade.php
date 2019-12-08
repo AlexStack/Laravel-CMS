@@ -13,7 +13,7 @@
             <div class="row justify-content-center">
                 {{-- search form --}}
                 <div class="col-md-6 col-sm-11">
-                    {!! Form::model($_GET, [ 'method' => "GET" ]) !!}
+                    {!! Form::model($_GET, [ 'method' => "GET", 'id'=>'search_form' ]) !!}
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -30,9 +30,20 @@
                             <button class="btn btn-secondary search-btn" type="submit">{{$helper->t('search')}}</button>
                         </div>
                     </div>
-
+                    <input name="tag" class="tag" type="hidden" value="{{$_REQUEST['tag'] ?? ''}}" />
                     {{ Form::close() }}
                 </div>
+                {{-- clear search terms --}}
+                @if ( isset($_REQUEST['tag']) && trim($_REQUEST['tag']) != '')
+                <div class="col-md-auto pt-2 pb-3">
+                    <span>{{$helper->t('category,tag')}}
+                        <a href="#" onclick="$('#search_form .tag').val('');$('#search_form').submit();return false;">
+                            <i class="far fa-times-circle text-primary mr-1">
+                            </i>{{$_REQUEST['tag']}}</a>
+                    </span>
+                </div>
+                @endif
+
 
             </div>
 
@@ -46,7 +57,7 @@
 
             <div class="row justify-content-center search-pagination">
                 <div class="col-md-auto  justify-content-center pagination">
-                    {{ $search_results->appends(['keyword' =>$_REQUEST['keyword']??null])->links() }}
+                    {{ $search_results->appends(['keyword' =>$_REQUEST['keyword']??null, 'tag' =>$_REQUEST['tag']??null])->links() }}
                 </div>
                 <div class="w-100"></div>
                 <div class="col-md-auto text-center">

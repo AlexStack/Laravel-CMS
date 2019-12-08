@@ -77,6 +77,7 @@ return [
  'meta_description' => 'META Description',
  'view_counts'      => 'View Counts',
  'tags'             => 'Tags',
+ 'tag'              => 'Tag',
  'extra_image_1'    => 'Extra Image 1',
  'extra_text_1'     => 'Extra Text 1',
  'extra_content_1'  => 'Extra Content 1',
