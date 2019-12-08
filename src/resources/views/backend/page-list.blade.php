@@ -7,6 +7,9 @@
         <div class="col-md">
             <ul id="sortableList" class="list-group all-pages">
                 @forelse ($all_pages as $item)
+                @if ( isset($_GET['hide_depth']) && $item->depth >= $_GET['hide_depth'])
+                @continue
+                @endif
                 <li class="list-group-item list-group-item-action" id="page-{{$item->id}}">
                     <i class="fas fa-arrows-alt text-light handle"></i>
                     @php

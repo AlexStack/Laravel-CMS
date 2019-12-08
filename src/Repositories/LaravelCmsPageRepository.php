@@ -233,7 +233,7 @@ class LaravelCmsPageRepository extends BaseRepository
         // simulate a page collection
         $data['page']                       = collect([]);
         $data['page']->template_file        = 'page-search-result';
-        $data['page']->title                = ('tag' == $search_type) ? $this->helper->t('tag').' '.$keyword : $this->helper->t('search').' '.$keyword;
+        $data['page']->title                = ('tag' == $search_type) ? $this->helper->t('tag').' '.$keyword : $this->helper->t('search').' '.$keyword.(request()->tag ? ' - '.request()->tag : '');
         $data['page']->meta_title           = $data['page']->title.' ('.$this->helper->t('page_number', ['number'=>$_GET['page'] ?? 1]).')';
         $data['page']->slug                 = $slug;
         $data['page']->id                   = $slug;

@@ -36,9 +36,9 @@
                 {{-- clear search terms --}}
                 @if ( isset($_REQUEST['tag']) && trim($_REQUEST['tag']) != '')
                 <div class="col-md-auto pt-2 pb-3">
-                    <span>{{$helper->t('category,tag')}}
+                    <span class="search-tag">{{$helper->t('category,tag')}}
                         <a href="#" onclick="$('#search_form .tag').val('');$('#search_form').submit();return false;">
-                            <i class="far fa-times-circle text-primary mr-1">
+                            <i class="far fa-times-circle mr-1">
                             </i>{{$_REQUEST['tag']}}</a>
                     </span>
                 </div>
