@@ -3,6 +3,7 @@
         "endforelse",
         "endphp",
         "forelse",
+        "persistor",
         "tabpanel"
     ]
 }

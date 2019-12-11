@@ -32,10 +32,28 @@ class LaravelCmsPageAdminController extends Controller
     public function index()
     {
         $this->checkUser();
+        if ('json' == request()->response_type) {
+            $data = $this->repo->index();
 
-        $data = $this->repo->index();
+            unset($data['helper']);
+            unset($data['plugins']);
 
-        return view($this->helper->bladePath('page-list', 'b'), $data);
+            foreach ($data['all_pages'] as $key => $page) {
+                $data['all_pages'][$key]->url = $this->helper->url($page);
+            }
+
+            $rs = response()->json($data['all_pages']);
+
+            return $rs;
+        } elseif ($this->helper->s('system.all_pages.react_js')) {
+            $data['helper'] = $this->helper;
+
+            return view($this->helper->bladePath('page-list-react-js', 'b'), $data);
+        } else {
+            $data = $this->repo->index();
+
+            return view($this->helper->bladePath('page-list', 'b'), $data);
+        }
     }
 
     public function create()

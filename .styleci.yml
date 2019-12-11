@@ -1,7 +1,6 @@
 preset: laravel
 risky: false
 enabled:
-  - alpha_ordered_imports
   - align_double_arrow
   - align_equals
 disabled:
