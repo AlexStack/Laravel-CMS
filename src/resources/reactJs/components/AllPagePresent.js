@@ -11,8 +11,24 @@ const AllPagePresent = ({
   deleteConfirmId
 }) => {
   // return <span>AllPagePresent AllPagePresent {store.pages.items.length}</span>;
+  if (filterKey == "all") {
+    filterKey = store.pages.filterKey;
+  }
 
-  let filteredPages = store.pages.items.filter(function(item) {
+  // let filteredPages = Object.assign({}, store.pages.items); // store.pages.items is an array, can not use object.assign for sort()
+
+  // let tmpObj = [...store.pages.items];
+  // console.log(tmpObj);
+  // tmpObj = tmpObj.sort((a, b) => a.id < b.id);
+
+  // tips: use [...store.pages.items] to clone to a new array with a new memory space
+  // similar to clone a obj by Object.assign({}, store.pages.items)
+  let filteredPages =
+    filterKey == "newly_added"
+      ? [...store.pages.items].sort((a, b) => a.id < b.id)
+      : store.pages.items;
+
+  filteredPages = filteredPages.filter(function(item, index) {
     if (searchKeyword) {
       return item.title.toLowerCase().includes(searchKeyword.toLowerCase());
     } else if (filterKey == "menu_enabled") {
@@ -23,6 +39,8 @@ const AllPagePresent = ({
       return item.depth < 2;
     } else if (filterKey == "depth_3") {
       return item.depth < 3;
+    } else if (filterKey == "newly_added") {
+      return index < 50;
     }
     return true;
   });
@@ -34,6 +52,7 @@ const AllPagePresent = ({
         handleFieldChange={handleFieldChange}
         searchKeyword={searchKeyword}
         formRef={formRef}
+        filterKey={store.pages.filterKey}
       />
 
       <ul className="list-group search-results">
@@ -75,11 +94,17 @@ AllPagePresent.propTypes = {
   handleAskQuestion: PropTypes.func
 };
 
-const SearchForm = ({ items, searchKeyword, handleFieldChange, formRef }) => {
+const SearchForm = ({
+  items,
+  searchKeyword,
+  handleFieldChange,
+  formRef,
+  filterKey
+}) => {
   return (
     <form id="page-search-form" ref={formRef}>
       <div className="row justify-content-center">
-        <div className="input-group col-md-6 mb-2">
+        <div className="input-group col-md-8 mb-2">
           <input
             type="text"
             className="form-control"
@@ -106,6 +131,7 @@ const SearchForm = ({ items, searchKeyword, handleFieldChange, formRef }) => {
             )}
             {!searchKeyword && (
               <select
+                defaultValue={filterKey}
                 onChange={handleFieldChange}
                 name="filter_key"
                 className="btn btn-outline-secondary"
@@ -115,7 +141,8 @@ const SearchForm = ({ items, searchKeyword, handleFieldChange, formRef }) => {
                 <option value="depth_1">Level 1</option>
                 <option value="depth_2">Level 2</option>
                 <option value="depth_3">Level 3</option>
-                {/* <option value="latest_added">Latest Added</option> */}
+                {/* <option value="all">{filterKey}</option> */}
+                <option value="newly_added">Recently Added</option>
               </select>
             )}
 
@@ -169,12 +196,12 @@ const PageItem = ({
   return (
     <li className="list-group-item list-group-item-action">
       <i className={icon} />
-      {!searchKeyword && depthStr.repeat(item.depth)}
+      {!searchKeyword && depthStr.repeat(item.depth) + " "}
       <a
         href={`./pages/${item.id}/edit`}
         className={item.menu_enabled && "menu_enabled"}
       >
-        {item.menu_title && ` [${item.menu_title}] `}
+        {item.menu_title && `[${item.menu_title}] `}
         {/* {item.title && searchKeyword
           ? item.title.replace(searchKeyword, "*" + searchKeyword + "*")
           : item.title} */}
