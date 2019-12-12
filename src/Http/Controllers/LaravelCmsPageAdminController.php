@@ -49,7 +49,8 @@ class LaravelCmsPageAdminController extends Controller
                 // $data['all_pages'][$key]->menu_enabled = (int) $data['all_pages'][$key]->menu_enabled;
             }
 
-            $rs = response()->json($data['all_pages']);
+            // JSON_UNESCAPED_UNICODE can save around another 20% bandwidth transfer if it is Chinese site
+            $rs = response()->json($data['all_pages'])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
 
             return $rs;
         } elseif ($this->helper->s('system.all_pages.react_js')) {
