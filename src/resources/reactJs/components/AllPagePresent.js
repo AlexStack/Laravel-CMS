@@ -60,6 +60,7 @@ const AllPagePresent = ({
         searchKeyword={searchKeyword}
         formRef={formRef}
         filterKey={store.pages.filterKey}
+        totalNumber={store.pages.items.length}
       />
 
       <ul className="list-group search-results">
@@ -106,7 +107,8 @@ const SearchForm = ({
   searchKeyword,
   handleFieldChange,
   formRef,
-  filterKey
+  filterKey,
+  totalNumber
 }) => {
   return (
     <form id="page-search-form" ref={formRef}>
@@ -136,7 +138,7 @@ const SearchForm = ({
                 <i className="fas fa-search mr-1" />
               </button>
             )}
-            {!searchKeyword && (
+            {!searchKeyword && totalNumber > 20 && (
               <select
                 defaultValue={filterKey}
                 onChange={handleFieldChange}
