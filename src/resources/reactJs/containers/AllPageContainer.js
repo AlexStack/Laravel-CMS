@@ -57,7 +57,7 @@ class AllPageContainer extends Component {
 
   handleFieldChangeNow(event, action, item) {
     console.log(this.formRef, action);
-    console.log(event, event.target.name, event.target.className, item);
+    console.log(event, event.target.name, event.target.value);
     if (event.target.name == "search_keyword") {
       this.setState({
         searchKeyword: event.target.value
@@ -83,6 +83,7 @@ class AllPageContainer extends Component {
       this.setState({
         filterKey: event.target.value
       });
+      this.props.dispatch(allActions.setFilterKeyRequest(event.target.value));
 
       this.totalPointAnimation(2, 1);
       this.formRef.current.elements[0].focus();

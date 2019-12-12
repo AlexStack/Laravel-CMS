@@ -8,7 +8,7 @@ export const INITIAL_STATE = {
   formStatus: null, // Submitting, Success, Failed
   applyTask: null,
   histories: [],
-  questionForm2: null
+  filterKey: "all"
 };
 
 const listAllPages = (state = INITIAL_STATE, action) => {
@@ -23,10 +23,15 @@ const deletePage = (state = INITIAL_STATE, action) => {
   };
 };
 
+const setFilterKey = (state = INITIAL_STATE, action) => {
+  return { ...state, filterKey: action.value };
+};
+
 // map our action types to our reducer functions
 export const HANDLERS = {
   [actionTypes.LIST_ALL_PAGE_SUCCESS]: listAllPages,
-  [actionTypes.DELETE_PAGE_SUCCESS]: deletePage
+  [actionTypes.DELETE_PAGE_SUCCESS]: deletePage,
+  [actionTypes.SET_FILTER_KEY_SUCCESS]: setFilterKey
   // [actionTypes.APPLY_TASK_GROUP_FAILURE]: applyTaskFailure
 };
 

@@ -9,7 +9,11 @@ const { Types, Creators } = createActions({
 
   deletePageRequest: ["id"],
   deletePageSuccess: ["id", "page"],
-  deletePageFailure: ["error"]
+  deletePageFailure: ["error"],
+
+  setFilterKeyRequest: ["value"],
+  setFilterKeySuccess: ["value"],
+  setFilterKeyFailure: ["error"]
 });
 
 export const actionTypes = Types;

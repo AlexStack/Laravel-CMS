@@ -25,10 +25,20 @@ function* deletePage(action) {
   }
 }
 
+function* setFilterKey(action) {
+  try {
+    yield put(allActions.setFilterKeySuccess(action.value));
+  } catch (e) {
+    yield put(allActions.setFilterKeyFailure(e.message));
+  }
+}
+
 function* rootSaga() {
   yield takeLatest(actionTypes.LIST_ALL_PAGE_REQUEST, listAllPage);
 
   yield takeLatest(actionTypes.DELETE_PAGE_REQUEST, deletePage);
+
+  yield takeLatest(actionTypes.SET_FILTER_KEY_REQUEST, setFilterKey);
 }
 
 export default rootSaga;
