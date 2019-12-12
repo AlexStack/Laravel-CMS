@@ -171,7 +171,7 @@ const PageItem = ({
   deleteConfirmId
 }) => {
   const depthStr = "⎯⎯⎯";
-  let color_class = "text-secondary";
+  let color_class = "";
   let icon = "";
   if (item.redirect_url || item.url.indexOf("http") === 0) {
     color_class = "text-success";
@@ -207,6 +207,7 @@ const PageItem = ({
           ? item.title.replace(searchKeyword, "*" + searchKeyword + "*")
           : item.title} */}
         {item.title}
+        <i className="far fa-edit ml-3" />
       </a>
 
       <a
@@ -219,15 +220,12 @@ const PageItem = ({
       </a>
 
       {item.menu_enabled && (
-        <a
-          href={`./pages/create?parent_id=${item.id}&menu_enabled=0`}
-          className="text-secondary"
-        >
+        <a href={`./pages/create?parent_id=${item.id}&menu_enabled=0`}>
           <i className="far fa-plus-square ml-3" />
         </a>
       )}
 
-      {item.url.indexOf("homepage") == -1 && (
+      {item.url.indexOf("homepage") == -1 ? (
         <a
           className={`float-right ${
             deleteConfirmId == item.id ? "text-danger" : "delete-link"
@@ -239,6 +237,15 @@ const PageItem = ({
         >
           <i className="far fa-trash-alt mr-1" />
           {deleteConfirmId == item.id && <span>Confirm Delete</span>}
+        </a>
+      ) : (
+        <a
+          className="btn btn-outline-primary btn-sm ml-3"
+          href="./pages/create?switch_nav_tab=settings"
+          role="button"
+        >
+          <i className="fas fa-plus-circle mr-1" />
+          Add new page
         </a>
       )}
     </li>
