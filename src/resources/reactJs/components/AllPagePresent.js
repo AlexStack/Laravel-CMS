@@ -93,14 +93,6 @@ const AllPagePresent = ({
     </div>
   );
 };
-AllPagePresent.propTypes = {
-  store: PropTypes.object,
-  myPoints: PropTypes.object,
-  modalData: PropTypes.object,
-  totalPoints: PropTypes.number,
-  handleFieldChange: PropTypes.func,
-  handleAskQuestion: PropTypes.func
-};
 
 const SearchForm = ({
   items,
@@ -251,6 +243,33 @@ const PageItem = ({
       )}
     </li>
   );
+};
+
+AllPagePresent.propTypes = {
+  store: PropTypes.object,
+  handleFieldChange: PropTypes.func,
+  formRef: PropTypes.object,
+  searchKeyword: PropTypes.string,
+  filterKey: PropTypes.string,
+  deleteConfirmId: PropTypes.number
+};
+
+SearchForm.propTypes = {
+  items: PropTypes.array,
+  handleFieldChange: PropTypes.func,
+  formRef: PropTypes.object,
+  searchKeyword: PropTypes.string,
+  filterKey: PropTypes.string,
+  totalNumber: PropTypes.number
+};
+
+PageItem.propTypes = {
+  item: PropTypes.object,
+  handleFieldChange: PropTypes.func,
+  formRef: PropTypes.object,
+  searchKeyword: PropTypes.string,
+  filterKey: PropTypes.string,
+  deleteConfirmId: PropTypes.number
 };
 
 export default AllPagePresent;

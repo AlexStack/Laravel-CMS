@@ -56,8 +56,8 @@ class AllPageContainer extends Component {
   };
 
   handleFieldChangeNow(event, action, item) {
-    console.log(this.formRef, action);
-    console.log(event, event.target.name, event.target.value);
+    // console.log(this.formRef, action);
+    // console.log(event, event.target.name, event.target.value);
     if (event.target.name == "search_keyword") {
       this.setState({
         searchKeyword: event.target.value
@@ -118,13 +118,14 @@ const mapStateToProps = state => {
   //console.log("mapStateToProps AllPageContainer", state);
   return state;
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    // askQuestion: newDate => {
-    //     dispatch(allActions.askQuestionRequest(newDate));
-    // },
-  };
-};
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     // askQuestion: newDate => {
+//     //     dispatch(allActions.askQuestionRequest(newDate));
+//     // },
+//   };
+// };
 
 AllPageContainer.propTypes = {
   dispatch: PropTypes.func.isRequired

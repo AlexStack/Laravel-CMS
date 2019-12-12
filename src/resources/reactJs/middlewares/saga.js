@@ -1,8 +1,8 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import Api from "./apiServices";
-import { push } from "connected-react-router";
+// import { push } from "connected-react-router";
 import allActions, { actionTypes } from "../reduxStores/actions/allActions";
-import { PROJECT_NAME, myLog } from "../constants/config";
+import { myLog } from "../constants/config";
 
 function* listAllPage(action) {
   try {

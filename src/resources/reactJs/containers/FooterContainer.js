@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import FooterPresent from "../components/FooterPresent";
 
 class FooterContainer extends Component {
@@ -12,7 +12,7 @@ class FooterContainer extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = () => {
   //console.log("mapStateToProps FooterContainer", state.login);
   return {
     // login: state.login

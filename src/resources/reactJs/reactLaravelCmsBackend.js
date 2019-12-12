@@ -26,7 +26,7 @@ export default class App extends Component {
  * building robust, powerful web applications using React + Laravel.
  */
 
-require("./bootstrap");
+// require("./bootstrap");
 
 if (document.getElementById("react-js-sap")) {
   ReactDOM.render(<App />, document.getElementById("react-js-sap"));
