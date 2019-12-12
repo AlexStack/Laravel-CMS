@@ -5,9 +5,9 @@
 [![image](docs/images/min/styleci.svg)](https://github.com/AlexStack/Laravel-CMS/releases)
 [![Latest Stable Version](https://poser.pugx.org/alexstack/laravel-cms/v/stable)](https://github.com/AlexStack/Laravel-CMS/releases)
 
--   Free, open source Simple Bootstrap Laravel CMS for any EXISTING Laravel 5.x or new Laravel 6 website.
--   Only add a few database tables with prefix, not effect your existing database tables.
--   You can easy custom the database table names, the page URL path(route) and the template(theme)
+-   Free, open-source Simple Bootstrap Laravel CMS for any EXISTING Laravel 5.x or new Laravel 6 website.
+-   Only add a few database tables with a prefix, not effect your existing database tables.
+-   You can easily custom the database table names, the page URL path(route) and the template(theme)
 -   Website is ready after install. Easy to use, simple enough but flexible.
 -   Basic Laravel 5.x /Laravel 6.x syntax and blade template, no need to learn a new "language"
 
@@ -38,7 +38,7 @@ php artisan laravelcms --action=uninstall
 
 ![image](docs/images/min/artisan-install-command-min.png)
 
-## Screenshot of the output of uninstall command
+## Screenshot of the output of uninstalling command
 
 ![image](docs/images/min/artisan-uninstall-command-min.png)
 
@@ -64,16 +64,16 @@ php artisan make:auth && php artisan migrate
 composer require laravel/ui && php artisan ui vue --auth
 ```
 
-## How to log into the backend /cmsadmin/ ?
+## How to log into the backend /cmsadmin/?
 
 -   Amila CMS use your existing Laravel user system
--   You need to login with the FIRST USER of your site (user_id = 1)
+-   You need to log in with the FIRST USER of your site (user_id = 1)
 -   You can add more admin users by change the admin_ary in config/laravel-cms.php
 -   If you don't have any existing user, then register a new one via http://your-domain/register
 
 ## Why the uploaded image can not display (404 error)
 
--   You can fix it by create a storage public link
+-   You can fix it by creating a storage public link
 -   **php artisan storage:link**
 -   eg. The public/storage should link to ../storage/app/public, if the public/storage is a real folder, you should remove/rename it and run "php artisan storage:link" to set up the link.
 
@@ -82,13 +82,13 @@ composer require laravel/ui && php artisan ui vue --auth
 -   **homepage_route**: This is the frontend homepage. By default it is /cms-home, you can change it to / then remove the existing / route in the routes/web.php
 
 ```php
-# Change homepage_route to /  in config/laravel-cms.php
-'homepage_route'    => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/'),
+# Change homepage_route to /  in config/laravel-cms.php
+'homepage_route'    => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/'),
 
 # Remove the existing / route in the routes/web.php
 
 // Route::get('/', function () {
-//     return view('welcome');
+//     return view('welcome');
 // });
 ```
 
@@ -98,13 +98,13 @@ composer require laravel/ui && php artisan ui vue --auth
 'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/Article-'),
 ```
 
--   **admin_route**: This is the backend admin page route, By default it is /cmsadmin
+-   **admin_route**: This is the backend admin page route, By default, it is /cmsadmin
 
 ```php
-'admin_route'       => env('LARAVEL_CMS_BACKEND_ROUTE', '/admin2019'),
+'admin_route'       => env('LARAVEL_CMS_BACKEND_ROUTE', '/admin2019'),
 ```
 
--   **After change the route, you will need to run below commands:**
+-   **After changing the route, you will need to run below commands:**
 
 ```php
 php artisan laravelcms --action=clear
@@ -116,15 +116,15 @@ php artisan laravelcms --action=clear
 
 ```php
 @if ( isset($file_data->main_image) )
-    <img src="{{$helper->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, '1000') }}" class="img-fluid" />
 
-    <img src="{{$helper->imageUrl($file_data->main_image, '500') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, '500') }}" class="img-fluid" />
 
-    <img src="{{$helper->imageUrl($file_data->main_image, 'w', '150') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, 'w', '150') }}" class="img-fluid" />
 
-    <img src="{{$helper->imageUrl($file_data->main_image, '100', '100') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, '100', '100') }}" class="img-fluid" />
 
-    <img src="{{$helper->imageUrl($file_data->main_image, 'original', 'original') }}" class="img-fluid" />
+    <img src="{{$helper->imageUrl($file_data->main_image, 'original', 'original') }}" class="img-fluid" />
 
 @endif
 
@@ -145,7 +145,7 @@ php artisan laravelcms --action=clear
 <script src="{{ $helper->assetUrl('js/bottom.js') }}"></script>
 ```
 
--   The default template file will load css and js asset with last_modify_time parameter to avoid cache from browser
+-   The default template file will load CSS and js asset with last_modify_time parameter to avoid cache from the browser
 
 ## How to set up a different template theme from the default?
 
@@ -154,12 +154,12 @@ php artisan laravelcms --action=clear
 -   Default value in config/laravel-cms.php
 
 ```php
-    'template' => [
-        'frontend_dir'      => 'frontend',
-        'backend_dir'       => 'backend',
-        'backend_language'  => 'en',
-        'frontend_language' => 'en',
-    ]
+    'template' => [
+        'frontend_dir'      => 'frontend',
+        'backend_dir'       => 'backend',
+        'backend_language'  => 'en',
+        'frontend_language' => 'en',
+    ]
 ```
 
 -   run **php artisan config:cache** to load new config file
@@ -173,9 +173,9 @@ php artisan laravelcms --action=clear
 -   'slug_suffix' can be anything you want, empty means no suffix
 
 ```php
-    'slug_format'   => 'from_title',
-    'slug_suffix'   => '.html',
-    'slug_separate' => '-',
+    'slug_format'   => 'from_title',
+    'slug_suffix'   => '.html',
+    'slug_separate' => '-',
 ```
 
 ## How to set up a brand new Laravel 6.x website & install our CMS
@@ -186,24 +186,24 @@ php artisan laravelcms --action=clear
 // Install Laravel 6.x & the CMS package
 composer create-project --prefer-dist laravel/laravel cms && cd cms && composer require alexstack/laravel-cms
 
-// Then you need to change the database settings in the .env, after that initialize CMS
+// Then you need to change the database settings in the .env after that initialize CMS
 cd cms & vi .env
 php artisan laravelcms
 
 // Or initialize the CMS with silent mode
-php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_  --silent=yes
+php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_  --silent=yes
 
 // Enable auth system for Laravel 6.x
 composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
 
 // Config the document root to point to the cms/public then you can access the backend
-// Tips: You will need register a new user, the first user will be the admin user
+// Tips: You will need to register a new user, the first user will be the admin user
 ```
 
 ## How to upgrade the CMS?
 
 -   Run below command in your Laravel project folder
--   It will ask whether you want to copy the new view,asset and language files to your project
+-   It will ask whether you want to copy the new view, asset and language files to your project
 
 ```php
 composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrade
@@ -215,7 +215,7 @@ composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrad
 
 ## ReactJS for backend All Pages list
 
--   Laravel CMS use ReactJS for backend All Pages list, (the ReactJS source code can be find here)[https://github.com/AlexStack/Laravel-CMS/tree/alex_dev/src/resources/reactJs]
+-   Laravel CMS use ReactJS for backend All Pages list, [the ReactJS source code can be found here](https://github.com/AlexStack/Laravel-CMS/tree/alex_dev/src/resources/reactJs)
 -   The compiled js file is here: /public/laravel-cms/backend/js/reactLaravelCmsBackend.js
 -   It can be switch to normal Laravel blade page by change the "react_js": true to false in the setting system.all_pages
 
