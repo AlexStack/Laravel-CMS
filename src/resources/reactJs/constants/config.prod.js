@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import React from "react";
-import { Field, ErrorMessage } from "formik";
+// import React from "react";
+// import { Field, ErrorMessage } from "formik";
 import LanguageStrings from "./LanguageStrings";
 
 const reactLanguage = window.reactLanguage ? window.reactLanguage : "en";
@@ -42,77 +42,77 @@ export const POINT_FUNC = (num = 1, lang = "english") => {
   }
 };
 
-export const CustomInput2 = props => (
-  <div className="form-group row">
-    <label className="col-sm-4 col-form-label text-right">{props.label}</label>
-    <div className="col-sm">
-      {!props.children && (
-        <>
-          <Field
-            type={props.type || "text"}
-            name={props.name}
-            component={props.component || "input"}
-            className={`${
-              props.type == "checkbox" ? "align-middle" : "form-control"
-            } ${props.className || ""}`}
-          />
-          <ErrorMessage
-            name={props.name}
-            component="div"
-            className="text-danger"
-          />
-        </>
-      )}
-      {props.children && <>{props.children}</>}
-      {props.help && (
-        <small className="text-secondary text-help">{props.help}</small>
-      )}
-    </div>
-  </div>
-);
+// export const CustomInput2 = props => (
+//   <div className="form-group row">
+//     <label className="col-sm-4 col-form-label text-right">{props.label}</label>
+//     <div className="col-sm">
+//       {!props.children && (
+//         <>
+//           <Field
+//             type={props.type || "text"}
+//             name={props.name}
+//             component={props.component || "input"}
+//             className={`${
+//               props.type == "checkbox" ? "align-middle" : "form-control"
+//             } ${props.className || ""}`}
+//           />
+//           <ErrorMessage
+//             name={props.name}
+//             component="div"
+//             className="text-danger"
+//           />
+//         </>
+//       )}
+//       {props.children && <>{props.children}</>}
+//       {props.help && (
+//         <small className="text-secondary text-help">{props.help}</small>
+//       )}
+//     </div>
+//   </div>
+// );
 
-export const CustomInput = props => {
-  let inputClass = "form-control";
-  if (props.type == "checkbox") {
-    inputClass = "align-middle";
-  } else if (props.component == "textarea") {
-    inputClass = "md-textarea md-textarea-auto2 form-control ";
-  }
-  return (
-    <div className="md-form md-outline">
-      {!props.children && (
-        <>
-          {props.iconClass && <i className={props.iconClass} />}
-          <label
-            htmlFor={`input-${props.name}`}
-            className="md-input-label active"
-          >
-            {props.label}
-          </label>
+// export const CustomInput = props => {
+//   let inputClass = "form-control";
+//   if (props.type == "checkbox") {
+//     inputClass = "align-middle";
+//   } else if (props.component == "textarea") {
+//     inputClass = "md-textarea md-textarea-auto2 form-control ";
+//   }
+//   return (
+//     <div className="md-form md-outline">
+//       {!props.children && (
+//         <>
+//           {props.iconClass && <i className={props.iconClass} />}
+//           <label
+//             htmlFor={`input-${props.name}`}
+//             className="md-input-label active"
+//           >
+//             {props.label}
+//           </label>
 
-          <Field
-            type={props.type || "text"}
-            name={props.name}
-            id={`${props.formName || "input"}-${props.name}`}
-            multiple={props.type == "file" ? true : false}
-            component={props.component || "input"}
-            className={`${inputClass} ${props.className || ""}`}
-          />
+//           <Field
+//             type={props.type || "text"}
+//             name={props.name}
+//             id={`${props.formName || "input"}-${props.name}`}
+//             multiple={props.type == "file" ? true : false}
+//             component={props.component || "input"}
+//             className={`${inputClass} ${props.className || ""}`}
+//           />
 
-          <ErrorMessage
-            name={props.name}
-            component="div"
-            className="text-danger small"
-          />
-        </>
-      )}
-      {props.children && <>{props.children}</>}
-      {props.help && (
-        <small className="form-text text-muted text-help">{props.help}</small>
-      )}
-    </div>
-  );
-};
+//           <ErrorMessage
+//             name={props.name}
+//             component="div"
+//             className="text-danger small"
+//           />
+//         </>
+//       )}
+//       {props.children && <>{props.children}</>}
+//       {props.help && (
+//         <small className="form-text text-muted text-help">{props.help}</small>
+//       )}
+//     </div>
+//   );
+// };
 
 // export const materialDesign = todo => {
 //     if (todo == "form") {

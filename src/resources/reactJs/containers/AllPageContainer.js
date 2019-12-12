@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import AllPagePresent from "../components/AllPagePresent";
 import allActions from "../reduxStores/actions/allActions";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 class AllPageContainer extends Component {
   constructor(props) {

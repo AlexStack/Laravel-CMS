@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Lang, POINT_FUNC } from "../constants/config";
 
 const AllPagePresent = ({
   store,
@@ -144,7 +143,7 @@ const SearchForm = ({
                 name="filter_key"
                 className="btn btn-outline-secondary"
               >
-                <option value="all">All</option>
+                <option value="all">All Pages</option>
                 <option value="menu_enabled">Menu Enabled</option>
                 <option value="depth_1">Level 1</option>
                 <option value="depth_2">Level 2</option>
