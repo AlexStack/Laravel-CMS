@@ -14,17 +14,11 @@ const AllPagePresent = ({
     filterKey = store.pages.filterKey;
   }
 
-  // let filteredPages = Object.assign({}, store.pages.items); // store.pages.items is an array, can not use object.assign for sort()
-
-  // let tmpObj = [...store.pages.items];
-  // console.log(tmpObj);
-  // tmpObj = tmpObj.sort((a, b) => a.id < b.id);
-
   // tips: use [...store.pages.items] to clone to a new array with a new memory space
   // similar to clone a obj by Object.assign({}, store.pages.items)
   let filteredPages =
     filterKey == "newly_added"
-      ? [...store.pages.items].sort((a, b) => a.id < b.id)
+      ? [...store.pages.items].sort((a, b) => b.id - a.id)
       : store.pages.items;
 
   filteredPages = filteredPages.filter(function(item, index) {
