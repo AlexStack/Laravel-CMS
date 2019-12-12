@@ -213,6 +213,12 @@ composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrad
 
 ![image](docs/images/min/laravel-cms-upgrade-min.png)
 
+## ReactJS for backend All Pages list
+
+-   Laravel CMS use ReactJS for backend All Pages list, (the ReactJS source code can be find here)[https://github.com/AlexStack/Laravel-CMS/tree/alex_dev/src/resources/reactJs]
+-   The compiled js file is here: /public/laravel-cms/backend/js/reactLaravelCmsBackend.js
+-   It can be switch to normal Laravel blade page by change the "react_js": true to false in the setting system.all_pages
+
 ## License
 
 -   The Amila Laravel CMS is open-source software licensed under the MIT license.
