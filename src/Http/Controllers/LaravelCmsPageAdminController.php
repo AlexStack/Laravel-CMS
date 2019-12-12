@@ -40,6 +40,13 @@ class LaravelCmsPageAdminController extends Controller
 
             foreach ($data['all_pages'] as $key => $page) {
                 $data['all_pages'][$key]->url = $this->helper->url($page);
+                //remove some unused ReactJS api data for speed, it can save around 24% bandwidth transfer
+                unset($data['all_pages'][$key]->redirect_url);
+                unset($data['all_pages'][$key]->slug);
+                unset($data['all_pages'][$key]->status);
+                unset($data['all_pages'][$key]->parent_id);
+                unset($data['all_pages'][$key]->sort_value);
+                $data['all_pages'][$key]->menu_enabled = (int) $data['all_pages'][$key]->menu_enabled;
             }
 
             $rs = response()->json($data['all_pages']);

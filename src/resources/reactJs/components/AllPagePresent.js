@@ -30,7 +30,8 @@ const AllPagePresent = ({
 
   filteredPages = filteredPages.filter(function(item, index) {
     if (searchKeyword) {
-      return item.title.toLowerCase().includes(searchKeyword.toLowerCase());
+      const lowerKey = searchKeyword.toLowerCase();
+      return ( item.title.toLowerCase().includes(lowerKey) || (item.menu_title && item.menu_title.toLowerCase().includes(lowerKey)) || item.url.replace(/-|\.|\$/g,' ').toLowerCase().includes(lowerKey) );
     } else if (filterKey == "menu_enabled") {
       return item.menu_enabled;
     } else if (filterKey == "depth_1") {
@@ -172,7 +173,7 @@ const PageItem = ({
   const depthStr = "⎯⎯⎯";
   let color_class = "text-secondary";
   let icon = "";
-  if (item.redirect_url) {
+  if (item.redirect_url || item.url.indexOf('http') === 0 ) {
     color_class = "text-success";
   }
   if (item.slug == "homepage") {
@@ -219,7 +220,7 @@ const PageItem = ({
 
       {item.menu_enabled && (
         <a
-          href={`./pages/create?parent_id=${item.id}&meu_enabled=0`}
+          href={`./pages/create?parent_id=${item.id}&menu_enabled=0`}
           className="text-secondary"
         >
           <i className="far fa-plus-square ml-3" />
