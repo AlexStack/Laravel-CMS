@@ -46,7 +46,7 @@ class LaravelCmsPageAdminController extends Controller
                 unset($data['all_pages'][$key]->status);
                 unset($data['all_pages'][$key]->parent_id);
                 unset($data['all_pages'][$key]->sort_value);
-                $data['all_pages'][$key]->menu_enabled = (int) $data['all_pages'][$key]->menu_enabled;
+                // $data['all_pages'][$key]->menu_enabled = (int) $data['all_pages'][$key]->menu_enabled;
             }
 
             $rs = response()->json($data['all_pages']);

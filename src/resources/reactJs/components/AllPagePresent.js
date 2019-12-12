@@ -31,7 +31,14 @@ const AllPagePresent = ({
   filteredPages = filteredPages.filter(function(item, index) {
     if (searchKeyword) {
       const lowerKey = searchKeyword.toLowerCase();
-      return ( item.title.toLowerCase().includes(lowerKey) || (item.menu_title && item.menu_title.toLowerCase().includes(lowerKey)) || item.url.replace(/-|\.|\$/g,' ').toLowerCase().includes(lowerKey) );
+      return (
+        item.title.toLowerCase().includes(lowerKey) ||
+        (item.menu_title && item.menu_title.toLowerCase().includes(lowerKey)) ||
+        item.url
+          .replace(/-|\.|\$/g, " ")
+          .toLowerCase()
+          .includes(lowerKey)
+      );
     } else if (filterKey == "menu_enabled") {
       return item.menu_enabled;
     } else if (filterKey == "depth_1") {
@@ -173,10 +180,10 @@ const PageItem = ({
   const depthStr = "⎯⎯⎯";
   let color_class = "text-secondary";
   let icon = "";
-  if (item.redirect_url || item.url.indexOf('http') === 0 ) {
+  if (item.redirect_url || item.url.indexOf("http") === 0) {
     color_class = "text-success";
   }
-  if (item.slug == "homepage") {
+  if (item.slug == "homepage" || item.url.indexOf("homepage") != -1) {
     color_class = "text-primary";
   }
   if (item.menu_enabled) {
@@ -190,7 +197,7 @@ const PageItem = ({
   } else {
     icon = "far fa-file mr-1 " + color_class + "";
   }
-  if (item.slug == "homepage") {
+  if (item.slug == "homepage" || item.url.indexOf("homepage") != -1) {
     icon = "fas fa-home mr-1 " + color_class + "";
   }
 
@@ -227,7 +234,7 @@ const PageItem = ({
         </a>
       )}
 
-      {item.slug != "homepage" && (
+      {item.url.indexOf("homepage") == -1 && (
         <a
           className={`float-right ${
             deleteConfirmId == item.id ? "text-danger" : "delete-link"
