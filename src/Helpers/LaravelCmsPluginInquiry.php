@@ -52,13 +52,20 @@ class LaravelCmsPluginInquiry
     {
         $settings = LaravelCmsInquirySetting::where('page_id', $page_id)->first();
 
-        if (! isset($settings->form_enabled) || ! $settings->form_enabled) {
+        if (isset($settings->form_enabled) && ! $settings->form_enabled) {
             return null;
         }
-        $default_setting_id = $settings->default_setting_id ?? $this->helper->s('inquiry.default_setting_id');
+        $default_setting_id = isset($settings->default_setting_id) ? $settings->default_setting_id : $this->helper->s('inquiry.default_setting_id');
         if ($default_setting_id) {
             $default_settings = LaravelCmsInquirySetting::where('id', $default_setting_id)->first();
+            if (! $default_settings) {
+                return null;
+            } elseif (! $settings) {
+                // in case there is no record in the inquires table
+                $settings = $default_settings;
+            }
         }
+        // dd($settings);
         $new_settings = clone $settings;
         foreach ($settings->toArray() as $key => $value) {
             if (null === $new_settings[$key]) {
