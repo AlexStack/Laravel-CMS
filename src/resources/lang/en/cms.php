@@ -23,6 +23,8 @@ return [
  'choose'          => 'Select',
  'yes'             => 'Yes',
  'no'              => 'No',
+'loading'          => 'Loading',
+'keyword'          => 'Keyword',
 
  'save_and_continue_edit'      => 'Save and continue edit',
  'save_and_return_to_the_list' => 'Save and return to the list',

@@ -24,6 +24,9 @@ return [
     'choose'          => '选择',
     'yes'             => '是的',
     'no'              => '不是',
+    'loading'         => '加载中',
+    'keyword'         => '关键字',
+    'recently_added'  => '最近添加的',
 
     'save_and_continue_edit'      => '保存并继续修改',
     'save_and_return_to_the_list' => '保存并返回列表页',

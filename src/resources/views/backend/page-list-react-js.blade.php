@@ -7,11 +7,21 @@
         <div class="col-md" id="react-js-sap">
             <div class="m-5 text-center">
                 <i class="fas fa-spinner fa-spin text-primary mr-1"></i>
-                Loading ...
+                {{$helper->t('loading')}} ...
             </div>
         </div>
     </div>
 </div>
+
+<!-- Simple multi-language for ReactJs -->
+<script>
+    var cmsLang = new Object();
+    cmsLang.keyword = "{{$helper->t('keyword')}}";
+    cmsLang.create_new_page = "{{$helper->t('create_new_page')}}";
+    cmsLang.all_page = "{{$helper->t('all_page')}}";
+    cmsLang.menu_enabled = "{{$helper->t('menu_enabled')}}";
+    cmsLang.recently_added = "{{$helper->t('recently_added')}}";
+</script>
 
 <!-- Load ReactJs scripts start -->
 @include($helper->bladePath('includes.react-js-scripts','b'))

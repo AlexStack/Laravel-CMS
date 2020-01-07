@@ -297,7 +297,7 @@ class LaravelCmsPluginInquiry
                 'page'                  => $setting->page_id,
                 'switch_nav_tab'        => 'inquiry',
                 'show_advanced_settings'=> 'yes',
-                ]);
+            ]);
         }
     }
 }

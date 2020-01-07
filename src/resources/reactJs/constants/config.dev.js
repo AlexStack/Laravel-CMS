@@ -8,7 +8,7 @@ const reactLanguage = window.reactLanguage ? window.reactLanguage : "en";
 LanguageStrings.setLanguage(reactLanguage);
 export const Lang = LanguageStrings;
 
-let api_uri = "/cmsadmin";
+let api_uri = window.admin_route;
 let project_name = "Laravel CMS";
 let project_name_plural = "Laravel CMS";
 // if (window.location.href.indexOf(".test") != -1) {

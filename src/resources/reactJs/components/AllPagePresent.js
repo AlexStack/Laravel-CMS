@@ -106,7 +106,7 @@ const SearchForm = ({
             name="search_keyword"
             onChange={handleFieldChange}
             // value={searchKeyword || ""}
-            placeholder="Keyword"
+            placeholder={window.cmsLang.keyword}
             disabled={!searchKeyword && items.length == 0}
           />
           <div className="input-group-append">
@@ -131,13 +131,17 @@ const SearchForm = ({
                 name="filter_key"
                 className="btn btn-outline-secondary"
               >
-                <option value="all">All Pages</option>
-                <option value="menu_enabled">Menu Enabled</option>
+                <option value="all">{window.cmsLang.all_page}</option>
+                <option value="menu_enabled">
+                  {window.cmsLang.menu_enabled}
+                </option>
                 <option value="depth_1">Level 1</option>
                 <option value="depth_2">Level 2</option>
                 <option value="depth_3">Level 3</option>
                 {/* <option value="all">{filterKey}</option> */}
-                <option value="newly_added">Recently Added</option>
+                <option value="newly_added">
+                  {window.cmsLang.recently_added}
+                </option>
               </select>
             )}
 
@@ -239,7 +243,7 @@ const PageItem = ({
           role="button"
         >
           <i className="fas fa-plus-circle mr-1" />
-          Add new page
+          {window.cmsLang.create_new_page}
         </a>
       )}
     </li>
