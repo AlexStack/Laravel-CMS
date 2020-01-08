@@ -53,14 +53,14 @@ class LaravelCmsPageAdminController extends Controller
             $rs = response()->json($data['all_pages'])->setEncodingOptions(JSON_UNESCAPED_UNICODE);
 
             return $rs;
-        } elseif ($this->helper->s('system.all_pages.react_js')) {
-            $data['helper'] = $this->helper;
-
-            return view($this->helper->bladePath('page-list-react-js', 'b'), $data);
-        } else {
+        } elseif (0 === $this->helper->s('system.all_pages.react_js')) {
             $data = $this->repo->index();
 
             return view($this->helper->bladePath('page-list', 'b'), $data);
+        } else {
+            $data['helper'] = $this->helper;
+
+            return view($this->helper->bladePath('page-list-react-js', 'b'), $data);
         }
     }
 

@@ -41,7 +41,7 @@ const AllPagePresent = ({
     } else if (filterKey == "depth_3") {
       return item.depth < 3;
     } else if (filterKey == "newly_added") {
-      return index < 50;
+      return index < window.recently_added_numbers;
     }
     return true;
   });
@@ -58,7 +58,7 @@ const AllPagePresent = ({
       />
 
       <ul className="list-group search-results">
-        {filteredPages.map(item => (
+        {filteredPages.slice(0, window.display_limit_numbers).map(item => (
           <PageItem
             item={item}
             handleFieldChange={handleFieldChange}
@@ -68,6 +68,21 @@ const AllPagePresent = ({
           />
         ))}
       </ul>
+
+      {filteredPages.length > window.display_limit_numbers && (
+        <div className="col text-center mt-5">
+          <i className="fas fa-exclamation-circle text-info mr-1" />
+          Total page number is
+          <span className="text-success p-2">{filteredPages.length}</span>, only
+          display
+          <span className="text-success p-2">
+            {window.display_limit_numbers}
+          </span>
+          pages here for better performance. You can use the search form to find
+          the specific pages or change the
+          system.all_pages.display_limit_numbers setting to display more pages.
+        </div>
+      )}
 
       {!searchKeyword && filteredPages.length == 0 && (
         <div className="row">
@@ -124,7 +139,7 @@ const SearchForm = ({
                 <i className="fas fa-search mr-1" />
               </button>
             )}
-            {!searchKeyword && totalNumber > 20 && (
+            {!searchKeyword && totalNumber > window.display_option_numbers && (
               <select
                 defaultValue={filterKey}
                 onChange={handleFieldChange}
