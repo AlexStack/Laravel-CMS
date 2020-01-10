@@ -20,7 +20,7 @@
     cmsLang.keyword = "{{$helper->t('keyword')}}";
     cmsLang.create_new_page = "{{$helper->t('create_new_page')}}";
     cmsLang.all_page = "{{$helper->t('all_page')}}";
-    cmsLang.menu_enabled = "{{$helper->t('menu_enabled')}}";
+    cmsLang.menu_enabled = "{{$helper->t('display_in_menu')}}";
     cmsLang.recently_added = "{{$helper->t('recently_added')}}";
     cmsLang.confirm_delete = "{{$helper->t('confirm,delete')}}";
     // ReactJs settings from CMS

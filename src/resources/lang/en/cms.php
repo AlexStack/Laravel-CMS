@@ -6,7 +6,7 @@ return [
     'settings'         => 'Settings',
     'main_content'     => 'Main content',
     'extra_content'    => 'Extra content',
-    'all_page'         => 'All pages',
+    'all_page'         => 'All Pages',
     'create_new_page'  => 'Add new page',
     'delete'           => 'Delete',
     'upload'           => 'Upload',
