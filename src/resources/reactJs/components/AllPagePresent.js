@@ -249,7 +249,9 @@ const PageItem = ({
           }}
         >
           <i className="far fa-trash-alt mr-1" />
-          {deleteConfirmId == item.id && <span>Confirm Delete</span>}
+          {deleteConfirmId == item.id && (
+            <span>{window.cmsLang.confirm_delete}</span>
+          )}
         </a>
       ) : (
         <a

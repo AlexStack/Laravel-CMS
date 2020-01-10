@@ -22,6 +22,7 @@
     cmsLang.all_page = "{{$helper->t('all_page')}}";
     cmsLang.menu_enabled = "{{$helper->t('menu_enabled')}}";
     cmsLang.recently_added = "{{$helper->t('recently_added')}}";
+    cmsLang.confirm_delete = "{{$helper->t('confirm,delete')}}";
     // ReactJs settings from CMS
     var recently_added_numbers = {{$helper->s('system.all_pages.recently_added_numbers') ?? 50}};
     var display_limit_numbers  = {{$helper->s('system.all_pages.display_limit_numbers') ?? 1000}};
