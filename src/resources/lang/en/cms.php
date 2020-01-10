@@ -92,6 +92,11 @@ return [
     'redirect_url'     => 'Redirect URL',
     'file_data'        => 'File JSON Data',
     'special_text'     => 'Special Text',
+    'top_level'        => 'Top Level',
+    'display_in_menu'  => 'Display In Menu',
+    'hide_in_menu'     => 'Hide In Menu',
+    'publish'          => 'Publish',
+    'pending'          => 'Pending',
 
     // inquiry form
     'inquiry'            => 'Inquiry',

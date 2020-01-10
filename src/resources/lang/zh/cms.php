@@ -96,6 +96,11 @@ return [
     'redirect_url'     => '转向网址',
     'file_data'        => '文件JSON数据',
     'special_text'     => '特殊文字',
+    'top_level'        => '顶级',
+    'display_in_menu'  => '在菜单中显示',
+    'hide_in_menu'     => '不显示在菜单中',
+    'publish'          => '发布',
+    'pending'          => '待定',
 
     // inquiry form
     'inquiry'            => '咨询',

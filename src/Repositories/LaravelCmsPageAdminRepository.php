@@ -296,7 +296,7 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         //var_dump($data['children']->toArray());
 
         if ('get_select_options' == $action) {
-            $options  = [null => 'Top Level'];
+            $options  = [null => $this->helper->t('top_level')];
             $flat_ary = $this->flattenArray($data['children']->toArray(), 'children4list');
 
             //var_dump($flat_ary);
