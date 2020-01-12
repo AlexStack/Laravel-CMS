@@ -178,6 +178,11 @@ php artisan laravelcms --action=clear
     'slug_separate' => '-',
 ```
 
+## Use your own PHP class / How to integrate your PHP code into the CMS
+
+-   One simple option is to implement a method from your own PHP controller/class by adding it into a cms page. [Tutorial for it.](https://www.laravelcms.tech/Laravel-Advanced-Override-the-page-content-by-your-PHP-Class-method-function.html "Use your PHP class in a Laravel CMS page")
+-   Another option is to create a CMS plugin for your own project and use it for all pages. [A tutorial is here.](https://www.laravelcms.tech/Laravel-Create-your-own-plugin.html "How to create a Laravel CMS Plugin") You can also publish the plugin if the feature can be used by other websites.
+
 ## How to set up a brand new Laravel 6.x website & install our CMS
 
 -   It's good for a local test
@@ -222,7 +227,3 @@ composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrad
 ## License
 
 -   The Amila Laravel CMS is open-source software licensed under the MIT license.
-
-```
-
-```
