@@ -133,3 +133,10 @@ pre.prettyprint {
     white-space: nowrap;
   }
 }
+
+
+.search-results mark {
+  padding: 0;
+  background-color: rgb(247, 247, 247);
+  color: rgb(185, 2, 2);
+}

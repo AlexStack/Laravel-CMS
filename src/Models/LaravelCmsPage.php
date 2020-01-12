@@ -202,6 +202,11 @@ class LaravelCmsPage extends Model
         return $this->hasMany(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id', 'id')->with('children')->orderBy('sort_value', 'desc')->orderBy('id', 'desc');
     }
 
+    public function children4list()
+    {
+        return $this->hasMany(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id', 'id')->with('children4list:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled')->orderBy('sort_value', 'desc')->orderBy('id', 'desc');
+    }
+
     public function menus()
     {
         return $this->hasMany(\AlexStack\LaravelCms\Models\LaravelCmsPage::class, 'parent_id', 'id')->where('menu_enabled', 1)->with('menus:title,menu_title,id,parent_id,slug,redirect_url,menu_enabled')->orderBy('sort_value', 'desc')->orderBy('id', 'desc');

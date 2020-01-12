@@ -553,6 +553,21 @@ class CmsSettingsTableSeeder extends Seeder
                 'enabled'         => 0,
                 'sort_value'      => 3,
             ],
+            35 => [
+                'param_name'      => 'all_pages',
+                'page_id'         => null,
+                'param_value'     => '{
+"react_js": 1,
+"display_limit_numbers": 1000,
+"recently_added_numbers": 50,
+"display_option_numbers": 20
+}',
+                'input_attribute' => '{"rows":6,"required":"required"}',
+                'abstract'        => null,
+                'category'        => 'system',
+                'enabled'         => 0,
+                'sort_value'      => 15,
+            ],
         ]);
     }
 }

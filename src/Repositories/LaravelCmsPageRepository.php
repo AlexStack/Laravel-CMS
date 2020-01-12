@@ -84,7 +84,18 @@ class LaravelCmsPageRepository extends BaseRepository
                 $data['plugins']->put($plugin['blade_dir'], new $plugin_class());
             }
         }
-        //$this->helper->debug($data['plugins']);
+
+        // override the $data by call_user_func
+        if (strpos($data['page']->special_text, 'php_class') && $special_json = json_decode($data['page']->special_text)) {
+            $user_class   = $special_json->php_class;
+            $class_method = $special_json->class_method ?? 'index';
+            $parameters   = $special_json->parameters ?? null;
+            if ('' != $user_class && class_exists($user_class) && is_callable($user_class.'::'.$class_method)) {
+                $data = call_user_func([new $user_class(), $class_method], $data, $parameters);
+            } else {
+                $data['call_user_func_error'] = $user_class.' class not exists or class_method not callable ';
+            }
+        }
 
         return $data;
     }
@@ -187,21 +198,30 @@ class LaravelCmsPageRepository extends BaseRepository
     public function search($slug, $search_type = 'content')
     {
         $keyword                = request()->keyword;
-        if ($keyword) {
+        if ($keyword || request()->tag) {
             if ('content' == $search_type) {
                 $data['search_results'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
-                    return $query->where('title', 'like', '%'.trim($keyword).'%')
-                ->orWhere('main_content', 'like', '%'.trim($keyword).'%')
-                ->orWhere('sub_content', 'like', '%'.trim($keyword).'%');
+                    return $query->where(function ($query) use ($keyword) {
+                        return $query->where('title', 'like', '%'.trim($keyword).'%')
+                                ->orWhere('main_content', 'like', '%'.trim($keyword).'%')
+                                ->orWhere('sub_content', 'like', '%'.trim($keyword).'%');
+                    });
+                })
+                ->when(request()->tag, function ($query, $keyword) {
+                    $query->where('tags', 'like', '%"'.trim(request()->tag).'"%');
+
+                    // dd($query->toSql());
+
+                    return $query;
                 })
                 ->orderBy('id', 'desc')
-                ->paginate($this->helper->s('template.number_per_search') ?? 6);
+                ->paginate($this->helper->s('template.number_per_search') ?? 24);
             } elseif ('tag' == $search_type) {
                 $data['search_results'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
                     return $query->where('tags', 'like', '%"'.trim($keyword).'"%');
                 })
                 ->orderBy('id', 'desc')
-                ->paginate($this->helper->s('template.number_per_search') ?? 6);
+                ->paginate($this->helper->s('template.number_per_search') ?? 20);
             }
         } else {
             $data['search_results'] = [];
@@ -213,7 +233,7 @@ class LaravelCmsPageRepository extends BaseRepository
         // simulate a page collection
         $data['page']                       = collect([]);
         $data['page']->template_file        = 'page-search-result';
-        $data['page']->title                = ('tag' == $search_type) ? $this->helper->t('tag').' '.$keyword : $this->helper->t('search').' '.$keyword;
+        $data['page']->title                = ('tag' == $search_type) ? $this->helper->t('tag').' '.$keyword : $this->helper->t('search').' '.$keyword.(request()->tag ? ' - '.request()->tag : '');
         $data['page']->meta_title           = $data['page']->title.' ('.$this->helper->t('page_number', ['number'=>$_GET['page'] ?? 1]).')';
         $data['page']->slug                 = $slug;
         $data['page']->id                   = $slug;

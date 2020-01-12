@@ -49,8 +49,8 @@
 
             @include($helper->bladePath('includes.breadcrumb'))
 
-
-            {!! isset($plugins['page-tab-inquiry-form']) ? $plugins['page-tab-inquiry-form']->displayForm($page) : ''
+            {!! isset($plugins['page-tab-inquiry-form']) ? $plugins['page-tab-inquiry-form']->displayForm($page) : '
+            <!-- Inquiry plugin disabled -->'
             !!}
 
         </div>

@@ -22,7 +22,7 @@ class LaravelCmsPageAdminRepository extends BaseRepository
     {
         //$data['all_pages'] = LaravelCmsPage::orderBy('id','desc')->get();
 
-        $all_page_ary = $this->flattenArray($this->parentPages('all')->toArray());
+        $all_page_ary = $this->flattenArray($this->parentPages('all')->toArray(), 'children4list');
 
         $data['all_pages']  = json_decode(json_encode($all_page_ary), false);
 
@@ -287,17 +287,17 @@ class LaravelCmsPageAdminRepository extends BaseRepository
 
     public function parentPages($action = 'get_select_options')
     {
-        $data['children'] = LaravelCmsPage::with('children:title,menu_title,id,parent_id,menu_enabled,slug,redirect_url,sort_value,status')
+        $data['children'] = LaravelCmsPage::with('children4list:title,menu_title,id,parent_id,menu_enabled,slug,redirect_url,sort_value,status')
             ->whereNull('parent_id')
             ->orderBy('sort_value', 'desc')
             ->orderBy('id', 'desc')
-            ->get();
+            ->get(['title', 'menu_title', 'id', 'parent_id', 'menu_enabled', 'slug', 'redirect_url', 'sort_value', 'status']);
 
         //var_dump($data['children']->toArray());
 
         if ('get_select_options' == $action) {
-            $options  = [null => 'Top Level'];
-            $flat_ary = $this->flattenArray($data['children']->toArray());
+            $options  = [null => $this->helper->t('top_level')];
+            $flat_ary = $this->flattenArray($data['children']->toArray(), 'children4list');
 
             //var_dump($flat_ary);
 

@@ -113,10 +113,11 @@
         'type'=>'select', 'label'=>$helper->t('parent_page'), 'options'=>$parent_page_options])
 
         @include($helper->bladePath('includes.form-input','b'), ['name' =>
-        "menu_enabled", 'type'=>'select', 'options'=>['1' => 'Display In Menu', '0' => 'Hide In Menu'] ])
+        "menu_enabled", 'type'=>'select', 'options'=>['1' => $helper->t('display_in_menu'), '0' =>
+        $helper->t('hide_in_menu')] ])
 
         @include($helper->bladePath('includes.form-input','b'), ['name' => "status",
-        'type'=>'select', 'options'=>['publish' => 'Publish', 'pending' => 'Pending'] ])
+        'type'=>'select', 'options'=>['publish' => $helper->t('publish'), 'pending' => $helper->t('pending')] ])
 
         @include($helper->bladePath('includes.form-input','b'), ['name' =>
         "redirect_url" ])

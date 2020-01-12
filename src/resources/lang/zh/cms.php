@@ -24,6 +24,10 @@ return [
     'choose'          => '选择',
     'yes'             => '是的',
     'no'              => '不是',
+    'loading'         => '加载中',
+    'keyword'         => '关键字',
+    'recently_added'  => '最近添加的',
+    'confirm'         => '确定',
 
     'save_and_continue_edit'      => '保存并继续修改',
     'save_and_return_to_the_list' => '保存并返回列表页',
@@ -79,6 +83,7 @@ return [
     'meta_description' => 'META描述',
     'view_counts'      => '浏览次数',
     'tags'             => '标签',
+    'tag'              => '标签',
     'extra_image_1'    => '附加图片1',
     'extra_text_1'     => '附加文字1',
     'extra_content_1'  => '附加内容1',
@@ -91,6 +96,11 @@ return [
     'redirect_url'     => '转向网址',
     'file_data'        => '文件JSON数据',
     'special_text'     => '特殊文字',
+    'top_level'        => '顶级',
+    'display_in_menu'  => '在菜单中显示',
+    'hide_in_menu'     => '不显示在菜单中',
+    'publish'          => '发布',
+    'pending'          => '待定',
 
     // inquiry form
     'inquiry'            => '咨询',

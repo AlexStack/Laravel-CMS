@@ -39,3 +39,11 @@
 </script>
 
 {!! $helper->loadPluginJs('js_for_all_admin_pages') !!}
+
+@if (request()->route()->getName() == 'LaravelCmsAdmin.index' && $helper->s('system.all_pages.react_js') &&
+isset($_COOKIE['laravel_cms_access_num']) &&
+$_COOKIE['laravel_cms_access_num'] <= 2) <!-- Pre-Load(browser cache) ReactJS extra scripts so the All Pages list will
+    load faster -->
+    @include($helper->bladePath('includes.react-js-scripts','b'))
+
+    @endif
