@@ -141,7 +141,7 @@ class LaravelCmsPluginInquiry
         }
 
         // inquiry_verify_str for basic spam check
-        if (! $form_data['inquiry_verify_str'] || ! strpos($form_data['inquiry_verify_str'], '-')) {
+        if (! isset($form_data['inquiry_verify_str']) || ! strpos($form_data['inquiry_verify_str'], '-')) {
             $result['success']       = false;
             $result['error_message'] = 'Verify inquiry_verify_str failed.';
 
