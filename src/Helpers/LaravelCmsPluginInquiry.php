@@ -140,6 +140,22 @@ class LaravelCmsPluginInquiry
             return json_encode($result);
         }
 
+        // inquiry_verify_str for basic spam check
+        if (! $form_data['inquiry_verify_str'] || ! strpos($form_data['inquiry_verify_str'], '-')) {
+            $result['success']       = false;
+            $result['error_message'] = 'Verify inquiry_verify_str failed.';
+
+            return json_encode($result);
+        } else {
+            $verify_str_ary = explode('-', $form_data['inquiry_verify_str']);
+            if (3 != count($verify_str_ary) || $verify_str_ary[0] != $form_data['page_id'] || $verify_str_ary[1] < 5 || $verify_str_ary[2] < 4) {
+                $result['success']       = false;
+                $result['error_message'] = 'Verify inquiry_verify_str failed!';
+
+                return json_encode($result);
+            }
+        }
+
         $inquiry = new LaravelCmsInquiry();
         foreach ($inquiry->fillable as $field) {
             if (isset($form_data[$field])) {
