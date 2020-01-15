@@ -150,7 +150,7 @@ class LaravelCmsPluginInquiry
             $verify_str_ary = explode('-', $form_data['inquiry_verify_str']);
             if (3 != count($verify_str_ary) || $verify_str_ary[0] != $form_data['page_id'] || $verify_str_ary[1] < 5 || $verify_str_ary[2] < 4) {
                 $result['success']       = false;
-                $result['error_message'] = 'Verify inquiry_verify_str failed!';
+                $result['error_message'] = 'Verify inquiry_verify_str failed! Message too short?';
 
                 return json_encode($result);
             }

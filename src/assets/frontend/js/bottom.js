@@ -35,7 +35,7 @@ function submitInquiryForm() {
   var inputStartTime = null;
   $('#laravel-cms-inquiry-form textarea[name="message"]')
     .after(
-      '<input name="inquiry_verify_str" id="inquiry_verify_str" value="0-0-0" />'
+      '<input name="inquiry_verify_str" id="inquiry_verify_str" type="hidden" value="0-0-0" />'
     )
     .focus(function() {
       if (inputStartTime == null) {
