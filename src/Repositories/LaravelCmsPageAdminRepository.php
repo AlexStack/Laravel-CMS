@@ -38,7 +38,7 @@ class LaravelCmsPageAdminRepository extends BaseRepository
         $data['helper']                = $this->helper;
         $data['page_tab_blades']       = $this->extraPageTabs();
 
-        $this->extraPageTabs('create');
+        $data['plugins'] = $this->extraPageTabs('create');
 
         return $data;
     }

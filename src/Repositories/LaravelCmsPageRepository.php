@@ -214,12 +214,14 @@ class LaravelCmsPageRepository extends BaseRepository
 
                     return $query;
                 })
+                ->orderBy('sort_value', 'desc')
                 ->orderBy('id', 'desc')
                 ->paginate($this->helper->s('template.number_per_search') ?? 24);
             } elseif ('tag' == $search_type) {
                 $data['search_results'] = LaravelCmsPage::when($keyword, function ($query, $keyword) {
                     return $query->where('tags', 'like', '%"'.trim($keyword).'"%');
                 })
+                ->orderBy('sort_value', 'desc')
                 ->orderBy('id', 'desc')
                 ->paginate($this->helper->s('template.number_per_search') ?? 20);
             }

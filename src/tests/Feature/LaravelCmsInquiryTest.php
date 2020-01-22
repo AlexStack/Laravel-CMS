@@ -42,10 +42,11 @@ class LaravelCmsInquiryTest extends TestCase
         $inquiry->save();
 
         $form_data = [
-            'first_name' => 'Name'.rand(0, 999),
-            'email'      => 'email'.rand(0, 999).'@example.com',
-            'message'    => 'Message '.rand(0, 999),
-            'page_id'    => 2,
+            'first_name'         => 'Name'.rand(0, 999),
+            'email'              => 'email'.rand(0, 999).'@example.com',
+            'message'            => 'Message '.rand(0, 999),
+            'page_id'            => 2,
+            'inquiry_verify_str' => '2-8-9',
         ];
         $request = new \Illuminate\Http\Request($form_data);
 

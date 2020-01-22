@@ -65,7 +65,10 @@
                         @else
                         {{$item->title}}
                         @endif
-                    </a></li>
+                    </a>
+                    <a class="text-secondary float-right ml-2 " href="{{$helper->url($item)}}" target="_blank"><i
+                            class="fas fa-external-link-square-alt small"></i></a>
+                </li>
                 @endforeach
             </ul>
         </div>
