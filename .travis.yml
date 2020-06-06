@@ -24,10 +24,14 @@ before_install:
 before_script:
   - composer self-update
   - |-
-    if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "6.*" ]]; then
-      composer create-project --prefer-dist laravel/laravel cms "5.7.*"
+    if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "7.*" ]]; then
+      composer create-project --prefer-dist laravel/laravel cms "6.*"
     else
-      composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+      if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "6.*" ]]; then
+        composer create-project --prefer-dist laravel/laravel cms "5.7.*"
+      else
+        composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+      fi
     fi
   - cd cms
   - composer show laravel/framework
