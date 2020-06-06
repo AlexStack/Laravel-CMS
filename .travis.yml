@@ -23,7 +23,7 @@ before_install:
 
 before_script:
   - composer self-update
-  - |-
+  - |
     if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "7.*" ]]; then
       composer create-project --prefer-dist laravel/laravel cms "6.*"
     else if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "6.*" ]]; then
