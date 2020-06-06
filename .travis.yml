@@ -4,19 +4,19 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - 7.4snapshot
+  - 7.4
 
 sudo: false
 env:
   matrix:
     - LARAVEL_VERSION=5.*
     - LARAVEL_VERSION=6.*
-    - LARAVEL_VERSION=5.5.*
+    - LARAVEL_VERSION=7.*
 
 matrix:
   fast_finish: true
   allow_failures:
-    - php: 7.4snapshot
+    - php: 7.1
 
 before_install:
   - mysql -e 'CREATE DATABASE laravelcms_test;'
@@ -24,10 +24,14 @@ before_install:
 before_script:
   - composer self-update
   - |-
-    if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "6.*" ]]; then
-      composer create-project --prefer-dist laravel/laravel cms "5.7.*"
+    if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "7.*" ]]; then
+      composer create-project --prefer-dist laravel/laravel cms "5.5.*"
     else
-      composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+      if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "6.*" ]]; then
+        composer create-project --prefer-dist laravel/laravel cms "5.8.*"
+      else
+        composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
+      fi
     fi
   - cd cms
   - composer show laravel/framework
@@ -38,7 +42,7 @@ before_script:
   - php artisan laravelcms --help
   - php artisan laravelcms --action=initialize --locale=zh --table_prefix=travis_cms_  --silent=yes
   - |-
-    if [[ "$TRAVIS_PHP_VERSION" == "7.4snapshot" ]]; then
+    if [[ "$TRAVIS_PHP_VERSION" == "7.4" ]]; then
       composer require fzaninotto/faker dev-master
     fi
 install:

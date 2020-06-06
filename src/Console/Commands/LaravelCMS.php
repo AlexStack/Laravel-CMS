@@ -313,7 +313,7 @@ class LaravelCMS extends Command
         }
 
         if ('' == trim($options['locale'])) {
-            $app_locale = $this->ask('Set up a locale language instead of the default', config('app.locale'));
+            $app_locale = $this->ask('Set up a locale language instead of English eg. en/zh/es/jp/ko/ar/fr/ru/pt/it', config('app.locale'));
         } else {
             $app_locale = trim($options['locale']);
         }
