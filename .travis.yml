@@ -25,10 +25,10 @@ before_script:
   - composer self-update
   - |-
     if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "7.*" ]]; then
-      composer create-project --prefer-dist laravel/laravel cms "6.*"
+      composer create-project --prefer-dist laravel/laravel cms "5.5.*"
     else
       if [[ "$TRAVIS_PHP_VERSION" == "7.1" && "$LARAVEL_VERSION" == "6.*" ]]; then
-        composer create-project --prefer-dist laravel/laravel cms "5.7.*"
+        composer create-project --prefer-dist laravel/laravel cms "5.8.*"
       else
         composer create-project --prefer-dist laravel/laravel cms "${LARAVEL_VERSION}"
       fi

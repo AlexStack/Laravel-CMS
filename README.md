@@ -54,15 +54,17 @@ php artisan laravelcms --action=uninstall
 
 ## Error "Route [login] not defined" while access the backend /cmsadmin/
 
--   This means you did not install Laravel Auth
+-   This means you did not install Laravel Auth(User system)
 -   Can be fixed by the below commands:
 
 ```php
-// Laravel 5.x
-php artisan make:auth && php artisan migrate
 // Laravel 6.x & Laravel >= 7
 composer require laravel/ui && php artisan ui vue --auth
+// Laravel 5.x, run blow command instead
+php artisan make:auth && php artisan migrate
 ```
+
+-   After install the Auth package, please register the first user as the admin
 
 ## How to log into the backend /cmsadmin/?
 
@@ -183,12 +185,12 @@ php artisan laravelcms --action=clear
 -   One simple option is to implement a method from your own PHP controller/class by adding it into a cms page. [Tutorial for it.](https://www.laravelcms.tech/Laravel-Advanced-Override-the-page-content-by-your-PHP-Class-method-function.html "Use your PHP class in a Laravel CMS page")
 -   Another option is to create a CMS plugin for your own project and use it for all pages. [A tutorial is here.](https://www.laravelcms.tech/Laravel-Create-your-own-plugin.html "How to create a Laravel CMS Plugin") You can also publish the plugin if the feature can be used by other websites.
 
-## How to set up a brand new Laravel 6.x website & install our CMS
+## How to set up a brand new Laravel 6.x or 7.x website & install our CMS
 
 -   It's good for a local test
 
 ```php
-// Install Laravel 6.x & the CMS package
+// Install Laravel 6.x/7.x & the CMS package
 composer create-project --prefer-dist laravel/laravel cms && cd cms && composer require alexstack/laravel-cms
 
 // Then you need to change the database settings in the .env after that initialize CMS
@@ -198,7 +200,7 @@ php artisan laravelcms
 // Or initialize the CMS with silent mode
 php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_  --silent=yes
 
-// Enable auth system for Laravel 6.x
+// Enable auth system for Laravel 6.x/7.x
 composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
 
 // Config the document root to point to the cms/public then you can access the backend
@@ -223,6 +225,10 @@ composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrad
 -   Laravel CMS use ReactJS for backend All Pages list, [the ReactJS source code can be found here](https://github.com/AlexStack/Laravel-CMS/tree/alex_dev/src/resources/reactJs)
 -   The compiled js file is here: /public/laravel-cms/backend/js/reactLaravelCmsBackend.js
 -   It can be switch to normal Laravel blade page by change the "react_js": true to false in the setting system.all_pages
+
+## What PHP versions do you support?
+
+-   Amila Laravel CMS passed the basic test on PHP 7.1, 7.2, 7.3, 7.4
 
 ## License
 
