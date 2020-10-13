@@ -5,13 +5,14 @@
 [![image](docs/images/min/styleci.svg)](https://github.com/AlexStack/Laravel-CMS/releases)
 [![Latest Stable Version](https://poser.pugx.org/alexstack/laravel-cms/v/stable)](https://github.com/AlexStack/Laravel-CMS/releases)
 
--   Free, open-source Simple Bootstrap Laravel CMS for any EXISTING Laravel 7.x or 6.x or old Laravel 5.x website.
+-   Free, open-source Simple Bootstrap Laravel CMS, support Laravel 8.x or 7.x or old Laravel 6.x & 5.x
+-   Can integrate with any existing Laravel project, install as an individual Laravel package
 -   Only add a few database tables with a prefix, not effect your existing database tables.
 -   You can easily custom the database table names, the page URL path(route) and the template(theme)
--   Website is ready after install. Easy to use, simple enough but flexible.
--   Basic Laravel 7.x /Laravel 6.x / Laravel 5.x syntax and blade template, no need to learn a new "language"
+-   Build-in Website is ready after install. Easy to use, simple enough but flexible.
+-   Basic Laravel 8.x/ Laravel 7.x /Laravel 6.x / Laravel 5.x syntax and blade template, no need to learn a "new language"
 
-## How to install & uninstall (Support Laravel 7.x & Laravel 6.x & Laravel 5.x)
+## How to install & uninstall (Support Laravel 8.x & Laravel 7.x & Laravel 6.x & Laravel 5.x)
 
 ```php
 // Make sure you already configured the database in the .env
@@ -58,7 +59,7 @@ php artisan laravelcms --action=uninstall
 -   Can be fixed by the below commands:
 
 ```php
-// Laravel 6.x & Laravel >= 7
+// Laravel 6.x & Laravel >= 7 & Laravel >= 8
 composer require laravel/ui && php artisan ui vue --auth
 // Laravel 5.x, run blow command instead
 php artisan make:auth && php artisan migrate
@@ -190,7 +191,7 @@ php artisan laravelcms --action=clear
 -   It's good for a local test
 
 ```php
-// Install Laravel 6.x/7.x & the CMS package
+// Install Laravel 6.x/7.x/8.x & the CMS package
 composer create-project --prefer-dist laravel/laravel cms && cd cms && composer require alexstack/laravel-cms
 
 // Then you need to change the database settings in the .env after that initialize CMS
@@ -200,7 +201,7 @@ php artisan laravelcms
 // Or initialize the CMS with silent mode
 php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_  --silent=yes
 
-// Enable auth system for Laravel 6.x/7.x
+// Enable auth system for Laravel 6.x/7.x/8.x
 composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
 
 // Config the document root to point to the cms/public then you can access the backend

@@ -142,7 +142,6 @@
                             title="{{$file->filename}}" class="preview_link not_image">{{strtoupper($file->suffix)}}
                             {{$helper->t('file')}}<i class="fas fa-external-link-alt ml-1 small text-secondary"></i></a>
                          {{($file->filesize/1024 > 1000) ? round($file->filesize/1024/1024,2) . ' MB' : (($file->filesize/1024 > 10) ? round($file->filesize/1024) . ' KB' : round($file->filesize/1024, 1) . ' KB') }}
-
                         <a href="#" onclick="return confirmDelete({{$file->id}})" class="del">D<i
                                 class="far fa-trash-alt ml-1 small text-secondary"></i></a>
                     </div>

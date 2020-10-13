@@ -23,13 +23,13 @@ class AddForeignKeysToCmsPagesTable extends Migration
             $table_name_files = $this->config['table_name']['files'];
             $table_name_pages = $this->table_name;
 
-            $table->foreign('main_image', 'cms_pages_ibfk_main_image')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
-            $table->foreign('main_banner', 'cms_pages_ibfk_main_banner')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
-            $table->foreign('extra_image_1', 'cms_pages_ibfk_extra_image_1')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
-            $table->foreign('extra_image_2', 'cms_pages_ibfk_extra_image_2')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
-            $table->foreign('extra_image_3', 'cms_pages_ibfk_extra_image_3')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
-            $table->foreign('parent_id', 'cms_pages_ibfk_parent_id')->references('id')->on($table_name_pages)->onUpdate('RESTRICT')->onDelete('SET NULL');
-            //$table->foreign('user_id', 'cms_pages_ibfk_user_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('SET NULL');
+            $table->foreign('main_image', $this->table_name.'_ibfk_main_image')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
+            $table->foreign('main_banner', $this->table_name.'_ibfk_main_banner')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
+            $table->foreign('extra_image_1', $this->table_name.'_ibfk_extra_image_1')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
+            $table->foreign('extra_image_2', $this->table_name.'_ibfk_extra_image_2')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
+            $table->foreign('extra_image_3', $this->table_name.'_ibfk_extra_image_3')->references('id')->on($table_name_files)->onUpdate('RESTRICT')->onDelete('SET NULL');
+            $table->foreign('parent_id', $this->table_name.'_ibfk_parent_id')->references('id')->on($table_name_pages)->onUpdate('RESTRICT')->onDelete('SET NULL');
+            //$table->foreign('user_id', $this->table_name . '_ibfk_user_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('SET NULL');
         });
     }
 
@@ -39,12 +39,12 @@ class AddForeignKeysToCmsPagesTable extends Migration
     public function down()
     {
         Schema::table($this->table_name, function (Blueprint $table) {
-            $table->dropForeign('cms_pages_ibfk_main_image');
-            $table->dropForeign('cms_pages_ibfk_main_banner');
-            $table->dropForeign('cms_pages_ibfk_extra_image_1');
-            $table->dropForeign('cms_pages_ibfk_extra_image_2');
-            $table->dropForeign('cms_pages_ibfk_extra_image_3');
-            //$table->dropForeign('cms_pages_ibfk_user_id');
+            $table->dropForeign($this->table_name.'_ibfk_main_image');
+            $table->dropForeign($this->table_name.'_ibfk_main_banner');
+            $table->dropForeign($this->table_name.'_ibfk_extra_image_1');
+            $table->dropForeign($this->table_name.'_ibfk_extra_image_2');
+            $table->dropForeign($this->table_name.'_ibfk_extra_image_3');
+            //$table->dropForeign($this->table_name . '_ibfk_user_id');
         });
     }
 }
