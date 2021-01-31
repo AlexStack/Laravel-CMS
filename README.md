@@ -34,13 +34,13 @@ composer require alexstack/laravel-cms && php artisan laravelcms
 
 ```php
 // Step 1: Install Laravel to folder cms
-composer create-project --prefer-dist laravel/laravel cms && cd cms && composer require alexstack/laravel-cms
+composer create-project laravel/laravel cms && cd cms && composer require alexstack/laravel-cms
 
 // Step 2: Change the database connection settings in the .env
-cd cms & vi .env
+vi .env // change DB_DATABASE, DB_USERNAME, DB_PASSWORD
 
-// Step 3: install cms
-php artisan laravelcms
+// Step 3: install CMS
+php artisan laravelcms  --silent=yes
 
 // Step 4: Enable Laravel auth/login system
 composer require laravel/ui && php artisan ui bootstrap --auth && php artisan migrate

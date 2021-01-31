@@ -334,16 +334,17 @@ class LaravelCMS extends Command
             '--provider' => 'AlexStack\LaravelCms\LaravelCmsServiceProvider',
         ]);
 
-        if ('cms_' != $table_prefix || 'en' != $app_locale) {
-            $config_str = str_replace(
-                ["=> 'cms_", "=> 'en"],
-                ["=> '".$table_prefix, "=> '".$app_locale],
-                file_get_contents(dirname(__FILE__, 3).'/config/laravel-cms.php')
-            );
-            $config_str = trim($config_str); // in case it not change in ram memory
-            file_put_contents(base_path('config/laravel-cms.php'), $config_str);
-            $this->line('<fg=cyan>----> Changed db table prefix to : </><fg=yellow>'.$table_prefix.'</>');
-        }
+        // if ('cms_' != $table_prefix || 'en' != $app_locale) {
+        //     $config_str = str_replace(
+        //         ["=> 'cms_", "=> 'en"],
+        //         ["=> '".$table_prefix, "=> '".$app_locale],
+        //         file_get_contents(dirname(__FILE__, 3).'/config/laravel-cms.php')
+        //     );
+        //     $config_str = trim($config_str); // in case it not change in ram memory
+        //     file_put_contents(base_path('config/laravel-cms.php'), $config_str);
+        //     $this->line('<fg=cyan>----> Changed db table prefix to : </><fg=yellow>'.$table_prefix.'</>');
+        // }
+        $this->rewriteConfig($table_prefix, $app_locale);
 
         $this->call('config:cache');
         $this->call('route:clear');
@@ -370,6 +371,8 @@ class LaravelCMS extends Command
         ]);
 
         $this->forBrandNewProject();
+
+        $this->rewriteConfig($table_prefix, $app_locale); // incase something wrong
 
         $this->clearCache($options);
 
@@ -464,6 +467,19 @@ EOF;
             // $this->line('<fg=green>- </> ');
 
             $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
+        }
+    }
+
+    public function rewriteConfig($table_prefix, $app_locale){
+        if ('cms_' != $table_prefix || 'en' != $app_locale) {
+            $config_str = str_replace(
+                ["=> 'cms_", "=> 'en"],
+                ["=> '".$table_prefix, "=> '".$app_locale],
+                file_get_contents(dirname(__FILE__, 3).'/config/laravel-cms.php')
+            );
+            $config_str = trim($config_str); // in case it not change in ram memory
+            file_put_contents(base_path('config/laravel-cms.php'), $config_str);
+            $this->line('<fg=cyan>----> Changed db table prefix to : </><fg=yellow>'.$table_prefix.'</>');
         }
     }
 }

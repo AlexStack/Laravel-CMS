@@ -1,9 +1,9 @@
 {
     "name": "alexstack/laravel-cms",
-    "description": "Simple Bootstrap Laravel CMS. Can integrate to any existing Laravel project. Only add few database tables with prefix, not effect your existing database tables. Support Laravel 7.x & Laravel 6.x & Laravel 5.x - Amila Laravel CMS",
+    "description": "Simple Bootstrap Laravel CMS. Can integrate to any existing Laravel project. Only add few database tables with prefix, not effect your existing database tables. Support Laravel 8.x & 7.x & Laravel 6.x & Laravel 5.x - Amila Laravel CMS",
     "type": "library",
     "homepage": "https://github.com/AlexStack/Laravel-CMS/",
-    "keywords": ["laravel", "laravel cms", "laravel blog", "laravel wordpress", "LaravelCMS", "amila laravel cms", "php cms", "cms", "laravel 6", "laravel6", "laravel 7", "laravel7", "Amila CMS", "headless cms", "existing laravel project"],
+    "keywords": ["laravel", "laravel cms", "laravel blog", "laravel wordpress", "LaravelCMS", "amila laravel cms", "php cms", "cms", "laravel 6", "laravel6", "laravel 7", "laravel7", "Amila CMS", "headless cms", "existing laravel project", "laravel 8"],
     "license": "MIT",
     "support": {
         "issues": "https://github.com/AlexStack/Laravel-CMS/issues"
