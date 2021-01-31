@@ -13,7 +13,7 @@ class LaravelCMS extends Command
      * @var string
      */
     protected $signature = 'laravelcms
-            {--a|action=initialize : initialize or install or uninstall}
+            {--a|action=initialize : -a upgrade or -a install or -a uninstall or -a clear}
             {--p|table_prefix= : Default table_prefix is cms_}
             {--l|locale= : Default locale is en}
             {--s|silent=no : Silent mode yes or no}
@@ -341,6 +341,7 @@ class LaravelCMS extends Command
                 file_get_contents(dirname(__FILE__, 3).'/config/laravel-cms.php')
             );
             file_put_contents(base_path('config/laravel-cms.php'), $config_str);
+            $this->line('<fg=cyan>----> Changed db table prefix to : </><fg=yellow>'.$table_prefix.'</>');
         }
 
         $this->call('config:cache');
@@ -366,6 +367,8 @@ class LaravelCMS extends Command
         $this->call('db:seed', [
             '--class' => 'AlexStack\LaravelCms\CmsInquirySettingsTableSeeder',
         ]);
+
+        $this->forBrandNewProject();
 
         $this->clearCache($options);
 
@@ -423,5 +426,43 @@ class LaravelCMS extends Command
         }
 
         return true;
+    }
+
+    public function forBrandNewProject(){
+        $defRootRoute = <<<EOF
+Route::get('/', function () {
+    return view('welcome');
+});
+EOF;
+        $webRouteStr = file_get_contents(base_path("routes/web.php"));
+        if ( strpos($webRouteStr, trim($defRootRoute))!== false){
+            $webRouteStr = str_replace("::get('/',","::get('/welcome',", $webRouteStr);
+            file_put_contents(base_path("routes/web.php"), $webRouteStr);
+
+            $this->line('<fg=green>- Set route / to the CMS homepage</> ');
+
+            $config_str = str_replace(
+                "'/cms-home')",
+                "'/')",
+                file_get_contents(dirname(__FILE__, 3).'/config/laravel-cms.php')
+            );
+            file_put_contents(base_path('config/laravel-cms.php'), $config_str);
+
+        } else {
+            // $this->line('<fg=green>- old route:</> '. $defRootRoute);
+
+        }
+        // add a public/css/app.css for auth/login page
+        if (!file_exists(public_path('css'))) {
+            $target_dir   = public_path('css');
+            $backup_dir   = storage_path('app/laravel-cms/backups/css');
+            $ignore_files = [];
+            $source_files = glob(dirname(__FILE__, 3).'/assets/publicCss/*');
+
+            // $this->line('<fg=green>- The exists public/css will backup to:</> '.$backup_dir);
+            // $this->line('<fg=green>- </> ');
+
+            $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
+        }
     }
 }
