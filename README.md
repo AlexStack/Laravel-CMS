@@ -12,11 +12,12 @@
 -   Build-in Website is ready after install. Easy to use, simple enough but flexible.
 -   Basic Laravel 8.x/ Laravel 7.x /Laravel 6.x / Laravel 5.x syntax and blade template, no need to learn a "new language"
 
-## How to install & uninstall (Support Laravel 8.x & Laravel 7.x & Laravel 6.x & Laravel 5.x)
+## How to install for an existing Laravel project
+- Support Laravel 8.x & Laravel 7.x & Laravel 6.x & Laravel 5.x
 
 ```php
-// Make sure you already configured the database in the .env
-// Go to the laravel project folder and install it via composer
+// Make sure you already have laravel installed and configured the database in the .env
+// Go to your laravel project folder and install it via composer
 // Initialize the CMS (You can set up database table prefix and locale here)
 
 composer require alexstack/laravel-cms && php artisan laravelcms
@@ -25,7 +26,40 @@ composer require alexstack/laravel-cms && php artisan laravelcms
 // Now you can access the cms frontend site: http://yourdomain/cms-home
 
 // Access the backend with the FIRST USER of your site: http://yourdomain/cmsadmin
+```
 
+## How to set up a brand new CMS website with the latest Laravel
+
+-   It's good for a local testing, it's support the latest Laravel version
+
+```php
+// Step 1: Install Laravel to folder cms
+composer create-project --prefer-dist laravel/laravel cms && cd cms && composer require alexstack/laravel-cms
+
+// Step 2: Change the database connection settings in the .env
+cd cms & vi .env
+
+// Step 3: install cms
+php artisan laravelcms
+
+// Step 4: Enable Laravel auth/login system
+composer require laravel/ui && php artisan ui bootstrap --auth && php artisan migrate
+
+// Step 5: Set up a web server via php artisan
+php artisan serve
+
+// Step 6: Now, you can access your cms backend via http://127.0.0.1:8080/cmsadmin/
+
+// Tips: You will need to register a new user and the first user will be the admin user of the cms
+
+// Tips: You can initialize the CMS with silent mode
+php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_  --silent=yes
+
+```
+
+
+## How to uninstall
+```php
 // Uninstall the CMS
 php artisan laravelcms --action=uninstall
 
@@ -186,27 +220,7 @@ php artisan laravelcms --action=clear
 -   One simple option is to implement a method from your own PHP controller/class by adding it into a cms page. [Tutorial for it.](https://www.laravelcms.tech/Laravel-Advanced-Override-the-page-content-by-your-PHP-Class-method-function.html "Use your PHP class in a Laravel CMS page")
 -   Another option is to create a CMS plugin for your own project and use it for all pages. [A tutorial is here.](https://www.laravelcms.tech/Laravel-Create-your-own-plugin.html "How to create a Laravel CMS Plugin") You can also publish the plugin if the feature can be used by other websites.
 
-## How to set up a brand new Laravel 6.x or 7.x website & install our CMS
 
--   It's good for a local test
-
-```php
-// Install Laravel 6.x/7.x/8.x & the CMS package
-composer create-project --prefer-dist laravel/laravel cms && cd cms && composer require alexstack/laravel-cms
-
-// Then you need to change the database settings in the .env after that initialize CMS
-cd cms & vi .env
-php artisan laravelcms
-
-// Or initialize the CMS with silent mode
-php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_  --silent=yes
-
-// Enable auth system for Laravel 6.x/7.x/8.x
-composer require laravel/ui && php artisan ui vue --auth && php artisan migrate
-
-// Config the document root to point to the cms/public then you can access the backend
-// Tips: You will need to register a new user, the first user will be the admin user
-```
 
 ## How to upgrade the CMS?
 

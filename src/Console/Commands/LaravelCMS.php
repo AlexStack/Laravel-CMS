@@ -340,6 +340,7 @@ class LaravelCMS extends Command
                 ["=> '".$table_prefix, "=> '".$app_locale],
                 file_get_contents(dirname(__FILE__, 3).'/config/laravel-cms.php')
             );
+            $config_str = trim($config_str); // in case it not change in ram memory
             file_put_contents(base_path('config/laravel-cms.php'), $config_str);
             $this->line('<fg=cyan>----> Changed db table prefix to : </><fg=yellow>'.$table_prefix.'</>');
         }
