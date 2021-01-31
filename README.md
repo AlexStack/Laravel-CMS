@@ -37,9 +37,10 @@ composer require alexstack/laravel-cms && php artisan laravelcms
 composer create-project laravel/laravel cms && cd cms && composer require alexstack/laravel-cms
 
 // Step 2: Change the database connection settings in the .env
-vi .env // change DB_DATABASE, DB_USERNAME, DB_PASSWORD
+// Make sure the DB_DATABASE, DB_USERNAME, DB_PASSWORD are correct
+vi .env
 
-// Step 3: install CMS
+// Step 3: install CMS in silent mode
 php artisan laravelcms  --silent=yes
 
 // Step 4: Enable Laravel auth/login system
@@ -50,7 +51,7 @@ php artisan serve
 
 // Step 6: Now, you can access your cms backend via http://127.0.0.1:8080/cmsadmin/
 
-// Tips: You will need to register a new user and the first user will be the admin user of the cms
+// Note: You will need to register a new user and the first user will be the admin user of the cms
 
 // Tips: You can initialize the CMS with silent mode
 php artisan laravelcms --action=initialize --locale=en --table_prefix=cms_  --silent=yes
