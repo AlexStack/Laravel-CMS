@@ -370,12 +370,13 @@ class LaravelCMS extends Command
 
     public function forBrandNewProject()
     {
-        $defRootRoute = <<<EOF
-Route::get('/', function () {
-    return view('welcome');
-});
-EOF;
-        $webRouteStr = file_get_contents(base_path('routes/web.php'));
+//         $defRootRoute = <<<EOF
+        // Route::get('/', function () {
+//     return view('welcome');
+        // });
+        // EOF;
+        $defRootRoute = "Route::get('/', function () {\n    return view('welcome');\n});";
+        $webRouteStr  = file_get_contents(base_path('routes/web.php'));
         if (false !== strpos($webRouteStr, trim($defRootRoute))) {
             $webRouteStr = str_replace("::get('/',", "::get('/welcome',", $webRouteStr);
             file_put_contents(base_path('routes/web.php'), $webRouteStr);

@@ -1,12 +1,24 @@
 <?php
+/**
+ * need to run "php artisan config:cache" after make a change.
+ **/
 
 return [
     /*
     |--------------------------------------------------------------------------
+    | Custom page routes
+    |--------------------------------------------------------------------------
+    */
+    'homepage_route' => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
+
+    'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/cms-'),
+
+    'admin_route' => env('LARAVEL_CMS_BACKEND_ROUTE', '/cmsadmin'),
+
+    /*
+    |--------------------------------------------------------------------------
     | CMS frontend global settings
     |--------------------------------------------------------------------------
-    | need to run "php artisan config:cache" after make a change
-    |
     */
     'site_name' => env('APP_NAME', 'My Site Name'),
     'top_logo'  => env('LARAVEL_CMS_TOP_LOGO', 'https://raw.githubusercontent.com/AlexStack/Laravel-CMS/master/src/assets/frontend/images/top-logo.png'),
@@ -27,18 +39,6 @@ return [
     </div>',
 
     'favicon_url' => '/favicon.ico',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Custom page routes
-    |--------------------------------------------------------------------------
-    */
-    'homepage_route' => env('LARAVEL_CMS_HOMEPAGE_ROUTE', '/cms-home'),
-
-    'page_route_prefix' => env('LARAVEL_CMS_PAGE_PREFIX', '/cms-'),
-
-    'admin_route' => env('LARAVEL_CMS_BACKEND_ROUTE', '/cmsadmin'),
-
     /*
     |--------------------------------------------------------------------------
     | Default slug format and suffix for page URL
