@@ -41,7 +41,7 @@ composer create-project laravel/laravel cms && cd cms && composer require alexst
 vi .env
 
 // Step 3: install CMS in silent mode
-php artisan laravelcms  --silent=yes
+php artisan laravelcms --locale=en --table_prefix=cms_ --silent=yes
 
 // Step 4: Enable Laravel auth/login system
 composer require laravel/ui && php artisan ui bootstrap --auth && php artisan migrate

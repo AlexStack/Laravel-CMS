@@ -17,6 +17,9 @@ class LaravelCMS extends Command
             {--p|table_prefix= : Default table_prefix is cms_}
             {--l|locale= : Default locale is en}
             {--s|silent=no : Silent mode yes or no}
+            {--u|db_username= : username of the database}
+            {--w|db_password= : password of the database}
+            {--d|db_database= : database name}
             ';
 
     /**
@@ -83,19 +86,6 @@ class LaravelCMS extends Command
 
             $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
 
-            // $vendor_view_folders = glob($vendor_view_path.'/*', GLOB_ONLYDIR);
-            // foreach ($vendor_view_folders as $folder) {
-            //     $folder_name = basename($folder);
-            //     if (! in_array($folder_name, ['plugins', 'uploads', 'backups']) && file_exists($app_view_path.'/'.$folder_name)) {
-            //         if (! file_exists($view_backup_path)) {
-            //             mkdir($view_backup_path, 0755, true);
-            //         }
-            //         $new_name = $folder_name.'-bak-'.date('YmdHis');
-            //         rename($app_view_path.'/'.$folder_name, $view_backup_path.'/'.$new_name);
-            //         $this->line('<fg=green>- Backed up template:</> '.$new_name);
-            //     }
-            // }
-
             // copy plugin view files
             $target_dir   = base_path('resources/views/vendor/laravel-cms/plugins');
             $backup_dir   = storage_path('app/laravel-cms/backups/views/plugins');
@@ -107,19 +97,6 @@ class LaravelCMS extends Command
             $this->line('<fg=green>- </> ');
 
             $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
-
-            // foreach ($vendor_plugin_folders as $folder) {
-            //     $folder_name = basename($folder);
-            //     if (! in_array($folder_name, ['backups']) && file_exists($app_view_path.'/plugins/'.$folder_name)) {
-            //         if (! file_exists($plugin_backup_path)) {
-            //             mkdir($plugin_backup_path, 0755, true);
-            //         }
-
-            //         $new_name = $folder_name.'-bak-'.date('YmdHis');
-            //         rename($app_view_path.'/plugins/'.$folder_name, $plugin_backup_path.'/'.$new_name);
-            //         $this->line('<fg=green>- Backed up plugin view:</> '.$new_name);
-            //     }
-            // }
 
             $this->line('<fg=green>- </> ');
             $this->line('<fg=green>- Publish new template & plugin views:</> ');
@@ -142,20 +119,6 @@ class LaravelCMS extends Command
 
             $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
 
-            // $vendor_asset_folders = glob($vendor_asset_path.'/*', GLOB_ONLYDIR);
-            // foreach ($vendor_asset_folders as $folder) {
-            //     $folder_name = basename($folder);
-            //     if (! in_array($folder_name, ['plugins', 'uploads', 'backups']) && file_exists($app_asset_path.'/'.$folder_name)) {
-            //         if (! file_exists($asset_backup_path)) {
-            //             mkdir($asset_backup_path, 0755, true);
-            //         }
-
-            //         $new_name = $folder_name.'-bak-'.date('YmdHis');
-            //         rename($app_asset_path.'/'.$folder_name, $asset_backup_path.'/'.$new_name);
-            //         $this->line('<fg=green>- Backed up asset:</> '.$new_name);
-            //     }
-            // }
-
             $this->line('<fg=green>- </> ');
             $this->line('<fg=green>- Publish new assets:</> ');
             $this->line('<fg=green>- </> ');
@@ -168,25 +131,6 @@ class LaravelCMS extends Command
 
         // override lang files
         if ('no' != trim($options['silent']) || $this->confirm('<fg=cyan>**** Copy the CMS backend & frontend language files? ****</>', true)) {
-            // rename the old folders
-            // $vendor_lang_path    = dirname(__FILE__, 3).'/resources/lang';
-            // $app_lang_path       = base_path('resources/lang/vendor/laravel-cms');
-            // $lang_backup_path    = storage_path('app/laravel-cms/backups/lang');
-            // $vendor_lang_folders = glob($vendor_lang_path.'/*', GLOB_ONLYDIR);
-
-            // foreach ($vendor_lang_folders as $folder) {
-            //     $folder_name = basename($folder);
-            //     if (file_exists($app_lang_path.'/'.$folder_name)) {
-            //         if (! file_exists($lang_backup_path)) {
-            //             mkdir($lang_backup_path, 0755, true);
-            //         }
-
-            //         $new_name = $folder_name.'-bak-'.date('YmdHis');
-            //         rename($app_lang_path.'/'.$folder_name, $lang_backup_path.'/'.$new_name);
-            //         $this->line('<fg=green>- Backed up lang:</> '.$new_name);
-            //     }
-            // }
-
             // move lang files, lang/en lang/zh etc.
             $vendor_lang_path    = dirname(__FILE__, 3).'/resources/lang';
             $target_dir          = base_path('resources/lang/vendor/laravel-cms');
@@ -294,6 +238,8 @@ class LaravelCMS extends Command
         $this->line('<fg=red>**** Initialize Amila Laravel CMS ****</>');
         $this->line('<fg=red>****</>');
 
+        $this->checkDbConnection($options);
+
         if (file_exists(storage_path('app/laravel-cms'))) {
             $this->line('<fg=cyan>****</>');
             $this->line('<fg=cyan>**** Seems the Laravel CMS already initialized ****</>');
@@ -307,7 +253,7 @@ class LaravelCMS extends Command
         }
 
         if ('' == trim($options['table_prefix'])) {
-            $table_prefix = $this->ask('Set up a database table prefix instead of the default', 'cms_');
+            $table_prefix = $this->ask('Set up cms database table prefix instead of the default', 'cms_');
         } else {
             $table_prefix = trim($options['table_prefix']);
         }
@@ -334,16 +280,6 @@ class LaravelCMS extends Command
             '--provider' => 'AlexStack\LaravelCms\LaravelCmsServiceProvider',
         ]);
 
-        // if ('cms_' != $table_prefix || 'en' != $app_locale) {
-        //     $config_str = str_replace(
-        //         ["=> 'cms_", "=> 'en"],
-        //         ["=> '".$table_prefix, "=> '".$app_locale],
-        //         file_get_contents(dirname(__FILE__, 3).'/config/laravel-cms.php')
-        //     );
-        //     $config_str = trim($config_str); // in case it not change in ram memory
-        //     file_put_contents(base_path('config/laravel-cms.php'), $config_str);
-        //     $this->line('<fg=cyan>----> Changed db table prefix to : </><fg=yellow>'.$table_prefix.'</>');
-        // }
         $this->rewriteConfig($table_prefix, $app_locale);
 
         $this->call('config:cache');
@@ -432,16 +368,17 @@ class LaravelCMS extends Command
         return true;
     }
 
-    public function forBrandNewProject(){
+    public function forBrandNewProject()
+    {
         $defRootRoute = <<<EOF
 Route::get('/', function () {
     return view('welcome');
 });
 EOF;
-        $webRouteStr = file_get_contents(base_path("routes/web.php"));
-        if ( strpos($webRouteStr, trim($defRootRoute))!== false){
-            $webRouteStr = str_replace("::get('/',","::get('/welcome',", $webRouteStr);
-            file_put_contents(base_path("routes/web.php"), $webRouteStr);
+        $webRouteStr = file_get_contents(base_path('routes/web.php'));
+        if (false !== strpos($webRouteStr, trim($defRootRoute))) {
+            $webRouteStr = str_replace("::get('/',", "::get('/welcome',", $webRouteStr);
+            file_put_contents(base_path('routes/web.php'), $webRouteStr);
 
             $this->line('<fg=green>- Set route / to the CMS homepage</> ');
 
@@ -451,13 +388,11 @@ EOF;
                 file_get_contents(dirname(__FILE__, 3).'/config/laravel-cms.php')
             );
             file_put_contents(base_path('config/laravel-cms.php'), $config_str);
-
         } else {
             // $this->line('<fg=green>- old route:</> '. $defRootRoute);
-
         }
         // add a public/css/app.css for auth/login page
-        if (!file_exists(public_path('css'))) {
+        if (! file_exists(public_path('css'))) {
             $target_dir   = public_path('css');
             $backup_dir   = storage_path('app/laravel-cms/backups/css');
             $ignore_files = [];
@@ -470,7 +405,8 @@ EOF;
         }
     }
 
-    public function rewriteConfig($table_prefix, $app_locale){
+    public function rewriteConfig($table_prefix, $app_locale)
+    {
         if ('cms_' != $table_prefix || 'en' != $app_locale) {
             $config_str = str_replace(
                 ["=> 'cms_", "=> 'en"],
@@ -480,6 +416,52 @@ EOF;
             $config_str = trim($config_str); // in case it not change in ram memory
             file_put_contents(base_path('config/laravel-cms.php'), $config_str);
             $this->line('<fg=cyan>----> Changed db table prefix to : </><fg=yellow>'.$table_prefix.'</>');
+        }
+    }
+
+    public function checkDbConnection($options)
+    {
+        $defDbStr   = "DB_PORT=3306\nDB_DATABASE=laravel\nDB_USERNAME=root\nDB_PASSWORD=\n";
+        $envFileStr = file_get_contents(base_path('.env'));
+        if (strpos($envFileStr, $defDbStr)) {
+            // try to connection db
+
+            $this->line('<fg=yellow>**** Please set up database connection parameters : </>');
+
+            if ('' == trim($options['db_username'])) {
+                $db_username = $this->ask('Please enter the username of your database(DB_USERNAME)', 'root');
+            } else {
+                $db_username = trim($options['db_username']);
+            }
+
+            if ('' == trim($options['db_password'])) {
+                $db_password = $this->ask('Please enter the password of your database(DB_PASSWORD)', '');
+            } else {
+                $db_password = trim($options['db_password']);
+            }
+
+            if ('' == trim($options['db_database'])) {
+                $db_database = $this->ask('Please enter the database name', 'laravelcms');
+            } else {
+                $db_database = trim($options['db_database']);
+            }
+
+            // test connection before write to .env
+            try {
+                $mysqli = new \mysqli('localhost', $db_username, $db_password, $db_database);
+                if ($mysqli->host_info) {
+                    $this->line('<fg=yellow>**** Database connected </>');
+                    $envFileStr = str_replace($defDbStr, "DB_PORT=3306\nDB_DATABASE=$db_database\nDB_USERNAME=$db_username\nDB_PASSWORD=$db_password\n", $envFileStr);
+                    file_put_contents(base_path('.env'), $envFileStr);
+                } else {
+                    $this->line('<fg=yellow>**** Database connect failed</>');
+                }
+            } catch (\Exception $e) {
+                $this->line('<fg=yellow>**** Database connect failed !!</>Caught exception: '.$e->getMessage().'');
+                $this->checkDbConnection($options);
+            }
+        } else {
+            // not the default .env
         }
     }
 }
