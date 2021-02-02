@@ -404,6 +404,18 @@ class LaravelCMS extends Command
 
             $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
         }
+
+        if (file_exists(base_path('resources/views/auth/login.blade.php'))) {
+            $this->call('ui bootstrap', [
+                    '--auth' => true,
+                ]);
+
+            $this->call('migrate');
+
+            return true;
+        }
+
+        return false;
     }
 
     public function rewriteConfig($table_prefix, $app_locale)

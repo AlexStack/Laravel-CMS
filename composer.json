@@ -21,7 +21,8 @@
         "intervention/imagecache": "^2.3",
         "laravelcollective/html": ">=5.5",
         "overtrue/pinyin": "^4.0",
-        "alexstack/google-recaptcha-to-any-form": "^1.4"
+        "alexstack/google-recaptcha-to-any-form": "^1.4",
+        "laravel/ui": ">=1.0"
     },
     "autoload": {
         "psr-4": {
