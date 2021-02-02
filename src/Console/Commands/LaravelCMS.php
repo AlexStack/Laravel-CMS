@@ -312,15 +312,18 @@ class LaravelCMS extends Command
 
         $this->clearCache($options);
 
+        $runWebServer = ('no' == trim($options['silent'])) ? $this->confirm('Do you want to run a web server for this project on port 9321 ?', 'yes') : true;
+        $webUrl       =  ($runWebServer) ? 'http://127.0.0.1:9321' : config('app.url');
+
         // success message
         $this->line('<fg=red>****</>');
         $this->line('<fg=red>**** Laravel CMS Initialized ****</>');
         $this->line('<fg=red>****</>');
         $this->line('<fg=cyan>****</>');
-        $this->line('<fg=cyan>**** Admin panel: <fg=yellow>'.config('app.url').'</><fg=magenta>/cmsadmin/</> ****</>');
-        $this->line('<fg=cyan>**** Access here: <fg=yellow>'.config('app.url').'</><fg=magenta>/cmsadmin/</> ****</>');
+        $this->line('<fg=cyan>**** Admin panel: <fg=yellow>'.$webUrl.'</><fg=magenta>/cmsadmin/</> ****</>');
+        $this->line('<fg=cyan>**** Access URL: <fg=yellow>'.$webUrl.'</><fg=magenta>/cmsadmin/</> ****</>');
         if ($isNewProject) {
-            $this->line('<fg=yellow>**** Admin username: admin@admin.com  password: admin321</>');
+            $this->line('<fg=cyan>**** Admin username: <fg=magenta>admin@admin.com</>  password: <fg=magenta>admin321</></>');
         } else {
             $this->line('<fg=yellow>**** The default admin is the first user in your database(user id=1)</>');
         }
@@ -328,6 +331,10 @@ class LaravelCMS extends Command
         $this->line('<fg=green>****</>');
         $this->line('<fg=green>**** Have a good day!  ****</>');
         $this->line('<fg=green>****</>');
+
+        if ($runWebServer) {
+            $this->call('serve', ['--port'=>9321]);
+        }
     }
 
     public function clearCache($options)
