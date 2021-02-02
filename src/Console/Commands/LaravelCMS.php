@@ -306,7 +306,7 @@ class LaravelCMS extends Command
             '--class' => 'AlexStack\LaravelCms\CmsInquirySettingsTableSeeder',
         ]);
 
-        $this->forBrandNewProject();
+        $isNewProject = $this->forBrandNewProject();
 
         $this->rewriteConfig($table_prefix, $app_locale); // incase something wrong
 
@@ -319,6 +319,11 @@ class LaravelCMS extends Command
         $this->line('<fg=cyan>****</>');
         $this->line('<fg=cyan>**** Admin panel: <fg=yellow>'.config('app.url').'</><fg=magenta>/cmsadmin/</> ****</>');
         $this->line('<fg=cyan>**** Access here: <fg=yellow>'.config('app.url').'</><fg=magenta>/cmsadmin/</> ****</>');
+        if ($isNewProject) {
+            $this->line('<fg=yellow>**** Admin username: admin@admin.com  password: admin321</>');
+        } else {
+            $this->line('<fg=yellow>**** The default admin is the first user in your database(user id=1)</>');
+        }
         $this->line('<fg=cyan>****</>');
         $this->line('<fg=green>****</>');
         $this->line('<fg=green>**** Have a good day!  ****</>');
@@ -405,12 +410,20 @@ class LaravelCMS extends Command
             $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
         }
 
-        if (file_exists(base_path('resources/views/auth/login.blade.php'))) {
-            $this->call('ui bootstrap', [
-                    '--auth' => true,
+        try {
+            $rs = \App\Models\User::orderBy('id', 'DESC')->limit(1)->get();
+        } catch (\Exception $e) {
+            $this->call('ui:auth', [
+                    '--quiet',
                 ]);
 
             $this->call('migrate');
+
+            $rs2 = \App\Models\User::create([
+                    'name'    => 'Admin',
+                    'email'   => 'admin@admin.com',
+                    'password'=> bcrypt('admin321'),
+                ]);
 
             return true;
         }
@@ -488,6 +501,26 @@ class LaravelCMS extends Command
             }
         } else {
             // not the default .env
+
+            // try {
+            //     $rs = \App\Models\User::orderBy('id', 'DESC')->limit(1)->get();
+            //     var_dump($rs);
+            //     $rs2 = \App\Models\User::create([
+            //         'name'    => 'Admin',
+            //         'email'   => 'admin',
+            //         'password'=> bcrypt('admin321'),
+            //     ]);
+            //     var_dump($rs2);
+            // } catch (\Exception $e) {
+            //     echo $e;
+            //     $this->call('ui:auth', [
+            //         '--quiet',
+            //     ]);
+
+            //     $this->call('migrate');
+
+            //     return true;
+            // }
         }
     }
 }
