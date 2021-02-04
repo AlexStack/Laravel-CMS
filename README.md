@@ -49,7 +49,6 @@ php artisan laravelcms --locale=en --table_prefix=cms_ --silent=yes
 // Step 3: Now, you can access your cms backend via http://127.0.0.1:9321/cmsadmin/
 // Default admin username: admin@admin.com  password: admin321
 
-
 ```
 
 ## How to uninstall

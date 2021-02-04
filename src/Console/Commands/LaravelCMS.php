@@ -20,6 +20,7 @@ class LaravelCMS extends Command
             {--u|db_username= : username of the database}
             {--w|db_password= : password of the database}
             {--d|db_database= : database name}
+            {--o|port=9321 : web port of php artisan serve}
             ';
 
     /**
@@ -193,6 +194,10 @@ class LaravelCMS extends Command
             '--force' => true,
         ]);
 
+        $this->call('migrate:reset', [
+            '--force' => true,
+        ]);
+
         if ('no' == trim($options['silent']) && ! $this->confirm('<fg=cyan>**** Remove the CMS folders and files? ****</>', true)) {
             $this->error('User aborted! please run the command again.');
             exit();
@@ -312,8 +317,12 @@ class LaravelCMS extends Command
 
         $this->clearCache($options);
 
-        $runWebServer = ('no' == trim($options['silent'])) ? $this->confirm('Do you want to run a web server for this project on port 9321 ?', 'yes') : true;
-        $webUrl       =  ($runWebServer) ? 'http://127.0.0.1:9321' : config('app.url');
+        if (0 != $options['port']) {
+            $runWebServer = ('no' == trim($options['silent'])) ? $this->confirm('Do you want to run a web server for this project on port '.$options['port'].' ?', 'yes') : true;
+        } else {
+            $runWebServer = false;
+        }
+        $webUrl       =  ($runWebServer) ? 'http://127.0.0.1:'.$options['port'].'' : config('app.url');
 
         // success message
         $this->line('<fg=red>****</>');
@@ -333,7 +342,7 @@ class LaravelCMS extends Command
         $this->line('<fg=green>****</>');
 
         if ($runWebServer) {
-            $this->call('serve', ['--port'=>9321]);
+            $this->call('serve', ['--port'=>(int) $options['port']]);
         }
     }
 
@@ -417,20 +426,30 @@ class LaravelCMS extends Command
             $this->copyCmsFiles($source_files, $target_dir, $backup_dir, $ignore_files);
         }
 
+        if (class_exists("\App\Models\User")) {
+            $userModel = new \App\Models\User(); // for laravel 8.x
+        } elseif (class_exists("\App\User")) {
+            $userModel = new \App\User();
+        } else {
+            echo 'Can not find user model';
+
+            return false;
+        }
+
         try {
-            $rs = \App\Models\User::orderBy('id', 'DESC')->limit(1)->get();
+            $rs = $userModel->orderBy('id', 'DESC')->limit(1)->get();
         } catch (\Exception $e) {
             $this->call('ui:auth', [
-                    '--quiet',
-                ]);
+                '--quiet',
+            ]);
 
             $this->call('migrate');
 
-            $rs2 = \App\Models\User::create([
-                    'name'    => 'Admin',
-                    'email'   => 'admin@admin.com',
-                    'password'=> bcrypt('admin321'),
-                ]);
+            $rs2 = $userModel->create([
+                'name'    => 'Admin',
+                'email'   => 'admin@admin.com',
+                'password'=> bcrypt('admin321'),
+            ]);
 
             return true;
         }
@@ -508,26 +527,6 @@ class LaravelCMS extends Command
             }
         } else {
             // not the default .env
-
-            // try {
-            //     $rs = \App\Models\User::orderBy('id', 'DESC')->limit(1)->get();
-            //     var_dump($rs);
-            //     $rs2 = \App\Models\User::create([
-            //         'name'    => 'Admin',
-            //         'email'   => 'admin',
-            //         'password'=> bcrypt('admin321'),
-            //     ]);
-            //     var_dump($rs2);
-            // } catch (\Exception $e) {
-            //     echo $e;
-            //     $this->call('ui:auth', [
-            //         '--quiet',
-            //     ]);
-
-            //     $this->call('migrate');
-
-            //     return true;
-            // }
         }
     }
 }

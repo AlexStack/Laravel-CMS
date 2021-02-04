@@ -41,7 +41,7 @@ before_script:
   - php artisan serve &
   - composer require alexstack/laravel-cms "dev-$TRAVIS_BRANCH|$TRAVIS_BRANCH"
   - php artisan laravelcms --help
-  - php artisan laravelcms --action=initialize --locale=zh --table_prefix=travis_cms_  --silent=yes
+  - php artisan laravelcms --action=initialize --locale=zh --table_prefix=travis_cms_  --port=0 --silent=yes
   - |-
     if [[ "$TRAVIS_PHP_VERSION" == "7.4" ]]; then
       composer require fzaninotto/faker dev-master
