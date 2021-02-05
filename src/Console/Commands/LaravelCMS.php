@@ -506,8 +506,8 @@ class LaravelCMS extends Command
                     $envFileStr = str_replace($defDbStr, "DB_PORT=3306\nDB_DATABASE=$db_database\nDB_USERNAME=$db_username\nDB_PASSWORD=$db_password\n", $envFileStr);
                     file_put_contents(base_path('.env'), $envFileStr);
 
-                    $this->call('config:clear');
                     $this->call('config:cache');
+                    $this->call('route:clear');
 
                     // $this->call('laravelcms');
 

@@ -2,8 +2,8 @@ language: php
 
 php:
   - 7.1
-  - 7.3
   - 7.4
+  - 8.0
 
 sudo: false
 env:
@@ -44,7 +44,11 @@ before_script:
   - php artisan laravelcms --action=initialize --locale=zh --table_prefix=travis_cms_  --port=0 --silent=yes
   - |-
     if [[ "$TRAVIS_PHP_VERSION" == "7.4" ]]; then
-      composer require fzaninotto/faker dev-master
+      composer require fzaninotto/faker
+    fi
+  - |-
+    if [[ "$LARAVEL_VERSION" == "8.*" ]]; then
+      composer require laravel/legacy-factories
     fi
 install:
   - composer install --prefer-dist --quiet
