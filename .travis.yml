@@ -1,14 +1,13 @@
 language: php
 
 php:
-  - 7.1
+  - 7.3
   - 7.4
   - 8.0
 
 sudo: false
 env:
   matrix:
-    - LARAVEL_VERSION=5.*
     - LARAVEL_VERSION=6.*
     - LARAVEL_VERSION=7.*
     - LARAVEL_VERSION=8.*
@@ -16,8 +15,8 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
+    - php: 7.3
     - php: 7.1
-    - php: 7.2
 
 before_install:
   - mysql -e 'CREATE DATABASE laravelcms_test;'
@@ -42,10 +41,6 @@ before_script:
   - composer require alexstack/laravel-cms "dev-$TRAVIS_BRANCH|$TRAVIS_BRANCH"
   - php artisan laravelcms --help
   - php artisan laravelcms --action=initialize --locale=zh --table_prefix=travis_cms_  --port=0 --silent=yes
-  - |-
-    if [[ "$TRAVIS_PHP_VERSION" == "7.4" ]]; then
-      composer require fzaninotto/faker
-    fi
   - |-
     if [[ "$LARAVEL_VERSION" == "8.*" ]]; then
       composer require laravel/legacy-factories
