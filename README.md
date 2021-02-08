@@ -5,7 +5,7 @@
 [![image](docs/images/min/styleci.svg)](https://github.com/AlexStack/Laravel-CMS/releases)
 [![Latest Stable Version](https://poser.pugx.org/alexstack/laravel-cms/v/stable)](https://github.com/AlexStack/Laravel-CMS/releases)
 
--   Free, open-source Simple Bootstrap Laravel CMS, support Laravel 8.x or 7.x or old Laravel 6.x & 5.x
+-   Free, open-source Simple Bootstrap Laravel CMS, support Laravel 8.x or 7.x or old Laravel 6.x & 5.x, support MySql & MariaDB & PostgreSQL
 -   Can integrate with any existing Laravel project, install as an individual Laravel package
 -   Only add a few database tables with a prefix, not effect your existing database tables.
 -   You can easily custom the database table names, the page URL path(route) and the template(theme)
@@ -242,6 +242,19 @@ composer require alexstack/laravel-cms && php artisan laravelcms --action=upgrad
 -   cms version >= 1.4.4, support all laravel version >= 6.0
 -   cms version <= 1.4.3: support Laravel 5.x, 6.x, 7.x, 8.x
 -   Please install version 1.4.3 if the laravel version is 5.x of an existing project
+
+## How to use PostgreSQL instead of MySql or MariaDB?
+
+-   Make sure the .env changed before run the install command line. An example:
+
+```php
+DB_CONNECTION=pgsql
+DB_HOST=topsy.db.elephantsql.com
+DB_PORT=5432
+DB_DATABASE=oktetra
+DB_USERNAME=oktetra
+DB_PASSWORD=eO6nu-Ft1GPMaHDQPjoqN
+```
 
 ## License
 
