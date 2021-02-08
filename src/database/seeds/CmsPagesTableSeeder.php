@@ -43,7 +43,7 @@ class CmsPagesTableSeeder extends Seeder
                 'main_image'                    => null,
                 'sub_content'                   => '<p style="text-align: center; ">Sub content will display here while the subpages will show below by the default.</p><p style="text-align: center; ">You can add some subpage under the homepage to see what will happen.</p>',
                 'main_content'                  => '<p style="text-align: center; ">This is the home page\'s main content. </p><p style="text-align: center; ">You can change it in the cms backend : </p><p style="text-align: center; ">Please keep only one <span style="font-weight: bold;">slug </span>settings in the SEO tab as <b>homepage</b>.</p><p style="text-align: center; "><a href="/cmsadmin/">Click here go to the cms backend,</a> you will need to log in as the first user on the website.</p><p style="text-align: center; ">This page is a demo of the <span style="color: rgb(156, 0, 255);">Three Cards Page</span> template</p>',
-                'sort_value'                    => 60000,
+                'sort_value'                    => 32000,
                 'view_counts'                   => null,
                 'tags'                          => null,
                 'extra_image_1'                 => 2,

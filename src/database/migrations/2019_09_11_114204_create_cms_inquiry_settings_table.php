@@ -22,7 +22,7 @@ class CreateCmsInquirySettingsTable extends Migration
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('form_layout')->nullable();
-            $table->integer('page_id')->unsigned()->nullable()->index('page_id');
+            $table->integer('page_id')->unsigned()->nullable()->index($this->table_name . 'page_id');
             $table->integer('default_setting_id')->unsigned()->nullable();
             $table->string('form_layout_filename')->nullable();
             $table->text('display_form_fields', 16777215)->nullable();
@@ -35,10 +35,10 @@ class CreateCmsInquirySettingsTable extends Migration
             $table->text('google_recaptcha_secret_key', 16777215)->nullable();
             $table->string('google_recaptcha_css_class')->nullable();
             $table->string('google_recaptcha_no_tick_msg')->nullable();
-            $table->boolean('google_recaptcha_enabled')->default(0)->nullable()->index('google_recaptcha_enabled');
-            $table->boolean('form_enabled')->default(0)->nullable()->index('form_enabled');
+            $table->boolean('google_recaptcha_enabled')->default(0)->nullable()->index($this->table_name . 'google_recaptcha_enabled');
+            $table->boolean('form_enabled')->default(0)->nullable()->index($this->table_name . 'form_enabled');
             $table->timestamps();
-            $table->softDeletes()->index('deleted_at');
+            $table->softDeletes()->index($this->table_name . 'deleted_at');
         });
     }
 

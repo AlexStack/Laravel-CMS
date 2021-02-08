@@ -21,20 +21,20 @@ class CreateCmsFilesTable extends Migration
     {
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('user_id')->unsigned()->nullable()->index('user_id');
+            $table->bigInteger('user_id')->unsigned()->nullable()->index($this->table_name . 'user_id');
             $table->string('title', 190)->nullable();
             $table->text('description', 65535)->nullable();
             $table->string('suffix', 190)->nullable();
             $table->string('path', 190)->nullable();
             $table->string('filename', 190)->nullable();
-            $table->string('mimetype', 190)->nullable()->index('filetype');
-            $table->boolean('is_image')->nullable()->index('is_image');
-            $table->boolean('is_video')->nullable()->index('is_video');
+            $table->string('mimetype', 190)->nullable()->index($this->table_name . 'filetype');
+            $table->boolean('is_image')->nullable()->index($this->table_name . 'is_image');
+            $table->boolean('is_video')->nullable()->index($this->table_name . 'is_video');
             $table->bigInteger('filesize')->unsigned()->nullable();
-            $table->string('filehash', 190)->nullable()->index('filehash');
+            $table->string('filehash', 190)->nullable()->index($this->table_name . 'filehash');
             $table->string('url', 190)->nullable();
             $table->timestamps();
-            $table->softDeletes()->index('deleted_at');
+            $table->softDeletes()->index($this->table_name . 'deleted_at');
         });
     }
 
