@@ -21,8 +21,8 @@ class CreateCmsInquiriesTable extends Migration
     {
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id')->unsigned()->nullable()->index($this->table_name . 'parent_id');
-            $table->integer('page_id')->unsigned()->nullable()->index($this->table_name . 'page_id');
+            $table->integer('parent_id')->unsigned()->nullable()->index($this->table_name.'parent_id');
+            $table->integer('page_id')->unsigned()->nullable()->index($this->table_name.'page_id');
             $table->timestamps();
             $table->string('first_name', 190)->nullable();
             $table->string('last_name', 190)->nullable();
@@ -47,13 +47,13 @@ class CreateCmsInquiriesTable extends Migration
             $table->string('page_url', 190)->nullable();
             $table->text('admin_comment', 16777215)->nullable();
             $table->enum('status', ['New', 'Opened', 'Answered', 'Spam', 'Archived', 'Display'])->nullable()->default('New');
-            $table->boolean('sort_value')->default(0)->index($this->table_name . 'Sort');
+            $table->boolean('sort_value')->default(0)->index($this->table_name.'Sort');
             $table->text('extra_data_1', 16777215)->nullable();
             $table->text('extra_data_2', 16777215)->nullable();
             $table->text('extra_data_3', 16777215)->nullable();
             $table->text('extra_data_4', 16777215)->nullable();
             $table->text('extra_data_5', 16777215)->nullable();
-            $table->softDeletes()->index($this->table_name . 'deleted_at');
+            $table->softDeletes()->index($this->table_name.'deleted_at');
         });
     }
 

@@ -253,7 +253,7 @@ DB_HOST=topsy.db.elephantsql.com
 DB_PORT=5432
 DB_DATABASE=oktetra
 DB_USERNAME=oktetra
-DB_PASSWORD=eO6nu-Ft1GPMaHDQPjoqN
+DB_PASSWORD=the-postgresql-password
 ```
 
 ## License

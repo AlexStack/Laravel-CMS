@@ -21,16 +21,16 @@ class CreateCmsSettingsTable extends Migration
     {
         Schema::create($this->table_name, function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('param_name', 190)->nullable()->index($this->table_name . 'param_name');
-            $table->integer('page_id')->unsigned()->nullable()->index($this->table_name . 'page_id');
+            $table->string('param_name', 190)->nullable()->index($this->table_name.'param_name');
+            $table->integer('page_id')->unsigned()->nullable()->index($this->table_name.'page_id');
             $table->text('param_value', 65535)->nullable();
             $table->text('input_attribute', 65535)->nullable();
             $table->text('abstract', 65535)->nullable();
-            $table->string('category', 190)->nullable()->index($this->table_name . 'category');
-            $table->boolean('enabled')->default(0)->index($this->table_name . 'form_enabled');
-            $table->smallInteger('sort_value')->nullable()->index($this->table_name . 'sort_value');
+            $table->string('category', 190)->nullable()->index($this->table_name.'category');
+            $table->boolean('enabled')->default(0)->index($this->table_name.'form_enabled');
+            $table->smallInteger('sort_value')->nullable()->index($this->table_name.'sort_value');
             $table->timestamps();
-            $table->softDeletes()->index($this->table_name . 'deleted_at');
+            $table->softDeletes()->index($this->table_name.'deleted_at');
         });
     }
 
