@@ -121,6 +121,10 @@ class LaravelCmsHelper
 
         if ('svg' == $img_obj->suffix || (null == $width && null == $height) || ! isset($img_obj->is_image) || false == $img_obj->is_image) {
             // return original img url
+            if ('s3' == config('filesystems.default')) {
+                return \Storage::url($this->s('file.upload_dir').'/'.$img_obj->path);
+            }
+
             return '/'.$this->s('file.upload_dir').'/'.$img_obj->path;
         }
 
@@ -137,25 +141,44 @@ class LaravelCmsHelper
         $abs_real_dir  = public_path($related_dir);
         $abs_real_path = $abs_real_dir.'/'.$filename;
         $web_url       = '/'.$related_dir.'/'.$filename;
+        if ('s3' == config('filesystems.default')) {
+            $currentTime = \Carbon\Carbon::now();
+            $diffInSec   = $currentTime->diffInSeconds($img_obj->updated_at);
+            // add $diffInSec to speed up
+            if ($diffInSec > 90 || \Storage::exists($related_dir.'/'.$filename)) {
+                return \Storage::url($related_dir.'/'.$filename);
+            }
 
-        if (file_exists($abs_real_path)) {
-            $image_reoptimize_time = $this->s('image_reoptimize_time');
-            if (0 == $image_reoptimize_time) {
-                return $web_url;
-            } elseif (filemtime($abs_real_path) > time() - $this->s('image_reoptimize_time')) {
+            try {
+                $original_img = \Storage::get(''.$this->s('file.upload_dir').'/'.$img_obj->path);
+            } catch (\Exception $e) {
+                $original_img = null;
+                $web_url .= '?s3error='.$e->getMessage();
+            }
+
+            if (! $original_img) {
                 return $web_url;
             }
-            //return $abs_real_path . ' - already exists - ' . $web_url;
-        }
+        } else {
+            if (file_exists($abs_real_path)) {
+                $image_reoptimize_time = $this->s('image_reoptimize_time');
+                if (0 == $image_reoptimize_time) {
+                    return $web_url;
+                } elseif (filemtime($abs_real_path) > time() - $this->s('image_reoptimize_time')) {
+                    return $web_url;
+                }
+                //return $abs_real_path . ' - already exists - ' . $web_url;
+            }
 
-        if (! file_exists($abs_real_dir)) {
-            mkdir($abs_real_dir, 0755, true);
-        }
+            if (! file_exists($abs_real_dir)) {
+                mkdir($abs_real_dir, 0755, true);
+            }
 
-        $original_img = public_path(''.$this->s('file.upload_dir').'/'.$img_obj->path);
+            $original_img = public_path(''.$this->s('file.upload_dir').'/'.$img_obj->path);
 
-        if (! file_exists($original_img)) {
-            return $web_url;
+            if (! file_exists($original_img)) {
+                return $web_url.'?original_img_not_exists';
+            }
         }
 
         try {
@@ -167,7 +190,13 @@ class LaravelCmsHelper
             if ('jpg' == $suffix || 'jpeg' == $suffix) {
                 $new_img->encode('jpg');
             }
-            $new_img->save($abs_real_path, 75);
+
+            if ('s3' == config('filesystems.default')) {
+                \Storage::disk('s3')->put($related_dir.'/'.$filename, $new_img);
+                $web_url = \Storage::url($related_dir.'/'.$filename);
+            } else {
+                $new_img->save($abs_real_path, 75);
+            }
         } catch (\Exception $e) {
             $web_url .= '?error='.$e->getMessage();
         }
@@ -476,14 +505,17 @@ class LaravelCmsHelper
 
         $file_store_dir = public_path(dirname($this->s('file.upload_dir').'/'.$file_data['path']));
 
-        // $this->debug($file_store_dir . '/'. basename($file_data['path']));
+        if ('s3' == config('filesystems.default')) {
+            $s3file = $this->s('file.upload_dir').'/'.$file_data['path'];
+            // exit($s3file);
+            $f->storeAs(dirname($s3file), basename($s3file));
+        } else {
+            if (! file_exists($file_store_dir)) {
+                mkdir($file_store_dir, 0755, true);
+            }
 
-        // $f->move($file_store_dir, basename($file_data['path']));
-        if (! file_exists($file_store_dir)) {
-            mkdir($file_store_dir, 0755, true);
+            rename($file_data['temp_path'], $file_store_dir.'/'.basename($file_data['path']));
         }
-
-        rename($file_data['temp_path'], $file_store_dir.'/'.basename($file_data['path']));
 
         return $new_file;
 
