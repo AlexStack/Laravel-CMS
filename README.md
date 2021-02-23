@@ -256,6 +256,58 @@ DB_USERNAME=oktetra
 DB_PASSWORD=the-postgresql-password
 ```
 
+## How to store & access files on AWS s3?
+
+-   On AWS: Create a s3 bucket and enable it as a Static website hosting, allow all public access and set s3:GetObject Bucket policy, Create an IAM user for api use.
+-   Laravel .env file, set below variables:
+
+    ```php
+    AWS_ACCESS_KEY_ID=
+    AWS_SECRET_ACCESS_KEY=
+    AWS_DEFAULT_REGION=
+    AWS_BUCKET=
+    FILESYSTEM_DRIVER=s3
+    AWS_URL=
+    ```
+
+-   composer require league/flysystem-aws-s3-v3 ^1.0
+-   done
+
+## How to install laravel/jetstream or other ui instead of laravel/ui?
+
+```php
+// Step 1: Install Laravel to folder cms
+composer create-project laravel/laravel cmsjet && cd cmsjet && composer require laravel/jetstream
+
+// Step 2: install jetstream
+php artisan jetstream:install inertia && npm install && npm run dev
+
+// Step 3: install CMS in silent mode
+composer require alexstack/laravel-cms && php artisan laravelcms --locale=en --table_prefix=jet_ --silent=yes
+
+// Step 4: Edit routes/web.php
+- Remove or comment Auth::routes();
+- Change Route::get('/' to Route::get('/welcome'
+- Run command: php artisan laravelcms --action=clear
+
+// Step 5: Now, you can access your cms backend via http://127.0.0.1:9321/cmsadmin/
+// Default admin username: admin@admin.com  password: admin321
+
+```
+
+## How to install it on HeroKu?
+
+-   Local: First, install at your localhost and make sure everything works fine
+-   Local: Create a github repository for the laravelcms folder. eg. cd cms && git init && git remote add origin https://github.com/xxx.git
+-   Local: Enable gd exif for heroku php: composer require ext-exif ext-gd
+-   On HeroKu: create a new app from this github repository, enable automatically deploy
+-   HeroKu: add Dyno formation: web vendor/bin/heroku-php-apache2 public/
+-   HeroKu: add .env variables to settings -> Config Vars
+-   Local: to use Nginx together with PHP, add a file named Procfile on folder cms with content below:
+    ```php
+    web: vendor/bin/heroku-php-nginx
+    ```
+
 ## License
 
 -   The Amila Laravel CMS is open-source software licensed under the MIT license.
