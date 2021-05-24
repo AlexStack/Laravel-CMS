@@ -90,7 +90,7 @@ class LaravelCmsPageRepository extends BaseRepository
             $user_class   = $special_json->php_class;
             $class_method = $special_json->class_method ?? 'index';
             $parameters   = $special_json->parameters ?? null;
-            if ('' != $user_class && class_exists($user_class) && is_callable($user_class.'::'.$class_method)) {
+            if ('' != $user_class && class_exists($user_class) && method_exists($user_class, $class_method)) {
                 $data = call_user_func([new $user_class(), $class_method], $data, $parameters);
             } else {
                 $data['call_user_func_error'] = $user_class.' class not exists or class_method not callable ';

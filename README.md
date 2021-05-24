@@ -301,12 +301,13 @@ composer require alexstack/laravel-cms && php artisan laravelcms --locale=en --t
 -   Local: Create a github repository for the laravelcms folder. eg. cd cms && git init && git remote add origin https://github.com/xxx.git
 -   Local: Enable gd exif for heroku php: composer require ext-exif ext-gd
 -   On HeroKu: create a new app from this github repository, enable automatically deploy
+-   Local: to use Nginx/apache together with PHP, add a file named Procfile on folder cms with content below:
+    ```php
+    web: vendor/bin/heroku-php-apache2 public/
+    ```
 -   HeroKu: add Dyno formation: web vendor/bin/heroku-php-apache2 public/
 -   HeroKu: add .env variables to settings -> Config Vars
--   Local: to use Nginx together with PHP, add a file named Procfile on folder cms with content below:
-    ```php
-    web: vendor/bin/heroku-php-nginx
-    ```
+-   Done
 
 ## License
 

@@ -325,7 +325,7 @@ class LaravelCmsPageAdminRepository extends BaseRepository
             $callback_ary = collect([]);
             foreach ($option_ary as $plugin) {
                 $plugin_class = trim($plugin['php_class'] ?? '');
-                if ('' != $plugin_class && class_exists($plugin_class) && is_callable($plugin_class.'::'.$action)) {
+                if ('' != $plugin_class && class_exists($plugin_class) && method_exists($plugin_class, $action)) {
                     //echo $plugin_class . '::' . $action . '  --- ';
 
                     $s = call_user_func([new $plugin_class(), $action], $form_data, $page, $plugin);

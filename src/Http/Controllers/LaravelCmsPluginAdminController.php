@@ -118,7 +118,7 @@ class LaravelCmsPluginAdminController extends Controller
     {
         $plugin_settings = $this->helper->s('plugin.'.$this->plugin->param_name);
         $plugin_class    = trim($plugin_settings['php_class'] ?? '');
-        if ('' != $plugin_class && class_exists($plugin_class) && is_callable($plugin_class.'::'.$action)) {
+        if ('' != $plugin_class && class_exists($plugin_class) && method_exists($plugin_class, $action)) {
             //echo $plugin_class . '::' . $action . '  --- ';
 
             return call_user_func([new $plugin_class(), $action], $form_data, $plugin, $plugin_settings);
